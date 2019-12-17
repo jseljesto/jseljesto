@@ -9,3 +9,7 @@
   top: 420px;
   left: 600px;
 }
+
+label em {
+  color: red;
+}
