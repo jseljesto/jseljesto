@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="skjema.css"/>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <form id="skjema">
+            <p><label for="namn">Navn (*): </label>
+                <input id="namn" type="text" placeholder="Skriv navnet ditt her:" required>
+            </p>
+            <p><label for="kjonn">Kjønn (*):</label>
+                <input id="kjonn" type="text" list="valgKjonn" required>
+                <datalist id="valgKjonn">
+                    <option value="Mann"></option>
+                    <option value="Kvinne"></option>
+                </datalist>
+            </p>
+            <p><label for="fodDato">Fødselsdato (*): </label>
+                <input id="fodDato" type="date" min="1950-01-01" max="2000-01-01" required>
+            </p>
+            <p><label for="postkode">Postkode (*): </label>
+                <input id="postkode" type="number" required>
+            </p>
+            <p><label for="adresse">Adresse (*): </label>
+                <input id="adresse" type="text" required>
+            </p>
+            <p><label for="telefonNr"> Telefonnummer:</label>
+                <input id="telefonNr" type="number">
+            </p>
+            <p><label for="hobbyer"> Hobbyer:</label><br>
+                <input id="idrett" type="checkbox" value="Idrett">Idrett<br>
+                <input id="matlaging" type="checkbox" value="Matlaging">Matlaging<br>
+                <input id="lesing" type="checkbox" value="Lesing">Lesing<br>
+                <input id="koding" type="checkbox" value="koding">Koding<br>
+                <input id="camping" type="checkbox" value="camping">Camping<br>
+            </p>
+            <p id="personInfo"></p>
+        </form>
+        <button onclick="createObject(findBirthDate())">Button</button>
+    <script>
+
+        class Person {
+            constructor(name, gender, birthDate, postalCode, adress) {
+                this._name = name;
+                this._gender = gender;
+                this._birthDate = birthDate;
+                this._postalCode = postalCode;
+                this._adress = adress;
+                this._phoneNumber;
+                this._hobbies;
+                }
+
+                get name () {
+                    return this._name;
+                }
+
+                set name (name) {
+                    if (typeof name === "string") {
+                        this._name = name;
+                    }
+                }
+
+                get gender () {
+                    return this._gender;
+                }
+
+                set gender (gender) {
+                    if (typeof gender === "string") {
+                        this._gender = gender;
+                    }
+                }
+
+                get birthDate () {
+                    return this._birthDate;
+                }
+
+                set birthDate (birthDate) {
+                    if (typeof birthDate === "number") {
+                        this._birthDate = birthDate;
+                    }
+                }
+
+                get postalCode () {
+                    return this._postalCode;
+                }
+
+                set postalCode (postalCode) {
+                    if (typeof postalCode === "number") {
+                        this._postalCode = postalCode;
+                    }
+                }
+
+                get adress () {
+                    return this._adress;
+                }
+
+                set adress(adress) {
+                    if (typeof adress === "string") {
+                        this._adress = adress;
+                    }
+                }
+
+                get phoneNumber () {
+                    this._phoneNumber = phoneNumber;
+                }
+
+                set phoneNumber (phoneNumber) {
+                    if (typeof phoneNumber === "number") {
+                        this._phoneNumber = phoneNumber;
+                    }
+                }
+
+                get hobbies () {
+                    return this._hobbies;
+                }
+
+                set hobbies (hobbies) {
+                    if (hobbies.isArray()) {
+                        this._hobbies = hobbies;
+                    }
+                }
+
+            }
+
+        let personObjects = [];
+
+        function findName () {
+           return new Promise((resolve, reject) => {
+               setTimeout (() => {
+                   let personName = document.getElementById("namn").value;
+                   if (typeof personName === "number") {
+                       resolve(false);
+                       } else {
+                           resolve(personName);
+                           }
+                        }, 2000)
+                    });
+                }
+
+        function findGender () {
+            let gender = document.getElementById("kjonn").value;
+            return gender;
+        }
+
+        function findBirthDate () {
+            let fullBirthDate = [];
+            let birthday = document.getElementById("fodDato").value;
+            let year = birthday.substr(0,4);
+            fullBirthDate.push(year);
+            let month = birthday.substr(5,2);
+            fullBirthDate.push(month);
+            let day = birthday.substr(8,2);
+            fullBirthDate.push(day);
+            return fullBirthDate;
+        }
+
+        function findPostalCode () {
+            let postalCode = document.getElementById("postkode").value;
+            return postalCode;
+        }
+
+        function findAdress () {
+            let adress = document.getElementById("adresse").value;
+            return adress;
+        }
+
+        function findPhoneNumber () {
+            return new Promise ((resolve,reject) => {
+                setTimeout(() => {
+                    let phoneNumber = document.getElementById("telefonNr").value;
+                    if (typeof phoneNumber === "number") {
+                        resolve (phoneNumber);
+                        } else {
+                            reject(false);
+                            }
+                        }, 2000)
+                    });
+                }
+
+        function isChecked (id) {
+            return new Promise ((resolve,reject) => {
+                setTimeout (() => {
+                    if (id.checked === true) {
+                        resolve (true);
+                        } else {
+                        reject (false);
+                }}, 1000)
+            });
+        }
+
+        async function findHobbies () {
+            let hobbies = ["idrett", "matlaging", "lesing", "koding", "camping"];
+            let confirmedHobbies = [];
+            for (let i = 0; i < hobbies.length; i++) {
+                if (await isChecked(document.getElementById(hobbies[i]))) {
+                    confirmedHobbies.push(hobbies[i]);
+                }
+            }
+        }
+
+        async function createObject (birthDayArray) {
+            try {
+                let fullBirthDate = `${birthDayArray[2]}.${birthDayArray[1]}.${birthDayArray[0]}`
+                let person = new Person (await findName(),findGender(),fullBirthDate,findPostalCode(), findAdress())
+                document.getElementById("personInfo").innerHTML =
+                `Name: ${person.name} <br>
+                Gender: ${person.gender} <br>
+                Birth Date: ${person.birthDate} <br>
+                Postal Code: ${person.postalCode} <br>
+                Adress: ${person.adress}`;
+                personObjects.push(person); 
+                }
+                catch (err) {
+                    alert(err);
+                }
+        }
+
+    </script>
+    </body>
+</html>
