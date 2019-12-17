@@ -1,0 +1,15 @@
+#skjema {
+	position: fixed;
+  top: 40%;
+  left: 55%;
+  margin-top: -200px;
+  margin-left: -200px;
+}
+
+#button {
+	position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: 200px;
+  margin-left: -200px;
+}
