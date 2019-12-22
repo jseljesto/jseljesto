@@ -31,11 +31,11 @@
             <input id="telefonNr" type="number">
         </p>
         <p><label for="hobbyer"> Hobbyer:</label><br>
-            <input id="idrett" type="checkbox" value="Idrett">Idrett<br>
-            <input id="matlaging" type="checkbox" value="Matlaging">Matlaging<br>
-            <input id="lesing" type="checkbox" value="Lesing">Lesing<br>
-            <input id="koding" type="checkbox" value="koding">Koding<br>
-            <input id="camping" type="checkbox" value="camping">Camping<br>
+            <input id="Idrett" type="checkbox" value="Idrett">Idrett<br>
+            <input id="Matlaging" type="checkbox" value="Matlaging">Matlaging<br>
+            <input id="Lesing" type="checkbox" value="Lesing">Lesing<br>
+            <input id="Koding" type="checkbox" value="koding">Koding<br>
+            <input id="Camping" type="checkbox" value="camping">Camping<br>
         </p>
         <p id="personInfo"></p>
     </form>
@@ -43,14 +43,14 @@
     <script>
 
         class Person {
-            constructor(name, gender, birthDate, postalCode, adress, phoneNumber) {
+            constructor(name, gender, birthDate, postalCode, adress, phoneNumber, hobbies) {
                 this._name = name;
                 this._gender = gender;
                 this._birthDate = birthDate;
                 this._postalCode = postalCode;
                 this._adress = adress;
                 this._phoneNumber = phoneNumber;
-                this._hobbies;
+                this._hobbies = hobbies;
             }
 
             get name() {
@@ -209,34 +209,36 @@
                     if (id.checked === true) {
                         resolve(true);
                     } else {
-                        reject(false);
+                        resolve(false);
                     }
-                }, 1000)
+                }, 200)
             });
         }
 
         async function findHobbies() {
-            let hobbies = ["idrett", "matlaging", "lesing", "koding", "camping"];
+            let hobbies = ["Idrett", "Matlaging", "Lesing", "Koding", "Camping"];
             let confirmedHobbies = [];
             for (let i = 0; i < hobbies.length; i++) {
                 if (await isChecked(document.getElementById(hobbies[i]))) {
                     confirmedHobbies.push(hobbies[i]);
                 }
             }
+            return confirmedHobbies;
         }
 
         async function createObject(birthDayArray) {
             try {
                 let fullBirthDate = `${birthDayArray[2]}.${birthDayArray[1]}.${birthDayArray[0]}`
-                let person = new Person(await findName(), findGender(), fullBirthDate, findPostalCode(), findAdress(), await findPhoneNumber());
+                let person = new Person(await findName(), findGender(), fullBirthDate, findPostalCode(), findAdress(), await findPhoneNumber(), await findHobbies());
                 if (!(person.name === false) || (!(person.phoneNumber === false))) {
                     document.getElementById("personInfo").innerHTML =
-                        `Name: ${person.name} <br>
+                    `Name: ${person.name} <br>
                     Gender: ${person.gender} <br>
                     Birth Date: ${person.birthDate} <br>
                     Postal Code: ${person.postalCode} <br>
                     Adress: ${person.adress} <br>
-                    Phone Number: ${person.phoneNumber}`;
+                    Phone Number: ${person.phoneNumber} <br>
+                    Hobbies: ${person.hobbies}`;
                     personObjects.push(person);
                 }
             }
