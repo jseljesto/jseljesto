@@ -13,3 +13,9 @@
 label em {
   color: red;
 }
+
+#personInfo {
+  position: fixed;
+  top: 450px;
+  left: 575px;
+}

@@ -41,13 +41,13 @@
     <script>
 
         class Person {
-            constructor(name, gender, birthDate, postalCode, adress) {
+            constructor(name, gender, birthDate, postalCode, adress, phoneNumber) {
                 this._name = name;
                 this._gender = gender;
                 this._birthDate = birthDate;
                 this._postalCode = postalCode;
                 this._adress = adress;
-                this._phoneNumber;
+                this._phoneNumber = phoneNumber;
                 this._hobbies;
                 }
 
@@ -102,11 +102,11 @@
                 }
 
                 get phoneNumber () {
-                    this._phoneNumber = phoneNumber;
+                    return this._phoneNumber;
                 }
 
                 set phoneNumber (phoneNumber) {
-                    if (typeof phoneNumber === "number") {
+                    if (typeof phoneNumber === "string") {
                         this._phoneNumber = phoneNumber;
                     }
                 }
@@ -125,16 +125,35 @@
 
         let personObjects = [];
 
+        function validateText(textID) {
+            var re = /^[A-Za-z]+$/;
+            if(!(re.test(document.getElementById(textID).value))) {
+                alert (`${textID} is NOT correct!`);
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function validateNumber(numberID) {
+            var re = /^[0-9]+$/;
+            if(!(re.test(document.getElementById(numberID).value))) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
         function findName () {
            return new Promise((resolve, reject) => {
                setTimeout (() => {
                    let personName = document.getElementById("namn").value;
-                   if (typeof personName === "number") {
-                       resolve(false);
+                   if (validateText("namn") === false) {
+                       reject(false);
                        } else {
                            resolve(personName);
                            }
-                        }, 2000)
+                        }, 1000)
                     });
                 }
 
@@ -169,12 +188,14 @@
             return new Promise ((resolve,reject) => {
                 setTimeout(() => {
                     let phoneNumber = document.getElementById("telefonNr").value;
-                    if (typeof phoneNumber === "number") {
-                        resolve (phoneNumber);
-                        } else {
-                            reject(false);
-                            }
-                        }, 2000)
+                    if (phoneNumber.length === 0) {
+                            let emptyPhoneNumber = "Ikkje oppgitt";
+                            resolve(emptyPhoneNumber); }
+                        else if (validateNumber("telefonNr") === false) {
+                            reject (false);
+                    } else {
+                            resolve(phoneNumber); }
+                        }, 1000)
                     });
                 }
 
@@ -202,14 +223,16 @@
         async function createObject (birthDayArray) {
             try {
                 let fullBirthDate = `${birthDayArray[2]}.${birthDayArray[1]}.${birthDayArray[0]}`
-                let person = new Person (await findName(),findGender(),fullBirthDate,findPostalCode(), findAdress())
-                document.getElementById("personInfo").innerHTML =
-                `Name: ${person.name} <br>
-                Gender: ${person.gender} <br>
-                Birth Date: ${person.birthDate} <br>
-                Postal Code: ${person.postalCode} <br>
-                Adress: ${person.adress}`;
-                personObjects.push(person); 
+                let person = new Person (await findName(),findGender(),fullBirthDate,findPostalCode(),findAdress(),await findPhoneNumber());
+                if (!(person.name === false) || (!(person.phoneNumber === false))) { 
+                    document.getElementById("personInfo").innerHTML =
+                    `Name: ${person.name} <br>
+                    Gender: ${person.gender} <br>
+                    Birth Date: ${person.birthDate} <br>
+                    Postal Code: ${person.postalCode} <br>
+                    Adress: ${person.adress} <br>
+                    Phone Number: ${person.phoneNumber}`;
+                    personObjects.push(person); }
                 }
                 catch (err) {
                     alert(err);
