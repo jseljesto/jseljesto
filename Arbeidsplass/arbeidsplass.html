@@ -155,7 +155,7 @@
                     } else {
                         resolve(personName);
                     }
-                }, 1000)
+                }, 200)
             });
         }
 
@@ -199,7 +199,7 @@
                     } else {
                         resolve(phoneNumber);
                     }
-                }, 1000)
+                }, 500)
             });
         }
 
@@ -223,7 +223,8 @@
                     confirmedHobbies.push(hobbies[i]);
                 }
             }
-            return confirmedHobbies;
+            let hobbiesString = confirmedHobbies.join(`, `);
+            return hobbiesString;
         }
 
         async function createObject(birthDayArray) {
