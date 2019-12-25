@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="stylesheet" href="stylesheet.css" />
+        <meta charset="UTF-8">
+    </head>
+    <body>
+
+        <p id="result" style="position:fixed; left:57%; top:19%; text-align:center;">0</p>
+        <p style="position:fixed; left:42%; top:25%;">
+            <button class="keys" onclick="squareRoot()">sqrt</button>
+            <button class="keys" onclick="clickOperator('%')">%</button>
+            <button class="keys" onclick="changeNegPos()">+/-</button>
+            <button class="keys" onclick="clickOperator('/')">/</button><br><br>
+            <button class="keys" onclick="clickNumber('7')">7</button>
+            <button class="keys" onclick="clickNumber('8')">8</button>
+            <button class="keys" onclick="clickNumber('9')">9</button>
+            <button class="keys" onclick="clickOperator('*')">X</button><br><br>
+            <button class="keys" onclick="clickNumber('4')">4</button>
+            <button class="keys" onclick="clickNumber('5')">5</button>
+            <button class="keys" onclick="clickNumber('6')">6</button>
+            <button class="keys" onclick="clickOperator('-')">-</button><br><br>
+            <button class="keys" onclick="clickNumber('1')">1</button>
+            <button class="keys" onclick="clickNumber('2')">2</button>
+            <button class="keys" onclick="clickNumber('3')">3</button>
+            <button class="keys" onclick="clickOperator('+')">+</button><br><br>
+            <button class="keys" onclick="clickNumber('0')">0</button>
+            <button class="keys" onclick="addDecimal()">.</button>
+            <button class="keys" onclick="clearCalc()">AC</button>
+            <button class="keys" onclick="findResult()">=</button>
+
+        </p>
+
+    <script>
+
+        let currentNumber = 0;
+        let firstNumber = 0;
+        let operator = "";
+        let secondNumber = 0;
+
+        function clickNumber(val) {
+            if (operator.length === 0) {
+                firstNumber = parseFloat(firstNumber + val);
+                document.getElementById("result").innerHTML = firstNumber;
+            }
+            else if (operator.length > 0) {
+                secondNumber = parseFloat(secondNumber + val);
+                document.getElementById("result").innerHTML = secondNumber;
+
+            } else {
+
+            }
+        }
+
+        function clickOperator(op) {
+            if (operator.length === 0) { 
+                operator = op;
+            }
+
+        }
+
+        function clearCalc() {
+            currentNumber = 0;
+            firstNumber = 0;
+            operator = "";
+            secondNumber = 0;
+            document.getElementById("result").innerHTML = 0;
+        }
+
+        function addDecimal() {
+            if (operator.length === 0) {
+                firstNumber += ".";
+                document.getElementById("result").innerHTML = firstNumber;
+
+            }
+            else if (operator.length > 0) {
+                secondNumber += ".";
+                document.getElementById("result").innerHTML = secondNumber;
+
+            }
+
+        }
+
+        function changeNegPos() {
+            if (operator.length === 0) {
+                let temporaryNumber = firstNumber.toString();
+                if(temporaryNumber.charAt(0) === "-") {
+                    firstNumber = firstNumber.substr(1);
+                } else {
+                    firstNumber = "-" + firstNumber;
+                }
+                document.getElementById("result").innerHTML = firstNumber;
+            }
+            if (operator.length > 0) {
+                let temporaryNumber = secondNumber.toString()
+                if(temporaryNumber.charAt(0) === "-") {
+                    secondNumber = secondNumber.substr(1);
+                } else {
+                    secondNumber = "-" + secondNumber;
+                }
+                document.getElementById("result").innerHTML = secondNumber;
+            }
+        }
+
+        function squareRoot() {
+            currentNumber = Math.sqrt(firstNumber);
+            document.getElementById("result").innerHTML = currentNumber;
+        }
+
+        function findResult() {
+            if (operator === "+") {
+                currentNumber = firstNumber + secondNumber;
+            }
+            else if (operator === "-") {
+                currentNumber = firstNumber - secondNumber;
+            }
+            else if (operator === "*") {
+                currentNumber = firstNumber * secondNumber;
+            }
+            else if (operator === "/") {
+                currentNumber = firstNumber / secondNumber;
+            }
+            else if (operator === "%") {
+                currentNumber = firstNumber * secondNumber / 100;
+            }
+            else {
+                alert("You have no operators!");
+            }
+            document.getElementById("result").innerHTML = currentNumber;
+        }
+
+    </script>
+
+    </body>
+</html>

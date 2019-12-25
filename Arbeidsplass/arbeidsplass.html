@@ -191,7 +191,7 @@
                 setTimeout(() => {
                     let phoneNumber = document.getElementById("telefonNr").value;
                     if (phoneNumber.length === 0) {
-                        let emptyPhoneNumber = "Ikkje oppgitt";
+                        let emptyPhoneNumber = "No information";
                         resolve(emptyPhoneNumber);
                     }
                     else if (validateNumber("telefonNr") === false) {
