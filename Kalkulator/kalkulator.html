@@ -6,7 +6,7 @@
     </head>
     <body>
 
-        <p id="result" style="position:fixed; left:57%; top:19%; text-align:center;">0</p>
+        <p id="result">0</p>
         <p style="position:fixed; left:42%; top:25%;">
             <button class="keys" onclick="squareRoot()">sqrt</button>
             <button class="keys" onclick="clickOperator('%')">%</button>
@@ -26,8 +26,8 @@
             <button class="keys" onclick="clickOperator('+')">+</button><br><br>
             <button class="keys" onclick="clickNumber('0')">0</button>
             <button class="keys" onclick="addDecimal()">.</button>
-            <button class="keys" onclick="clearCalc()">AC</button>
-            <button class="keys" onclick="findResult()">=</button>
+            <button class="keys" onclick="clearCalc()" id="reset">AC</button>
+            <button class="keys" onclick="findResult()" id="equals">=</button>
 
         </p>
 

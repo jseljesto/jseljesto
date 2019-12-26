@@ -1,4 +1,29 @@
 .keys {
   height: 50px;
   width: 50px;
+  outline-style: solid;
+  outline-width: thin;
+}
+
+#equals {
+  background-color: black;
+  color: white;
+}
+
+#reset {
+  background-color: red;
+  color: white;
+}
+
+#result {
+  position: fixed;
+  left: 45%; 
+  top: 14%;
+  border: 5px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 150px;
+  padding-right: 20px;
+  background-color: black;
+  color: white;
 }
