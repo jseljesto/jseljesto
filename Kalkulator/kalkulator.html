@@ -108,8 +108,14 @@
         }
 
         function squareRoot() {
+            if (secondNumber > 0) {
+                findResult();
+                currentNumber = Math.sqrt(currentNumber);
+                document.getElementById("result").innerHTML = currentNumber;
+            } else {
             currentNumber = Math.sqrt(firstNumber);
             document.getElementById("result").innerHTML = currentNumber;
+            }
         }
 
         function findResult() {
@@ -132,6 +138,9 @@
                 alert("You have no operators!");
             }
             document.getElementById("result").innerHTML = currentNumber;
+            firstNumber = 0;
+            secondNumber = 0;
+            operator = "";
         }
 
     </script>
