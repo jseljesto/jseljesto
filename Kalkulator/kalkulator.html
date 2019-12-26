@@ -55,6 +55,11 @@
         function clickOperator(op) {
             if (operator.length === 0) { 
                 operator = op;
+            } else {
+                findResult();
+                firstNumber = currentNumber;
+                secondNumber = 0;
+                operator = op;
             }
 
         }
