@@ -5,9 +5,30 @@
   outline-width: thin;
 }
 
+.keys:hover {
+  background-color: lightgrey;
+}
+
+.operators {
+  height: 50px;
+  width: 50px;
+  outline-style: solid;
+  outline-width: thin;
+  outline-color: black;
+  color: blue;
+}
+
+.operators:hover {
+  background-color: lightgrey;
+}
+
 #equals {
   background-color: black;
   color: white;
+}
+
+#equals:hover {
+  opacity: 0.7;
 }
 
 #reset {
@@ -15,13 +36,18 @@
   color: white;
 }
 
+#reset:hover {
+  opacity: 0.7;
+}
+
 #result {
   position: fixed;
-  left: 45%; 
-  top: 14%;
+  left: 44%; 
+  top: 13%;
+  font-size: 30px;
   border: 5px;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   padding-left: 150px;
   padding-right: 20px;
   background-color: black;
