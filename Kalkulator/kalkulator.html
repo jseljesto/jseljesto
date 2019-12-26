@@ -90,18 +90,18 @@
             if (operator.length === 0) {
                 let temporaryNumber = firstNumber.toString();
                 if(temporaryNumber.charAt(0) === "-") {
-                    firstNumber = firstNumber.substr(1);
+                    firstNumber = Math.abs(firstNumber);
                 } else {
-                    firstNumber = "-" + firstNumber;
+                    firstNumber = firstNumber * -1;
                 }
                 document.getElementById("result").innerHTML = firstNumber;
             }
             if (operator.length > 0) {
                 let temporaryNumber = secondNumber.toString()
                 if(temporaryNumber.charAt(0) === "-") {
-                    secondNumber = secondNumber.substr(1);
+                    secondNumber = Math.abs(secondNumber);
                 } else {
-                    secondNumber = "-" + secondNumber;
+                    secondNumber = secondNumber * -1;
                 }
                 document.getElementById("result").innerHTML = secondNumber;
             }
@@ -122,7 +122,7 @@
             if (operator === "+") {
                 currentNumber = firstNumber + secondNumber;
             }
-            else if (operator === "-") {
+             else if (operator === "-") {
                 currentNumber = firstNumber - secondNumber;
             }
             else if (operator === "*") {
@@ -135,7 +135,7 @@
                 currentNumber = firstNumber * secondNumber / 100;
             }
             else {
-                alert("You have no operators!");
+                alert("You haven't made any changes!");
             }
             document.getElementById("result").innerHTML = currentNumber;
             firstNumber = 0;
