@@ -1,3 +1,7 @@
+#theme {
+  background-image: linear-gradient(to right, blue, #cce0ff);
+}
+
 .keys {
   height: 50px;
   width: 50px;
