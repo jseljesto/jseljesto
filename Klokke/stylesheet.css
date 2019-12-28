@@ -1,0 +1,11 @@
+#tid {
+    position: fixed;
+    left: 50%;
+}
+
+#canvas {
+    position: fixed;
+    top: 15%;
+    left: 36%;
+    background-color: black;
+}
