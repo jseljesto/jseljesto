@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+    </head>
+    <link rel="stylesheet" href="stylesheet.css" />
+    <meta charset="UTF-8">
+    <body onload="createShoppingList()">
+        <form id="input">
+            <p><label for="produkt"> Produkt :</label>
+            <input id="produkt" type="text" required></p>
+            <p><label for="antall"> Antall :</label>
+            <input id="antall" type="number"> Enhet: <input id="enhet" type="enhet"></p>
+            
+        </form>
+        <button id="leggTil" onclick="addElement()">Legg Til</button>
+        <p id="handleliste"></p>
+
+        <script>
+        let shoppingList = [];
+
+        function createShoppingList () {
+            let shoppingText = "<ul id='nyHandleliste'>";
+            for (let i of shoppingList) {
+                let index = shoppingList.indexOf(i);
+                shoppingText += "<li onclick='removeElement(" + index + ")'>" + i + "</li>";
+                }
+                shoppingText += "</ul>";
+                document.getElementById("handleliste").innerHTML = shoppingText; 
+        }
+
+        function addElement() {
+            let text = document.getElementById("antall").value + " " +
+            document.getElementById("enhet").value + " " + 
+            document.getElementById("produkt").value;
+            shoppingList.push(text);
+            createShoppingList();
+            document.getElementById("antall").value = "";
+            document.getElementById("enhet").value = "";
+            document.getElementById("produkt").value = "";
+
+        }
+
+        function removeElement(index) {
+            shoppingList.splice(index,1);
+            let updatedList = document.getElementById("nyHandleliste");
+            updatedList.removeChild(updatedList.childNodes[index]);
+            createShoppingList();
+        }
+        </script>
+    </bodyonload="createShoppingList()">
+</html>

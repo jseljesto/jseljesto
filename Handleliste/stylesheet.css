@@ -1,0 +1,17 @@
+#handleliste {
+    position: fixed;
+    top: 15%;
+    left: 43%;
+    font-size: 25px;
+}
+
+#input {
+    position: fixed;
+    left: 43%;
+}
+
+#leggTil {
+    position:fixed;
+    left: 43%;
+    top: 17%;
+}
