@@ -1,17 +1,19 @@
 #handleliste {
     position: fixed;
-    top: 15%;
+    top: 22%;
     left: 43%;
     font-size: 25px;
+    cursor: pointer;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif
 }
 
 #input {
     position: fixed;
-    left: 43%;
+    left: 30%;
 }
 
 #leggTil {
     position:fixed;
     left: 43%;
-    top: 17%;
+    top: 20%;
 }
