@@ -4,7 +4,12 @@
     left: 43%;
     font-size: 25px;
     cursor: pointer;
-    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    color: red;
+}
+
+#handleliste:hover {
+    color: blue;
 }
 
 #input {

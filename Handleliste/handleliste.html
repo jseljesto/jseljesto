@@ -4,7 +4,7 @@
     </head>
     <link rel="stylesheet" href="stylesheet.css" />
     <meta charset="UTF-8">
-    <body onload="createShoppingList()">
+    <body onload="createShoppingList(); getSuggestions()">
         <form id="input">
             <p><label for="produkt"> Produkt :</label>
             <input id="produkt" type="text" required></p>
@@ -14,9 +14,21 @@
         </form>
         <button id="leggTil" onclick="addElement()">Legg Til</button>
         <p id="handleliste"></p>
+        <p id="forslag"></p>
 
         <script>
         let shoppingList = [];
+
+        function getSuggestions() {
+            const xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    document.getElementById("forslag").innerHTML = xhr.responseText;
+                    return xhr.responseText;
+                }
+            }
+            xhr.open("GET", "suggestions.txt");
+        }
 
         function createShoppingList () {
             let shoppingText = "<ul id='nyHandleliste'>";
