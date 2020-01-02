@@ -5,8 +5,8 @@
 .keys {
   height: 50px;
   width: 50px;
-  outline-style: solid;
-  outline-width: thin;
+  border-radius: 5px;
+  border-color: black;
 }
 
 .keys:hover {
@@ -16,9 +16,8 @@
 .operators {
   height: 50px;
   width: 50px;
-  outline-style: solid;
-  outline-width: thin;
-  outline-color: black;
+  border-radius: 5px;
+  border-color: black;
   color: blue;
 }
 
@@ -55,5 +54,6 @@
   padding-left: 150px;
   padding-right: 20px;
   background-color: black;
+  border-radius: 5px;
   color: white;
 }
