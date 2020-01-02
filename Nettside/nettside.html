@@ -17,8 +17,18 @@
                     <a href="#link2">Link 2</a>
                     <a href="#link3">Link 3</a>
                 </div>
-            </li>   
+            </li>
+            <li><a href="#open"><span onclick="openBar()">Open</span></a></li>   
         </ul>
+
+        <div id="sidebar" class="sidebar">
+            <a href="#" class="close" onclick="closeBar()">&times;</a>
+            <a href="#">Home</a>
+            <a href="#">Dome</a>
+            <a href="#">Lome</a>
+            <a href="#">Grome</a>
+
+        </div>
 
         <article class="borderEffect">
             <h2>First article</h2>
@@ -29,6 +39,16 @@
             <h2>Road ahead:</h2>
             <p>Creating a personal website..</p>
         </article>
+
+        <script>
+
+            function openBar() {
+                document.getElementById("sidebar").style.width = "250px";
+            }
+            function closeBar() {
+                document.getElementById("sidebar").style.width = "0";
+            }
+        </script>
 
     </body>
 </html>
