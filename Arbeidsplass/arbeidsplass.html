@@ -8,7 +8,9 @@
 
 <body>
     <form id="skjema">
-        <p><label for="namn">Navn<em>*</em> : </label>
+        <p>
+            <label for="namn" data-title="Fornamn og etternamn må inkluderast." >
+                Navn<em>*</em> : </label>
             <input id="namn" type="text" placeholder="Skriv navnet ditt her:" required>
         </p>
         <p><label for="kjonn">Kjønn<em>*</em> :</label>
@@ -21,10 +23,14 @@
         <p><label for="fodDato">Fødselsdato<em>*</em> : </label>
             <input id="fodDato" type="date" min="1950-01-01" max="2000-01-01" required>
         </p>
-        <p><label for="postkode">Postkode<em>*</em> : </label>
+        <p>
+            <label for="postkode" data-title="Skriv inn din firesifra postkode. Ikkje inkluder posstad.">
+                Postkode<em>*</em> : </label>
             <input id="postkode" type="number" required>
         </p>
-        <p><label for="adresse">Adresse<em>*</em> : </label>
+        <p>
+            <label for="adresse" data-title="Skriv inn di bustadsadresse.">
+                Adresse<em>*</em> : </label>
             <input id="adresse" type="text" required>
         </p>
         <p><label for="telefonNr"> Telefonnummer:</label>
@@ -37,9 +43,11 @@
             <input id="Koding" type="checkbox" value="koding">Koding<br>
             <input id="Camping" type="checkbox" value="camping">Camping<br>
         </p>
-        <p id="personInfo"></p>
     </form>
     <button id="sendInfo" onclick="createObject(findBirthDate())">Send Inn</button>
+    <p id="listOfPersons">List of persons: </p>
+    <p id="personInfo"></p>
+    <button id="clearStorage" onclick="clearStorage()">Omstill</button>
     <script>
 
         class Person {
@@ -126,6 +134,15 @@
         }
 
         let personObjects = [];
+        let test = JSON.parse(localStorage.getItem("personList"));
+        if (test[0] != null) {
+            if (!test[0] != undefined) {
+                personObjects = JSON.parse(localStorage.getItem("personList"));
+                for (let a = 0; a < personObjects.length; a++) {
+                    document.getElementById("listOfPersons").innerHTML += "<br>" + personObjects[a];
+            }
+        }   
+    }
 
         function validateText(textID) {
             var re = /^[A-Za-z]+$/;
@@ -230,22 +247,28 @@
         async function createObject(birthDayArray) {
             try {
                 let fullBirthDate = `${birthDayArray[2]}.${birthDayArray[1]}.${birthDayArray[0]}`
-                let person = new Person(await findName(), findGender(), fullBirthDate, findPostalCode(), findAdress(), await findPhoneNumber(), await findHobbies());
-                if (!(person.name === false) || (!(person.phoneNumber === false))) {
+                let newPerson = new Person(await findName(), findGender(), fullBirthDate, findPostalCode(), findAdress(), await findPhoneNumber(), await findHobbies());
+                if (!(newPerson.name === false) || (!(newPerson.phoneNumber === false))) {
                     document.getElementById("personInfo").innerHTML =
-                    `Name: ${person.name} <br>
-                    Gender: ${person.gender} <br>
-                    Birth Date: ${person.birthDate} <br>
-                    Postal Code: ${person.postalCode} <br>
-                    Adress: ${person.adress} <br>
-                    Phone Number: ${person.phoneNumber} <br>
-                    Hobbies: ${person.hobbies}`;
-                    personObjects.push(person);
+                    `Name: ${newPerson.name} <br>
+                    Gender: ${newPerson.gender} <br>
+                    Birth Date: ${newPerson.birthDate} <br>
+                    Postal Code: ${newPerson.postalCode} <br>
+                    Adress: ${newPerson.adress} <br>
+                    Phone Number: ${newPerson.phoneNumber} <br>
+                    Hobbies: ${newPerson.hobbies}`;
                 }
+                personObjects.push(newPerson.name);
+                localStorage.setItem("personList", JSON.stringify(personObjects));
             }
             catch (err) {
                 alert(err);
             }
+        }
+
+        function clearStorage() {
+            localStorage.removeItem("personList");
+            location.reload();
         }
 
     </script>

@@ -1,7 +1,7 @@
 #skjema {
 	position: fixed;
-  top: 25px;
-  left: 500px;
+  top: 10px;
+  left: 15px;
 }
 
 #sendInfo {
@@ -16,6 +16,45 @@ label em {
 
 #personInfo {
   position: fixed;
-  top: 450px;
-  left: 575px;
+  top: 15px;
+  left: 400px;
+}
+
+[data-title] {
+  position: relative;
+}
+
+[data-title]:hover {
+  cursor: pointer;
+}
+
+[data-title]:hover:after {
+  opacity: 1;
+  visibility: visible;
+}
+
+[data-title]:after {
+  content: attr(data-title);
+  position: absolute;
+  border: 5px solid black;
+  left: 100%;
+  bottom: 100%;
+  width: 200px;
+  z-index: 1;
+  opacity: 0;
+  padding: 5px;
+  background-color: white;
+  visibility: hidden;
+}
+
+#listOfPersons {
+  position: fixed;
+  top: 15px;
+  left: 950px;
+}
+
+#clearStorage {
+  position: fixed;
+  top: 400px;
+  left: 950px;
 }
