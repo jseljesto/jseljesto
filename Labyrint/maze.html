@@ -73,11 +73,12 @@
 
             function moveLeft() {
                 currentX -= 100;
+               /* let imgData = ctx.getImageData((currentX-25), (currentY-25), 100, 100);
+                let pix = imgData.data; */
                 ctx.clearRect(0, 0, c.width, c.height);
                 drawMaze();
                 createFinishLine();
                 createImage(currentX, currentY);
-                //objImage.style.left = parseInt(objImage.style.left) - 100 + "px";
             }
             function moveRight() {
                 currentX += 100;
@@ -85,7 +86,6 @@
                 drawMaze();
                 createFinishLine();
                 createImage(currentX, currentY);
-                //objImage.style.left = parseInt(objImage.style.left) + 100 + "px";
             }
             function moveUp() {
                 currentY -= 100;
@@ -93,7 +93,6 @@
                 drawMaze();
                 createFinishLine();
                 createImage(currentX, currentY);
-                //objImage.style.top = parseInt(objImage.style.top) - 100 + "px";
             }
             function moveDown() {
                 currentY += 100;
@@ -101,7 +100,6 @@
                 drawMaze();
                 createFinishLine();
                 createImage(currentX, currentY);
-                //objImage.style.top = parseInt(objImage.style.top) + 100 + "px";
             }
 
             function moveObject(event) {
