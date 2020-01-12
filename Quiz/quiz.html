@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="stylesheet.css" />
+    <meta charset="UTF-8">
+</head>
+
+<body>
+
+    <p id="questionsheet"></p><br>
+    <input type="radio" name="answer"><label id="answer1"></label><br>
+    <input type="radio" name="answer"><label id="answer2"></label><br>
+    <input type="radio" name="answer"><label id="answer3"></label><br>
+    <input type="radio" name="answer"><label id="answer4"></label><br><br>
+
+    <button id="check">Check</button>
+    <button id="next" style="visibility : hidden;">Next</button>
+
+    <script>
+        let data = [{
+            "question": "What colours are represented on the Norwegian flag?",
+            "answers": {
+                "correctAnswer": "Red, blue and white",
+                "wrongAnswer1": "Yellow, blue and white",
+                "wrongAnswer2": "Red and white",
+                "wrongAnswer3": "Blue and white"
+            }
+        }, {
+            "question": "What is the national day of Norway?",
+            "answers": {
+                "correctAnswer": "17th of May",
+                "wrongAnswer1": "20th of May",
+                "wrongAnswer2": "17th of April",
+                "wrongAnswer3": "20th of April"
+            }
+        },
+        {
+            "question": "What is the population of Norway?",
+            "answers": {
+                "correctAnswer": "5,3 million",
+                "wrongAnswer1": "4,3 million",
+                "wrongAnswer2": "4,8 million",
+                "wrongAnswer3": "5.8 million"
+            }
+        }]
+
+        //Randomizes questions and answers
+
+        data.sort(function (a, b) {
+            return 0.5 - Math.random()
+        });
+
+        let answers = [data[0].answers.correctAnswer, data[0].answers.wrongAnswer1,
+        data[0].answers.wrongAnswer2, data[0].answers.wrongAnswer3];
+
+        answers.sort(function (a, b) {
+            return 0.5 - Math.random()
+        });
+
+        document.getElementById("questionsheet").innerHTML = data[0].question;
+        document.getElementById("answer1").innerHTML = answers[0];
+        document.getElementById("answer2").innerHTML = answers[1];
+        document.getElementById("answer3").innerHTML = answers[2];
+        document.getElementById("answer4").innerHTML = answers[3];
+
+
+      //  let data = require('./data.json');
+
+    </script>
+</body>
+
+</html>
