@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <h1 align="center">Designing your own button!</h1><br>
+    <h3 align="center">Use the premade tools to create a button</h3>
+    <h3 align="center">to use for your own website!</h3>
+    <h3 align="center">Click on button for code!</h3>
+
+
+    <p>Change the text of the button:</p>
+    <input type="text" id="buttonName" name="buttonName" value="" oninput="changeName()"/>
+
+    <p>What color do you want the button to have?</p>
+    <select id="color" onchange="changeColor()">
+        <option value="yellow">Yellow</option>
+        <option value="red">Red</option>
+        <option value="blue">Blue</option>
+        <option value="green">Green</option>
+        <option value="black">Black</option>
+        <option value="purple">Purple</option>
+        <option value="white" selected>White</option>
+        <option value="brown">Brown</option>
+        <option value="orange">Orange</option>
+        <option value="grey">Grey</option>
+
+    </select>
+
+    <p>What color do you want the text to have?</p>
+    <select id="textColor" onchange="changeTextColor()">
+        <option value="yellow">Yellow</option>
+        <option value="red">Red</option>
+        <option value="blue">Blue</option>
+        <option value="green">Green</option>
+        <option value="black" selected>Black</option>
+        <option value="purple">Purple</option>
+        <option value="white">White</option>
+        <option value="brown">Brown</option>
+        <option value="orange">Orange</option>
+        <option value="grey">Grey</option>
+
+    </select>
+
+    <p>How round do you want the corners?</p>
+    <select id="roundedCorners" onchange="changeCorners()">
+        <option value="0" selected>No corners (0px)</option>
+        <option value="5">Slightly rounded (5px)</option>
+        <option value="10">Fairly rounded (10px)</option>
+        <option value="15">Well rounded (15px)</option>
+    </select>
+
+    <button id="designButton" style="position: fixed; top:45%; left:45%; 
+    height: 30px; width: 130px;" onclick="writeCode()">Design Me!</button>
+
+    <p align="center" id="buttonCode"></p>
+
+</body>
+<script>
+
+    function changeName() {
+        document.getElementById("designButton").innerHTML = document.getElementById("buttonName").value;
+    }
+
+    function changeColor() {
+        document.getElementById("designButton").style.backgroundColor = 
+        document.getElementById("color").value;
+    }
+
+    function changeTextColor() {
+        document.getElementById("designButton").style.color = document.getElementById("textColor").value;
+    }
+
+    function changeCorners() {
+        document.getElementById("designButton").style.borderRadius = 
+        document.getElementById("roundedCorners").value + "px";
+    }
+
+   //Outputs only style changes made by user, ignores premade style 
+    function writeCode() {
+        document.getElementById("designButton").style.removeProperty("position");
+        document.getElementById("designButton").style.removeProperty("top");
+        document.getElementById("designButton").style.removeProperty("left");
+        document.getElementById("designButton").style.removeProperty("height");
+        document.getElementById("designButton").style.removeProperty("width");
+
+        document.getElementById("buttonCode").innerHTML = document.getElementById("designButton").style.cssText;
+
+        document.getElementById("designButton").style.position = "fixed";
+        document.getElementById("designButton").style.top = "45%";
+        document.getElementById("designButton").style.left = "45%";
+        document.getElementById("designButton").style.height = "30px";
+        document.getElementById("designButton").style.width = "130px";
+
+    }
+</script>
+
+</html>
