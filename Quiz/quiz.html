@@ -2,22 +2,27 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="stylesheet.css" />
+    <link rel="stylesheet" href="stylesheet.css"/>
     <meta charset="UTF-8">
 </head>
 
 <body>
 
-    <p id="questionsheet"></p><br>
-    <input type="radio" name="answer"><label id="answer1"></label><br>
-    <input type="radio" name="answer"><label id="answer2"></label><br>
-    <input type="radio" name="answer"><label id="answer3"></label><br>
-    <input type="radio" name="answer"><label id="answer4"></label><br><br>
+    <p id="questionsheet"></p>
+        <input type="radio" id="radio1" name="answer" value=""><label id="option1"></label><br>
+        <input type="radio" id="radio2" name="answer" value=""><label id="option2"></label><br>
+        <input type="radio" id="radio3" name="answer" value=""><label id="option3"></label><br>
+        <input type="radio" id="radio4" name="answer" value=""><label id="option4"></label><br><br>
 
-    <button id="check">Check</button>
-    <button id="next" style="visibility : hidden;">Next</button>
+    <button id="check" onclick="checkQuestion()">Check</button>
+    <button id="next" style="visibility : hidden;" onclick="nextQuestion()">Next</button>
 
     <script>
+
+        let qAnswered = 0;
+        let answers = [];
+        let points = 0;
+
         let data = [{
             "question": "What colours are represented on the Norwegian flag?",
             "answers": {
@@ -26,7 +31,8 @@
                 "wrongAnswer2": "Red and white",
                 "wrongAnswer3": "Blue and white"
             }
-        }, {
+        },
+        {
             "question": "What is the national day of Norway?",
             "answers": {
                 "correctAnswer": "17th of May",
@@ -43,26 +49,80 @@
                 "wrongAnswer2": "4,8 million",
                 "wrongAnswer3": "5.8 million"
             }
-        }]
+        }];
 
-        //Randomizes questions and answers
+        let numOfQuestions = data.length;
+
+        //Randomizes questions
 
         data.sort(function (a, b) {
             return 0.5 - Math.random()
         });
 
-        let answers = [data[0].answers.correctAnswer, data[0].answers.wrongAnswer1,
-        data[0].answers.wrongAnswer2, data[0].answers.wrongAnswer3];
+        answers = [data[qAnswered].answers.correctAnswer, data[qAnswered].answers.wrongAnswer1,
+        data[qAnswered].answers.wrongAnswer2, data[qAnswered].answers.wrongAnswer3];
 
         answers.sort(function (a, b) {
             return 0.5 - Math.random()
         });
 
-        document.getElementById("questionsheet").innerHTML = data[0].question;
-        document.getElementById("answer1").innerHTML = answers[0];
-        document.getElementById("answer2").innerHTML = answers[1];
-        document.getElementById("answer3").innerHTML = answers[2];
-        document.getElementById("answer4").innerHTML = answers[3];
+        document.getElementById("questionsheet").innerHTML = data[qAnswered].question;
+        document.getElementById("option1").innerHTML = answers[0];
+        document.getElementById("radio1").value = answers[0];
+        document.getElementById("option2").innerHTML = answers[1];
+        document.getElementById("radio2").value = answers[1];
+        document.getElementById("option3").innerHTML = answers[2];
+        document.getElementById("radio3").value = answers[2];
+        document.getElementById("option4").innerHTML = answers[3];
+        document.getElementById("radio4").value = answers[3];
+
+        function nextQuestion() {
+
+            if (qAnswered === numOfQuestions) {
+                document.getElementById("next").style.visibility = "visible";
+                alert("You are done!");
+            }
+            else {
+
+            answers = [data[qAnswered].answers.correctAnswer, data[qAnswered].answers.wrongAnswer1,
+            data[qAnswered].answers.wrongAnswer2, data[qAnswered].answers.wrongAnswer3];
+
+            answers.sort(function (a, b) {
+                return 0.5 - Math.random()
+            });
+
+            document.getElementById("questionsheet").innerHTML = data[qAnswered].question;
+            document.getElementById("option1").innerHTML = answers[0];
+            document.getElementById("radio1").value = answers[0];
+            document.getElementById("option2").innerHTML = answers[1];
+            document.getElementById("radio2").value = answers[1];
+            document.getElementById("option3").innerHTML = answers[2];
+            document.getElementById("radio3").value = answers[2];
+            document.getElementById("option4").innerHTML = answers[3];
+            document.getElementById("radio4").value = answers[3];
+            
+            document.getElementById("check").style.visibility = "visible";
+            document.getElementById("next").style.visibility = "hidden";
+            }
+        }
+
+        function checkQuestion() {
+            for (i = 1; i < 5; i++) {
+                if (document.getElementById("radio" + i).checked) {
+                    if (document.getElementById("radio" + i).value === 
+                    data[qAnswered].answers.correctAnswer) {
+                        alert("You answered correctly!");
+                        points++;
+                    }
+                    else {
+                        alert("You answered wrong!");
+                    }
+                }
+            }
+            qAnswered++;
+            document.getElementById("check").style.visibility = "hidden";
+            document.getElementById("next").style.visibility = "visible";
+        }
 
 
       //  let data = require('./data.json');
