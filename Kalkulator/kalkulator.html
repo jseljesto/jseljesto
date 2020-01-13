@@ -1,35 +1,37 @@
 <!DOCTYPE HTML>
 <html id="theme">
-    <head>
-        <link rel="stylesheet" href="stylesheet.css" />
-        <meta charset="UTF-8">
-    </head>
-    <body>
 
-        <p id="result">0</p>
-        <p style="position:fixed; left:42%; top:25%;">
-            <button class="operators" onclick="squareRoot()">sqrt</button>
-            <button class="operators" onclick="clickOperator('%')">%</button>
-            <button class="operators" onclick="changeNegPos()">+/-</button>
-            <button class="operators" onclick="clickOperator('/')">/</button><br><br>
-            <button class="keys" onclick="clickNumber('7')">7</button>
-            <button class="keys" onclick="clickNumber('8')">8</button>
-            <button class="keys" onclick="clickNumber('9')">9</button>
-            <button class="operators" onclick="clickOperator('*')">X</button><br><br>
-            <button class="keys" onclick="clickNumber('4')">4</button>
-            <button class="keys" onclick="clickNumber('5')">5</button>
-            <button class="keys" onclick="clickNumber('6')">6</button>
-            <button class="operators" onclick="clickOperator('-')">-</button><br><br>
-            <button class="keys" onclick="clickNumber('1')">1</button>
-            <button class="keys" onclick="clickNumber('2')">2</button>
-            <button class="keys" onclick="clickNumber('3')">3</button>
-            <button class="operators" onclick="clickOperator('+')">+</button><br><br>
-            <button class="keys" onclick="clickNumber('0')">0</button>
-            <button class="keys" onclick="addDecimal()">.</button>
-            <button class="keys" onclick="clearCalc()" id="reset">AC</button>
-            <button class="keys" onclick="findResult()" id="equals">=</button>
+<head>
+    <link rel="stylesheet" href="stylesheet.css" />
+    <meta charset="UTF-8">
+</head>
 
-        </p>
+<body>
+
+    <p id="result">0</p>
+    <p style="position:fixed; left:42%; top:25%;">
+        <button class="operators" onclick="squareRoot()">sqrt</button>
+        <button class="operators" onclick="clickOperator('%')">%</button>
+        <button class="operators" onclick="changeNegPos()">+/-</button>
+        <button class="operators" onclick="clickOperator('/')">/</button><br><br>
+        <button class="keys" onclick="clickNumber('7')">7</button>
+        <button class="keys" onclick="clickNumber('8')">8</button>
+        <button class="keys" onclick="clickNumber('9')">9</button>
+        <button class="operators" onclick="clickOperator('*')">X</button><br><br>
+        <button class="keys" onclick="clickNumber('4')">4</button>
+        <button class="keys" onclick="clickNumber('5')">5</button>
+        <button class="keys" onclick="clickNumber('6')">6</button>
+        <button class="operators" onclick="clickOperator('-')">-</button><br><br>
+        <button class="keys" onclick="clickNumber('1')">1</button>
+        <button class="keys" onclick="clickNumber('2')">2</button>
+        <button class="keys" onclick="clickNumber('3')">3</button>
+        <button class="operators" onclick="clickOperator('+')">+</button><br><br>
+        <button class="keys" onclick="clickNumber('0')">0</button>
+        <button class="keys" onclick="addDecimal()">.</button>
+        <button class="keys" onclick="clearCalc()" id="reset">AC</button>
+        <button class="keys" onclick="findResult()" id="equals">=</button>
+
+    </p>
 
     <script>
 
@@ -53,7 +55,7 @@
         }
 
         function clickOperator(op) {
-            if (operator.length === 0) { 
+            if (operator.length === 0) {
                 operator = op;
             } else {
                 findResult();
@@ -89,7 +91,7 @@
         function changeNegPos() {
             if (operator.length === 0) {
                 let temporaryNumber = firstNumber.toString();
-                if(temporaryNumber.charAt(0) === "-") {
+                if (temporaryNumber.charAt(0) === "-") {
                     firstNumber = Math.abs(firstNumber);
                 } else {
                     firstNumber = firstNumber * -1;
@@ -98,7 +100,7 @@
             }
             if (operator.length > 0) {
                 let temporaryNumber = secondNumber.toString()
-                if(temporaryNumber.charAt(0) === "-") {
+                if (temporaryNumber.charAt(0) === "-") {
                     secondNumber = Math.abs(secondNumber);
                 } else {
                     secondNumber = secondNumber * -1;
@@ -113,8 +115,8 @@
                 currentNumber = Math.sqrt(currentNumber);
                 document.getElementById("result").innerHTML = currentNumber;
             } else {
-            currentNumber = Math.sqrt(firstNumber);
-            document.getElementById("result").innerHTML = currentNumber;
+                currentNumber = Math.sqrt(firstNumber);
+                document.getElementById("result").innerHTML = currentNumber;
             }
         }
 
@@ -122,7 +124,7 @@
             if (operator === "+") {
                 currentNumber = firstNumber + secondNumber;
             }
-             else if (operator === "-") {
+            else if (operator === "-") {
                 currentNumber = firstNumber - secondNumber;
             }
             else if (operator === "*") {
@@ -145,5 +147,6 @@
 
     </script>
 
-    </body>
+</body>
+
 </html>

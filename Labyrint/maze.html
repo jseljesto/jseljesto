@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" href="stylesheet.css" />
-        <meta charset="UTF-8">
-    </head>
-    <body onkeydown="moveObject(event)">
-        <canvas onclick="showCoords()" id="myCanvas" width="800" height="500"></canvas>
-        <img id="objectImage" src="image.png" style="opacity: 0"/>
-        <img id="finishLine" src="finishline.png" style="opacity: 0"/>
-        <script>
 
-            let c = document.getElementById("myCanvas");
-            let ctx = c.getContext("2d");
-            let currentX = 125;
-            let currentY = 425;
-            let objImage = document.getElementById("objectImage");
+<head>
+    <link rel="stylesheet" href="stylesheet.css" />
+    <meta charset="UTF-8">
+</head>
 
-            //Creating lines for maze
+<body onkeydown="moveObject(event)">
+    <canvas onclick="showCoords()" id="myCanvas" width="800" height="500"></canvas>
+    <img id="objectImage" src="image.png" style="opacity: 0" />
+    <img id="finishLine" src="finishline.png" style="opacity: 0" />
+    <script>
 
-            function drawMaze() {
+        let c = document.getElementById("myCanvas");
+        let ctx = c.getContext("2d");
+        let currentX = 125;
+        let currentY = 425;
+        let objImage = document.getElementById("objectImage");
+
+        //Creating lines for maze
+
+        function drawMaze() {
 
             ctx.beginPath();
-            ctx.rect(0,0,500,500);
+            ctx.rect(0, 0, 500, 500);
             ctx.stroke();
 
             ctx.beginPath();
@@ -60,76 +62,77 @@
             ctx.lineTo(100, 400);
             ctx.moveTo(100, 400);
             ctx.lineTo(200, 400);
-            ctx.stroke(); }
+            ctx.stroke();
+        }
 
-            function createImage(x,y) {
-                ctx.drawImage(objImage, x, y);  
-            }
+        function createImage(x, y) {
+            ctx.drawImage(objImage, x, y);
+        }
 
-            function createFinishLine() {
-                let finishLine = document.getElementById("finishLine");
-                ctx.drawImage(finishLine, 300, 0); 
-                }
+        function createFinishLine() {
+            let finishLine = document.getElementById("finishLine");
+            ctx.drawImage(finishLine, 300, 0);
+        }
 
-            function moveLeft() {
-                currentX -= 100;
-               /* let imgData = ctx.getImageData((currentX-25), (currentY-25), 100, 100);
-                let pix = imgData.data; */
-                ctx.clearRect(0, 0, c.width, c.height);
-                drawMaze();
-                createFinishLine();
-                createImage(currentX, currentY);
-            }
-            function moveRight() {
-                currentX += 100;
-                ctx.clearRect(0, 0, c.width, c.height);
-                drawMaze();
-                createFinishLine();
-                createImage(currentX, currentY);
-            }
-            function moveUp() {
-                currentY -= 100;
-                ctx.clearRect(0, 0, c.width, c.height);
-                drawMaze();
-                createFinishLine();
-                createImage(currentX, currentY);
-            }
-            function moveDown() {
-                currentY += 100;
-                ctx.clearRect(0, 0, c.width, c.height);
-                drawMaze();
-                createFinishLine();
-                createImage(currentX, currentY);
-            }
-
-            function moveObject(event) {
-                switch(event.keyCode) {
-                    case 37: 
-                      moveLeft();
-                      break;
-                    case 38:
-                      moveUp();
-                      break;
-                    case 39:
-                      moveRight();
-                      break;
-                    case 40:
-                      moveDown();
-                      break;
-                }
-            }
-
-            function showCoords() {
-                var x = event.screenX - 400;
-                var y = event.screenY - 120;
-                alert ("X-coords: " + x + " Y-coords: " + y);
-            }
-
+        function moveLeft() {
+            currentX -= 100;
+            /* let imgData = ctx.getImageData((currentX-25), (currentY-25), 100, 100);
+             let pix = imgData.data; */
+            ctx.clearRect(0, 0, c.width, c.height);
             drawMaze();
-            createImage(currentX,currentY);
             createFinishLine();
+            createImage(currentX, currentY);
+        }
+        function moveRight() {
+            currentX += 100;
+            ctx.clearRect(0, 0, c.width, c.height);
+            drawMaze();
+            createFinishLine();
+            createImage(currentX, currentY);
+        }
+        function moveUp() {
+            currentY -= 100;
+            ctx.clearRect(0, 0, c.width, c.height);
+            drawMaze();
+            createFinishLine();
+            createImage(currentX, currentY);
+        }
+        function moveDown() {
+            currentY += 100;
+            ctx.clearRect(0, 0, c.width, c.height);
+            drawMaze();
+            createFinishLine();
+            createImage(currentX, currentY);
+        }
 
-        </script>
-    </body>
+        function moveObject(event) {
+            switch (event.keyCode) {
+                case 37:
+                    moveLeft();
+                    break;
+                case 38:
+                    moveUp();
+                    break;
+                case 39:
+                    moveRight();
+                    break;
+                case 40:
+                    moveDown();
+                    break;
+            }
+        }
+
+        function showCoords() {
+            var x = event.screenX - 400;
+            var y = event.screenY - 120;
+            alert("X-coords: " + x + " Y-coords: " + y);
+        }
+
+        drawMaze();
+        createImage(currentX, currentY);
+        createFinishLine();
+
+    </script>
+</body>
 
 </html>

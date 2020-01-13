@@ -1,54 +1,57 @@
 <!DOCTYPE HTML>
 <html>
-    <head>
-        <link rel="stylesheet" href="stylesheet.css"/>
-        <meta charset="UTF-8">
-    </head>
-    <body>
 
-        <ul>
-            <li><a class="active" href="#home">Home</a></li>
-            <li><a href="#dome">Dome</a></li>
-            <li><a href="#lome">Lome</a></li>
-            <li class="dropdown">
-                <a href="javascript:void(0)" class="dropbtn">Grome</a>
-                <div class="dropdown-content">
-                    <a href="#link1">Link 1</a>
-                    <a href="#link2">Link 2</a>
-                    <a href="#link3">Link 3</a>
-                </div>
-            </li>
-            <li><a href="#open"><span onclick="openBar()">Open</span></a></li>   
-        </ul>
+<head>
+    <link rel="stylesheet" href="stylesheet.css" />
+    <meta charset="UTF-8">
+</head>
 
-        <div id="sidebar" class="sidebar">
-            <a href="#" class="close" onclick="closeBar()">&times;</a>
-            <a href="#">Home</a>
-            <a href="#">Dome</a>
-            <a href="#">Lome</a>
-            <a href="#">Grome</a>
+<body>
 
-        </div>
+    <ul>
+        <li><a class="active" href="#home">Home</a></li>
+        <li><a href="#dome">Dome</a></li>
+        <li><a href="#lome">Lome</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)" class="dropbtn">Grome</a>
+            <div class="dropdown-content">
+                <a href="#link1">Link 1</a>
+                <a href="#link2">Link 2</a>
+                <a href="#link3">Link 3</a>
+            </div>
+        </li>
+        <li><a href="#open"><span onclick="openBar()">Open</span></a></li>
+    </ul>
 
-        <article class="borderEffect">
-            <h2>First article</h2>
-            <p>Something about making a website...</p>
-        </article>
+    <div id="sidebar" class="sidebar">
+        <a href="#" class="close" onclick="closeBar()">&times;</a>
+        <a href="#">Home</a>
+        <a href="#">Dome</a>
+        <a href="#">Lome</a>
+        <a href="#">Grome</a>
 
-        <article class="borderEffect">
-            <h2>Road ahead:</h2>
-            <p>Creating a personal website..</p>
-        </article>
+    </div>
 
-        <script>
+    <article class="borderEffect">
+        <h2>First article</h2>
+        <p>Something about making a website...</p>
+    </article>
 
-            function openBar() {
-                document.getElementById("sidebar").style.width = "250px";
-            }
-            function closeBar() {
-                document.getElementById("sidebar").style.width = "0";
-            }
-        </script>
+    <article class="borderEffect">
+        <h2>Road ahead:</h2>
+        <p>Creating a personal website..</p>
+    </article>
 
-    </body>
+    <script>
+
+        function openBar() {
+            document.getElementById("sidebar").style.width = "250px";
+        }
+        function closeBar() {
+            document.getElementById("sidebar").style.width = "0";
+        }
+    </script>
+
+</body>
+
 </html>

@@ -9,7 +9,7 @@
 <body>
     <form id="skjema">
         <p>
-            <label for="namn" data-title="Fornamn og etternamn må inkluderast." >
+            <label for="namn" data-title="Fornamn og etternamn må inkluderast.">
                 Navn<em>*</em> : </label>
             <input id="namn" type="text" placeholder="Skriv navnet ditt her:" required>
         </p>
@@ -140,9 +140,9 @@
                 personObjects = JSON.parse(localStorage.getItem("personList"));
                 for (let a = 0; a < personObjects.length; a++) {
                     document.getElementById("listOfPersons").innerHTML += "<br>" + personObjects[a];
+                }
             }
-        }   
-    }
+        }
 
         function validateText(textID) {
             var re = /^[A-Za-z]+$/;
@@ -250,7 +250,7 @@
                 let newPerson = new Person(await findName(), findGender(), fullBirthDate, findPostalCode(), findAdress(), await findPhoneNumber(), await findHobbies());
                 if (!(newPerson.name === false) || (!(newPerson.phoneNumber === false))) {
                     document.getElementById("personInfo").innerHTML =
-                    `Name: ${newPerson.name} <br>
+                        `Name: ${newPerson.name} <br>
                     Gender: ${newPerson.gender} <br>
                     Birth Date: ${newPerson.birthDate} <br>
                     Postal Code: ${newPerson.postalCode} <br>
