@@ -1,13 +1,22 @@
 #handleliste {
     position: fixed;
     top: 22%;
-    left: 43%;
+    left: 30%;
     font-size: 25px;
     cursor: pointer;
     font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
     color: red;
 }
 
+#side2 {
+    position: fixed;
+    top: 22%;
+    left: 50%;
+    font-size: 25px;
+    cursor: pointer;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    color: red;
+}
 li:hover {
     color: blue;
 }

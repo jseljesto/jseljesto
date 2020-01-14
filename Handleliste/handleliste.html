@@ -16,10 +16,15 @@
     </form>
     <button id="leggTil" onclick="addElement()">Legg Til</button>
     <p id="handleliste"></p>
+    <p id="side2"></p>
     <p id="forslag"></p>
 
     <script>
         let shoppingList = [];
+        let secondPage = [];
+        let numOfWares = 0;
+        let secondPageItems = 0;
+        let totalWares = 0;
 
         function getSuggestions() {
             const xhr = new XMLHttpRequest();
@@ -42,23 +47,50 @@
             document.getElementById("handleliste").innerHTML = shoppingText;
         }
 
+        function shoppingListSecondPage() {
+            let shoppingText = "<ul id='listeAndreSide'>";
+            for (let i of secondPage) {
+                let index = secondPage.indexOf(i);
+                shoppingText += "<li onclick='removeSecondPageElement(" + index + ")'>" + i + "</li>";
+            }
+            shoppingText += "</ul>";
+            document.getElementById("side2").innerHTML = shoppingText;
+        }
+
         function addElement() {
+
             let text = document.getElementById("antall").value + " " +
                 document.getElementById("enhet").value + " " +
                 document.getElementById("produkt").value;
-            shoppingList.push(text);
-            createShoppingList();
+            if (numOfWares <= 9) {
+                shoppingList.push(text);
+                createShoppingList();
+                numOfWares++;
+            }
+            else if (numOfWares >= 10) {
+                secondPage.push(text);
+                shoppingListSecondPage();
+                secondPageItems++;
+            }
             document.getElementById("antall").value = "";
             document.getElementById("enhet").value = "";
             document.getElementById("produkt").value = "";
-
         }
 
         function removeElement(index) {
             shoppingList.splice(index, 1);
             let updatedList = document.getElementById("nyHandleliste");
             updatedList.removeChild(updatedList.childNodes[index]);
+                numOfWares--;
             createShoppingList();
+        }
+
+        function removeSecondPageElement(index) {
+            secondPage.splice(index, 1);
+            let updatedList = document.getElementById("listeAndreSide");
+            updatedList.removeChild(updatedList.childNodes[index]);
+            secondPageItems--;
+            shoppingListSecondPage();
         }
     </script>
 </body>
