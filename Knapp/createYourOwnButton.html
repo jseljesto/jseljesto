@@ -13,8 +13,8 @@
 
 
     <p style="position: fixed; top:40%;">Change the text of the button:</p>
-    <input type="text" id="buttonName" name="buttonName" value="" 
-    oninput="changeName()" style="position: fixed; top:47%;"/>
+    <input type="text" id="buttonName" name="buttonName" value="" oninput="changeName()"
+        style="position: fixed; top:47%;" />
 
     <p style="position: fixed; top:50%; ">What color do you want the button to have?</p>
     <select id="color" onchange="changeColor()" style="position: fixed; top:57%;">
@@ -68,8 +68,7 @@
     </select>
 
     <p style="position: fixed; top: 50%; right: 3%;">Transition?</p>
-    <input type="checkbox" id="transition" style="position: fixed; top: 53%; right: 1%;"
-    onclick="addTransition()">
+    <input type="checkbox" id="transition" style="position: fixed; top: 53%; right: 1%;" onclick="addTransition()">
 
     <p style="position: fixed; top: 57%; right: 1%;">Amount of shadow?</p>
     <select id="boxShadow" style="position: fixed; top: 64%; right: 1%;" onchange="changeShadow()">
@@ -91,10 +90,12 @@
 
     <button id="designButton" style="position: fixed; top:45%; left:45%; 
     background-color: white; 
-    height: 30px; width: 130px;" onclick="writeCode()" onmouseover="changeHoverColor()" 
-    onmouseout="changeColor()">Design Me!</button>
+    height: 30px; width: 130px;" onclick="writeCode()" onmouseover="changeHoverColor()"
+        onmouseout="changeColor()">Design Me!</button>
 
-    <strong><p style="position: fixed; top: 90%;">Code here:</p></strong>
+    <strong>
+        <p style="position: fixed; top: 90%;">Code here:</p>
+    </strong>
     <p id="buttonCode" style="position: fixed; top: 90%; left: 7%;"></p>
 
 </body>
@@ -105,8 +106,8 @@
     }
 
     function changeColor() {
-        document.getElementById("designButton").style.backgroundColor = 
-        document.getElementById("color").value;
+        document.getElementById("designButton").style.backgroundColor =
+            document.getElementById("color").value;
     }
 
     function changeTextColor() {
@@ -114,17 +115,17 @@
     }
 
     function changeCorners() {
-        document.getElementById("designButton").style.borderRadius = 
-        document.getElementById("roundedCorners").value + "px";
+        document.getElementById("designButton").style.borderRadius =
+            document.getElementById("roundedCorners").value + "px";
     }
 
     function changeHoverColor() {
-        document.getElementById("designButton").style.backgroundColor = 
-        document.getElementById("hoverColor").value;
+        document.getElementById("designButton").style.backgroundColor =
+            document.getElementById("hoverColor").value;
     }
 
     function addTransition() {
-        if(document.getElementById("transition").checked) {
+        if (document.getElementById("transition").checked) {
             document.getElementById("designButton").style.transition = "0.5s";
         } else {
             document.getElementById("designButton").style.removeProperty("transition");
@@ -133,15 +134,15 @@
 
     function changeShadow() {
         let shadowValue = document.getElementById("boxShadow").value + "px";
-        document.getElementById("designButton").style.boxShadow = 
-        `${shadowValue} ${shadowValue} ${shadowValue} ${shadowColor()}`;
+        document.getElementById("designButton").style.boxShadow =
+            `${shadowValue} ${shadowValue} ${shadowValue} ${shadowColor()}`;
     }
 
     function shadowColor() {
         return document.getElementById("shadowColor").value;
     }
 
-   //Outputs only style changes made by user, ignores premade style 
+    //Outputs only style changes made by user, ignores premade style 
     function writeCode() {
         document.getElementById("designButton").style.removeProperty("position");
         document.getElementById("designButton").style.removeProperty("top");
