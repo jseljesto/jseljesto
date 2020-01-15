@@ -101,13 +101,17 @@
 </body>
 <script>
 
+    let bcColor = "";
+    let hoverColor = "";
+
     function changeName() {
         document.getElementById("designButton").innerHTML = document.getElementById("buttonName").value;
     }
 
     function changeColor() {
+        bcColor = document.getElementById("color").value;
         document.getElementById("designButton").style.backgroundColor =
-            document.getElementById("color").value;
+            bcColor;
     }
 
     function changeTextColor() {
@@ -120,8 +124,9 @@
     }
 
     function changeHoverColor() {
+        hoverColor = document.getElementById("hoverColor").value;
         document.getElementById("designButton").style.backgroundColor =
-            document.getElementById("hoverColor").value;
+            hoverColor;
     }
 
     function addTransition() {
@@ -150,7 +155,12 @@
         document.getElementById("designButton").style.removeProperty("height");
         document.getElementById("designButton").style.removeProperty("width");
 
-        document.getElementById("buttonCode").innerHTML = document.getElementById("designButton").style.cssText;
+        document.getElementById("designButton").style.backgroundColor = bcColor;
+        document.getElementById("buttonCode").innerHTML = "#designButton { "
+
+        document.getElementById("buttonCode").innerHTML += document.getElementById("designButton").style.cssText;
+        document.getElementById("buttonCode").innerHTML += `} #designButton:hover 
+        { background-color: ${hoverColor}}`
 
         document.getElementById("designButton").style.position = "fixed";
         document.getElementById("designButton").style.top = "45%";
