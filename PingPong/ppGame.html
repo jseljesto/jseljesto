@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            background-color: blue;
+        }
+
+        #myCanvas {
+            border: 2px solid #FFF;
+            position: absolute;
+            margin: auto;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            background-color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <strong><p id="score" style="position:fixed; right: 35px; font-size: 30px">Score: </p></strong>
+    <canvas id="myCanvas" width="600" height="400"></canvas>
+    <script>
+
+        let canvas = document.getElementById("myCanvas");
+        let ctx = canvas.getContext("2d");
+        let x = canvas.width / 2;
+        let y = canvas.height - 200;
+        let dx = 1;
+        let dy = 1;
+        let ballRadius = 15;
+        let paddleHeight = 125;
+        let paddleWidth = 20;
+        let paddleX = 15;
+        let paddleY = (canvas.height - paddleHeight) / 2;
+        let score = 0;
+        let interval = setInterval(draw, 10);
+
+
+        document.addEventListener("mousemove", checkMouseMove, false);
+
+        function checkMouseMove(e) {
+            let currentY = e.clientY - canvas.offsetTop;
+            if (currentY > 0 && currentY < canvas.height) {
+                paddleY = currentY - paddleHeight / 2;
+            }
+        }
+
+        function drawBall() {
+            ctx.beginPath();
+            ctx.arc(x, y, ballRadius, 0, Math.PI * 2, false);
+            ctx.fillStyle = "red";
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function drawPaddle() {
+            ctx.beginPath();
+            ctx.rect(paddleX, paddleY, paddleWidth, paddleHeight);
+            ctx.fillStyle = "grey";
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBall();
+            drawPaddle();
+
+            if (x + dx > canvas.width - ballRadius) {
+                dx = -dx;
+            }
+            if (x === (paddleX + paddleWidth) && y > paddleY && y < (paddleY + paddleHeight)) {
+                dx = -dx * 1.5;
+                score++;
+                document.getElementById("score").innerHTML = "Score: " + score;
+            }
+            if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
+                dy = -dy;
+            }
+            if (x + dx < 0 - ballRadius) {
+                alert(`Game Over! \n Score: ${score}`);
+                document.location.reload();
+                clearInterval(interval);
+            }
+
+            x += dx;
+            y += dy;
+
+        }
+    </script>
+</body>
+
+</html>
