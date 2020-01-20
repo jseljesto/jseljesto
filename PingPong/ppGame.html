@@ -22,7 +22,9 @@
 </head>
 
 <body>
-    <strong><p id="score" style="position:fixed; right: 35px; font-size: 30px">Score: </p></strong>
+    <strong>
+        <p id="score" style="position:fixed; right: 35px; font-size: 30px">Score: </p>
+    </strong>
     <canvas id="myCanvas" width="600" height="400"></canvas>
     <script>
 
@@ -39,6 +41,7 @@
         let paddleY = (canvas.height - paddleHeight) / 2;
         let score = 0;
         let interval = setInterval(draw, 10);
+        let speedCap = 20;
 
 
         document.addEventListener("mousemove", checkMouseMove, false);
@@ -75,7 +78,12 @@
                 dx = -dx;
             }
             if (x === (paddleX + paddleWidth) && y > paddleY && y < (paddleY + paddleHeight)) {
-                dx = -dx * 1.5;
+                if (dx > speedCap || dx < -speedCap) {
+                    dx = -dx;
+                }
+                else {
+                    dx = -dx * 1.5;
+                }
                 score++;
                 document.getElementById("score").innerHTML = "Score: " + score;
             }
