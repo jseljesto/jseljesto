@@ -77,15 +77,48 @@
             if (x + dx > canvas.width - ballRadius) {
                 dx = -dx;
             }
-            if (x === (paddleX + paddleWidth) && y > paddleY && y < (paddleY + paddleHeight)) {
-                if (dx > speedCap || dx < -speedCap) {
-                    dx = -dx;
+            if (x <= (paddleX + paddleWidth)) {
+                if (y >= paddleY && y <= (paddleY + (paddleHeight / 2))) {
+                    if (dx > speedCap || dx < -speedCap) {
+                        dx = -dx;
+                    }
+                    else {
+                        dx = -dx * 1.2;
+                    }
+
+                    let distTopMid = (paddleY + (paddleHeight / 2)) - y;
+
+                    if (dy < 0) {
+                        dy = 1 * (distTopMid * 0.03) + (dx*0.025);
+                        dy = Math.abs(dy);
+                    }
+                    else if (dy > 0 || dy === 0) {
+                        dy = 1 * (distTopMid * 0.03) + (dx*0.025);
+                    }
+                    score++;
+                    document.getElementById("score").innerHTML = "Score: " + score;
                 }
-                else {
-                    dx = -dx * 1.5;
+                else if (y >= paddleY + (paddleHeight / 2) && y <= (paddleY + paddleHeight)) {
+                    if (dx > speedCap || dx < -speedCap) {
+                        dx = -dx;
+                    }
+                    else {
+                        dx = -dx * 1.2;
+                    }
+
+                    let distBotMid = y - (paddleY + (paddleHeight / 2));
+
+                    if (dy < 0 || dy === 0) {
+                        dy = 1 * (distBotMid * 0.03) + (dx*0.025);
+                        dy = -Math.abs(dy);
+                    }
+                    else if (dy > 0) {
+                        dy = 1 * (distBotMid * 0.03) + (dx*0.025);
+                        dy = -dy;
+                    }
+                    score++;
+                    document.getElementById("score").innerHTML = "Score: " + score;
                 }
-                score++;
-                document.getElementById("score").innerHTML = "Score: " + score;
             }
             if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
                 dy = -dy;
