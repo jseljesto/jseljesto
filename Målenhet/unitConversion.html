@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="stylesheet.css" />
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <ul>
+        <li><a id="length" onclick="toggleUnitType('length')">Lengde</a></li>
+        <li><a id="weight" onclick="toggleUnitType('weight')">Vekt</a></li>
+        <li><a id="time" onclick="toggleUnitType('time')">Tid</a></li>
+        <li><a id="temperature" onclick="toggleUnitType('temperature')">Temperatur</a></li>
+    </ul>
+
+
+    <input id="numberToConvert" type="number" style="position: fixed; top: 30%; left: 20%;">
+    <input id="numberConverted" type="number" style="position: fixed; top: 30%; left: 51%;" readonly>
+
+    <select id="lengthToConvert" class="lengthConverter" style="position: fixed; top: 30%; left: 34%;">
+        <option value="Meter" selected>Meter (m)</option>
+        <option value="Centimeter">Centimeter (cm)</option>
+        <option value="Millimeter">Millimeter (mm)</option>
+        <option value="Kilometer">Kilometer (km)</option>
+        <option value="Engelsk Mil">Engelsk Milk (mile)</option>
+        <option value="Yard">Yard (yd)</option>
+        <option value="Fot">Fot (foot)</option>
+        <option value="Tomme">Tomme (inch)</option>
+        <option value="Lysår">Lysår (light year)</option>
+    </select>
+
+    <select id="lengthConverted" class="lengthConverter" style="position: fixed; top: 30%; left: 65%;">
+        <option value="meter" selected>Meter (m)</option>
+        <option value="centimeter">Centimeter (cm)</option>
+        <option value="millimeter">Millimeter (mm)</option>
+        <option value="kilometer">Kilometer (km)</option>
+        <option value="engelsk mil">Engelsk Milk (mile)</option>
+        <option value="yard">Yard (yd)</option>
+        <option value="fot">Fot (foot)</option>
+        <option value="tomme">Tomme (inch)</option>
+        <option value="lysår">Lysår (light year)</option>
+    </select>
+
+    <select id="weightToConvert" class="weightConverter"
+        style="position: fixed; top: 30%; left: 34%; visibility: hidden;">
+        <option value="gram" selected>Gram (g)</option>
+        <option value="kilogram">Kilogram (kg)</option>
+        <option value="milligram">Milligram (mg)</option>
+        <option value="tonn">Tonn (t)</option>
+        <option value="pound">Pound (lb)</option>
+        <option value="ounce">Ounce (oz)</option>
+    </select>
+
+    <select id="weightConverted" class="weightConverter" style="position: fixed; top: 30%; 
+    left: 65%; visibility: hidden;">
+        <option value="gram" selected>Gram (g)</option>
+        <option value="kilogram">Kilogram (kg)</option>
+        <option value="milligram">Milligram (mg)</option>
+        <option value="tonn">Tonn (t)</option>
+        <option value="pound">Pound (lb)</option>
+        <option value="ounce">Ounce (oz)</option>
+    </select>
+
+    <select id="timeToConvert" class="timeConverter"
+        style="position: fixed; top: 30%; left: 34%; visibility: hidden;">
+        <option value="sekund" selected>Sekund</option>
+        <option value="minutt">Minutt</option>
+        <option value="timer">Timer</option>
+        <option value="dager">Dager</option>
+        <option value="veker">Veker</option>
+        <option value="måneder">Måneder</option>
+        <option value="år">År</option>
+    </select>
+
+    <select id="timeConverted" class="timeConverter" style="position: fixed; top: 30%; 
+    left: 65%; visibility: hidden;">
+        <option value="sekund" selected>Sekund</option>
+        <option value="minutt">Minutt</option>
+        <option value="timer">Timer</option>
+        <option value="dager">Dager</option>
+        <option value="veker">Veker</option>
+        <option value="måneder">Måneder</option>
+        <option value="år">År</option>
+    </select>
+
+    <select id="temperatureToConvert" class="temperaturConverter"
+        style="position: fixed; top: 30%; left: 34%; visibility: hidden;">
+        <option value="celsius" selected>Celsius (°C)</option>
+        <option value="fahrenheit">Fahrenheit (ºF)</option>
+        <option value="kelvin">Kelvin (K)</option>
+    </select>
+
+    <select id="temperatureConverted" class="temperaturConverter" style="position: fixed; top: 30%; 
+    left: 65%; visibility: hidden;">
+        <option value="celsius" selected>Celsius (°C)</option>
+        <option value="fahrenheit">Fahrenheit (ºF)</option>
+        <option value="kelvin">Kelvin (K)</option>
+    </select>
+
+
+    <script>
+
+        let shownUnitType = "length";
+
+        function toggleUnitType(newUnitType) {
+
+            document.getElementById(shownUnitType + "ToConvert").style.visibility = "hidden";
+            document.getElementById(shownUnitType + "Converted").style.visibility = "hidden";
+            shownUnitType = newUnitType;
+            document.getElementById(newUnitType + "ToConvert").style.visibility = "visible";
+            document.getElementById(newUnitType + "Converted").style.visibility = "visible";
+
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,25 @@
+ul {
+    list-style-type: none;
+    position: fixed;
+    top: 15%;
+    left: 35%;
+    overflow: hidden;
+  }
+
+li {
+    float: left;
+  }
+
+li a {
+    display: block;
+    padding: 8px 10px;
+    background-color: red;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    border-right: 1px solid white;
+}
+
+li a:hover {
+    background-color: black;
+  }
