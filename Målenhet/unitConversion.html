@@ -18,19 +18,8 @@
     <input id="numberToConvert" type="number" style="position: fixed; top: 30%; left: 20%;">
     <input id="numberConverted" type="number" style="position: fixed; top: 30%; left: 51%;" readonly>
 
-    <select id="lengthToConvert" class="lengthConverter" style="position: fixed; top: 30%; left: 34%;">
-        <option value="Meter" selected>Meter (m)</option>
-        <option value="Centimeter">Centimeter (cm)</option>
-        <option value="Millimeter">Millimeter (mm)</option>
-        <option value="Kilometer">Kilometer (km)</option>
-        <option value="Engelsk Mil">Engelsk Milk (mile)</option>
-        <option value="Yard">Yard (yd)</option>
-        <option value="Fot">Fot (foot)</option>
-        <option value="Tomme">Tomme (inch)</option>
-        <option value="Lysår">Lysår (light year)</option>
-    </select>
-
-    <select id="lengthConverted" class="lengthConverter" style="position: fixed; top: 30%; left: 65%;">
+    <select id="lengthToConvert" class="lengthConverter" onchange="updateUnits()"
+        style="position: fixed; top: 30%; left: 34%;">
         <option value="meter" selected>Meter (m)</option>
         <option value="centimeter">Centimeter (cm)</option>
         <option value="millimeter">Millimeter (mm)</option>
@@ -39,10 +28,21 @@
         <option value="yard">Yard (yd)</option>
         <option value="fot">Fot (foot)</option>
         <option value="tomme">Tomme (inch)</option>
-        <option value="lysår">Lysår (light year)</option>
     </select>
 
-    <select id="weightToConvert" class="weightConverter"
+    <select id="lengthConverted" class="lengthConverter" onchange="updateUnits()"
+        style="position: fixed; top: 30%; left: 65%;">
+        <option value="meter" selected>Meter (m)</option>
+        <option value="centimeter">Centimeter (cm)</option>
+        <option value="millimeter">Millimeter (mm)</option>
+        <option value="kilometer">Kilometer (km)</option>
+        <option value="engelsk mil">Engelsk Milk (mile)</option>
+        <option value="yard">Yard (yd)</option>
+        <option value="fot">Fot (foot)</option>
+        <option value="tomme">Tomme (inch)</option>
+    </select>
+
+    <select id="weightToConvert" class="weightConverter" onchange="updateUnits()"
         style="position: fixed; top: 30%; left: 34%; visibility: hidden;">
         <option value="gram" selected>Gram (g)</option>
         <option value="kilogram">Kilogram (kg)</option>
@@ -52,8 +52,8 @@
         <option value="ounce">Ounce (oz)</option>
     </select>
 
-    <select id="weightConverted" class="weightConverter" style="position: fixed; top: 30%; 
-    left: 65%; visibility: hidden;">
+    <select id="weightConverted" class="weightConverter" onchange="updateUnits()"
+        style="position: fixed; top: 30%; left: 65%; visibility: hidden;">
         <option value="gram" selected>Gram (g)</option>
         <option value="kilogram">Kilogram (kg)</option>
         <option value="milligram">Milligram (mg)</option>
@@ -62,7 +62,7 @@
         <option value="ounce">Ounce (oz)</option>
     </select>
 
-    <select id="timeToConvert" class="timeConverter"
+    <select id="timeToConvert" class="timeConverter" onchange="updateUnits()"
         style="position: fixed; top: 30%; left: 34%; visibility: hidden;">
         <option value="sekund" selected>Sekund</option>
         <option value="minutt">Minutt</option>
@@ -73,8 +73,8 @@
         <option value="år">År</option>
     </select>
 
-    <select id="timeConverted" class="timeConverter" style="position: fixed; top: 30%; 
-    left: 65%; visibility: hidden;">
+    <select id="timeConverted" class="timeConverter" onchange="updateUnits()"
+        style="position: fixed; top: 30%; left: 65%; visibility: hidden;">
         <option value="sekund" selected>Sekund</option>
         <option value="minutt">Minutt</option>
         <option value="timer">Timer</option>
@@ -84,24 +84,43 @@
         <option value="år">År</option>
     </select>
 
-    <select id="temperatureToConvert" class="temperaturConverter"
+    <select id="temperatureToConvert" class="temperaturConverter" onchange="updateUnits()"
         style="position: fixed; top: 30%; left: 34%; visibility: hidden;">
         <option value="celsius" selected>Celsius (°C)</option>
         <option value="fahrenheit">Fahrenheit (ºF)</option>
         <option value="kelvin">Kelvin (K)</option>
     </select>
 
-    <select id="temperatureConverted" class="temperaturConverter" style="position: fixed; top: 30%; 
-    left: 65%; visibility: hidden;">
+    <select id="temperatureConverted" class="temperaturConverter" onchange="updateUnits()"
+        style="position: fixed; top: 30%; left: 65%; visibility: hidden;">
         <option value="celsius" selected>Celsius (°C)</option>
         <option value="fahrenheit">Fahrenheit (ºF)</option>
         <option value="kelvin">Kelvin (K)</option>
     </select>
+
+    <button id="buttonConverter" onclick="convertUnits()"
+        style="position: fixed; top: 30%; right: 18%;">Convert</button>
 
 
     <script>
 
+        let lengthUnits = {
+            meter: 1,
+            centimeter: 100,
+            millimeter: 1000,
+            kilometer: 0.001,
+            "engelsk mil": 0.000621371192,
+            yard: 0.9144,
+            fot: 0.3048,
+            tomme: 0.0254
+        }
+
         let shownUnitType = "length";
+        let firstUnit = "meter";
+        let secondUnit = "meter";
+
+        let keys = Object.keys(lengthUnits);
+        let values = Object.values(lengthUnits);
 
         function toggleUnitType(newUnitType) {
 
@@ -110,7 +129,27 @@
             shownUnitType = newUnitType;
             document.getElementById(newUnitType + "ToConvert").style.visibility = "visible";
             document.getElementById(newUnitType + "Converted").style.visibility = "visible";
+        }
 
+        function updateUnits() {
+            firstUnit = document.getElementById(shownUnitType + "ToConvert").value;
+            secondUnit = document.getElementById(shownUnitType + "Converted").value;
+            document.getElementById("numberConverted").removeAttribute("value");
+        }
+
+        function convertUnits() {
+            let currentValue = document.getElementById("numberToConvert").value;
+            for (let i in keys) {
+                if (firstUnit === keys[i]) {
+                    currentValue /= values[i];
+                }
+            }
+            for (let x in keys) {
+                if (secondUnit === keys[x]) {
+                    currentValue *= values[x];
+                    document.getElementById("numberConverted").value = currentValue;
+                }
+            }
         }
 
     </script>
