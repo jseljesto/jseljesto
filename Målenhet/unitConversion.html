@@ -115,12 +115,35 @@
             tomme: 0.0254
         }
 
+        let weightUnits = {
+            kilogram: 1,
+            gram: 1000,
+            milligram: 1000000,
+            tonn: 0.001,
+            pound: 2.204623,
+            ounce: 35.2739619
+        }
+
+        let timeUnits = {
+            sekund: 2629800,
+            minutt: 43830,
+            timer: 730.5,
+            dager: 30.475,
+            måneder: 1,
+            år: 0.08333
+        }
+
+        let temperatureUnits = {
+            celsius: 1,
+            kelvin: 1,
+            fahrenheit: 1.8
+        }
+
         let shownUnitType = "length";
         let firstUnit = "meter";
         let secondUnit = "meter";
 
-        let keys = Object.keys(lengthUnits);
-        let values = Object.values(lengthUnits);
+
 
         function toggleUnitType(newUnitType) {
 
@@ -129,6 +152,7 @@
             shownUnitType = newUnitType;
             document.getElementById(newUnitType + "ToConvert").style.visibility = "visible";
             document.getElementById(newUnitType + "Converted").style.visibility = "visible";
+            updateUnits();
         }
 
         function updateUnits() {
@@ -137,7 +161,68 @@
             document.getElementById("numberConverted").removeAttribute("value");
         }
 
+        function findCorrectKeys() {
+            if (shownUnitType === "length") {
+                let keys = Object.keys(lengthUnits);
+                return keys;
+            }
+            if (shownUnitType === "weight") {
+                let keys = Object.keys(weightUnits);
+                return keys;
+            }
+            if (shownUnitType === "time") {
+                let keys = Object.keys(timeUnits);
+                return keys;
+            }
+            if (shownUnitType === "temperature") {
+                let keys = Object.keys(temperatureUnits);
+                return keys;
+            }
+        }
+
+        function findCorrectValues() {
+            if (shownUnitType === "length") {
+                let values = Object.values(lengthUnits);
+                return values;
+            }
+            if (shownUnitType === "weight") {
+                let values = Object.values(weightUnits);
+                return values;
+            }
+            if (shownUnitType === "time") {
+                let values = Object.values(timeUnits);
+                return values;
+            }
+            if (shownUnitType === "temperature") {
+                let values = Object.values(temperatureUnits);
+                return values;
+            }
+
+        }
+
+        function addExtraTempVal() {
+            let value = 0;
+
+            if (firstUnit === "fahrenheit") {
+                value -= 32;
+            }
+            else if (firstUnit === "kelvin") {
+                value -= 274;
+            }
+            else if (secondUnit === "fahrenheit") {
+                value += 32;
+            }
+            else if (secondUnit === "kelvin") {
+                value += 274;
+            }
+            return value;
+        }
+
         function convertUnits() {
+
+            let keys = findCorrectKeys();
+            let values = findCorrectValues();
+
             let currentValue = document.getElementById("numberToConvert").value;
             for (let i in keys) {
                 if (firstUnit === keys[i]) {
@@ -147,6 +232,7 @@
             for (let x in keys) {
                 if (secondUnit === keys[x]) {
                     currentValue *= values[x];
+                    currentValue += addExtraTempVal();
                     document.getElementById("numberConverted").value = currentValue;
                 }
             }
