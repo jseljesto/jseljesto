@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html style="overflow: scroll;">
 
 <head>
 
@@ -14,7 +14,7 @@
 
     <p style="position: fixed; top:40%;">Change the text of the button:</p>
     <input type="text" id="buttonName" name="buttonName" value="" oninput="changeName()"
-        style="position: fixed; top:47%;" />
+        style="position: fixed; top:47%;"/>
 
     <p style="position: fixed; top:50%; ">What color do you want the button to have?</p>
     <select id="color" onchange="changeColor()" style="position: fixed; top:57%;">
@@ -96,7 +96,8 @@
     <strong>
         <p style="position: fixed; top: 90%;">Code here:</p>
     </strong>
-    <p id="buttonCode" style="position: fixed; top: 90%; left: 7%;"></p>
+    <textarea id="buttonCode" rows="5" cols="50" style="position: fixed; top: 90%; left: 7%;">
+    </textarea>
 
 </body>
 <script>
