@@ -41,7 +41,7 @@
             let shoppingText = "<ul id='nyHandleliste'>";
             for (let i of shoppingList) {
                 let index = shoppingList.indexOf(i);
-                shoppingText += "<li onclick='removeElement(" + index + ")'>" + i + "</li>";
+                shoppingText += "<li>" + i + "<a onclick='removeElement(" + index + ")'> &times;</a></li>";
             }
             shoppingText += "</ul>";
             document.getElementById("handleliste").innerHTML = shoppingText;
@@ -51,37 +51,38 @@
             let shoppingText = "<ul id='listeAndreSide'>";
             for (let i of secondPage) {
                 let index = secondPage.indexOf(i);
-                shoppingText += "<li onclick='removeSecondPageElement(" + index + ")'>" + i + "</li>";
+                shoppingText += "<li><a onclick='removeSecondPageElement(" + index + ")'>&times;</a>" + i + "</li>";
             }
             shoppingText += "</ul>";
             document.getElementById("side2").innerHTML = shoppingText;
         }
 
         function addElement() {
-
-            let text = document.getElementById("antall").value + " " +
-                document.getElementById("enhet").value + " " +
-                document.getElementById("produkt").value;
-            if (numOfWares <= 9) {
-                shoppingList.push(text);
-                createShoppingList();
-                numOfWares++;
+            if (document.getElementById("produkt").value != "") {
+                let text = document.getElementById("antall").value + " " +
+                    document.getElementById("enhet").value + " " +
+                    document.getElementById("produkt").value;
+                if (numOfWares <= 9) {
+                    shoppingList.push(text);
+                    createShoppingList();
+                    numOfWares++;
+                }
+                else if (numOfWares >= 10) {
+                    secondPage.push(text);
+                    shoppingListSecondPage();
+                    secondPageItems++;
+                }
+                document.getElementById("antall").value = "";
+                document.getElementById("enhet").value = "";
+                document.getElementById("produkt").value = "";
             }
-            else if (numOfWares >= 10) {
-                secondPage.push(text);
-                shoppingListSecondPage();
-                secondPageItems++;
-            }
-            document.getElementById("antall").value = "";
-            document.getElementById("enhet").value = "";
-            document.getElementById("produkt").value = "";
         }
 
         function removeElement(index) {
             shoppingList.splice(index, 1);
             let updatedList = document.getElementById("nyHandleliste");
             updatedList.removeChild(updatedList.childNodes[index]);
-                numOfWares--;
+            numOfWares--;
             createShoppingList();
         }
 

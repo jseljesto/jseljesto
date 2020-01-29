@@ -5,7 +5,7 @@
     font-size: 25px;
     cursor: pointer;
     font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-    color: red;
+    color: black;
 }
 
 #side2 {
@@ -15,10 +15,10 @@
     font-size: 25px;
     cursor: pointer;
     font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-    color: red;
+    color: black;
 }
-li:hover {
-    color: blue;
+a:hover {
+    color: red;
 }
 
 #input {
