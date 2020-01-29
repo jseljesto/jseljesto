@@ -12,6 +12,11 @@
     <img id="finishLine" src="finishline.png" style="opacity: 0" />
     <script>
 
+        let wallsLeft = [];
+        let wallsRight = [];
+        let wallsUp = [];
+        let wallsDown = [];
+
         let c = document.getElementById("myCanvas");
         let ctx = c.getContext("2d");
         let currentX = 125;
@@ -21,6 +26,10 @@
         //Creating lines for maze
 
         function drawMaze() {
+            wallsLeft = [];
+            wallsRight = [];
+            wallsUp = [];
+            wallsDown = [];
 
             ctx.beginPath();
             ctx.rect(0, 0, 500, 500);
@@ -30,39 +39,75 @@
             ctx.moveTo(400, 500);
             ctx.lineTo(400, 400);
             ctx.stroke();
+            wallsLeft.push([425, 425]);
+            wallsRight.push([325, 425]);
 
             ctx.beginPath();
             ctx.moveTo(500, 300);
             ctx.lineTo(400, 300);
             ctx.stroke();
+            wallsUp.push([425, 325]);
+            wallsDown.push([425, 225]);
 
             ctx.beginPath();
             ctx.moveTo(500, 200);
             ctx.lineTo(200, 200);
             ctx.stroke();
+            wallsUp.push([425, 225]);
+            wallsUp.push([325, 225]);
+            wallsUp.push([225, 225]);
+            wallsDown.push([425, 125]);
+            wallsDown.push([325, 125]);
+            wallsDown.push([225, 125]);
 
             ctx.beginPath();
             ctx.moveTo(400, 0);
             ctx.lineTo(400, 100);
+            wallsLeft.push([425, 25]);
+            wallsRight.push([325, 25]);
             ctx.moveTo(400, 100);
             ctx.lineTo(100, 100);
+            wallsUp.push([325, 125]);
+            wallsUp.push([225, 125]);
+            wallsUp.push([125, 125]);
+            wallsDown.push([325, 25]);
+            wallsDown.push([225, 25]);
+            wallsDown.push([125, 25]);
             ctx.moveTo(100, 100);
             ctx.lineTo(100, 200);
             ctx.stroke();
+            wallsRight.push([25, 125]);
+            wallsLeft.push([125, 125]);
 
             ctx.beginPath();
             ctx.moveTo(300, 500);
             ctx.lineTo(300, 300);
+            wallsLeft.push([325, 325]);
+            wallsLeft.push([325, 425]);
+            wallsRight.push([225, 325]);
+            wallsRight.push([225, 425]);
             ctx.moveTo(300, 300);
             ctx.lineTo(100, 300);
             ctx.stroke();
+            wallsUp.push([225, 325]);
+            wallsUp.push([125, 325]);
+            wallsDown.push([225, 225]);
+            wallsDown.push([125, 225]);
 
             ctx.beginPath();
             ctx.moveTo(100, 500);
             ctx.lineTo(100, 400);
+            wallsLeft.push([125, 425]);
+            wallsRight.push([25, 425]);
             ctx.moveTo(100, 400);
             ctx.lineTo(200, 400);
             ctx.stroke();
+            wallsDown.push([125, 325]);
+            wallsUp.push([125, 425]);
+
+            createFinishLine();
+            createImage(currentX, currentY);
+            checkFinish();
         }
 
         function createImage(x, y) {
@@ -75,34 +120,67 @@
         }
 
         function moveLeft() {
-            currentX -= 100;
-            /* let imgData = ctx.getImageData((currentX-25), (currentY-25), 100, 100);
-             let pix = imgData.data; */
-            ctx.clearRect(0, 0, c.width, c.height);
-            drawMaze();
-            createFinishLine();
-            createImage(currentX, currentY);
+            let foundWall = false;
+            let temp = [];
+            temp.push([currentX, currentY]);
+            for (let i = 0; i < wallsLeft.length; i++) {
+                if (JSON.stringify(temp[0]) === JSON.stringify(wallsLeft[i])) {
+                    foundWall = true;
+                }
+            }
+            if (foundWall === false  && currentX != 25) {
+                currentX -= 100;
+                ctx.clearRect(0, 0, c.width, c.height);
+                drawMaze();
+            }
         }
+
         function moveRight() {
-            currentX += 100;
-            ctx.clearRect(0, 0, c.width, c.height);
-            drawMaze();
-            createFinishLine();
-            createImage(currentX, currentY);
+            let foundWall = false;
+            let temp = [];
+            temp.push([currentX, currentY]);
+            for (let i = 0; i < wallsRight.length; i++) {
+                if (JSON.stringify(temp[0]) === JSON.stringify(wallsRight[i])) {
+                    foundWall = true;
+                }
+            }
+            if (foundWall === false && currentX != 425) {
+                currentX += 100;
+                ctx.clearRect(0, 0, c.width, c.height);
+                drawMaze();
+            }
         }
+
         function moveUp() {
-            currentY -= 100;
-            ctx.clearRect(0, 0, c.width, c.height);
-            drawMaze();
-            createFinishLine();
-            createImage(currentX, currentY);
+            let foundWall = false;
+            let temp = [];
+            temp.push([currentX, currentY]);
+            for (let i = 0; i < wallsUp.length; i++) {
+                if (JSON.stringify(temp[0]) === JSON.stringify(wallsUp[i])) {
+                    foundWall = true;
+                }
+            }
+            if (foundWall === false && currentY != 25) {
+                currentY -= 100;
+                ctx.clearRect(0, 0, c.width, c.height);
+                drawMaze();
+            }
         }
+
         function moveDown() {
-            currentY += 100;
-            ctx.clearRect(0, 0, c.width, c.height);
-            drawMaze();
-            createFinishLine();
-            createImage(currentX, currentY);
+            let foundWall = false;
+            let temp = [];
+            temp.push([currentX, currentY]);
+            for (let i = 0; i < wallsDown.length; i++) {
+                if (JSON.stringify(temp[0]) === JSON.stringify(wallsDown[i])) {
+                    foundWall = true;
+                }
+            }
+            if (foundWall === false && currentY != 425) {
+                currentY += 100;
+                ctx.clearRect(0, 0, c.width, c.height);
+                drawMaze();
+            }
         }
 
         function moveObject(event) {
@@ -126,6 +204,12 @@
             var x = event.screenX - 400;
             var y = event.screenY - 120;
             alert("X-coords: " + x + " Y-coords: " + y);
+        }
+
+        function checkFinish() {
+            if (currentX === 325 && currentY === 25) {
+                alert("Congrats! You reached the finish line!");
+            }
         }
 
         drawMaze();
