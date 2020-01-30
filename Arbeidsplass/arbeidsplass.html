@@ -157,6 +157,7 @@
         function validateNumber(numberID) {
             var re = /^[0-9]+$/;
             if (!(re.test(document.getElementById(numberID).value))) {
+                alert(`${textID} is NOT correct!`);
                 return false;
             } else {
                 return true;

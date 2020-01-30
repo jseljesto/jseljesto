@@ -7,7 +7,7 @@
 #sendInfo {
 	position: fixed;
   top: 420px;
-  left: 600px;
+  left: 10%;
 }
 
 label em {
@@ -17,7 +17,7 @@ label em {
 #personInfo {
   position: fixed;
   top: 15px;
-  left: 400px;
+  left: 45%;
 }
 
 [data-title] {
@@ -50,11 +50,11 @@ label em {
 #listOfPersons {
   position: fixed;
   top: 15px;
-  left: 950px;
+  left: 80%;
 }
 
 #clearStorage {
   position: fixed;
   top: 400px;
-  left: 950px;
+  left: 80%;
 }

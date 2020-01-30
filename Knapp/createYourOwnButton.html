@@ -94,9 +94,9 @@
         onmouseout="changeColor()">Design Me!</button>
 
     <strong>
-        <p style="position: fixed; top: 90%;">Code here:</p>
+        <p style="position: fixed; top: 85%;">Code here:</p>
     </strong>
-    <textarea id="buttonCode" rows="5" cols="50" style="position: fixed; top: 90%; left: 7%;">
+    <textarea id="buttonCode" rows="5" cols="50" style="position: fixed; top: 85%; left: 7%;">
     </textarea>
 
 </body>
@@ -161,7 +161,7 @@
 
         document.getElementById("buttonCode").innerHTML += document.getElementById("designButton").style.cssText;
         document.getElementById("buttonCode").innerHTML += `} #designButton:hover 
-        { background-color: ${hoverColor}}`
+        { background-color: ${hoverColor}; }`
 
         document.getElementById("designButton").style.position = "fixed";
         document.getElementById("designButton").style.top = "45%";
