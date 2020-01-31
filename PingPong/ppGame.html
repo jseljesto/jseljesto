@@ -22,6 +22,8 @@
 </head>
 
 <body>
+    <button id="singleplayer" onclick="disableMulti();">Singleplayer</button>
+    <button id="multiplayer" onclick="enableMulti();">Multiplayer</button>
     <strong>
         <p id="score" style="position:fixed; right: 35px; font-size: 30px">Score: </p>
     </strong>
@@ -31,7 +33,7 @@
         let canvas = document.getElementById("myCanvas");
         let ctx = canvas.getContext("2d");
         let x = canvas.width / 2;
-        let y = canvas.height - 200;
+        let y = canvas.height - 150;
         let dx = 1;
         let dy = 0;
         let ballRadius = 15;
@@ -42,6 +44,12 @@
         let score = 0;
         let interval = setInterval(draw, 10);
         let speedCap = 20;
+        let multiEnabled = false;
+        let oppHeight = 125;
+        let oppWidth = 20;
+        let oppX = 565;
+        let oppY = (canvas.height - paddleHeight) / 2;
+        let oppSpeed = 1;
 
 
         document.addEventListener("mousemove", checkMouseMove, false);
@@ -61,22 +69,38 @@
             ctx.closePath();
         }
 
-        function drawPaddle() {
+        function drawPaddle(x, y, width, height) {
             ctx.beginPath();
-            ctx.rect(paddleX, paddleY, paddleWidth, paddleHeight);
+            ctx.rect(x, y, width, height);
             ctx.fillStyle = "grey";
             ctx.fill();
             ctx.closePath();
         }
 
+        function enableMulti() {
+            multiEnabled = true;
+        }
+
+        function disableMulti() {
+            multiEnabled = false;
+            location.reload();
+        }
+
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             drawBall();
-            drawPaddle();
-
-            if (x + dx > canvas.width - ballRadius) {
-                dx = -dx;
+            drawPaddle(paddleX, paddleY, paddleWidth, paddleHeight);
+            if (multiEnabled === true) {
+                drawPaddle(oppX, oppY, oppWidth, oppHeight);
+                document.getElementById("score").style.visibility = "hidden";
             }
+
+            if (multiEnabled === false) {
+                if (x + dx > canvas.width - ballRadius) {
+                    dx = -dx;
+                }
+            }
+
             if (x <= (paddleX + paddleWidth)) {
                 if (y >= paddleY && y <= (paddleY + (paddleHeight / 2))) {
                     if (dx > speedCap || dx < -speedCap) {
@@ -116,10 +140,55 @@
                         dy = 1 * (distBotMid * 0.03) + (dx * 0.025);
                         dy = -dy;
                     }
-                    score++;
-                    document.getElementById("score").innerHTML = "Score: " + score;
+                    if (multiEnabled === false) {
+                        score++;
+                        document.getElementById("score").innerHTML = "Score: " + score;
+                    }
                 }
             }
+            if (multiEnabled === true) {
+                if (x >= oppX) {
+                    if (y >= oppY && y <= (oppY + (paddleHeight / 2))) {
+                        if (dx > speedCap || dx < -speedCap) {
+                            dx = -dx;
+                        }
+                        else {
+                            dx = -dx * 1.2;
+                        }
+
+                        let distTopMid = (oppY + (oppHeight / 2)) - y;
+
+                        if (dy < 0) {
+                            dy = 1 * (distTopMid * 0.03) + (dx * 0.025);
+                            dy = Math.abs(dy);
+                        }
+                        else if (dy > 0 || dy === 0) {
+                            dy = 1 * (distTopMid * 0.03) + (dx * 0.025);
+                        }
+                    }
+                    else if (y >= oppY + (oppHeight / 2) && y <= (oppY + oppHeight)) {
+                        if (dx > speedCap || dx < -speedCap) {
+                            dx = -dx;
+                        }
+                        else {
+                            dx = -dx * 1.2;
+                        }
+
+                        let distBotMid = y - (oppY + (oppHeight / 2));
+
+                        if (dy < 0 || dy === 0) {
+                            dy = 1 * (distBotMid * 0.03) + (dx * 0.025);
+                            dy = -Math.abs(dy);
+                        }
+                        else if (dy > 0) {
+                            dy = 1 * (distBotMid * 0.03) + (dx * 0.025);
+                            dy = -dy;
+                        }
+                    }
+                    oppSpeed = oppSpeed * 1.3;
+                }
+            }
+
             if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
                 dy = -dy;
             }
@@ -128,10 +197,23 @@
                 document.location.reload();
                 clearInterval(interval);
             }
+            if (multiEnabled === true) {
+                if (x + dx > canvas.width + ballRadius) {
+                    alert('You won!');
+                    document.location.reload();
+                    clearInterval(interval);
+                }
+            }
 
             // dy = dy + 0.001; Gravity if desired.
             x += dx;
             y += dy;
+            if (multiEnabled === true) {
+                oppY += oppSpeed;
+                if (oppY > 270 || oppY < 5) {
+                    oppSpeed = -oppSpeed;
+                }
+            }
 
         }
     </script>
