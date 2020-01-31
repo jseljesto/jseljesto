@@ -88,15 +88,19 @@
     </select>
 
 
-    <button id="designButton" style="position: fixed; top:45%; left:45%; 
-    background-color: white; 
+    <button id="designButton" style="position: fixed; top:45%; left:45%; background-color: white; 
     height: 30px; width: 130px;" onclick="writeCode()" onmouseover="changeHoverColor()"
         onmouseout="changeColor()">Design Me!</button>
 
     <strong>
-        <p style="position: fixed; top: 85%;">Code here:</p>
+        <p style="position: fixed; top: 85%;">CSS-code here:</p>
     </strong>
-    <textarea id="buttonCode" rows="5" cols="50" style="position: fixed; top: 85%; left: 7%;">
+    <textarea id="buttonCSSCode" rows="5" cols="50" style="position: fixed; top: 85%; left: 10%;">
+    </textarea>
+    <strong>
+        <p style="position:fixed; top: 85%; right: 32%;">HTML-code here:</p>
+    </strong>
+    <textarea id="buttonHTMLCode" rows="5" cols="50" style="position: fixed; top: 85%; right: 1%;">
     </textarea>
 
 </body>
@@ -157,11 +161,14 @@
         document.getElementById("designButton").style.removeProperty("width");
 
         document.getElementById("designButton").style.backgroundColor = bcColor;
-        document.getElementById("buttonCode").innerHTML = "#designButton { "
+        document.getElementById("buttonCSSCode").innerHTML = "#designButton { "
 
-        document.getElementById("buttonCode").innerHTML += document.getElementById("designButton").style.cssText;
-        document.getElementById("buttonCode").innerHTML += `} #designButton:hover 
+        document.getElementById("buttonCSSCode").innerHTML += document.getElementById("designButton").style.cssText;
+        document.getElementById("buttonCSSCode").innerHTML += `} #designButton:hover 
         { background-color: ${hoverColor}; }`
+
+        document.getElementById("buttonHTMLCode").innerHTML = "<button id='designButton'>" + 
+        document.getElementById("designButton").innerHTML + "</button>"
 
         document.getElementById("designButton").style.position = "fixed";
         document.getElementById("designButton").style.top = "45%";
