@@ -10,6 +10,7 @@
     <canvas onclick="showCoords()" id="myCanvas" width="800" height="500"></canvas>
     <img id="objectImage" src="image.png" style="opacity: 0" />
     <img id="finishLine" src="finishline.png" style="opacity: 0" />
+    <h1 id="timer" style="position: fixed; left: 10%">00:00:00</h1>
     <script>
 
         let wallsLeft = [];
@@ -22,6 +23,9 @@
         let currentX = 125;
         let currentY = 425;
         let objImage = document.getElementById("objectImage");
+        let seconds = 0;
+        let minutes = 0;
+        let hours = 0;
 
         //Creating lines for maze
 
@@ -200,6 +204,36 @@
             }
         }
 
+        function timerCount() {
+            seconds++;
+            if (seconds >= 60) {
+                seconds = 0;
+                minutes++;
+                if (minutes >= 60) {
+                    minutes = 0;
+                    hours++;
+                }
+            }
+
+            if (hours < 10) {
+                document.getElementById("timer").innerHTML = "0" + hours + ":";
+            } else {
+                document.getElementbyId("timer").innerHTML = hours + ":";            
+                }
+
+            if (minutes < 10) {
+                document.getElementById("timer").innerHTML += "0" + minutes + ":";
+            } else {
+                document.getElementById("timer").innerHTML += minutes + ":";
+            }
+
+            if (seconds < 10) {
+                document.getElementById("timer").innerHTML += "0" + seconds;
+            } else {
+                document.getElementById("timer").innerHTML += seconds;
+            }
+        }
+
         function showCoords() {
             var x = event.screenX - 400;
             var y = event.screenY - 120;
@@ -208,13 +242,16 @@
 
         function checkFinish() {
             if (currentX === 325 && currentY === 25) {
-                alert("Congrats! You reached the finish line!");
+                alert("Congrats! You reached the finish line in " + hours + " hours, " 
+                + minutes + " minutes and " + seconds + " seconds!");
+                window.location.reload();
             }
         }
 
         drawMaze();
         createImage(currentX, currentY);
         createFinishLine();
+        setInterval(timerCount, 1000);
 
     </script>
 </body>
