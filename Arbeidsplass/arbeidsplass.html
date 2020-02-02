@@ -45,6 +45,8 @@
         </p>
     </form>
     <button id="sendInfo" onclick="createObject(findBirthDate())">Send Inn</button>
+    <button onclick="location.reload()" style="position: fixed; 
+    top: 420px; left: 45%">Create new person</button>
     <p id="listOfPersons">List of persons: </p>
     <p id="personInfo"></p>
     <button id="clearStorage" onclick="clearStorage()">Omstill</button>
@@ -133,16 +135,13 @@
 
         }
 
+        let personNames = [];
         let personObjects = [];
-        let test = JSON.parse(localStorage.getItem("personList"));
+        let test = JSON.parse(localStorage.getItem("personObjects"));
         if (test) {
-            if (test[0] != null) {
-                if (!test[0] != undefined) {
-                    personObjects = JSON.parse(localStorage.getItem("personList"));
-                    for (let a = 0; a < personObjects.length; a++) {
-                        document.getElementById("listOfPersons").innerHTML += "<br>" + personObjects[a];
-                    }
-                }
+            personObjects = JSON.parse(localStorage.getItem("personObjects"));
+            for (let a = 0; a <= personObjects.length; a++) {
+                document.getElementById("listOfPersons").innerHTML += "<br>" + personObjects[a]._name;
             }
         }
 
@@ -270,7 +269,9 @@
         async function createObject(birthDayArray) {
             try {
                 let fullBirthDate = `${birthDayArray[2]}.${birthDayArray[1]}.${birthDayArray[0]}`
-                let newPerson = new Person(await findName(), findGender(), fullBirthDate, findPostalCode(), findAddress(), await findPhoneNumber(), await findHobbies());
+                let newPerson = new Person(await findName(), findGender(), fullBirthDate,
+                    findPostalCode(), findAddress(), await findPhoneNumber(), await findHobbies());
+                personObjects.push(newPerson);
                 if (newPerson.name && newPerson.gender && newPerson.phoneNumber
                     && newPerson.postalCode && newPerson.address) {
                     document.getElementById("personInfo").innerHTML =
@@ -281,9 +282,8 @@
                     Address: ${newPerson.address} <br>
                     Phone Number: ${newPerson.phoneNumber} <br>
                     Hobbies: ${newPerson.hobbies}`;
-                    personObjects.push(newPerson.name);
                 }
-                localStorage.setItem("personList", JSON.stringify(personObjects));
+                localStorage.setItem("personObjects", JSON.stringify(personObjects));
             }
             catch (err) {
                 alert(err);
@@ -291,7 +291,7 @@
         }
 
         function clearStorage() {
-            localStorage.removeItem("personList");
+            localStorage.removeItem("personObjects");
             location.reload();
         }
 
