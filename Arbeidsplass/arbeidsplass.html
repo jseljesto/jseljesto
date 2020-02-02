@@ -24,7 +24,7 @@
             <input id="fodDato" type="date" min="1950-01-01" max="2000-01-01" required>
         </p>
         <p>
-            <label for="postkode" data-title="Skriv inn din firesifra postkode. Ikkje inkluder posstad.">
+            <label for="postkode" data-title="Skriv inn din firesifra postkode. Ikkje inkluder poststad.">
                 Postkode<em>*</em> : </label>
             <input id="postkode" type="number" required>
         </p>
@@ -51,12 +51,12 @@
     <script>
 
         class Person {
-            constructor(name, gender, birthDate, postalCode, adress, phoneNumber, hobbies) {
+            constructor(name, gender, birthDate, postalCode, address, phoneNumber, hobbies) {
                 this._name = name;
                 this._gender = gender;
                 this._birthDate = birthDate;
                 this._postalCode = postalCode;
-                this._adress = adress;
+                this._address = address;
                 this._phoneNumber = phoneNumber;
                 this._hobbies = hobbies;
             }
@@ -101,13 +101,13 @@
                 }
             }
 
-            get adress() {
-                return this._adress;
+            get address() {
+                return this._address;
             }
 
-            set adress(adress) {
-                if (typeof adress === "string") {
-                    this._adress = adress;
+            set address(address) {
+                if (typeof address === "string") {
+                    this._address = address;
                 }
             }
 
@@ -135,11 +135,13 @@
 
         let personObjects = [];
         let test = JSON.parse(localStorage.getItem("personList"));
-        if (test[0] != null) {
-            if (!test[0] != undefined) {
-                personObjects = JSON.parse(localStorage.getItem("personList"));
-                for (let a = 0; a < personObjects.length; a++) {
-                    document.getElementById("listOfPersons").innerHTML += "<br>" + personObjects[a];
+        if (test) {
+            if (test[0] != null) {
+                if (!test[0] != undefined) {
+                    personObjects = JSON.parse(localStorage.getItem("personList"));
+                    for (let a = 0; a < personObjects.length; a++) {
+                        document.getElementById("listOfPersons").innerHTML += "<br>" + personObjects[a];
+                    }
                 }
             }
         }
@@ -179,7 +181,12 @@
 
         function findGender() {
             let gender = document.getElementById("kjonn").value;
-            return gender;
+            if (gender) {
+                return gender;
+            } else {
+                alert("Gender is NOT correct!");
+                return false;
+            }
         }
 
         function findBirthDate() {
@@ -191,17 +198,32 @@
             fullBirthDate.push(month);
             let day = birthday.substr(8, 2);
             fullBirthDate.push(day);
-            return fullBirthDate;
+            if (!day || !month || !year) {
+                alert("Birthdate is NOT correct!");
+                return false;
+            } else {
+                return fullBirthDate;
+            }
         }
 
         function findPostalCode() {
             let postalCode = document.getElementById("postkode").value;
-            return postalCode;
+            if (postalCode) {
+                return postalCode;
+            } else {
+                alert("Postal Code is NOT correct!");
+                return false;
+            }
         }
 
-        function findAdress() {
-            let adress = document.getElementById("adresse").value;
-            return adress;
+        function findAddress() {
+            let address = document.getElementById("adresse").value;
+            if (address) {
+                return address;
+            } else {
+                alert("Address is NOT correct!");
+                return false;
+            }
         }
 
         function findPhoneNumber() {
@@ -209,7 +231,7 @@
                 setTimeout(() => {
                     let phoneNumber = document.getElementById("telefonNr").value;
                     if (phoneNumber.length === 0) {
-                        let emptyPhoneNumber = "No information";
+                        let emptyPhoneNumber = "No valid information";
                         resolve(emptyPhoneNumber);
                     }
                     else if (validateNumber("telefonNr") === false) {
@@ -248,18 +270,19 @@
         async function createObject(birthDayArray) {
             try {
                 let fullBirthDate = `${birthDayArray[2]}.${birthDayArray[1]}.${birthDayArray[0]}`
-                let newPerson = new Person(await findName(), findGender(), fullBirthDate, findPostalCode(), findAdress(), await findPhoneNumber(), await findHobbies());
-                if (!(newPerson.name === false) || (!(newPerson.phoneNumber === false))) {
+                let newPerson = new Person(await findName(), findGender(), fullBirthDate, findPostalCode(), findAddress(), await findPhoneNumber(), await findHobbies());
+                if (newPerson.name && newPerson.gender && newPerson.phoneNumber
+                    && newPerson.postalCode && newPerson.address) {
                     document.getElementById("personInfo").innerHTML =
                         `Name: ${newPerson.name} <br>
                     Gender: ${newPerson.gender} <br>
                     Birth Date: ${newPerson.birthDate} <br>
                     Postal Code: ${newPerson.postalCode} <br>
-                    Adress: ${newPerson.adress} <br>
+                    Address: ${newPerson.address} <br>
                     Phone Number: ${newPerson.phoneNumber} <br>
                     Hobbies: ${newPerson.hobbies}`;
+                    personObjects.push(newPerson.name);
                 }
-                personObjects.push(newPerson.name);
                 localStorage.setItem("personList", JSON.stringify(personObjects));
             }
             catch (err) {
