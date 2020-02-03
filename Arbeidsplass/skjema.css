@@ -1,11 +1,11 @@
 #skjema {
-	position: fixed;
+	position: absolute;
   top: 10px;
   left: 15px;
 }
 
 #sendInfo {
-	position: fixed;
+	position: absolute;
   top: 420px;
   left: 10%;
 }
@@ -15,7 +15,7 @@ label em {
 }
 
 #personInfo {
-  position: fixed;
+  position: absolute;
   top: 15px;
   left: 45%;
 }
@@ -48,13 +48,13 @@ label em {
 }
 
 #listOfPersons {
-  position: fixed;
+  position: absolute;
   top: 15px;
   left: 80%;
 }
 
 #clearStorage {
-  position: fixed;
+  position: absolute;
   top: 420px;
   left: 80%;
 }
