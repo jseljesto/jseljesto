@@ -24,6 +24,8 @@
 <body>
     <button id="singleplayer" onclick="disableMulti();">Singleplayer</button>
     <button id="multiplayer" onclick="enableMulti();">Multiplayer</button>
+    <button id="reset" onclick="location.reload()" style="position: absolute; right: 1%">Reset</button>
+    <button id="start" onclick="start()" style="position: absolute; right: 6%;">Start</button>
     <strong>
         <p id="score" style="position:fixed; right: 35px; font-size: 30px">Score: </p>
     </strong>
@@ -33,8 +35,8 @@
         let canvas = document.getElementById("myCanvas");
         let ctx = canvas.getContext("2d");
         let x = canvas.width / 2;
-        let y = canvas.height - 150;
-        let dx = 1;
+        let y = canvas.height / 2;
+        let dx = 0;
         let dy = 0;
         let ballRadius = 15;
         let paddleHeight = 125;
@@ -215,6 +217,11 @@
                 }
             }
 
+        }
+
+        function start() {
+            dx = 1;
+            document.getElementById("start").style.visibility = "hidden";
         }
     </script>
 </body>
