@@ -10,8 +10,29 @@
     <p id="tid"></p>
 
     <canvas id="canvas" width="400" height="400"></canvas>
+    <select id="tidssoner" onchange="changeTimeZone()" style="position: absolute; top: 20%;">
+        <option value="-8" selected>UTC - 08:00 (Stillehavskysten USA)</option>
+        <option value="-7" selected>UTC - 07:00 (Arizona, Rocky Mountains)</option>
+        <option value="-6" selected>UTC - 06:00 (Mexico By, Midtvesten USA)</option>
+        <option value="-5" selected>UTC - 05:00 (Bogota, Lima, Quito, Østkysten USA)</option>
+        <option value="-3" selected>UTC - 03:00 (Buenos Aires, Montevideo)</option>
+        <option value="0" selected>UTC 00:00 (Dublin, Lisboa, London)</option>
+        <option value="1" selected>UTC + 01:00 (Amsterdam, Berlin, Oslo, Roma)</option>
+        <option value="2">UTC + 02:00 (Beirut, Helsinki, Kairo, Sofia)</option>
+        <option value="3">UTC + 03:00 (Istanbul, Moskva, St. Petersburg)</option>
+        <option value="4">UTC + 04:00 (Baku, Jerevan)</option>
+        <option value="5">UTC + 05:00 (Jekaterinburg)</option>
+        <option value="7">UTC + 07:00 (Bangkok, Hanoi)</option>
+        <option value="8">UTC + 08:00 (Beijing, Perth, Singapore)</option>
+        <option value="9">UTC + 09:00 (Seoul, Tokyo)</option>
+        <option value="10">UTC + 10:00 (Melbourne, Sydney)</option>
+        <option value="12">UTC + 12:00 (Auckland, Wellington)</option>
+    </select>
 
     <script>
+
+        let currentZone = 1;
+        let zoneDiff = 0;
 
         class Clock {
             constructor(hours, minutes, seconds) {
@@ -122,7 +143,7 @@
         }
         function findCurrentTime() {
             let currentDate = new Date();
-            let h = currentDate.getHours();
+            let h = currentDate.getHours() + zoneDiff;
             let m = currentDate.getMinutes();
             let s = currentDate.getSeconds();
             let clock = new Clock(h, m, s);
@@ -130,6 +151,11 @@
             clock.seconds = addZerosToCurrentTime(s);
             document.getElementById("tid").innerHTML = `${clock.hours}:${clock.minutes}:${clock.seconds}`;
             return clock;
+        }
+
+        function changeTimeZone() {
+            let chosenTimeZone = parseFloat(document.getElementById("tidssoner").value);
+            zoneDiff = chosenTimeZone - currentZone;
         }
     </script>
 </body>
