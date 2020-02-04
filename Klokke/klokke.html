@@ -80,6 +80,17 @@
                 ctx.rotate(-ang);
             }
 
+            for (num = 1; num < 61; num++) {
+                ang = num * Math.PI / 30;
+                ctx.rotate(ang);
+                ctx.translate(0, -radius * 0.98);
+                ctx.rotate(-ang);
+                ctx.fillText("-", 0, 0);
+                ctx.rotate(ang);
+                ctx.translate(0, radius * 0.98);
+                ctx.rotate(-ang);
+            }
+
             let clock = findCurrentTime();
             clock.hours = clock.hours % 12;
             clock.hours = (clock.hours * Math.PI / 6) + (clock.minutes * Math.PI / (6 * 60)) + (clock.seconds * Math.PI / (360 * 60));
