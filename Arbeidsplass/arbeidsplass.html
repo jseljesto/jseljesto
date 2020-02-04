@@ -40,10 +40,11 @@
             <input id="Idrett" type="checkbox" value="Idrett">Idrett<br>
             <input id="Matlaging" type="checkbox" value="Matlaging">Matlaging<br>
             <input id="Lesing" type="checkbox" value="Lesing">Lesing<br>
-            <input id="Koding" type="checkbox" value="koding">Koding<br>
-            <input id="Camping" type="checkbox" value="camping">Camping<br>
+            <input id="Koding" type="checkbox" value="Koding">Koding<br>
+            <input id="Camping" type="checkbox" value="Camping">Camping<br>
         </p>
     </form>
+
     <button id="sendInfo" onclick="createObject(findBirthDate())">Send Inn</button>
     <button onclick="location.reload()" style="position: absolute; 
     top: 420px; left: 45%">Lag ny person</button>
@@ -138,8 +139,7 @@
             }
 
         }
-
-        let personNames = [];
+        
         let personObjects = [];
         let test = JSON.parse(localStorage.getItem("personObjects"));
         if (test) {
@@ -299,7 +299,7 @@
             for (let p = 0; p <= personObjects.length; p++) {
                 if (searchedName === personObjects[p]._name) {
                     document.getElementById("personSearched").innerHTML =
-                    `Name: ${personObjects[p]._name} <br>
+                        `Name: ${personObjects[p]._name} <br>
                     Gender: ${personObjects[p]._gender} <br>
                     Birth Date: ${personObjects[p]._birthDate} <br>
                     Postal Code: ${personObjects[p]._postalCode} <br>

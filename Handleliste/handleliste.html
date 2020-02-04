@@ -24,9 +24,8 @@
         let secondPage = [];
         let numOfWares = 0;
         let secondPageItems = 0;
-        let totalWares = 0;
 
-        function getSuggestions() {
+      /*  function getSuggestions() {
             const xhr = new XMLHttpRequest();
             xhr.onreadystatechange = () => {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -35,7 +34,7 @@
                 }
             }
             xhr.open("GET", "suggestions.txt");
-        }
+        } */
 
         function createShoppingList() {
             let shoppingText = "<ul id='nyHandleliste'>";
@@ -67,11 +66,12 @@
                     createShoppingList();
                     numOfWares++;
                 }
-                else if (numOfWares >= 10) {
+                else if (numOfWares >= 10 && secondPageItems <= 9) {
                     secondPage.push(text);
                     shoppingListSecondPage();
                     secondPageItems++;
                 }
+
                 document.getElementById("antall").value = "";
                 document.getElementById("enhet").value = "";
                 document.getElementById("produkt").value = "";

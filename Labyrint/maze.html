@@ -132,7 +132,7 @@
                     foundWall = true;
                 }
             }
-            if (foundWall === false  && currentX != 25) {
+            if (foundWall === false && currentX != 25) {
                 currentX -= 100;
                 ctx.clearRect(0, 0, c.width, c.height);
                 drawMaze();
@@ -218,8 +218,8 @@
             if (hours < 10) {
                 document.getElementById("timer").innerHTML = "0" + hours + ":";
             } else {
-                document.getElementbyId("timer").innerHTML = hours + ":";            
-                }
+                document.getElementbyId("timer").innerHTML = hours + ":";
+            }
 
             if (minutes < 10) {
                 document.getElementById("timer").innerHTML += "0" + minutes + ":";
@@ -242,8 +242,8 @@
 
         function checkFinish() {
             if (currentX === 325 && currentY === 25) {
-                alert("Congrats! You reached the finish line in " + hours + " hours, " 
-                + minutes + " minutes and " + seconds + " seconds!");
+                alert("Congrats! You reached the finish line in " + hours + " hours, "
+                    + minutes + " minutes and " + seconds + " seconds!");
                 window.location.reload();
             }
         }

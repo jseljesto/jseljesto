@@ -14,7 +14,7 @@
 
     <p style="position: absolute; top:40%;">Change the text of the button:</p>
     <input type="text" id="buttonName" name="buttonName" value="" oninput="changeName()"
-        style="position: absolute; top:47%;"/>
+        style="position: absolute; top:47%;" />
 
     <p style="position: absolute; top:50%; ">What color do you want the button to have?</p>
     <select id="color" onchange="changeColor()" style="position: absolute; top:57%;">
@@ -167,8 +167,8 @@
         document.getElementById("buttonCSSCode").innerHTML += `} #designButton:hover 
         { background-color: ${hoverColor}; }`
 
-        document.getElementById("buttonHTMLCode").innerHTML = "<button id='designButton'>" + 
-        document.getElementById("designButton").innerHTML + "</button>"
+        document.getElementById("buttonHTMLCode").innerHTML = "<button id='designButton'>" +
+            document.getElementById("designButton").innerHTML + "</button>"
 
         document.getElementById("designButton").style.position = "absolute";
         document.getElementById("designButton").style.top = "45%";
