@@ -127,10 +127,12 @@
             let foundWall = false;
             let temp = [];
             temp.push([currentX, currentY]);
-            for (let i = 0; i < wallsLeft.length; i++) {
+            let i = 0;
+            while (i <= wallsLeft.length && foundWall === false) {
                 if (JSON.stringify(temp[0]) === JSON.stringify(wallsLeft[i])) {
                     foundWall = true;
                 }
+                i++;
             }
             if (foundWall === false && currentX != 25) {
                 currentX -= 100;
@@ -143,10 +145,12 @@
             let foundWall = false;
             let temp = [];
             temp.push([currentX, currentY]);
-            for (let i = 0; i < wallsRight.length; i++) {
+            let i = 0;
+            while (i <= wallsRight.length && foundWall === false) {
                 if (JSON.stringify(temp[0]) === JSON.stringify(wallsRight[i])) {
                     foundWall = true;
                 }
+                i++;
             }
             if (foundWall === false && currentX != 425) {
                 currentX += 100;
@@ -159,10 +163,12 @@
             let foundWall = false;
             let temp = [];
             temp.push([currentX, currentY]);
-            for (let i = 0; i < wallsUp.length; i++) {
+            let i = 0;
+            while (i <= wallsUp.length && foundWall === false) {
                 if (JSON.stringify(temp[0]) === JSON.stringify(wallsUp[i])) {
                     foundWall = true;
                 }
+                i++;
             }
             if (foundWall === false && currentY != 25) {
                 currentY -= 100;
@@ -175,10 +181,12 @@
             let foundWall = false;
             let temp = [];
             temp.push([currentX, currentY]);
-            for (let i = 0; i < wallsDown.length; i++) {
+            let i = 0;
+            while (i <= wallsDown.length && foundWall === false) {
                 if (JSON.stringify(temp[0]) === JSON.stringify(wallsDown[i])) {
                     foundWall = true;
                 }
+                i++;
             }
             if (foundWall === false && currentY != 425) {
                 currentY += 100;
