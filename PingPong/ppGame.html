@@ -27,7 +27,12 @@
     <button id="reset" onclick="location.reload()" style="position: absolute; right: 1%">Reset</button>
     <button id="start" onclick="start()" style="position: absolute; right: 6%;">Start</button>
     <strong>
-        <p id="score" style="position:fixed; right: 35px; font-size: 30px">Score: </p>
+        <h1 id="highscore" style="position: absolute; top: 7%;">Highscore:</h1>
+    </strong>
+    <button onclick="localStorage.removeItem('savedScores')" style="position: absolute; 
+    bottom: 5%; left: 1%">Clear</button>
+    <strong>
+        <h2 id="score" style="position:absolute; right: 35px;">Score: </h2>
     </strong>
     <canvas id="myCanvas" width="600" height="400"></canvas>
     <script>
@@ -52,6 +57,8 @@
         let oppX = 565;
         let oppY = (canvas.height - paddleHeight) / 2;
         let oppSpeed = 1;
+        let scores = [];
+        viewScores();
 
 
         document.addEventListener("mousemove", checkMouseMove, false);
@@ -86,6 +93,31 @@
         function disableMulti() {
             multiEnabled = false;
             location.reload();
+        }
+
+        function viewScores() {
+            let testArray = JSON.parse(localStorage.getItem("savedScores"));
+            if (testArray) {
+                scores = JSON.parse(localStorage.getItem("savedScores"));
+                scores.sort(function (a, b) {
+                return b - a
+            });
+                for (let a = 0; a < scores.length; a++) {
+                    document.getElementById("highscore").innerHTML += "<br>" + scores[a];
+                }
+            }
+        }
+
+        function addScore(score) {
+            if (scores.length === 10) {
+                if (score > scores[9]) {
+                    scores.pop();
+                    scores.push(score);
+                }
+            } else {
+                scores.push(score);
+            }
+            localStorage.setItem("savedScores", JSON.stringify(scores));
         }
 
         function draw() {
@@ -196,6 +228,9 @@
             }
             if (x + dx < 0 - ballRadius) {
                 alert(`Game Over! \n Score: ${score}`);
+                if (multiEnabled === false) {
+                    addScore(score);
+                }
                 document.location.reload();
                 clearInterval(interval);
             }
