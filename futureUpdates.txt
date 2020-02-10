@@ -1,0 +1,19 @@
+Handleliste:
+- Finding products based on suggestion given by program
+
+Klokke:
+- Adding several smaller clocks representing the most popular timezones
+
+Knapp:
+- Making it easier to navigate around the site
+- Adding more complex features, such as animations and bubble effect
+
+PingPong
+- Give users the ability to customize ball, paddle and the canvas
+
+
+Future projects:
+- Secret message encoder/decoder
+- Platform game (Mario-style)
+- Search engine
+- Maze solver
