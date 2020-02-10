@@ -1,0 +1,11 @@
+Klokke:
+- Hand that shows time in seconds bugs out when seconds are between 15 and 45.
+
+Labyrint:
+- Image doesn't show up occasionally. Refresh a few times for it to work properly.
+
+PingPong:
+- Ball sometimes gets stuck behind users paddle.
+
+Quiz:
+- index.pug unable to find required functions from script src questionFunc.js.
