@@ -38,6 +38,9 @@
     <script>
 
         let user = prompt("Please enter your name!");
+        if (!user) {
+            user = "Unknown user";
+        }
         let canvas = document.getElementById("myCanvas");
         let ctx = canvas.getContext("2d");
         let x = canvas.width / 2;
