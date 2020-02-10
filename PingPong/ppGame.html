@@ -29,14 +29,15 @@
     <strong>
         <h1 id="highscore" style="position: absolute; top: 7%;">Highscore:</h1>
     </strong>
-    <button onclick="localStorage.removeItem('savedScores')" style="position: absolute; 
+    <button onclick="localStorage.removeItem('savedScores'); location.reload();" style="position: absolute; 
     bottom: 5%; left: 1%">Clear</button>
     <strong>
-        <h2 id="score" style="position:absolute; right: 35px;">Score: </h2>
+        <h2 id="score" style="position:absolute; right: 35px;">Current Score: </h2>
     </strong>
     <canvas id="myCanvas" width="600" height="400"></canvas>
     <script>
 
+        let user = prompt("Please enter your name!");
         let canvas = document.getElementById("myCanvas");
         let ctx = canvas.getContext("2d");
         let x = canvas.width / 2;
@@ -95,27 +96,38 @@
             location.reload();
         }
 
+        function compareScores(a,b) {
+            let scoreA = a.highscore;
+                let scoreB = b.highscore;
+                let comparison = 0;
+                if (scoreA < scoreB) {
+                    comparison = 1;
+                }  else if (scoreA > scoreB) {
+                    comparison = -1;
+                }
+                return comparison;
+        }
+
         function viewScores() {
             let testArray = JSON.parse(localStorage.getItem("savedScores"));
             if (testArray) {
                 scores = JSON.parse(localStorage.getItem("savedScores"));
-                scores.sort(function (a, b) {
-                return b - a
-            });
+                scores.sort(compareScores);
                 for (let a = 0; a < scores.length; a++) {
-                    document.getElementById("highscore").innerHTML += "<br>" + scores[a];
+                    document.getElementById("highscore").innerHTML += "<br>" + scores[a].name 
+                    + " : " + scores[a].highscore + "p";
                 }
             }
         }
 
         function addScore(score) {
             if (scores.length === 10) {
-                if (score > scores[9]) {
+                if (score > scores[9].highscore) {
                     scores.pop();
-                    scores.push(score);
+                    scores.push({name: user, highscore: score});
                 }
             } else {
-                scores.push(score);
+                scores.push({name: user, highscore: score});
             }
             localStorage.setItem("savedScores", JSON.stringify(scores));
         }
