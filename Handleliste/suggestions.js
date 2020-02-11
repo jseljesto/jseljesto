@@ -1,0 +1,1 @@
+export let items = ['Saft','Sukker','Eple','Appelsin','Melk','Pasta','Banan'];

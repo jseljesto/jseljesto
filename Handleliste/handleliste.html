@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="stylesheet.css" />
 <meta charset="UTF-8">
 
-<body onload="createShoppingList(); getSuggestions()">
+<body>
     <form id="input">
         <p><label for="produkt"> Produkt :</label>
             <input id="produkt" type="text" required></p>
@@ -14,33 +14,57 @@
             <input id="antall" type="number"> Enhet: <input id="enhet" type="enhet"></p>
 
     </form>
-    <button id="leggTil" onclick="addElement()">Legg Til</button>
+    <button id="leggTil">Legg Til</button>
     <p id="handleliste"></p>
     <p id="side2"></p>
     <p id="forslag"></p>
 
-    <script>
+    <script type="module">
+
+        import { items } from './suggestions.js'
+
         let shoppingList = [];
         let secondPage = [];
         let numOfWares = 0;
         let secondPageItems = 0;
 
-      /*  function getSuggestions() {
-            const xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = () => {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    document.getElementById("forslag").innerHTML = xhr.responseText;
-                    return xhr.responseText;
-                }
+
+        document.addEventListener("load", function () {
+            let shoppingText = "<ul id='nyHandleliste'>";
+            for (let i of shoppingList) {
+                let index = shoppingList.indexOf(i);
+                shoppingText += "<li>" + i + "<a id=" + index + "> &times;</a></li>";
             }
-            xhr.open("GET", "suggestions.txt");
-        } */
+            shoppingText += "</ul>";
+            document.getElementById("handleliste").innerHTML = shoppingText;
+        })
+
+
+        document.addEventListener("dblclick", function (element) {
+            if (element.target.id > 10) {
+                removeSecondPageElement(element.target.id);
+            } else {
+                removeElement(element.target.id);
+            }
+        });
+
+        document.addEventListener("change", function() {
+            let word = document.getElementById("produkt").value;
+            for (let i = 0; i < items.length; i++) {
+                    if (items[i].substring(0, word.length) === word) {
+                        document.getElementById("forslag").innerHTML = "Did you mean " + items[i];
+                        break;
+                    } else {
+                        document.getElementById("forslag").innerHTML = "Found no similar products.";
+                    }
+                }
+            });
 
         function createShoppingList() {
             let shoppingText = "<ul id='nyHandleliste'>";
             for (let i of shoppingList) {
                 let index = shoppingList.indexOf(i);
-                shoppingText += "<li>" + i + "<a onclick='removeElement(" + index + ")'> &times;</a></li>";
+                shoppingText += "<li>" + i + "<a id=" + index + "> &times;</a></li>";
             }
             shoppingText += "</ul>";
             document.getElementById("handleliste").innerHTML = shoppingText;
@@ -56,7 +80,8 @@
             document.getElementById("side2").innerHTML = shoppingText;
         }
 
-        function addElement() {
+        let newElement = document.getElementById("leggTil");
+        newElement.addEventListener('click', function () {
             if (document.getElementById("produkt").value != "") {
                 let text = document.getElementById("antall").value + " " +
                     document.getElementById("enhet").value + " " +
@@ -76,7 +101,7 @@
                 document.getElementById("enhet").value = "";
                 document.getElementById("produkt").value = "";
             }
-        }
+        })
 
         function removeElement(index) {
             shoppingList.splice(index, 1);
