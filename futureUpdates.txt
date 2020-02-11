@@ -11,6 +11,8 @@ Knapp:
 PingPong
 - Give users the ability to customize ball, paddle and the canvas
 
+Quiz:
+- Making it fully compatible with Node.js and Pug
 
 Future projects:
 - Secret message encoder/decoder
