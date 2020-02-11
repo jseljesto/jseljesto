@@ -1,6 +1,3 @@
-Handleliste:
-- Finding products based on suggestion given by program
-
 Klokke:
 - Adding several smaller clocks representing the most popular timezones
 
