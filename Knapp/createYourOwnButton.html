@@ -89,7 +89,7 @@
 
 
     <button id="designButton" style="position: absolute; top:45%; left:45%; background-color: white; 
-    height: 30px; width: 130px;" onclick="writeCode()" onmouseover="changeHoverColor()"
+    height: 30px; width: 130px;" onclick="outputCode()" onmouseover="changeHoverColor()"
         onmouseout="changeColor()">Design Me!</button>
 
     <strong>
@@ -152,8 +152,7 @@
         return document.getElementById("shadowColor").value;
     }
 
-    //Outputs only style changes made by user, ignores premade style 
-    function writeCode() {
+    function outputCode() {
         document.getElementById("designButton").style.removeProperty("position");
         document.getElementById("designButton").style.removeProperty("top");
         document.getElementById("designButton").style.removeProperty("left");

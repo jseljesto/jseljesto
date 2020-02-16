@@ -23,35 +23,35 @@
 
         import { items } from './suggestions.js'
 
-        let shoppingList = [];
+        let firstPage = [];
         let secondPage = [];
-        let numOfWares = 0;
+        let firstPageItems = 0;
         let secondPageItems = 0;
 
 
         document.addEventListener("load", function () {
-            let shoppingText = "<ul id='nyHandleliste'>";
-            for (let i of shoppingList) {
-                let index = shoppingList.indexOf(i);
-                shoppingText += "<li>" + i + "<a id=" + index + "> &times;</a></li>";
+            let shoppingListText = "<ul id='nyHandleliste'>";
+            for (let i of firstPage) {
+                let index = firstPage.indexOf(i);
+                shoppingListText += "<li>" + i + "<a id=" + index + "> &times;</a></li>";
             }
-            shoppingText += "</ul>";
-            document.getElementById("handleliste").innerHTML = shoppingText;
-        })
+            shoppingListText += "</ul>";
+            document.getElementById("handleliste").innerHTML = shoppingListText;
+        });
 
 
         document.addEventListener("dblclick", function (element) {
             if (element.target.id > 10) {
                 removeSecondPageElement(element.target.id);
             } else {
-                removeElement(element.target.id);
+                removeFirstPageElement(element.target.id);
             }
         });
 
         document.addEventListener("change", function() {
-            let word = document.getElementById("produkt").value;
+            let currentWord = document.getElementById("produkt").value;
             for (let i = 0; i < items.length; i++) {
-                    if (items[i].substring(0, word.length) === word) {
+                    if (items[i].substring(0, currentWord.length) === currentWord) {
                         document.getElementById("forslag").innerHTML = "Did you mean " + items[i];
                         break;
                     } else {
@@ -61,23 +61,23 @@
             });
 
         function createShoppingList() {
-            let shoppingText = "<ul id='nyHandleliste'>";
-            for (let i of shoppingList) {
-                let index = shoppingList.indexOf(i);
-                shoppingText += "<li>" + i + "<a id=" + index + "> &times;</a></li>";
+            let shoppingListText = "<ul id='nyHandleliste'>";
+            for (let i of firstPage) {
+                let index = firstPage.indexOf(i);
+                shoppingListText += "<li>" + i + "<a id=" + index + "> &times;</a></li>";
             }
-            shoppingText += "</ul>";
-            document.getElementById("handleliste").innerHTML = shoppingText;
+            shoppingListText += "</ul>";
+            document.getElementById("handleliste").innerHTML = shoppingListText;
         }
 
-        function shoppingListSecondPage() {
-            let shoppingText = "<ul id='listeAndreSide'>";
+        function createSecondPage() {
+            let shoppingListText = "<ul id='listeAndreSide'>";
             for (let i of secondPage) {
                 let index = secondPage.indexOf(i);
-                shoppingText += "<li>" + i + "<a onclick='removeSecondPageElement(" + index + ")'> &times;</a></li>";
+                shoppingListText += "<li>" + i + "<a onclick='removeSecondPageElement(" + index + ")'> &times;</a></li>";
             }
-            shoppingText += "</ul>";
-            document.getElementById("side2").innerHTML = shoppingText;
+            shoppingListText += "</ul>";
+            document.getElementById("side2").innerHTML = shoppingListText;
         }
 
         let newElement = document.getElementById("leggTil");
@@ -86,14 +86,14 @@
                 let text = document.getElementById("antall").value + " " +
                     document.getElementById("enhet").value + " " +
                     document.getElementById("produkt").value;
-                if (numOfWares <= 9) {
-                    shoppingList.push(text);
+                if (firstPageItems <= 9) {
+                    firstPage.push(text);
                     createShoppingList();
-                    numOfWares++;
+                    firstPageItems++;
                 }
-                else if (numOfWares >= 10 && secondPageItems <= 9) {
+                else if (firstPageItems >= 10 && secondPageItems <= 9) {
                     secondPage.push(text);
-                    shoppingListSecondPage();
+                    createSecondPage();
                     secondPageItems++;
                 }
 
@@ -101,13 +101,13 @@
                 document.getElementById("enhet").value = "";
                 document.getElementById("produkt").value = "";
             }
-        })
+        });
 
-        function removeElement(index) {
-            shoppingList.splice(index, 1);
+        function removeFirstPageElement(index) {
+            firstPage.splice(index, 1);
             let updatedList = document.getElementById("nyHandleliste");
             updatedList.removeChild(updatedList.childNodes[index]);
-            numOfWares--;
+            firstPageItems--;
             createShoppingList();
         }
 

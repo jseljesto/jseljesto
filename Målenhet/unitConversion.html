@@ -104,7 +104,7 @@
 
     <script>
 
-        let lengthUnits = {
+        const lengthUnits = {
             meter: 1,
             centimeter: 100,
             millimeter: 1000,
@@ -115,7 +115,7 @@
             tomme: 0.0254
         }
 
-        let weightUnits = {
+        const weightUnits = {
             kilogram: 1,
             gram: 1000,
             milligram: 1000000,
@@ -124,7 +124,7 @@
             ounce: 35.2739619
         }
 
-        let timeUnits = {
+        const timeUnits = {
             sekund: 2629800,
             minutt: 43830,
             timer: 730.5,
@@ -133,7 +133,7 @@
             år: 0.08333
         }
 
-        let temperatureUnits = {
+        const temperatureUnits = {
             celsius: 1,
             kelvin: 1,
             fahrenheit: 1.8
@@ -146,7 +146,6 @@
 
 
         function toggleUnitType(newUnitType) {
-
             document.getElementById(shownUnitType + "ToConvert").style.visibility = "hidden";
             document.getElementById(shownUnitType + "Converted").style.visibility = "hidden";
             shownUnitType = newUnitType;
@@ -219,7 +218,6 @@
         }
 
         function convertUnits() {
-
             let keys = findCorrectKeys();
             let values = findCorrectValues();
 

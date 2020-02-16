@@ -18,28 +18,28 @@
 
     <script type="module">
 
-        import { data } from './questions.js';
+        import { questionArray } from './questions.js';
 
         let qAnswered = 0;
         let answers = [];
         let points = 0;
 
-        let numOfQuestions = data.length;
+        const numOfQuestions = questionArray.length;
 
         //Randomizes questions
 
-        data.sort(function (a, b) {
+        questionArray.sort(function (a, b) {
             return 0.5 - Math.random()
         });
 
-        answers = [data[qAnswered].answers.correctAnswer, data[qAnswered].answers.wrongAnswer1,
-        data[qAnswered].answers.wrongAnswer2, data[qAnswered].answers.wrongAnswer3];
+        answers = [questionArray[qAnswered].answers.correctAnswer, questionArray[qAnswered].answers.wrongAnswer1,
+        questionArray[qAnswered].answers.wrongAnswer2, questionArray[qAnswered].answers.wrongAnswer3];
 
         answers.sort(function (a, b) {
             return 0.5 - Math.random()
         });
 
-        document.getElementById("questionsheet").innerHTML = data[qAnswered].question;
+        document.getElementById("questionsheet").innerHTML = questionArray[qAnswered].question;
         document.getElementById("option1").innerHTML = answers[0];
         document.getElementById("radio1").value = answers[0];
         document.getElementById("option2").innerHTML = answers[1];
@@ -58,14 +58,14 @@
             }
             else {
 
-                answers = [data[qAnswered].answers.correctAnswer, data[qAnswered].answers.wrongAnswer1,
-                data[qAnswered].answers.wrongAnswer2, data[qAnswered].answers.wrongAnswer3];
+                answers = [questionArray[qAnswered].answers.correctAnswer, questionArray[qAnswered].answers.wrongAnswer1,
+                questionArray[qAnswered].answers.wrongAnswer2, questionArray[qAnswered].answers.wrongAnswer3];
 
                 answers.sort(function (a, b) {
                     return 0.5 - Math.random()
                 });
 
-                document.getElementById("questionsheet").innerHTML = data[qAnswered].question;
+                document.getElementById("questionsheet").innerHTML = questionArray[qAnswered].question;
                 document.getElementById("option1").innerHTML = answers[0];
                 document.getElementById("radio1").value = answers[0];
                 document.getElementById("option2").innerHTML = answers[1];
@@ -91,7 +91,7 @@
             for (let i = 1; i < 5; i++) {
                 if (document.getElementById("radio" + i).checked) {
                     if (document.getElementById("radio" + i).value ===
-                        data[qAnswered].answers.correctAnswer) {
+                        questionArray[qAnswered].answers.correctAnswer) {
                         alert("You answered correctly!");
                         points++;
                         document.getElementById("option" + i).style.color = "green";

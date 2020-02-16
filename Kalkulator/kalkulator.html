@@ -36,20 +36,18 @@
     <script>
 
         let currentNumber = 0;
-        let firstNumber = 0;
+        let firstOperand = 0;
         let operator = "";
-        let secondNumber = 0;
+        let secondOperand = 0;
 
         function clickNumber(val) {
             if (operator.length === 0) {
-                firstNumber = parseFloat(firstNumber + val);
-                document.getElementById("result").innerHTML = firstNumber;
+                firstOperand = parseFloat(firstOperand + val);
+                document.getElementById("result").innerHTML = firstOperand;
             }
             else if (operator.length > 0) {
-                secondNumber = parseFloat(secondNumber + val);
-                document.getElementById("result").innerHTML = secondNumber;
-
-            } else {
+                secondOperand = parseFloat(secondOperand + val);
+                document.getElementById("result").innerHTML = secondOperand;
 
             }
         }
@@ -59,89 +57,85 @@
                 operator = op;
             } else {
                 findResult();
-                firstNumber = currentNumber;
-                secondNumber = 0;
+                firstOperand = currentNumber;
+                secondOperand = 0;
                 operator = op;
             }
-
         }
 
         function clearCalc() {
             currentNumber = 0;
-            firstNumber = 0;
+            firstOperand = 0;
             operator = "";
-            secondNumber = 0;
+            secondOperand = 0;
             document.getElementById("result").innerHTML = 0;
         }
 
         function addDecimal() {
             if (operator.length === 0) {
-                firstNumber += ".";
-                document.getElementById("result").innerHTML = firstNumber;
-
+                firstOperand += ".";
+                document.getElementById("result").innerHTML = firstOperand;
             }
             else if (operator.length > 0) {
-                secondNumber += ".";
-                document.getElementById("result").innerHTML = secondNumber;
-
+                secondOperand += ".";
+                document.getElementById("result").innerHTML = secondOperand;
             }
-
         }
 
         function changeNegPos() {
             if (operator.length === 0) {
-                let temporaryNumber = firstNumber.toString();
+                let temporaryNumber = firstOperand.toString();
                 if (temporaryNumber.charAt(0) === "-") {
-                    firstNumber = Math.abs(firstNumber);
+                    firstOperand = Math.abs(firstOperand);
                 } else {
-                    firstNumber = firstNumber * -1;
+                    firstOperand = -firstOperand;
                 }
-                document.getElementById("result").innerHTML = firstNumber;
+                document.getElementById("result").innerHTML = firstOperand;
             }
             if (operator.length > 0) {
-                let temporaryNumber = secondNumber.toString()
+                let temporaryNumber = secondOperand.toString()
                 if (temporaryNumber.charAt(0) === "-") {
-                    secondNumber = Math.abs(secondNumber);
+                    secondOperand = Math.abs(secondOperand);
                 } else {
-                    secondNumber = secondNumber * -1;
+                    secondOperand = -secondOperand;
                 }
-                document.getElementById("result").innerHTML = secondNumber;
+                document.getElementById("result").innerHTML = secondOperand;
             }
         }
 
         function squareRoot() {
-            if (secondNumber > 0) {
+            if (secondOperand > 0) {
                 findResult();
                 currentNumber = Math.sqrt(currentNumber);
                 document.getElementById("result").innerHTML = currentNumber;
             } else {
-                currentNumber = Math.sqrt(firstNumber);
+                currentNumber = Math.sqrt(firstOperand);
                 document.getElementById("result").innerHTML = currentNumber;
             }
         }
 
         function findResult() {
             if (operator === "+") {
-                currentNumber = firstNumber + secondNumber;
+                currentNumber = firstOperand + secondOperand;
             }
             else if (operator === "-") {
-                currentNumber = firstNumber - secondNumber;
+                currentNumber = firstOperand - secondOperand;
             }
             else if (operator === "*") {
-                currentNumber = firstNumber * secondNumber;
+                currentNumber = firstOperand * secondOperand;
             }
             else if (operator === "/") {
-                currentNumber = firstNumber / secondNumber;
+                currentNumber = firstOperand / secondOperand;
             }
             else if (operator === "%") {
-                currentNumber = firstNumber * secondNumber / 100;
+                currentNumber = firstOperand * secondOperand / 100;
             }
             else {
                 alert("You haven't made any changes!");
             }
             document.getElementById("result").innerHTML = currentNumber;
-            firstNumber = 0;
-            secondNumber = 0;
+            firstOperand = 0;
+            secondOperand = 0;
             operator = "";
         }
 

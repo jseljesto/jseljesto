@@ -45,12 +45,12 @@
         </p>
     </form>
 
-    <button id="sendInfo" onclick="createObject(findBirthDate())">Send Inn</button>
+    <button id="sendInfo" onclick="createPerson(findBirthDate())">Send Inn</button>
     <button onclick="location.reload()" style="position: absolute; 
     top: 420px; left: 45%">Lag ny person</button>
     <p id="listOfPersons">Liste av personar: </p>
     <p id="personInfo"></p>
-    <button id="clearStorage" onclick="clearStorage()">Omstill</button>
+    <button id="clearStorage" onclick="clearLocalStorage()">Omstill</button>
     <input id="searchBar" type="text" style="position: absolute; top: 580px;">
     <button id="searchPerson" onclick="searchForPerson()" style="position: fixed; 
     top: 580px; left: 15%;">Søk</button>
@@ -139,10 +139,10 @@
             }
 
         }
-        
+
         let personObjects = [];
-        let test = JSON.parse(localStorage.getItem("personObjects"));
-        if (test) {
+        const importedObjects = JSON.parse(localStorage.getItem("personObjects"));
+        if (importedObjects) {
             personObjects = JSON.parse(localStorage.getItem("personObjects"));
             for (let a = 0; a <= personObjects.length; a++) {
                 document.getElementById("listOfPersons").innerHTML += "<br>" + personObjects[a]._name;
@@ -150,7 +150,7 @@
         }
 
         function validateText(textID) {
-            var re = /^[A-Za-z]+$/;
+            const re = /^[A-Za-z]+$/;
             if (!(re.test(document.getElementById(textID).value))) {
                 alert(`${textID} is NOT correct!`);
                 return false;
@@ -160,7 +160,7 @@
         }
 
         function validateNumber(numberID) {
-            var re = /^[0-9]+$/;
+            const re = /^[0-9]+$/;
             if (!(re.test(document.getElementById(numberID).value))) {
                 alert(`${textID} is NOT correct!`);
                 return false;
@@ -193,19 +193,19 @@
         }
 
         function findBirthDate() {
-            let fullBirthDate = [];
-            let birthday = document.getElementById("fodDato").value;
-            let year = birthday.substr(0, 4);
-            fullBirthDate.push(year);
-            let month = birthday.substr(5, 2);
-            fullBirthDate.push(month);
-            let day = birthday.substr(8, 2);
-            fullBirthDate.push(day);
+            let birthDayArray = [];
+            let inputDate = document.getElementById("fodDato").value;
+            let year = inputDate.substr(0, 4);
+            birthDayArray.push(year);
+            let month = inputDate.substr(5, 2);
+            birthDayArray.push(month);
+            let day = inputDate.substr(8, 2);
+            birthDayArray.push(day);
             if (!day || !month || !year) {
                 alert("Birthdate is NOT correct!");
                 return false;
             } else {
-                return fullBirthDate;
+                return birthDayArray;
             }
         }
 
@@ -232,7 +232,7 @@
         function findPhoneNumber() {
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
-                    let phoneNumber = document.getElementById("telefonNr").value;
+                    let phoneNumber = Number(document.getElementById("telefonNr").value);
                     if (phoneNumber.length === 0) {
                         let emptyPhoneNumber = "No valid information";
                         resolve(emptyPhoneNumber);
@@ -259,20 +259,20 @@
         }
 
         async function findHobbies() {
-            let hobbies = ["Idrett", "Matlaging", "Lesing", "Koding", "Camping"];
+            const hobbies = ["Idrett", "Matlaging", "Lesing", "Koding", "Camping"];
             let confirmedHobbies = [];
             for (let i = 0; i < hobbies.length; i++) {
                 if (await isChecked(document.getElementById(hobbies[i]))) {
                     confirmedHobbies.push(hobbies[i]);
                 }
             }
-            let hobbiesString = confirmedHobbies.join(`, `);
-            return hobbiesString;
+            let listOfConfirmedHobbies = confirmedHobbies.join(`, `);
+            return listOfConfirmedHobbies;
         }
 
-        async function createObject(birthDayArray) {
+        async function createPerson(birthDayArray) {
             try {
-                let fullBirthDate = `${birthDayArray[2]}.${birthDayArray[1]}.${birthDayArray[0]}`
+                const fullBirthDate = `${birthDayArray[2]}.${birthDayArray[1]}.${birthDayArray[0]}`
                 let newPerson = new Person(await findName(), findGender(), fullBirthDate,
                     findPostalCode(), findAddress(), await findPhoneNumber(), await findHobbies());
                 personObjects.push(newPerson);
@@ -310,7 +310,7 @@
             }
         }
 
-        function clearStorage() {
+        function clearLocalStorage() {
             localStorage.removeItem("personObjects");
             location.reload();
         }

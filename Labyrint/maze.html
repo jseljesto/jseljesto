@@ -8,21 +8,21 @@
 
 <body onkeydown="moveObject(event)">
     <canvas onclick="showCoords()" id="myCanvas" width="800" height="500"></canvas>
-    <img id="objectImage" src="./image.png" style="opacity: 0"/>
-    <img id="finishLine" src="./finishline.png" style="opacity: 0"/>
+    <img id="objectImage" src="./image.png" style="opacity: 0" />
+    <img id="finishLine" src="./finishline.png" style="opacity: 0" />
     <h1 id="timer" style="position: fixed; left: 10%">00:00:00</h1>
     <script>
 
-        let wallsLeft = [];
-        let wallsRight = [];
-        let wallsUp = [];
-        let wallsDown = [];
+        let leftWalls = [];
+        let rightWalls = [];
+        let wallsAbove = [];
+        let wallsBelow = [];
 
         let c = document.getElementById("myCanvas");
         let ctx = c.getContext("2d");
         let currentX = 125;
         let currentY = 425;
-        let objImage = document.getElementById("objectImage");
+        const objImage = document.getElementById("objectImage");
         let seconds = 0;
         let minutes = 0;
         let hours = 0;
@@ -30,10 +30,10 @@
         //Creating lines for maze
 
         function drawMaze() {
-            wallsLeft = [];
-            wallsRight = [];
-            wallsUp = [];
-            wallsDown = [];
+            leftWalls = [];
+            rightWalls = [];
+            wallsAbove = [];
+            wallsBelow = [];
 
             ctx.beginPath();
             ctx.rect(0, 0, 500, 500);
@@ -43,71 +43,71 @@
             ctx.moveTo(400, 500);
             ctx.lineTo(400, 400);
             ctx.stroke();
-            wallsLeft.push([425, 425]);
-            wallsRight.push([325, 425]);
+            leftWalls.push([425, 425]);
+            rightWalls.push([325, 425]);
 
             ctx.beginPath();
             ctx.moveTo(500, 300);
             ctx.lineTo(400, 300);
             ctx.stroke();
-            wallsUp.push([425, 325]);
-            wallsDown.push([425, 225]);
+            wallsAbove.push([425, 325]);
+            wallsBelow.push([425, 225]);
 
             ctx.beginPath();
             ctx.moveTo(500, 200);
             ctx.lineTo(200, 200);
             ctx.stroke();
-            wallsUp.push([425, 225]);
-            wallsUp.push([325, 225]);
-            wallsUp.push([225, 225]);
-            wallsDown.push([425, 125]);
-            wallsDown.push([325, 125]);
-            wallsDown.push([225, 125]);
+            wallsAbove.push([425, 225]);
+            wallsAbove.push([325, 225]);
+            wallsAbove.push([225, 225]);
+            wallsBelow.push([425, 125]);
+            wallsBelow.push([325, 125]);
+            wallsBelow.push([225, 125]);
 
             ctx.beginPath();
             ctx.moveTo(400, 0);
             ctx.lineTo(400, 100);
-            wallsLeft.push([425, 25]);
-            wallsRight.push([325, 25]);
+            leftWalls.push([425, 25]);
+            rightWalls.push([325, 25]);
             ctx.moveTo(400, 100);
             ctx.lineTo(100, 100);
-            wallsUp.push([325, 125]);
-            wallsUp.push([225, 125]);
-            wallsUp.push([125, 125]);
-            wallsDown.push([325, 25]);
-            wallsDown.push([225, 25]);
-            wallsDown.push([125, 25]);
+            wallsAbove.push([325, 125]);
+            wallsAbove.push([225, 125]);
+            wallsAbove.push([125, 125]);
+            wallsBelow.push([325, 25]);
+            wallsBelow.push([225, 25]);
+            wallsBelow.push([125, 25]);
             ctx.moveTo(100, 100);
             ctx.lineTo(100, 200);
             ctx.stroke();
-            wallsRight.push([25, 125]);
-            wallsLeft.push([125, 125]);
+            rightWalls.push([25, 125]);
+            leftWalls.push([125, 125]);
 
             ctx.beginPath();
             ctx.moveTo(300, 500);
             ctx.lineTo(300, 300);
-            wallsLeft.push([325, 325]);
-            wallsLeft.push([325, 425]);
-            wallsRight.push([225, 325]);
-            wallsRight.push([225, 425]);
+            leftWalls.push([325, 325]);
+            leftWalls.push([325, 425]);
+            rightWalls.push([225, 325]);
+            rightWalls.push([225, 425]);
             ctx.moveTo(300, 300);
             ctx.lineTo(100, 300);
             ctx.stroke();
-            wallsUp.push([225, 325]);
-            wallsUp.push([125, 325]);
-            wallsDown.push([225, 225]);
-            wallsDown.push([125, 225]);
+            wallsAbove.push([225, 325]);
+            wallsAbove.push([125, 325]);
+            wallsBelow.push([225, 225]);
+            wallsBelow.push([125, 225]);
 
             ctx.beginPath();
             ctx.moveTo(100, 500);
             ctx.lineTo(100, 400);
-            wallsLeft.push([125, 425]);
-            wallsRight.push([25, 425]);
+            leftWalls.push([125, 425]);
+            rightWalls.push([25, 425]);
             ctx.moveTo(100, 400);
             ctx.lineTo(200, 400);
             ctx.stroke();
-            wallsDown.push([125, 325]);
-            wallsUp.push([125, 425]);
+            wallsBelow.push([125, 325]);
+            wallsAbove.push([125, 425]);
 
             createFinishLine();
             createImage(currentX, currentY);
@@ -128,8 +128,8 @@
             let temp = [];
             temp.push([currentX, currentY]);
             let i = 0;
-            while (i <= wallsLeft.length && foundWall === false) {
-                if (JSON.stringify(temp[0]) === JSON.stringify(wallsLeft[i])) {
+            while (i <= leftWalls.length && foundWall === false) {
+                if (JSON.stringify(temp[0]) === JSON.stringify(leftWalls[i])) {
                     foundWall = true;
                 }
                 i++;
@@ -146,8 +146,8 @@
             let temp = [];
             temp.push([currentX, currentY]);
             let i = 0;
-            while (i <= wallsRight.length && foundWall === false) {
-                if (JSON.stringify(temp[0]) === JSON.stringify(wallsRight[i])) {
+            while (i <= rightWalls.length && foundWall === false) {
+                if (JSON.stringify(temp[0]) === JSON.stringify(rightWalls[i])) {
                     foundWall = true;
                 }
                 i++;
@@ -164,8 +164,8 @@
             let temp = [];
             temp.push([currentX, currentY]);
             let i = 0;
-            while (i <= wallsUp.length && foundWall === false) {
-                if (JSON.stringify(temp[0]) === JSON.stringify(wallsUp[i])) {
+            while (i <= wallsAbove.length && foundWall === false) {
+                if (JSON.stringify(temp[0]) === JSON.stringify(wallsAbove[i])) {
                     foundWall = true;
                 }
                 i++;
@@ -182,8 +182,8 @@
             let temp = [];
             temp.push([currentX, currentY]);
             let i = 0;
-            while (i <= wallsDown.length && foundWall === false) {
-                if (JSON.stringify(temp[0]) === JSON.stringify(wallsDown[i])) {
+            while (i <= wallsBelow.length && foundWall === false) {
+                if (JSON.stringify(temp[0]) === JSON.stringify(wallsBelow[i])) {
                     foundWall = true;
                 }
                 i++;
@@ -243,8 +243,8 @@
         }
 
         function showCoords() {
-            var x = event.screenX - 400;
-            var y = event.screenY - 120;
+            let x = event.screenX - 400;
+            let y = event.screenY - 120;
             alert("X-coords: " + x + " Y-coords: " + y);
         }
 

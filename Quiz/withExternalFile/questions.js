@@ -1,4 +1,4 @@
-export let data = [
+export let questionArray = [
     {
        "question": "What colours are represented on the Norwegian flag?",
        "answers": {

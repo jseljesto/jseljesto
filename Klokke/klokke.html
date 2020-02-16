@@ -69,7 +69,7 @@
 
         let canvas = document.getElementById("canvas");
         let ctx = canvas.getContext("2d");
-        let radius = canvas.height / 2;
+        const radius = canvas.height / 2;
         ctx.translate(radius, radius);
         setInterval(drawClock, 1000);
 
