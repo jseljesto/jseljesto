@@ -74,7 +74,8 @@
             let shoppingListText = "<ul id='listeAndreSide'>";
             for (let i of secondPage) {
                 let index = secondPage.indexOf(i);
-                shoppingListText += "<li>" + i + "<a onclick='removeSecondPageElement(" + index + ")'> &times;</a></li>";
+                shoppingListText += "<li>" + i + 
+                    "<a onclick='removeSecondPageElement(" + index + ")'> &times;</a></li>";
             }
             shoppingListText += "</ul>";
             document.getElementById("side2").innerHTML = shoppingListText;
