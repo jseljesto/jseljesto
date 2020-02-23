@@ -5,11 +5,15 @@ Knapp:
 - Making it easier to navigate around the site
 - Adding more complex features, such as animations and bubble effect
 
-PingPong
+PingPong:
 - Give users the ability to customize ball, paddle and the canvas
 
 Quiz:
 - Making it fully compatible with Node.js and Pug
+
+Minigames:
+- Several minigames connected with in-game currency and upgradeable functionality and interaction
+
 
 Future projects:
 - Secret message encoder/decoder
