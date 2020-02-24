@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        #myCanvas {
+            border: 2px solid black;
+            position: absolute;
+            margin: auto;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="myCanvas" width="800" height="600"></canvas>
+</body>
+<script>
+
+    let canvas = document.getElementById("myCanvas");
+    let ctx = canvas.getContext("2d");
+
+    let shipWidth = 50;
+    let shipHeight = 50;
+    let shipY = 520;
+    let shipX = (canvas.width - shipWidth) / 2;
+    let invaderX = 200;
+    let invaderY = 100;
+    let dx = -1;
+
+    const interval = setInterval(draw, 10);
+
+    document.addEventListener("mousemove", checkMouseMove, false);
+
+    function drawElement(x,y,width,height,color) {
+        ctx.beginPath();
+        ctx.rect(x,y,width,height);
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawElement(shipX, shipY, shipWidth, shipHeight, "green");
+        drawElement(shipX + 12.5, shipY-20, 25, 20, "green");
+
+        for (let i = 0; i < 5; i++) {
+            drawElement(invaderX + (i*50), invaderY, 20, 20, "black");
+        }
+        //console.log(invaderX);
+        invaderX += dx;
+        if (invaderX <= 0 || invaderX >= 580) {
+            invaderY += 20;
+            dx = -dx;
+        }
+    }
+    function checkMouseMove(e) {
+            let currentX = e.clientX - canvas.offsetLeft;
+            if (currentX > 25 && currentX < (canvas.width-25)) {
+                shipX = currentX - shipWidth / 2;
+            }
+        }
+
+</script>
+
+</html>
