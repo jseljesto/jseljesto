@@ -13,10 +13,10 @@ Quiz:
 
 Minigames:
 - Several minigames connected with in-game currency and upgradeable functionality and interaction
+- Includes Space Invaders-type game, platformer and survival simulator
 
 
 Future projects:
 - Secret message encoder/decoder
-- Platform game (Mario-style)
 - Search engine
 - Maze solver
