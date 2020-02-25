@@ -15,7 +15,7 @@
     </style>
 </head>
 
-<body>
+<body onkeydown="createBullet(event)">
     <canvas id="myCanvas" width="800" height="600"></canvas>
 </body>
 <script>
@@ -30,40 +30,72 @@
     let invaderX = 200;
     let invaderY = 100;
     let dx = -1;
+    let turretY = shipY - 20;
+    let turretX = shipX + 12.5;
+    let bulletSpeed = 2;
+    let bullets = [];
+
+    let invaders = [];
+    for (let a = 0; a < 5; a++) {
+        invaders.push({ x: (invaderX + (a * 50)), y: invaderY });
+    }
 
     const interval = setInterval(draw, 10);
 
     document.addEventListener("mousemove", checkMouseMove, false);
 
-    function drawElement(x,y,width,height,color) {
+    function drawElement(x, y, width, height, color) {
         ctx.beginPath();
-        ctx.rect(x,y,width,height);
+        ctx.rect(x, y, width, height);
         ctx.fillStyle = color;
         ctx.fill();
         ctx.closePath();
     }
 
+    function createBullet(event) {
+        if (event.keyCode === 32) {
+            bullets.push({x: turretX, y: (turretY-20)});
+        }
+    }
+
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawElement(shipX, shipY, shipWidth, shipHeight, "green");
-        drawElement(shipX + 12.5, shipY-20, 25, 20, "green");
+        turretX = shipX + 12.5;
+        turretY = shipY - 20;
+        drawElement(turretX, turretY, 25, 20, "green");
 
-        for (let i = 0; i < 5; i++) {
-            drawElement(invaderX + (i*50), invaderY, 20, 20, "black");
-        }
-        //console.log(invaderX);
         invaderX += dx;
         if (invaderX <= 0 || invaderX >= 580) {
             invaderY += 20;
             dx = -dx;
         }
-    }
-    function checkMouseMove(e) {
-            let currentX = e.clientX - canvas.offsetLeft;
-            if (currentX > 25 && currentX < (canvas.width-25)) {
-                shipX = currentX - shipWidth / 2;
-            }
+
+        for (let i = 0; i < invaders.length; i++) {
+            drawElement(invaders[i].x, invaders[i].y, 20, 20, "black");
+            invaders[i].x = invaderX + (i * 50);
+            invaders[i].y = invaderY;
         }
+
+        for (let b = 0; b < bullets.length; b++) {
+            drawElement(bullets[b].x, bullets[b].y, 25, 20, "green");
+            bullets[b].y -= bulletSpeed;
+        }
+
+        if (invaderY >= turretY) {
+            alert("You lost the game!");
+            clearInterval(interval);
+            window.location.reload();
+        }
+
+    }
+
+    function checkMouseMove(e) {
+        let currentX = e.clientX - canvas.offsetLeft;
+        if (currentX > 25 && currentX < (canvas.width - 25)) {
+            shipX = currentX - shipWidth / 2;
+        }
+    }
 
 </script>
 
