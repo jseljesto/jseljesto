@@ -54,7 +54,7 @@
 
     function createBullet(event) {
         if (event.keyCode === 32) {
-            bullets.push({x: turretX, y: (turretY-20)});
+            bullets.push({ x: turretX, y: (turretY - 20) });
         }
     }
 
@@ -73,7 +73,7 @@
 
         for (let i = 0; i < invaders.length; i++) {
             drawElement(invaders[i].x, invaders[i].y, 20, 20, "black");
-            invaders[i].x = invaderX + (i * 50);
+            invaders[i].x += dx;
             invaders[i].y = invaderY;
         }
 
@@ -88,6 +88,20 @@
             window.location.reload();
         }
 
+        for (let d = 0; d < invaders.length; d++) {
+            for (let e = 0; e < bullets.length; e++) {
+                if (bullets[e].y <= invaders[d].y + 20 && bullets[e].y + 20 >= invaders[d].y) {
+                    if (bullets[e].x + 25 >= invaders[d].x && bullets[e].x <= invaders[d].x + 20) {
+                        bullets.splice(e, 1);
+                        invaders.splice(d, 1);
+                    }
+                }
+            }
+        }
+        if (invaders.length === 0) {
+            clearInterval(interval);
+            window.location.reload();
+        }
     }
 
     function checkMouseMove(e) {
