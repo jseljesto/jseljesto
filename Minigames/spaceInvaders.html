@@ -16,7 +16,9 @@
 </head>
 
 <body onkeydown="createBullet(event)">
-    <canvas id="myCanvas" width="800" height="600"></canvas>
+    <h1 id="header" style="font-size: 100px; text-align: center; text-shadow: 3px 3px grey;">SPACE INVADERS!</h1>
+    <button id="startBtn" style="font-size: 100px; position:absolute; left: 42%" onclick="startGame();">PLAY</button>
+    <canvas id="myCanvas" width="800" height="600" style="visibility: hidden;"></canvas>
 </body>
 <script>
 
@@ -27,24 +29,38 @@
     let shipHeight = 50;
     let shipY = 520;
     let shipX = (canvas.width - shipWidth) / 2;
-    let invaderX = 200;
+    let invaderX = 50;
     let invaderY = 100;
-    let dx = 1;
+    let dx = 0;
     let speedCap = 5;
     let turretY = shipY - 20;
     let turretX = shipX + 12.5;
     let bulletSpeed = 2;
     let coolDown = 150;
     let bullets = [];
+    let gameStarted = false;
+    let upperRowLeft = 14;
 
     let invaders = [];
-    for (let a = 0; a < 5; a++) {
-        invaders.push({ x: (invaderX + (a * 50)), y: invaderY });
+    for (let a = 0; a < 28; a++) {
+        if (a < upperRowLeft) {
+            invaders.push({ x: (invaderX + (a * 50)), y: invaderY });
+        } else {
+            let temp = a - 14;
+            invaders.push({ x: (invaderX + (temp * 50)), y: invaderY + 50 });
+        }
     }
 
     const interval = setInterval(draw, 10);
 
     document.addEventListener("mousemove", checkMouseMove, false);
+
+    function startGame() {
+        document.getElementById("startBtn").style.visibility = "hidden";
+        document.getElementById("myCanvas").style.visibility = "visible";
+          dx = 0.5;
+        gameStarted = true;
+    }
 
     function drawElement(x, y, width, height, color) {
         ctx.beginPath();
@@ -64,57 +80,66 @@
     }
 
     function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        drawElement(shipX, shipY, shipWidth, shipHeight, "green");
-        turretX = shipX + 12.5;
-        turretY = shipY - 20;
-        drawElement(turretX, turretY, 25, 20, "green");
+        if (gameStarted) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawElement(shipX, shipY, shipWidth, shipHeight, "green");
+            turretX = shipX + 12.5;
+            turretY = shipY - 20;
+            drawElement(turretX, turretY, 25, 20, "green");
 
-        invaderX += dx;
-        if (invaderX <= 0 || invaderX >= 580) {
-            invaderY += 20;
-            dx = -dx;
-        }
+            invaderX += dx;
+            if (invaders[0].x <= 0 || invaders[invaders.length-1].x >= 780) {
+                invaderY += 20;
+                dx = -dx;
+            }
 
-        for (let i = 0; i < invaders.length; i++) {
-            drawElement(invaders[i].x, invaders[i].y, 20, 20, "black");
-            invaders[i].x += dx;
-            invaders[i].y = invaderY;
-        }
+            for (let i = 0; i < invaders.length; i++) {
+                drawElement(invaders[i].x, invaders[i].y, 20, 20, "black");
+                invaders[i].x += dx;
+                if (i < upperRowLeft) {
+                    invaders[i].y = invaderY;
+                } else {
+                    invaders[i].y = invaderY + 50;
+                }
+            }
 
-        for (let b = 0; b < bullets.length; b++) {
-            drawElement(bullets[b].x, bullets[b].y, 25, 20, "green");
-            bullets[b].y -= bulletSpeed;
-        }
+            for (let b = 0; b < bullets.length; b++) {
+                drawElement(bullets[b].x, bullets[b].y, 25, 20, "green");
+                bullets[b].y -= bulletSpeed;
+            }
 
-        if (invaderY >= turretY) {
-            alert("The invaders have landed! You lost the game!");
-            clearInterval(interval);
-            window.location.reload();
-        }
+            if (invaderY >= turretY) {
+                alert("The invaders have landed! You lost the game!");
+                clearInterval(interval);
+                window.location.reload();
+            }
 
-        for (let d = 0; d < invaders.length; d++) {
-            for (let e = 0; e < bullets.length; e++) {
-                if (bullets[e].y <= invaders[d].y + 20 && bullets[e].y + 20 >= invaders[d].y) {
-                    if (bullets[e].x + 25 >= invaders[d].x && bullets[e].x <= invaders[d].x + 20) {
-                        bullets.splice(e, 1);
-                        invaders.splice(d, 1);
+            for (let d = 0; d < invaders.length; d++) {
+                for (let e = 0; e < bullets.length; e++) {
+                    if (bullets[e].y <= invaders[d].y + 20 && bullets[e].y + 20 >= invaders[d].y) {
+                        if (bullets[e].x + 25 >= invaders[d].x && bullets[e].x <= invaders[d].x + 20) {
+                            bullets.splice(e, 1);
+                            invaders.splice(d, 1);
+                            if (d <= upperRowLeft) {
+                                upperRowLeft--;
+                            }
+                        }
                     }
                 }
             }
-        }
 
-        if (coolDown < 150) {
-            coolDown++;
-        }
+            if (coolDown < 150) {
+                coolDown++;
+            }
 
-        if (Math.abs(dx) < speedCap) {
-            dx = dx * 1.0005;
-        }
+            if (Math.abs(dx) < speedCap) {
+                dx = dx * 1.0005;
+            }
 
-        if (invaders.length === 0) {
-            clearInterval(interval);
-            window.location.reload();
+            if (invaders.length === 0) {
+                document.getElementById("header").innerHTML = "YOU WON THE GAME!";
+                document.getElementById("myCanvas").style.visibility = hidden;
+            }
         }
     }
 
