@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="stylesheet.css" />
     <style>
         #myCanvas {
             border: 2px solid black;
@@ -17,25 +18,25 @@
 
 <body id="screen" onkeydown="createBullet(event)">
 
-    <h3 id="scoreBoard" style="font-size: 30px; position:absolute; top: 0%; right:1%;"></h3>
+    <h3 id="scoreBoard" style="font-size: 30px; position:absolute; top: 0%; right:1%; color:white;"></h3>
 
-    <h1 id="header" style="font-size: 100px; text-align: center; text-shadow: 3px 3px grey;">SPACE INVADERS!</h1>
+    <h1 id="header" style="font-size: 100px; text-align: center; text-shadow: 3px 3px black;">SPACE INVADERS!</h1>
     <button id="startBtn" style="font-size: 100px; position:absolute; left: 42%" onclick="startGame();">PLAY</button>
 
-    <h3 id="bulletRadiusLvl" style="font-size: 20px; position:absolute; left:5%; top: 34%"></h3>
-    <button id="bulletRadiusUpgrade" onclick="upgradeGame('bulletRadius')"
+    <h3 id="bulletRadiusLvl" class = "upgdHeaders" style="font-size: 20px; position:absolute; left:5%; top: 34%"></h3>
+    <button id="bulletRadiusUpgrade" class="upgButtons" onclick="upgradeGame('bulletRadius')"
         style="font-size: 20px; position:absolute; left:8%; top: 40%">UPGRADE</button>
 
-    <h3 id="multiplierLvl" style="font-size: 20px; position:absolute; right:5%; top: 34%"></h3>
-    <button id="multiplierUpgrade" onclick="upgradeGame('multiplier')"
+    <h3 id="multiplierLvl" class = "upgdHeaders" style="font-size: 20px; position:absolute; right:5%; top: 34%"></h3>
+    <button id="multiplierUpgrade" class="upgButtons" onclick="upgradeGame('multiplier')"
         style="font-size: 20px; position:absolute; right:8%; top: 40%">UPGRADE</button>
 
-    <h3 id="bulletSpdLvl" style="font-size: 20px; position:absolute; left:5%; top: 64%"></h3>
-    <button id="bulletSpdUpgrade" onclick="upgradeGame('bulletSpd')"
+    <h3 id="bulletSpdLvl" class = "upgdHeaders" style="font-size: 20px; position:absolute; left:5%; top: 64%"></h3>
+    <button id="bulletSpdUpgrade" class="upgButtons" onclick="upgradeGame('bulletSpd')"
         style="font-size: 20px; position:absolute; left:8%; top: 70%">UPGRADE</button>
 
-    <h3 id="cooldownLvl" style="font-size: 20px; position:absolute; right:6%; top: 64%"></h3>
-    <button id="cooldownUpgrade" onclick="upgradeGame('cooldown')"
+    <h3 id="cooldownLvl" class = "upgdHeaders" style="font-size: 20px; position:absolute; right:6%; top: 64%"></h3>
+    <button id="cooldownUpgrade" class="upgButtons" onclick="upgradeGame('cooldown')"
         style="font-size: 20px; position:absolute; right:8%; top: 70%">UPGRADE</button>
 
 
@@ -112,10 +113,10 @@
     function draw() {
         if (gameStarted) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drawElement(shipX, shipY, shipWidth, shipHeight, "green");
+            drawElement(shipX, shipY, shipWidth, shipHeight, "lightgreen");
             turretX = shipX + 12.5;
             turretY = shipY - 20;
-            drawElement(turretX, turretY, 25, 20, "green");
+            drawElement(turretX, turretY, 25, 20, "lightgreen");
 
             invaderX += dx;
             if (invaders[0].x <= 0 || invaders[invaders.length - 1].x >= 780) {
@@ -124,7 +125,7 @@
             }
 
             for (let i = 0; i < invaders.length; i++) {
-                drawElement(invaders[i].x, invaders[i].y, 20, 20, "black");
+                drawElement(invaders[i].x, invaders[i].y, 20, 20, "white");
                 invaders[i].x += dx;
                 if (i < upperRowLeft) {
                     invaders[i].y = invaderY;
@@ -134,7 +135,7 @@
             }
 
             for (let b = 0; b < bullets.length; b++) {
-                drawElement(bullets[b].x, bullets[b].y, 20 + (upgrades[0] * 4), 20 + (upgrades[0] * 4), "green");
+                drawElement(bullets[b].x, bullets[b].y, 20 + (upgrades[0] * 4), 20 + (upgrades[0] * 4), "lightgreen");
                 bullets[b].y -= bulletSpeed;
             }
 

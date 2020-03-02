@@ -1,0 +1,22 @@
+.upgButtons {
+    border-radius: 10px;
+    background-color: darkgreen;
+    color: white;
+    box-shadow: 5px 5px 5px black;
+}
+
+.upgHeaders {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#screen {
+    background-image: linear-gradient(to right, green, black, green);
+}
+
+#header {
+    color: white;
+}
+
+#myCanvas {
+    background-color: black;
+}
