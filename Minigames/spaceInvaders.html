@@ -15,9 +15,30 @@
     </style>
 </head>
 
-<body onkeydown="createBullet(event)">
+<body id="screen" onkeydown="createBullet(event)">
+
+    <h3 id="scoreBoard" style="font-size: 30px; position:absolute; top: 0%; right:1%;"></h3>
+
     <h1 id="header" style="font-size: 100px; text-align: center; text-shadow: 3px 3px grey;">SPACE INVADERS!</h1>
     <button id="startBtn" style="font-size: 100px; position:absolute; left: 42%" onclick="startGame();">PLAY</button>
+
+    <h3 id="bulletRadiusLvl" style="font-size: 20px; position:absolute; left:5%; top: 34%"></h3>
+    <button id="bulletRadiusUpgrade" onclick="upgradeGame('bulletRadius')"
+        style="font-size: 20px; position:absolute; left:8%; top: 40%">UPGRADE</button>
+
+    <h3 id="multiplierLvl" style="font-size: 20px; position:absolute; right:5%; top: 34%"></h3>
+    <button id="multiplierUpgrade" onclick="upgradeGame('multiplier')"
+        style="font-size: 20px; position:absolute; right:8%; top: 40%">UPGRADE</button>
+
+    <h3 id="bulletSpdLvl" style="font-size: 20px; position:absolute; left:5%; top: 64%"></h3>
+    <button id="bulletSpdUpgrade" onclick="upgradeGame('bulletSpd')"
+        style="font-size: 20px; position:absolute; left:8%; top: 70%">UPGRADE</button>
+
+    <h3 id="cooldownLvl" style="font-size: 20px; position:absolute; right:6%; top: 64%"></h3>
+    <button id="cooldownUpgrade" onclick="upgradeGame('cooldown')"
+        style="font-size: 20px; position:absolute; right:8%; top: 70%">UPGRADE</button>
+
+
     <canvas id="myCanvas" width="800" height="600" style="visibility: hidden;"></canvas>
 </body>
 <script>
@@ -25,18 +46,24 @@
     let canvas = document.getElementById("myCanvas");
     let ctx = canvas.getContext("2d");
 
+    let upgrades = [];
+    getUpgrades();
+    setUpgradeScreen();
+    let score = 0;
+    getScore();
+    document.getElementById("scoreBoard").innerHTML = `Score: ${score}`;
     let shipWidth = 50;
     let shipHeight = 50;
     let shipY = 520;
     let shipX = (canvas.width - shipWidth) / 2;
     let invaderX = 50;
-    let invaderY = 100;
+    let invaderY = 10;
     let dx = 0;
     let speedCap = 5;
     let turretY = shipY - 20;
     let turretX = shipX + 12.5;
-    let bulletSpeed = 2;
-    let coolDown = 150;
+    let bulletSpeed = 2 + (upgrades[2] * 2);
+    let coolDown = 150 - (upgrades[3] * 20);
     let bullets = [];
     let gameStarted = false;
     let upperRowLeft = 14;
@@ -56,9 +83,12 @@
     document.addEventListener("mousemove", checkMouseMove, false);
 
     function startGame() {
-        document.getElementById("startBtn").style.visibility = "hidden";
+        document.getElementById("screen").style.visibility = "hidden";
         document.getElementById("myCanvas").style.visibility = "visible";
-          dx = 0.5;
+        document.getElementById("header").style.visibility = "visible";
+        document.getElementById("scoreBoard").style.visibility = "visible";
+
+        dx = 0.15;
         gameStarted = true;
     }
 
@@ -72,7 +102,7 @@
 
     function createBullet(event) {
         if (event.keyCode === 32) {
-            if (coolDown >= 150) {
+            if (coolDown >= 150 - (upgrades[3] * 20)) {
                 bullets.push({ x: turretX, y: (turretY - 20) });
                 coolDown = 0;
             }
@@ -88,7 +118,7 @@
             drawElement(turretX, turretY, 25, 20, "green");
 
             invaderX += dx;
-            if (invaders[0].x <= 0 || invaders[invaders.length-1].x >= 780) {
+            if (invaders[0].x <= 0 || invaders[invaders.length - 1].x >= 780) {
                 invaderY += 20;
                 dx = -dx;
             }
@@ -104,7 +134,7 @@
             }
 
             for (let b = 0; b < bullets.length; b++) {
-                drawElement(bullets[b].x, bullets[b].y, 25, 20, "green");
+                drawElement(bullets[b].x, bullets[b].y, 20 + (upgrades[0] * 4), 20 + (upgrades[0] * 4), "green");
                 bullets[b].y -= bulletSpeed;
             }
 
@@ -117,9 +147,12 @@
             for (let d = 0; d < invaders.length; d++) {
                 for (let e = 0; e < bullets.length; e++) {
                     if (bullets[e].y <= invaders[d].y + 20 && bullets[e].y + 20 >= invaders[d].y) {
-                        if (bullets[e].x + 25 >= invaders[d].x && bullets[e].x <= invaders[d].x + 20) {
+                        if ((bullets[e].x + 20 + (upgrades[0] * 4)) >= invaders[d].x && bullets[e].x <= invaders[d].x + 20) {
                             bullets.splice(e, 1);
                             invaders.splice(d, 1);
+                            score = score + (1 + upgrades[1]);
+                            document.getElementById("scoreBoard").innerHTML = `Score: ${score}`;
+                            localStorage.setItem("minigameScore", JSON.stringify(score));
                             if (d <= upperRowLeft) {
                                 upperRowLeft--;
                             }
@@ -128,12 +161,12 @@
                 }
             }
 
-            if (coolDown < 150) {
+            if (coolDown < 150 - (upgrades[3] * 20)) {
                 coolDown++;
             }
 
             if (Math.abs(dx) < speedCap) {
-                dx = dx * 1.0005;
+                dx = dx * 1.00005;
             }
 
             if (invaders.length === 0) {
@@ -147,6 +180,32 @@
         let currentX = e.clientX - canvas.offsetLeft;
         if (currentX > 25 && currentX < (canvas.width - 25)) {
             shipX = currentX - shipWidth / 2;
+        }
+    }
+
+    function getUpgrades() {
+        let temp = JSON.parse(localStorage.getItem("currentUpgrades"));
+        if (temp) {
+            upgrades = JSON.parse(localStorage.getItem("currentUpgrades"));
+        } else {
+            for (let a = 0; a < 4; a++) {
+                upgrades.push(0);
+                localStorage.setItem("currentUpgrades", JSON.stringify(upgrades));
+            }
+        }
+    }
+
+    function setUpgradeScreen() {
+        document.getElementById("bulletRadiusLvl").innerHTML = `Bullet Radius Level: ${upgrades[0]} of 5`;
+        document.getElementById("multiplierLvl").innerHTML = `Score Multiplier Level: ${upgrades[1]} of 5`;
+        document.getElementById("bulletSpdLvl").innerHTML = `Bullet Speed Level: ${upgrades[2]} of 5`;
+        document.getElementById("cooldownLvl").innerHTML = `Cooldown Level: ${upgrades[3]} of 5`;
+    }
+
+    function getScore() {
+        let temp = JSON.parse(localStorage.getItem("minigameScore"));
+        if (temp) {
+            score = temp;
         }
     }
 
