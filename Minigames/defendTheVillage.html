@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+
+        <p id="villagers">Villagers: 5</p>
+        <p id="wood">Wood: 0</p>
+        <p id="stone">Stone: 0</p>
+        <p id="bronze">Bronze: 0</p>
+        <p id="iron">Iron: 0</p>
+        <p id="steel">Steel: 0</p>
+        <p id="food">Food: 200</p>
+        <p id="houses">Houses: 3</p>
+        <p id="armor"></p>
+        <p id="shields"></p>
+        <p id="weapons"></p>
+        <p id="technology"></p>
+
+        <p id="untaskedVillagers" style="position:absolute; top: 34%;">Available Villagers: 5</p>
+
+        <button onclick="moveVillager('food')" style="position:absolute; top: 39%; left: 4%;">-</button>
+        <p id="foodIncome" style="position:absolute; top: 37.5%;">Farms: 0</p>
+        <button onclick="addVillager('food')" style="position:absolute; top: 39%; left: 5.5%;">+</button>
+
+        <button onclick="moveVillager('wood')" style="position:absolute; top: 42.5%; left: 6.5%;">-</button>
+        <p id="woodIncome" style="position:absolute; top: 41%;">Lumber Camp: 0</p>
+        <button onclick="addVillager('wood')" style="position:absolute; top: 42.5%; left: 8%;">+</button>
+
+        <button onclick="moveVillager('mineral')" style="position:absolute; top: 46%; left: 4%;">-</button>
+        <p id="mineralIncome" style="position:absolute; top: 44.5%;">Mines: 0</p>
+        <button onclick="addVillager('mineral')" style="position:absolute; top: 46%; left: 5.5%;">+</button>
+
+    </body>
+    <script>
+        
+        let wood = 0;
+        let iron = 0;
+        let steel = 0;
+        let stone = 0;
+        let bronze = 0;
+        let availableVillagers = 5;
+        let totalVillagers = 5;
+        let food = 200;
+        let houses = 3;
+        let foodIncome = 0;
+        let woodIncome = 0;
+        let mineralIncome = 0;
+        let technologyLevel = 0;
+
+        const resourceInterval = setInterval(collect, 1000);
+
+        function collect() {
+
+            wood = wood + woodIncome;
+            food = food + foodIncome - (totalVillagers * 0.3);
+            
+            document.getElementById("villagers").innerHTML = `Villagers: ${totalVillagers.toFixed(0)}`;
+            document.getElementById("wood").innerHTML = `Wood: ${wood.toFixed(0)}`;
+            document.getElementById("food").innerHTML = `Food: ${food.toFixed(0)}`;
+            
+            switch (technologyLevel) {
+                case 0:
+                    stone = stone + mineralIncome;
+                    document.getElementById("stone").innerHTML = `Stone: ${stone.toFixed(0)}`;
+                    break;
+                case 1:
+                    bronze = bronze + mineralIncome;
+                    document.getElementById("bronze").innerHTML = `Bronze: ${bronze.toFixed(0)}`;
+                    break;
+                case 2:
+                    iron = iron + mineralIncome;
+                    document.getElementById("iron").innerHTML = `Iron: ${iron.toFixed(0)}`;
+                    break;
+                case 3:
+                    steel = steel + mineralIncome;
+                    document.getElementById("steel").innerHTML = `Steel: ${steel.toFixed(0)}`;
+                    break;
+            }
+        }
+
+        function moveVillager(resource) {
+            switch(resource) {
+                case "wood":
+                    if (woodIncome > 0) {
+                        woodIncome--;
+                        availableVillagers++;
+                        document.getElementById("woodIncome").innerHTML = `Lumber Camp: ${woodIncome.toFixed(0)}`;
+                    }
+                    break;
+                case "food":
+                    if (foodIncome > 0) {
+                        foodIncome--;
+                        availableVillagers++;
+                        document.getElementById("foodIncome").innerHTML = `Farms: ${foodIncome.toFixed(0)}`;
+                    }
+                    break;
+                case "mineral":
+                    if (mineralIncome > 0) {
+                        mineralIncome--;
+                        availableVillagers++;
+                        document.getElementById("mineralIncome").innerHTML = `Mines: ${mineralIncome.toFixed(0)}`;
+                    }
+                    break;
+            }
+            document.getElementById("untaskedVillagers").innerHTML = `Available Villagers: ${availableVillagers.toFixed(0)}`;
+        }
+
+        function addVillager(resource) {
+            switch(resource) {
+                case "wood":
+                    if (availableVillagers > 0) {
+                        woodIncome++;
+                        availableVillagers--;
+                        document.getElementById("woodIncome").innerHTML = `Lumber Camp: ${woodIncome.toFixed(0)}`;
+                    }
+                    break;
+                case "food":
+                    if (availableVillagers > 0) {
+                        foodIncome++;
+                        availableVillagers--;
+                        document.getElementById("foodIncome").innerHTML = `Farms: ${foodIncome.toFixed(0)}`;
+                    }
+                    break;
+                case "mineral":
+                    if (availableVillagers > 0) {
+                        mineralIncome++;
+                        availableVillagers--;
+                        document.getElementById("mineralIncome").innerHTML = `Mines: ${mineralIncome.toFixed(0)}`;
+                    }
+                    break;
+            }
+            document.getElementById("untaskedVillagers").innerHTML = `Available Villagers: ${availableVillagers.toFixed(0)}`;
+        }
+
+    </script>
+</html>
