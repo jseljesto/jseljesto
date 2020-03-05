@@ -13,24 +13,28 @@
         <p id="steel">Steel: 0</p>
         <p id="food">Food: 200</p>
         <p id="houses">Houses: 3</p>
-        <p id="armor"></p>
-        <p id="shields"></p>
-        <p id="weapons"></p>
+        <button onclick="createItems('house', technologyLevel)" style="position:absolute; top: 26%; left: 4.1%;">Buy</button>
+        <p id="armor">Armor: 0</p>
+        <button onclick="createItems('armor', technologLevel)" style="position:absolute; top: 29.5%; left: 4%;">Buy</button>
+        <p id="shields">Shields: 0</p>
+        <button onclick="createItems('shield', technologyLevel)" style="position:absolute; top: 33%; left: 4.5%;">Buy</button>
+        <p id="weapons">Weapons: 0</p>
+        <button onclick="createItems('weapon', technologyLevel)" style="position:absolute; top: 36.5%; left: 5%;">Buy</button>
         <p id="technology"></p>
 
-        <p id="untaskedVillagers" style="position:absolute; top: 34%;">Available Villagers: 5</p>
+        <p id="untaskedVillagers" style="position:absolute; top: 44%;">Available Villagers: 5</p>
 
-        <button onclick="moveVillager('food')" style="position:absolute; top: 39%; left: 4%;">-</button>
-        <p id="foodIncome" style="position:absolute; top: 37.5%;">Farms: 0</p>
-        <button onclick="addVillager('food')" style="position:absolute; top: 39%; left: 5.5%;">+</button>
+        <button onclick="moveVillager('food')" style="position:absolute; top: 49%; left: 4%;">-</button>
+        <p id="foodIncome" style="position:absolute; top: 47.5%;">Farms: 0</p>
+        <button onclick="addVillager('food')" style="position:absolute; top: 49%; left: 5.5%;">+</button>
 
-        <button onclick="moveVillager('wood')" style="position:absolute; top: 42.5%; left: 6.5%;">-</button>
-        <p id="woodIncome" style="position:absolute; top: 41%;">Lumber Camp: 0</p>
-        <button onclick="addVillager('wood')" style="position:absolute; top: 42.5%; left: 8%;">+</button>
+        <button onclick="moveVillager('wood')" style="position:absolute; top: 52.5%; left: 6.5%;">-</button>
+        <p id="woodIncome" style="position:absolute; top: 51%;">Lumber Camp: 0</p>
+        <button onclick="addVillager('wood')" style="position:absolute; top: 52.5%; left: 8%;">+</button>
 
-        <button onclick="moveVillager('mineral')" style="position:absolute; top: 46%; left: 4%;">-</button>
-        <p id="mineralIncome" style="position:absolute; top: 44.5%;">Mines: 0</p>
-        <button onclick="addVillager('mineral')" style="position:absolute; top: 46%; left: 5.5%;">+</button>
+        <button onclick="moveVillager('mineral')" style="position:absolute; top: 56%; left: 4%;">-</button>
+        <p id="mineralIncome" style="position:absolute; top: 54.5%;">Mines: 0</p>
+        <button onclick="addVillager('mineral')" style="position:absolute; top: 56%; left: 5.5%;">+</button>
 
     </body>
     <script>
@@ -40,6 +44,9 @@
         let steel = 0;
         let stone = 0;
         let bronze = 0;
+        let armor = 0;
+        let shields = 0;
+        let weapons = 0;
         let availableVillagers = 5;
         let totalVillagers = 5;
         let food = 200;
@@ -48,6 +55,9 @@
         let woodIncome = 0;
         let mineralIncome = 0;
         let technologyLevel = 0;
+        let housesBought = 0;
+        let totalDefense = 0;
+
 
         const resourceInterval = setInterval(collect, 1000);
 
@@ -78,6 +88,7 @@
                     document.getElementById("steel").innerHTML = `Steel: ${steel.toFixed(0)}`;
                     break;
             }
+            totalDefense = totalVillagers + (armor * 2.5) + (weapons * 2) + (shields * 1.5);
         }
 
         function moveVillager(resource) {
@@ -132,6 +143,110 @@
                     break;
             }
             document.getElementById("untaskedVillagers").innerHTML = `Available Villagers: ${availableVillagers.toFixed(0)}`;
+        }
+
+        function createItems(item, techLvl) {
+            switch(item) {
+                case "house":
+                    if (wood > (15 * (1,2*housesBought)).toFixed(0)) {
+                        wood -= (15 * (1.2**housesBought)).toFixed(0);
+                        houses++;
+                        housesBought++;
+                        document.getElementById("houses").innerHTML = `Houses: ${houses.toFixed(0)}`;
+                }
+                    break;
+                case "armor":
+                    switch(techLvl) {
+                        case 1:
+                            if (bronze > 15 * (1.2**armor)) {
+                                bronze -= (15 * (1.2**armor)).toFixed(0);
+                                armor++;
+                                document.getElementById("armor").innerHTML = `Armor: ${armor.toFixed(0)}`;
+                            }
+                            break;
+                        case 2:
+                            if (iron > 15 * (1.1**armor)) {
+                                iron -= (15 * (1.1**armor)).toFixed(0);
+                                armor++;
+                                document.getElementById("armor").innerHTML = `Armor: ${armor.toFixed(0)}`;
+                            }
+                            break;
+                        case 3:
+                            if (steel > 15 * (1.05**armor)) {
+                                steel -= (15 * (1.05**armor)).toFixed(0);
+                                armor++;
+                                document.getElementById("armor").innerHTML = `Armor: ${armor.toFixed(0)}`;
+                            }
+                            break;
+                    }
+                    break;
+
+                case "shield":
+                    switch(techLvl) {
+                        case 0:
+                            if (wood > 15 * (1.2**shields)) {
+                                wood -= (15 * (1.2**shields)).toFixed(0);
+                                shields++;
+                                document.getElementById("shields").innerHTML = `Shields: ${shields.toFixed(0)}`;
+                            }
+                            break;
+                        case 1:
+                            if (bronze > 15 * (1.15**shields)) {
+                                bronze -= (15 * (1.15**shields)).toFixed(0);
+                                shields++;
+                                document.getElementById("shields").innerHTML = `Shields: ${shields.toFixed(0)}`;
+                            }
+                            break;
+                        case 2:
+                            if (iron > 15 * (1.1**shields)) {
+                                iron -= (15 * (1.1**shields)).toFixed(0);
+                                shields++;
+                                document.getElementById("shields").innerHTML = `Shields: ${shields.toFixed(0)}`;
+                            }
+                            break;
+                        case 3:
+                            if (steel > 15 * (1.05**shields)) {
+                                steel -= (15 * (1.05**shields)).toFixed(0);
+                                shields++;
+                                document.getElementById("shields").innerHTML = `Shields: ${shields.toFixed(0)}`;
+                            }
+                            break;
+                    }
+                    break;
+
+                case "weapon":
+                    switch(techLvl) {
+                        case 0:
+                            if (stone > 15 * (1.2**weapons)) {
+                                stone -= (15 * (1.2**weapons)).toFixed(0);
+                                weapons++;
+                                document.getElementById("weapons").innerHTML = `Weapons: ${weapons.toFixed(0)}`;
+                            }
+                            break;
+                        case 1:
+                            if (bronze > 15 * (1.15**weapons)) {
+                                bronze -= (15 * (1.15**weapons)).toFixed(0);
+                                weapons++;
+                                document.getElementById("weapons").innerHTML = `weapons: ${weapons.toFixed(0)}`;
+                            }
+                            break;
+                        case 2:
+                            if (iron > 15 * (1.1**weapons)) {
+                                iron -= (15 * (1.1**weapons)).toFixed(0);
+                                weapons++;
+                                document.getElementById("weapons").innerHTML = `weapons: ${weapons.toFixed(0)}`;
+                            }
+                            break;
+                        case 3:
+                            if (steel > 15 * (1.05**weapons)) {
+                                steel -= (15 * (1.05**weapons)).toFixed(0);
+                                weapons++;
+                                document.getElementById("weapons").innerHTML = `weapons: ${weapons.toFixed(0)}`;
+                            }
+                            break;
+                    }
+                    break;
+            }
         }
 
     </script>
