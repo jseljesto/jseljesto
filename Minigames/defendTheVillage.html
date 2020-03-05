@@ -13,13 +13,17 @@
         <p id="steel">Steel: 0</p>
         <p id="food">Food: 200</p>
         <p id="houses">Houses: 3</p>
-        <button onclick="createItems('house', technologyLevel)" class="purchaseBtn" style="position:absolute; top: 26%; left: 4.1%;">Buy</button>
+        <button onclick="createItems('house', technologyLevel)" class="purchaseBtn" style="position:absolute; top: 26%; left: 4.1%;">
+            <span id="housePrice" class="btnText">Price: 15 Wood</span>Buy</button>
         <p id="armor">Armor: 0</p>
-        <button onclick="createItems('armor', technologLevel)" class="purchaseBtn" style="position:absolute; top: 29.5%; left: 4%;">Buy</button>
+        <button onclick="createItems('armor', technologLevel)" class="purchaseBtn" style="position:absolute; top: 29.5%; left: 4%;">
+            <span id="armorPrice" class="btnText">Price: 15 Bronze</span>Buy</button>
         <p id="shields">Shields: 0</p>
-        <button onclick="createItems('shield', technologyLevel)" class="purchaseBtn" style="position:absolute; top: 33%; left: 4.5%;">Buy</button>
+        <button onclick="createItems('shield', technologyLevel)" class="purchaseBtn" style="position:absolute; top: 33%; left: 4.5%;">
+            <span id="shieldPrice" class="btnText">Price: 15 Wood</span>Buy</button>
         <p id="weapons">Weapons: 0</p>
-        <button onclick="createItems('weapon', technologyLevel)" class="purchaseBtn" style="position:absolute; top: 36.5%; left: 5%;">Buy</button>
+        <button onclick="createItems('weapon', technologyLevel)" class="purchaseBtn" style="position:absolute; top: 36.5%; left: 5%;">
+            <span id="weaponPrice" class="btnText">Price: 15 Stone</span>Buy</button>
         <p id="technology"></p>
 
         <p id="untaskedVillagers" style="position:absolute; top: 44%;">Available Villagers: 5</p>
@@ -148,11 +152,12 @@
         function createItems(item, techLvl) {
             switch(item) {
                 case "house":
-                    if (wood > (15 * (1,2*housesBought)).toFixed(0)) {
+                    if (wood > (15 * (1.2**housesBought)).toFixed(0)) {
                         wood -= (15 * (1.2**housesBought)).toFixed(0);
                         houses++;
                         housesBought++;
                         document.getElementById("houses").innerHTML = `Houses: ${houses.toFixed(0)}`;
+                        document.getElementById("housePrice").innerHTML = `Price: ${(15 * (1.2**housesBought)).toFixed(0)} Wood`;
                 }
                     break;
                 case "armor":
@@ -162,6 +167,7 @@
                                 bronze -= (15 * (1.2**armor)).toFixed(0);
                                 armor++;
                                 document.getElementById("armor").innerHTML = `Armor: ${armor.toFixed(0)}`;
+                                document.getElementById("armorPrice").innerHTML = `Price: ${(15 * (1.2**armor)).toFixed(0)} Bronze`;
                             }
                             break;
                         case 2:
@@ -169,6 +175,7 @@
                                 iron -= (15 * (1.1**armor)).toFixed(0);
                                 armor++;
                                 document.getElementById("armor").innerHTML = `Armor: ${armor.toFixed(0)}`;
+                                document.getElementById("armorPrice").innerHTML = `Price: ${(15 * (1.1**armor)).toFixed(0)} Iron`;
                             }
                             break;
                         case 3:
@@ -176,6 +183,7 @@
                                 steel -= (15 * (1.05**armor)).toFixed(0);
                                 armor++;
                                 document.getElementById("armor").innerHTML = `Armor: ${armor.toFixed(0)}`;
+                                document.getElementById("armorPrice").innerHTML = `Price: ${(15 * (1.05**armor)).toFixed(0)} Steel`;
                             }
                             break;
                     }
@@ -188,6 +196,7 @@
                                 wood -= (15 * (1.2**shields)).toFixed(0);
                                 shields++;
                                 document.getElementById("shields").innerHTML = `Shields: ${shields.toFixed(0)}`;
+                                document.getElementById("shieldsPrice").innerHTML = `Price: ${(15 * (1.2**shields)).toFixed(0)} Wood`;
                             }
                             break;
                         case 1:
@@ -195,6 +204,7 @@
                                 bronze -= (15 * (1.15**shields)).toFixed(0);
                                 shields++;
                                 document.getElementById("shields").innerHTML = `Shields: ${shields.toFixed(0)}`;
+                                document.getElementById("shieldsPrice").innerHTML = `Price: ${(15 * (1.15**shields)).toFixed(0)} Bronze`;
                             }
                             break;
                         case 2:
@@ -202,6 +212,7 @@
                                 iron -= (15 * (1.1**shields)).toFixed(0);
                                 shields++;
                                 document.getElementById("shields").innerHTML = `Shields: ${shields.toFixed(0)}`;
+                                document.getElementById("shieldsPrice").innerHTML = `Price: ${(15 * (1.1**shields)).toFixed(0)} Iron`;
                             }
                             break;
                         case 3:
@@ -209,6 +220,7 @@
                                 steel -= (15 * (1.05**shields)).toFixed(0);
                                 shields++;
                                 document.getElementById("shields").innerHTML = `Shields: ${shields.toFixed(0)}`;
+                                document.getElementById("shieldsPrice").innerHTML = `Price: ${(15 * (1.05**shields)).toFixed(0)} Steel`;
                             }
                             break;
                     }
@@ -221,6 +233,7 @@
                                 stone -= (15 * (1.2**weapons)).toFixed(0);
                                 weapons++;
                                 document.getElementById("weapons").innerHTML = `Weapons: ${weapons.toFixed(0)}`;
+                                document.getElementById("weaponsPrice").innerHTML = `Price: ${(15 * (1.2**weapons)).toFixed(0)} Stone`;
                             }
                             break;
                         case 1:
@@ -228,6 +241,7 @@
                                 bronze -= (15 * (1.15**weapons)).toFixed(0);
                                 weapons++;
                                 document.getElementById("weapons").innerHTML = `weapons: ${weapons.toFixed(0)}`;
+                                document.getElementById("weaponsPrice").innerHTML = `Price: ${(15 * (1.15**weapons)).toFixed(0)} Bronze`;
                             }
                             break;
                         case 2:
@@ -235,6 +249,7 @@
                                 iron -= (15 * (1.1**weapons)).toFixed(0);
                                 weapons++;
                                 document.getElementById("weapons").innerHTML = `weapons: ${weapons.toFixed(0)}`;
+                                document.getElementById("weaponsPrice").innerHTML = `Price: ${(15 * (1.1**weapons)).toFixed(0)} Iron`;
                             }
                             break;
                         case 3:
@@ -242,6 +257,7 @@
                                 steel -= (15 * (1.05**weapons)).toFixed(0);
                                 weapons++;
                                 document.getElementById("weapons").innerHTML = `weapons: ${weapons.toFixed(0)}`;
+                                document.getElementById("weaponsPrice").innerHTML = `Price: ${(15 * (1.05**weapons)).toFixed(0)} Steel`;
                             }
                             break;
                     }
