@@ -24,6 +24,10 @@
 .purchaseBtn {
     position: relative;
     display: inline-block;
+    border-radius: 10px;
+    background-color: red;
+    color: white;
+    box-shadow: 3px 3px 3px black;
 }
 
 .purchaseBtn .btnText{
