@@ -40,6 +40,8 @@
         <p id="mineralIncome" style="position:absolute; top: 54.5%;">Mines: 0</p>
         <button onclick="addVillager('mineral')" style="position:absolute; top: 56%; left: 5.5%;">+</button>
 
+        <p id="strengthLvl" style="position:absolute; top: 70%;">Total Defense: 5</p>
+
     </body>
     <script>
         
@@ -64,37 +66,28 @@
 
 
         const resourceInterval = setInterval(collect, 1000);
+        const incomingVillagers = setInterval(newVillagers, 1000);
+        const updateInformation = setInterval(updateInfo, 100);
 
         function collect() {
 
             wood = wood + woodIncome;
             food = food + foodIncome - (totalVillagers * 0.3);
             
-            document.getElementById("villagers").innerHTML = `Villagers: ${totalVillagers.toFixed(0)}`;
-            document.getElementById("wood").innerHTML = `Wood: ${wood.toFixed(0)}`;
-            document.getElementById("food").innerHTML = `Food: ${food.toFixed(0)}`;
-            
             switch (technologyLevel) {
                 case 0:
                     stone = stone + mineralIncome;
-                    document.getElementById("stone").innerHTML = `Stone: ${stone.toFixed(0)}`;
                     break;
                 case 1:
                     bronze = bronze + mineralIncome;
-                    document.getElementById("bronze").innerHTML = `Bronze: ${bronze.toFixed(0)}`;
                     break;
                 case 2:
                     iron = iron + mineralIncome;
-                    document.getElementById("iron").innerHTML = `Iron: ${iron.toFixed(0)}`;
                     break;
                 case 3:
                     steel = steel + mineralIncome;
-                    document.getElementById("steel").innerHTML = `Steel: ${steel.toFixed(0)}`;
                     break;
             }
-            totalDefense = totalVillagers + (armor * 2.5) + (weapons * 2) + (shields * 1.5);
-            checkHousePrices();
-            checkPrices(technologyLevel);
         }
 
         function moveVillager(resource) {
@@ -187,8 +180,6 @@
                             }
                             break;
                     }
-                    document.getElementById("armor").innerHTML = `Armor: ${armor.toFixed(0)}`;
-                    document.getElementById("purchaseArmor").style.backgroundColor = "red";
                     break;
 
                 case "shield":
@@ -222,8 +213,6 @@
                             }
                             break;
                     }
-                    document.getElementById("shields").innerHTML = `Shields: ${shields.toFixed(0)}`;
-                    document.getElementById("purchaseShield").style.backgroundColor = "red";
                     break;
 
                 case "weapon":
@@ -257,8 +246,6 @@
                             }
                             break;
                     }
-                    document.getElementById("weapons").innerHTML = `weapons: ${weapons.toFixed(0)}`;
-                    document.getElementById("purchaseWeapon").style.backgroundColor = "red";
                     break;
             }
         }
@@ -337,6 +324,42 @@
                     }
                     break;
             }
+        }
+
+        function newVillagers() {
+            let roll = Math.floor(Math.random() * 50 + 1);
+            if (roll === 50) {
+                if ((houses*3) > totalVillagers) {
+                alert("A new villager arrived!");
+                totalVillagers++;
+                availableVillagers++;
+                document.getElementById("villagers").innerHTML = `Villagers: ${totalVillagers.toFixed(0)}`;
+                document.getElementById("untaskedVillagers").innerHTML = `Available Villagers: ${availableVillagers.toFixed(0)}`;
+                }
+                else {
+                    alert("A villager arrived, but you don't have enough space! Build a new house!");
+                }
+            }
+        }
+
+        function updateInfo() {
+            document.getElementById("villagers").innerHTML = `Villagers: ${totalVillagers.toFixed(0)}`;
+            document.getElementById("wood").innerHTML = `Wood: ${wood.toFixed(0)}`;
+            document.getElementById("food").innerHTML = `Food: ${food.toFixed(0)}`;
+            document.getElementById("stone").innerHTML = `Stone: ${stone.toFixed(0)}`;
+            document.getElementById("bronze").innerHTML = `Bronze: ${bronze.toFixed(0)}`;
+            document.getElementById("iron").innerHTML = `Iron: ${iron.toFixed(0)}`;
+            document.getElementById("steel").innerHTML = `Steel: ${steel.toFixed(0)}`;
+            document.getElementById("strengthLvl").innerHTML = `Total Defense: ${totalDefense.toFixed(0)}`;
+            document.getElementById("shields").innerHTML = `Shields: ${shields.toFixed(0)}`;
+            document.getElementById("weapons").innerHTML = `Weapons: ${weapons.toFixed(0)}`;
+            document.getElementById("armor").innerHTML = `Armor: ${armor.toFixed(0)}`;
+
+            totalDefense = totalVillagers + (armor * 2.5) + (weapons * 2) + (shields * 1.5);
+
+            checkHousePrices();
+            checkPrices(technologyLevel);
+
         }
 
     </script>
