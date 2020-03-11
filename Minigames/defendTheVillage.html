@@ -1,366 +1,425 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" href="minigameSheet.css" />
-    </head>
-    <body>
 
-        <p id="villagers">Villagers: 5</p>
-        <p id="wood">Wood: 0</p>
-        <p id="stone">Stone: 0</p>
-        <p id="bronze">Bronze: 0</p>
-        <p id="iron">Iron: 0</p>
-        <p id="steel">Steel: 0</p>
-        <p id="food">Food: 200</p>
-        <p id="houses">Houses: 3</p>
-        <button id="purchaseHouse" onclick="createItems('house', technologyLevel)" class="purchaseBtn" style="position:absolute; top: 26%; left: 4.1%;">
-            <span id="housePrice" class="btnText">Price: 15 Wood</span>Buy</button>
-        <p id="armor">Armor: 0</p>
-        <button id="purchaseArmor" onclick="createItems('armor', technologLevel)" class="purchaseBtn" style="position:absolute; top: 29.5%; left: 4%;">
-            <span id="armorPrice" class="btnText">Price: 15 Bronze</span>Buy</button>
-        <p id="shields">Shields: 0</p>
-        <button id="purchaseShield" onclick="createItems('shield', technologyLevel)" class="purchaseBtn" style="position:absolute; top: 33%; left: 4.5%;">
-            <span id="shieldPrice" class="btnText">Price: 15 Wood</span>Buy</button>
-        <p id="weapons">Weapons: 0</p>
-        <button id="purchaseWeapon" onclick="createItems('weapon', technologyLevel)" class="purchaseBtn" style="position:absolute; top: 36.5%; left: 5%;">
-            <span id="weaponPrice" class="btnText">Price: 15 Stone</span>Buy</button>
-        <p id="technology"></p>
+<head>
+    <link rel="stylesheet" href="minigameSheet.css" />
+</head>
 
-        <p id="untaskedVillagers" style="position:absolute; top: 44%;">Available Villagers: 5</p>
+<body>
 
-        <button onclick="moveVillager('food')" style="position:absolute; top: 49%; left: 4%;">-</button>
-        <p id="foodIncome" style="position:absolute; top: 47.5%;">Farms: 0</p>
-        <button onclick="addVillager('food')" style="position:absolute; top: 49%; left: 5.5%;">+</button>
+    <h2 id="countdownText" style="position:absolute; right: 50%;">Next Wave: 05:00</h2>
+    <h2 id="waveStrength" style="position:absolute; right: 1%">Total Strength: 0</h2>
 
-        <button onclick="moveVillager('wood')" style="position:absolute; top: 52.5%; left: 6.5%;">-</button>
-        <p id="woodIncome" style="position:absolute; top: 51%;">Lumber Camp: 0</p>
-        <button onclick="addVillager('wood')" style="position:absolute; top: 52.5%; left: 8%;">+</button>
+    <p id="villagers">Villagers: 5</p>
+    <p id="wood">Wood: 0</p>
+    <p id="stone">Stone: 0</p>
+    <p id="bronze">Bronze: 0</p>
+    <p id="iron">Iron: 0</p>
+    <p id="steel">Steel: 0</p>
+    <p id="food">Food: 200</p>
+    <p id="houses">Houses: 3</p>
+    <button id="purchaseHouse" onclick="createItems('house', technologyLevel)" class="purchaseBtn"
+        style="position:absolute; top: 26%; left: 4.1%;">
+        <span id="housePrice" class="btnText">Price: 15 Wood</span>Buy</button>
+    <p id="armor">Armor: 0</p>
+    <button id="purchaseArmor" onclick="createItems('armor', technologLevel)" class="purchaseBtn"
+        style="position:absolute; top: 29.5%; left: 4%;">
+        <span id="armorPrice" class="btnText">Price: 15 Bronze</span>Buy</button>
+    <p id="shields">Shields: 0</p>
+    <button id="purchaseShield" onclick="createItems('shield', technologyLevel)" class="purchaseBtn"
+        style="position:absolute; top: 33%; left: 4.5%;">
+        <span id="shieldPrice" class="btnText">Price: 15 Wood</span>Buy</button>
+    <p id="weapons">Weapons: 0</p>
+    <button id="purchaseWeapon" onclick="createItems('weapon', technologyLevel)" class="purchaseBtn"
+        style="position:absolute; top: 36.5%; left: 5%;">
+        <span id="weaponPrice" class="btnText">Price: 15 Stone</span>Buy</button>
+    <p id="technology"></p>
 
-        <button onclick="moveVillager('mineral')" style="position:absolute; top: 56%; left: 4%;">-</button>
-        <p id="mineralIncome" style="position:absolute; top: 54.5%;">Mines: 0</p>
-        <button onclick="addVillager('mineral')" style="position:absolute; top: 56%; left: 5.5%;">+</button>
+    <p id="untaskedVillagers" style="position:absolute; top: 44%;">Available Villagers: 5</p>
 
-        <p id="strengthLvl" style="position:absolute; top: 70%;">Total Defense: 5</p>
+    <button onclick="moveVillager('food')" style="position:absolute; top: 49%; left: 4%;">-</button>
+    <p id="foodIncome" style="position:absolute; top: 47.5%;">Farms: 0</p>
+    <button onclick="addVillager('food')" style="position:absolute; top: 49%; left: 5.5%;">+</button>
 
-    </body>
-    <script>
-        
-        let wood = 0;
-        let iron = 0;
-        let steel = 0;
-        let stone = 0;
-        let bronze = 0;
-        let armor = 0;
-        let shields = 0;
-        let weapons = 0;
-        let availableVillagers = 5;
-        let totalVillagers = 5;
-        let food = 200;
-        let houses = 3;
-        let foodIncome = 0;
-        let woodIncome = 0;
-        let mineralIncome = 0;
-        let technologyLevel = 0;
-        let housesBought = 0;
-        let totalDefense = 0;
+    <button onclick="moveVillager('wood')" style="position:absolute; top: 52.5%; left: 6.5%;">-</button>
+    <p id="woodIncome" style="position:absolute; top: 51%;">Lumber Camp: 0</p>
+    <button onclick="addVillager('wood')" style="position:absolute; top: 52.5%; left: 8%;">+</button>
+
+    <button onclick="moveVillager('mineral')" style="position:absolute; top: 56%; left: 4%;">-</button>
+    <p id="mineralIncome" style="position:absolute; top: 54.5%;">Mines: 0</p>
+    <button onclick="addVillager('mineral')" style="position:absolute; top: 56%; left: 5.5%;">+</button>
+
+    <p id="strengthLvl" style="position:absolute; top: 70%;">Total Defense: 5</p>
+
+</body>
+<script>
+
+    import { monsters } from './monsters.js'
+
+    let wood = 0;
+    let iron = 0;
+    let steel = 0;
+    let stone = 0;
+    let bronze = 0;
+    let armor = 0;
+    let shields = 0;
+    let weapons = 0;
+    let availableVillagers = 5;
+    let totalVillagers = 5;
+    let food = 200;
+    let houses = 3;
+    let foodIncome = 0;
+    let woodIncome = 0;
+    let mineralIncome = 0;
+    let technologyLevel = 0;
+    let housesBought = 0;
+    let totalDefense = 0;
+    let totalStrength = 0;
+    let seconds = 0;
+    let minutes = 5;
+    let nextWave = [];
+
+    nextWaveInformation();
 
 
-        const resourceInterval = setInterval(collect, 1000);
-        const incomingVillagers = setInterval(newVillagers, 1000);
-        const updateInformation = setInterval(updateInfo, 100);
+    const resourceInterval = setInterval(collect, 1000);
+    const incomingVillagers = setInterval(newVillagers, 1000);
+    const countDown = setInterval(countDownToNextWave, 1000);
+    const updateInformation = setInterval(updateInfo, 100);
 
-        function collect() {
+    function collect() {
 
-            wood = wood + woodIncome;
-            food = food + foodIncome - (totalVillagers * 0.3);
-            
-            switch (technologyLevel) {
-                case 0:
-                    stone = stone + mineralIncome;
-                    break;
-                case 1:
-                    bronze = bronze + mineralIncome;
-                    break;
-                case 2:
-                    iron = iron + mineralIncome;
-                    break;
-                case 3:
-                    steel = steel + mineralIncome;
-                    break;
-            }
+        wood = wood + woodIncome;
+        food = food + foodIncome - (totalVillagers * 0.3);
+
+        switch (technologyLevel) {
+            case 0:
+                stone = stone + mineralIncome;
+                break;
+            case 1:
+                bronze = bronze + mineralIncome;
+                break;
+            case 2:
+                iron = iron + mineralIncome;
+                break;
+            case 3:
+                steel = steel + mineralIncome;
+                break;
         }
+    }
 
-        function moveVillager(resource) {
-            switch(resource) {
-                case "wood":
-                    if (woodIncome > 0) {
-                        woodIncome--;
-                        availableVillagers++;
-                        document.getElementById("woodIncome").innerHTML = `Lumber Camp: ${woodIncome.toFixed(0)}`;
-                    }
-                    break;
-                case "food":
-                    if (foodIncome > 0) {
-                        foodIncome--;
-                        availableVillagers++;
-                        document.getElementById("foodIncome").innerHTML = `Farms: ${foodIncome.toFixed(0)}`;
-                    }
-                    break;
-                case "mineral":
-                    if (mineralIncome > 0) {
-                        mineralIncome--;
-                        availableVillagers++;
-                        document.getElementById("mineralIncome").innerHTML = `Mines: ${mineralIncome.toFixed(0)}`;
-                    }
-                    break;
-            }
-            document.getElementById("untaskedVillagers").innerHTML = `Available Villagers: ${availableVillagers.toFixed(0)}`;
-        }
-
-        function addVillager(resource) {
-            switch(resource) {
-                case "wood":
-                    if (availableVillagers > 0) {
-                        woodIncome++;
-                        availableVillagers--;
-                        document.getElementById("woodIncome").innerHTML = `Lumber Camp: ${woodIncome.toFixed(0)}`;
-                    }
-                    break;
-                case "food":
-                    if (availableVillagers > 0) {
-                        foodIncome++;
-                        availableVillagers--;
-                        document.getElementById("foodIncome").innerHTML = `Farms: ${foodIncome.toFixed(0)}`;
-                    }
-                    break;
-                case "mineral":
-                    if (availableVillagers > 0) {
-                        mineralIncome++;
-                        availableVillagers--;
-                        document.getElementById("mineralIncome").innerHTML = `Mines: ${mineralIncome.toFixed(0)}`;
-                    }
-                    break;
-            }
-            document.getElementById("untaskedVillagers").innerHTML = `Available Villagers: ${availableVillagers.toFixed(0)}`;
-        }
-
-        function createItems(item, techLvl) {
-            switch(item) {
-                case "house":
-                    if (wood > (15 * (1.2**housesBought)).toFixed(0)) {
-                        wood -= (15 * (1.2**housesBought)).toFixed(0);
-                        houses++;
-                        housesBought++;
-                        document.getElementById("houses").innerHTML = `Houses: ${houses.toFixed(0)}`;
-                        document.getElementById("housePrice").innerHTML = `Price: ${(15 * (1.2**housesBought)).toFixed(0)} Wood`;
-                        document.getElementById("purchaseHouse").style.backgroundColor = "red";
+    function moveVillager(resource) {
+        switch (resource) {
+            case "wood":
+                if (woodIncome > 0) {
+                    woodIncome--;
+                    availableVillagers++;
+                    document.getElementById("woodIncome").innerHTML = `Lumber Camp: ${woodIncome.toFixed(0)}`;
                 }
-                    break;
-                case "armor":
-                    switch(techLvl) {
-                        case 1:
-                            if (bronze > 15 * (1.2**armor)) {
-                                bronze -= (15 * (1.2**armor)).toFixed(0);
-                                armor++;
-                                document.getElementById("armorPrice").innerHTML = `Price: ${(15 * (1.2**armor)).toFixed(0)} Bronze`;
-                            }
-                            break;
-                        case 2:
-                            if (iron > 15 * (1.1**armor)) {
-                                iron -= (15 * (1.1**armor)).toFixed(0);
-                                armor++;
-                                document.getElementById("armorPrice").innerHTML = `Price: ${(15 * (1.1**armor)).toFixed(0)} Iron`;
-                            }
-                            break;
-                        case 3:
-                            if (steel > 15 * (1.05**armor)) {
-                                steel -= (15 * (1.05**armor)).toFixed(0);
-                                armor++;
-                                document.getElementById("armorPrice").innerHTML = `Price: ${(15 * (1.05**armor)).toFixed(0)} Steel`;
-                            }
-                            break;
-                    }
-                    break;
-
-                case "shield":
-                    switch(techLvl) {
-                        case 0:
-                            if (wood > 15 * (1.2**shields)) {
-                                wood -= (15 * (1.2**shields)).toFixed(0);
-                                shields++;
-                                document.getElementById("shieldsPrice").innerHTML = `Price: ${(15 * (1.2**shields)).toFixed(0)} Wood`;
-                            }
-                            break;
-                        case 1:
-                            if (bronze > 15 * (1.15**shields)) {
-                                bronze -= (15 * (1.15**shields)).toFixed(0);
-                                shields++;
-                                document.getElementById("shieldsPrice").innerHTML = `Price: ${(15 * (1.15**shields)).toFixed(0)} Bronze`;
-                            }
-                            break;
-                        case 2:
-                            if (iron > 15 * (1.1**shields)) {
-                                iron -= (15 * (1.1**shields)).toFixed(0);
-                                shields++;
-                                document.getElementById("shieldsPrice").innerHTML = `Price: ${(15 * (1.1**shields)).toFixed(0)} Iron`;
-                            }
-                            break;
-                        case 3:
-                            if (steel > 15 * (1.05**shields)) {
-                                steel -= (15 * (1.05**shields)).toFixed(0);
-                                shields++;
-                                document.getElementById("shieldsPrice").innerHTML = `Price: ${(15 * (1.05**shields)).toFixed(0)} Steel`;
-                            }
-                            break;
-                    }
-                    break;
-
-                case "weapon":
-                    switch(techLvl) {
-                        case 0:
-                            if (stone > 15 * (1.2**weapons)) {
-                                stone -= (15 * (1.2**weapons)).toFixed(0);
-                                weapons++;
-                                document.getElementById("weaponsPrice").innerHTML = `Price: ${(15 * (1.2**weapons)).toFixed(0)} Stone`;
-                            }
-                            break;
-                        case 1:
-                            if (bronze > 15 * (1.15**weapons)) {
-                                bronze -= (15 * (1.15**weapons)).toFixed(0);
-                                weapons++;
-                                document.getElementById("weaponsPrice").innerHTML = `Price: ${(15 * (1.15**weapons)).toFixed(0)} Bronze`;
-                            }
-                            break;
-                        case 2:
-                            if (iron > 15 * (1.1**weapons)) {
-                                iron -= (15 * (1.1**weapons)).toFixed(0);
-                                weapons++;
-                                document.getElementById("weaponsPrice").innerHTML = `Price: ${(15 * (1.1**weapons)).toFixed(0)} Iron`;
-                            }
-                            break;
-                        case 3:
-                            if (steel > 15 * (1.05**weapons)) {
-                                steel -= (15 * (1.05**weapons)).toFixed(0);
-                                weapons++;
-                                document.getElementById("weaponsPrice").innerHTML = `Price: ${(15 * (1.05**weapons)).toFixed(0)} Steel`;
-                            }
-                            break;
-                    }
-                    break;
-            }
+                break;
+            case "food":
+                if (foodIncome > 0) {
+                    foodIncome--;
+                    availableVillagers++;
+                    document.getElementById("foodIncome").innerHTML = `Farms: ${foodIncome.toFixed(0)}`;
+                }
+                break;
+            case "mineral":
+                if (mineralIncome > 0) {
+                    mineralIncome--;
+                    availableVillagers++;
+                    document.getElementById("mineralIncome").innerHTML = `Mines: ${mineralIncome.toFixed(0)}`;
+                }
+                break;
         }
-        
-        function checkHousePrices() {
-            if (wood > (15 * (1.2**housesBought)).toFixed(0)) {
-                document.getElementById("purchaseHouse").style.backgroundColor = "darkgreen";
-            } else {
-                document.getElementById("purchaseHouse").style.backgroundColor = "red";
-            }
-        }
+        document.getElementById("untaskedVillagers").innerHTML = `Available Villagers: ${availableVillagers.toFixed(0)}`;
+    }
 
-        function checkPrices(techLvl) {
-            switch(techLvl) {
-                case 0:
-                    if (wood > (15 * (1.2**shields)).toFixed(0)) {
-                        document.getElementById("purchaseShield").style.backgroundColor = "darkgreen";
-                    } else {
-                        document.getElementById("purchaseShield").style.backgroundColor = "red";
-                    }
-                    if (stone > (15 * (1.2**weapons).toFixed(0))) {
-                        document.getElementById("purchaseWeapon").style.backgroundColor = "darkgreen";
-                    } else {
-                        document.getElementById("purchaseWeapon").style.backgroundColor = "red";
-                    }
-                    break;
-                case 1:
-                    if (bronze > (15 * (1.15**shields)).toFixed(0)) {
-                        document.getElementById("purchaseArmor").style.backgroundColor = "darkgreen";
-                    } else {
-                        document.getElementById("purchaseArmor").style.backgroundColor = "red";
-                    }
-                    if (bronze > (15 * (1.15**shields)).toFixed(0)) {
-                        document.getElementById("purchaseShield").style.backgroundColor = "darkgreen";
-                    } else {
-                        document.getElementById("purchaseShield").style.backgroundColor = "red";
-                    }
-                    if (bronze > (15 * (1.15**weapons).toFixed(0))) {
-                        document.getElementById("purchaseWeapon").style.backgroundColor = "darkgreen";
-                    } else {
-                        document.getElementById("purchaseWeapon").style.backgroundColor = "red";
-                    }
-                    break;
-                case 2:
-                    if (iron > (15 * (1.10**shields)).toFixed(0)) {
-                        document.getElementById("purchaseArmor").style.backgroundColor = "darkgreen";
-                    } else {
-                        document.getElementById("purchaseArmor").style.backgroundColor = "red";
-                    }
-                    if (iron > (15 * (1.10**shields)).toFixed(0)) {
-                        document.getElementById("purchaseShield").style.backgroundColor = "darkgreen";
-                    } else {
-                        document.getElementById("purchaseShield").style.backgroundColor = "red";
-                    }
-                    if (iron > (15 * (1.10**weapons).toFixed(0))) {
-                        document.getElementById("purchaseWeapon").style.backgroundColor = "darkgreen";
-                    } else {
-                        document.getElementById("purchaseWeapon").style.backgroundColor = "red";
-                    }
-                    break;
-                case 3:
-                    if (steel > (15 * (1.05**shields)).toFixed(0)) {
-                        document.getElementById("purchaseArmor").style.backgroundColor = "darkgreen";
-                    } else {
-                        document.getElementById("purchaseArmor").style.backgroundColor = "red";
-                    }
-                    if (steel > (15 * (1.05**shields)).toFixed(0)) {
-                        document.getElementById("purchaseShield").style.backgroundColor = "darkgreen";
-                    } else {
-                        document.getElementById("purchaseShield").style.backgroundColor = "red";
-                    }
-                    if (steel > (15 * (1.05**weapons).toFixed(0))) {
-                        document.getElementById("purchaseWeapon").style.backgroundColor = "darkgreen";
-                    } else {
-                        document.getElementById("purchaseWeapon").style.backgroundColor = "red";
-                    }
-                    break;
-            }
+    function addVillager(resource) {
+        switch (resource) {
+            case "wood":
+                if (availableVillagers > 0) {
+                    woodIncome++;
+                    availableVillagers--;
+                    document.getElementById("woodIncome").innerHTML = `Lumber Camp: ${woodIncome.toFixed(0)}`;
+                }
+                break;
+            case "food":
+                if (availableVillagers > 0) {
+                    foodIncome++;
+                    availableVillagers--;
+                    document.getElementById("foodIncome").innerHTML = `Farms: ${foodIncome.toFixed(0)}`;
+                }
+                break;
+            case "mineral":
+                if (availableVillagers > 0) {
+                    mineralIncome++;
+                    availableVillagers--;
+                    document.getElementById("mineralIncome").innerHTML = `Mines: ${mineralIncome.toFixed(0)}`;
+                }
+                break;
         }
+        document.getElementById("untaskedVillagers").innerHTML = `Available Villagers: ${availableVillagers.toFixed(0)}`;
+    }
 
-        function newVillagers() {
-            let roll = Math.floor(Math.random() * 50 + 1);
-            if (roll === 50) {
-                if ((houses*3) > totalVillagers) {
+    function createItems(item, techLvl) {
+        switch (item) {
+            case "house":
+                if (wood > (15 * (1.2 ** housesBought)).toFixed(0)) {
+                    wood -= (15 * (1.2 ** housesBought)).toFixed(0);
+                    houses++;
+                    housesBought++;
+                    document.getElementById("houses").innerHTML = `Houses: ${houses.toFixed(0)}`;
+                    document.getElementById("housePrice").innerHTML = `Price: ${(15 * (1.2 ** housesBought)).toFixed(0)} Wood`;
+                    document.getElementById("purchaseHouse").style.backgroundColor = "red";
+                }
+                break;
+            case "armor":
+                switch (techLvl) {
+                    case 1:
+                        if (bronze > 15 * (1.2 ** armor)) {
+                            bronze -= (15 * (1.2 ** armor)).toFixed(0);
+                            armor++;
+                            document.getElementById("armorPrice").innerHTML = `Price: ${(15 * (1.2 ** armor)).toFixed(0)} Bronze`;
+                        }
+                        break;
+                    case 2:
+                        if (iron > 15 * (1.1 ** armor)) {
+                            iron -= (15 * (1.1 ** armor)).toFixed(0);
+                            armor++;
+                            document.getElementById("armorPrice").innerHTML = `Price: ${(15 * (1.1 ** armor)).toFixed(0)} Iron`;
+                        }
+                        break;
+                    case 3:
+                        if (steel > 15 * (1.05 ** armor)) {
+                            steel -= (15 * (1.05 ** armor)).toFixed(0);
+                            armor++;
+                            document.getElementById("armorPrice").innerHTML = `Price: ${(15 * (1.05 ** armor)).toFixed(0)} Steel`;
+                        }
+                        break;
+                }
+                break;
+
+            case "shield":
+                switch (techLvl) {
+                    case 0:
+                        if (wood > 15 * (1.2 ** shields)) {
+                            wood -= (15 * (1.2 ** shields)).toFixed(0);
+                            shields++;
+                            document.getElementById("shieldsPrice").innerHTML = `Price: ${(15 * (1.2 ** shields)).toFixed(0)} Wood`;
+                        }
+                        break;
+                    case 1:
+                        if (bronze > 15 * (1.15 ** shields)) {
+                            bronze -= (15 * (1.15 ** shields)).toFixed(0);
+                            shields++;
+                            document.getElementById("shieldsPrice").innerHTML = `Price: ${(15 * (1.15 ** shields)).toFixed(0)} Bronze`;
+                        }
+                        break;
+                    case 2:
+                        if (iron > 15 * (1.1 ** shields)) {
+                            iron -= (15 * (1.1 ** shields)).toFixed(0);
+                            shields++;
+                            document.getElementById("shieldsPrice").innerHTML = `Price: ${(15 * (1.1 ** shields)).toFixed(0)} Iron`;
+                        }
+                        break;
+                    case 3:
+                        if (steel > 15 * (1.05 ** shields)) {
+                            steel -= (15 * (1.05 ** shields)).toFixed(0);
+                            shields++;
+                            document.getElementById("shieldsPrice").innerHTML = `Price: ${(15 * (1.05 ** shields)).toFixed(0)} Steel`;
+                        }
+                        break;
+                }
+                break;
+
+            case "weapon":
+                switch (techLvl) {
+                    case 0:
+                        if (stone > 15 * (1.2 ** weapons)) {
+                            stone -= (15 * (1.2 ** weapons)).toFixed(0);
+                            weapons++;
+                            document.getElementById("weaponsPrice").innerHTML = `Price: ${(15 * (1.2 ** weapons)).toFixed(0)} Stone`;
+                        }
+                        break;
+                    case 1:
+                        if (bronze > 15 * (1.15 ** weapons)) {
+                            bronze -= (15 * (1.15 ** weapons)).toFixed(0);
+                            weapons++;
+                            document.getElementById("weaponsPrice").innerHTML = `Price: ${(15 * (1.15 ** weapons)).toFixed(0)} Bronze`;
+                        }
+                        break;
+                    case 2:
+                        if (iron > 15 * (1.1 ** weapons)) {
+                            iron -= (15 * (1.1 ** weapons)).toFixed(0);
+                            weapons++;
+                            document.getElementById("weaponsPrice").innerHTML = `Price: ${(15 * (1.1 ** weapons)).toFixed(0)} Iron`;
+                        }
+                        break;
+                    case 3:
+                        if (steel > 15 * (1.05 ** weapons)) {
+                            steel -= (15 * (1.05 ** weapons)).toFixed(0);
+                            weapons++;
+                            document.getElementById("weaponsPrice").innerHTML = `Price: ${(15 * (1.05 ** weapons)).toFixed(0)} Steel`;
+                        }
+                        break;
+                }
+                break;
+        }
+    }
+
+    function checkHousePrices() {
+        if (wood > (15 * (1.2 ** housesBought)).toFixed(0)) {
+            document.getElementById("purchaseHouse").style.backgroundColor = "darkgreen";
+        } else {
+            document.getElementById("purchaseHouse").style.backgroundColor = "red";
+        }
+    }
+
+    function checkPrices(techLvl) {
+        switch (techLvl) {
+            case 0:
+                if (wood > (15 * (1.2 ** shields)).toFixed(0)) {
+                    document.getElementById("purchaseShield").style.backgroundColor = "darkgreen";
+                } else {
+                    document.getElementById("purchaseShield").style.backgroundColor = "red";
+                }
+                if (stone > (15 * (1.2 ** weapons).toFixed(0))) {
+                    document.getElementById("purchaseWeapon").style.backgroundColor = "darkgreen";
+                } else {
+                    document.getElementById("purchaseWeapon").style.backgroundColor = "red";
+                }
+                break;
+            case 1:
+                if (bronze > (15 * (1.15 ** shields)).toFixed(0)) {
+                    document.getElementById("purchaseArmor").style.backgroundColor = "darkgreen";
+                } else {
+                    document.getElementById("purchaseArmor").style.backgroundColor = "red";
+                }
+                if (bronze > (15 * (1.15 ** shields)).toFixed(0)) {
+                    document.getElementById("purchaseShield").style.backgroundColor = "darkgreen";
+                } else {
+                    document.getElementById("purchaseShield").style.backgroundColor = "red";
+                }
+                if (bronze > (15 * (1.15 ** weapons).toFixed(0))) {
+                    document.getElementById("purchaseWeapon").style.backgroundColor = "darkgreen";
+                } else {
+                    document.getElementById("purchaseWeapon").style.backgroundColor = "red";
+                }
+                break;
+            case 2:
+                if (iron > (15 * (1.10 ** shields)).toFixed(0)) {
+                    document.getElementById("purchaseArmor").style.backgroundColor = "darkgreen";
+                } else {
+                    document.getElementById("purchaseArmor").style.backgroundColor = "red";
+                }
+                if (iron > (15 * (1.10 ** shields)).toFixed(0)) {
+                    document.getElementById("purchaseShield").style.backgroundColor = "darkgreen";
+                } else {
+                    document.getElementById("purchaseShield").style.backgroundColor = "red";
+                }
+                if (iron > (15 * (1.10 ** weapons).toFixed(0))) {
+                    document.getElementById("purchaseWeapon").style.backgroundColor = "darkgreen";
+                } else {
+                    document.getElementById("purchaseWeapon").style.backgroundColor = "red";
+                }
+                break;
+            case 3:
+                if (steel > (15 * (1.05 ** shields)).toFixed(0)) {
+                    document.getElementById("purchaseArmor").style.backgroundColor = "darkgreen";
+                } else {
+                    document.getElementById("purchaseArmor").style.backgroundColor = "red";
+                }
+                if (steel > (15 * (1.05 ** shields)).toFixed(0)) {
+                    document.getElementById("purchaseShield").style.backgroundColor = "darkgreen";
+                } else {
+                    document.getElementById("purchaseShield").style.backgroundColor = "red";
+                }
+                if (steel > (15 * (1.05 ** weapons).toFixed(0))) {
+                    document.getElementById("purchaseWeapon").style.backgroundColor = "darkgreen";
+                } else {
+                    document.getElementById("purchaseWeapon").style.backgroundColor = "red";
+                }
+                break;
+        }
+    }
+
+    function newVillagers() {
+        let roll = Math.floor(Math.random() * 50 + 1);
+        if (roll === 50) {
+            if ((houses * 3) > totalVillagers) {
                 alert("A new villager arrived!");
                 totalVillagers++;
                 availableVillagers++;
                 document.getElementById("villagers").innerHTML = `Villagers: ${totalVillagers.toFixed(0)}`;
                 document.getElementById("untaskedVillagers").innerHTML = `Available Villagers: ${availableVillagers.toFixed(0)}`;
-                }
-                else {
-                    alert("A villager arrived, but you don't have enough space! Build a new house!");
-                }
+            }
+            else {
+                alert("A villager arrived, but you don't have enough space! Build a new house!");
             }
         }
+    }
 
-        function updateInfo() {
-            document.getElementById("villagers").innerHTML = `Villagers: ${totalVillagers.toFixed(0)}`;
-            document.getElementById("wood").innerHTML = `Wood: ${wood.toFixed(0)}`;
-            document.getElementById("food").innerHTML = `Food: ${food.toFixed(0)}`;
-            document.getElementById("stone").innerHTML = `Stone: ${stone.toFixed(0)}`;
-            document.getElementById("bronze").innerHTML = `Bronze: ${bronze.toFixed(0)}`;
-            document.getElementById("iron").innerHTML = `Iron: ${iron.toFixed(0)}`;
-            document.getElementById("steel").innerHTML = `Steel: ${steel.toFixed(0)}`;
-            document.getElementById("strengthLvl").innerHTML = `Total Defense: ${totalDefense.toFixed(0)}`;
-            document.getElementById("shields").innerHTML = `Shields: ${shields.toFixed(0)}`;
-            document.getElementById("weapons").innerHTML = `Weapons: ${weapons.toFixed(0)}`;
-            document.getElementById("armor").innerHTML = `Armor: ${armor.toFixed(0)}`;
+    function updateInfo() {
+        document.getElementById("waveStrength").innerHTML = `${nextWave[0].quantity} ${nextWave[0].name} <br>
+        ${nextWave[1].quantity} ${nextWave[1].name} <br>
+        ${nextWave[2].quantity} ${nextWave[2].name} <br><br>
+         Total Strength: ${totalStrength.toFixed(0)}`;
 
-            totalDefense = totalVillagers + (armor * 2.5) + (weapons * 2) + (shields * 1.5);
+        document.getElementById("villagers").innerHTML = `Villagers: ${totalVillagers.toFixed(0)}`;
+        document.getElementById("wood").innerHTML = `Wood: ${wood.toFixed(0)}`;
+        document.getElementById("food").innerHTML = `Food: ${food.toFixed(0)}`;
+        document.getElementById("stone").innerHTML = `Stone: ${stone.toFixed(0)}`;
+        document.getElementById("bronze").innerHTML = `Bronze: ${bronze.toFixed(0)}`;
+        document.getElementById("iron").innerHTML = `Iron: ${iron.toFixed(0)}`;
+        document.getElementById("steel").innerHTML = `Steel: ${steel.toFixed(0)}`;
+        document.getElementById("strengthLvl").innerHTML = `Total Defense: ${totalDefense.toFixed(0)}`;
+        document.getElementById("shields").innerHTML = `Shields: ${shields.toFixed(0)}`;
+        document.getElementById("weapons").innerHTML = `Weapons: ${weapons.toFixed(0)}`;
+        document.getElementById("armor").innerHTML = `Armor: ${armor.toFixed(0)}`;
 
-            checkHousePrices();
-            checkPrices(technologyLevel);
+        totalDefense = totalVillagers + (armor * 2.5) + (weapons * 2) + (shields * 1.5);
 
+        checkHousePrices();
+        checkPrices(technologyLevel);
+
+    }
+
+    function countDownToNextWave() {
+        if (seconds === 0 && minutes === 0) {
+            startBattle();
+            minutes = 5;
         }
 
-    </script>
+        if (seconds === 0) {
+            seconds = 59;
+            minutes--;
+        } else {
+            seconds--;
+        }
+
+        document.getElementById("countdownText").innerHTML = "Next Wave: 0" + minutes + ":";
+
+        if (seconds < 10) {
+            document.getElementById("countdownText").innerHTML += "0" + seconds;
+        } else {
+            document.getElementById("countdownText").innerHTML += seconds;
+        }
+    }
+
+    function startBattle() {
+        nextWaveInformation();
+    }
+
+    function nextWaveInformation() {
+        totalStrength = 0;
+        for (b = 0; b < 3; b++) {
+            let newMonster = Math.floor(Math.random() * monsters.length);
+            nextWave.push({name: monsters[newMonster].name, strength: monsters[newMonster].strength, quantity: 1});
+            totalStrength += monsters[newMonster].strength;
+        }
+    }
+
+</script>
+
 </html>
