@@ -18,41 +18,41 @@
     <p id="steel">Steel: 0</p>
     <p id="food">Food: 200</p>
     <p id="houses">Houses: 3</p>
-    <button id="purchaseHouse" onclick="createItems('house', technologyLevel)" class="purchaseBtn"
+    <button id="purchaseHouse" class="purchaseBtn"
         style="position:absolute; top: 26%; left: 4.1%;">
         <span id="housePrice" class="btnText">Price: 15 Wood</span>Buy</button>
     <p id="armor">Armor: 0</p>
-    <button id="purchaseArmor" onclick="createItems('armor', technologLevel)" class="purchaseBtn"
+    <button id="purchaseArmor" class="purchaseBtn"
         style="position:absolute; top: 29.5%; left: 4%;">
         <span id="armorPrice" class="btnText">Price: 15 Bronze</span>Buy</button>
     <p id="shields">Shields: 0</p>
-    <button id="purchaseShield" onclick="createItems('shield', technologyLevel)" class="purchaseBtn"
+    <button id="purchaseShield" class="purchaseBtn"
         style="position:absolute; top: 33%; left: 4.5%;">
         <span id="shieldPrice" class="btnText">Price: 15 Wood</span>Buy</button>
     <p id="weapons">Weapons: 0</p>
-    <button id="purchaseWeapon" onclick="createItems('weapon', technologyLevel)" class="purchaseBtn"
+    <button id="purchaseWeapon" class="purchaseBtn"
         style="position:absolute; top: 36.5%; left: 5%;">
         <span id="weaponPrice" class="btnText">Price: 15 Stone</span>Buy</button>
     <p id="technology"></p>
 
     <p id="untaskedVillagers" style="position:absolute; top: 44%;">Available Villagers: 5</p>
 
-    <button onclick="moveVillager('food')" style="position:absolute; top: 49%; left: 4%;">-</button>
+    <button id="reduceFood" style="position:absolute; top: 49%; left: 4%;">-</button>
     <p id="foodIncome" style="position:absolute; top: 47.5%;">Farms: 0</p>
-    <button onclick="addVillager('food')" style="position:absolute; top: 49%; left: 5.5%;">+</button>
+    <button id="addFood" style="position:absolute; top: 49%; left: 5.5%;">+</button>
 
-    <button onclick="moveVillager('wood')" style="position:absolute; top: 52.5%; left: 6.5%;">-</button>
+    <button id="reduceWood" style="position:absolute; top: 52.5%; left: 6.5%;">-</button>
     <p id="woodIncome" style="position:absolute; top: 51%;">Lumber Camp: 0</p>
-    <button onclick="addVillager('wood')" style="position:absolute; top: 52.5%; left: 8%;">+</button>
+    <button id="addWood" style="position:absolute; top: 52.5%; left: 8%;">+</button>
 
-    <button onclick="moveVillager('mineral')" style="position:absolute; top: 56%; left: 4%;">-</button>
+    <button id="reduceMineral" style="position:absolute; top: 56%; left: 4%;">-</button>
     <p id="mineralIncome" style="position:absolute; top: 54.5%;">Mines: 0</p>
-    <button onclick="addVillager('mineral')" style="position:absolute; top: 56%; left: 5.5%;">+</button>
+    <button id="addMineral" style="position:absolute; top: 56%; left: 5.5%;">+</button>
 
     <p id="strengthLvl" style="position:absolute; top: 70%;">Total Defense: 5</p>
 
 </body>
-<script>
+<script type="module">
 
     import { monsters } from './monsters.js'
 
@@ -78,6 +78,7 @@
     let seconds = 0;
     let minutes = 5;
     let nextWave = [];
+    let waveNumber = 1;
 
     nextWaveInformation();
 
@@ -86,6 +87,18 @@
     const incomingVillagers = setInterval(newVillagers, 1000);
     const countDown = setInterval(countDownToNextWave, 1000);
     const updateInformation = setInterval(updateInfo, 100);
+
+    document.getElementById("reduceFood").addEventListener("click", function() { moveVillager('food'); });
+    document.getElementById("addFood").addEventListener("click", function() { addVillager('food'); });
+    document.getElementById("reduceWood").addEventListener("click", function() { moveVillager('wood'); });
+    document.getElementById("addWood").addEventListener("click", function() { addVillager('wood'); });
+    document.getElementById("reduceMineral").addEventListener("click", function() { moveVillager('mineral'); });
+    document.getElementById("addMineral").addEventListener("click", function() { addVillager('mineral'); });
+
+    document.getElementById("purchaseHouse").addEventListener("click", function() { createItems('house', technologyLevel); });
+    document.getElementById("purchaseArmor").addEventListener("click", function() { createItems('armor', technologyLevel); });
+    document.getElementById("purchaseShield").addEventListener("click", function() { createItems('shield', technologyLevel); });
+    document.getElementById("purchaseWeapon").addEventListener("click", function() { createItems('weapon', technologyLevel); });
 
     function collect() {
 
@@ -409,11 +422,12 @@
 
     function startBattle() {
         nextWaveInformation();
+        waveNumber++;
     }
 
     function nextWaveInformation() {
         totalStrength = 0;
-        for (b = 0; b < 3; b++) {
+        for (let b = 0; b < 3; b++) {
             let newMonster = Math.floor(Math.random() * monsters.length);
             nextWave.push({name: monsters[newMonster].name, strength: monsters[newMonster].strength, quantity: 1});
             totalStrength += monsters[newMonster].strength;
