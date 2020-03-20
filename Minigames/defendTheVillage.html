@@ -18,20 +18,16 @@
     <p id="steel">Steel: 0</p>
     <p id="food">Food: 200</p>
     <p id="houses">Houses: 3</p>
-    <button id="purchaseHouse" class="purchaseBtn"
-        style="position:absolute; top: 26%; left: 4.1%;">
+    <button id="purchaseHouse" class="purchaseBtn" style="position:absolute; top: 26%; left: 4.1%;">
         <span id="housePrice" class="btnText">Price: 15 Wood</span>Buy</button>
     <p id="armor">Armor: 0</p>
-    <button id="purchaseArmor" class="purchaseBtn"
-        style="position:absolute; top: 29.5%; left: 4%;">
+    <button id="purchaseArmor" class="purchaseBtn" style="position:absolute; top: 29.5%; left: 4%;">
         <span id="armorPrice" class="btnText">Price: 15 Bronze</span>Buy</button>
     <p id="shields">Shields: 0</p>
-    <button id="purchaseShield" class="purchaseBtn"
-        style="position:absolute; top: 33%; left: 4.5%;">
+    <button id="purchaseShield" class="purchaseBtn" style="position:absolute; top: 33%; left: 4.5%;">
         <span id="shieldPrice" class="btnText">Price: 15 Wood</span>Buy</button>
     <p id="weapons">Weapons: 0</p>
-    <button id="purchaseWeapon" class="purchaseBtn"
-        style="position:absolute; top: 36.5%; left: 5%;">
+    <button id="purchaseWeapon" class="purchaseBtn" style="position:absolute; top: 36.5%; left: 5%;">
         <span id="weaponPrice" class="btnText">Price: 15 Stone</span>Buy</button>
     <p id="technology"></p>
 
@@ -75,10 +71,13 @@
     let housesBought = 0;
     let totalDefense = 0;
     let totalStrength = 0;
-    let seconds = 0;
-    let minutes = 5;
+    let seconds = 10;
+    let minutes = 0;
     let nextWave = [];
     let waveNumber = 1;
+    let powerLevelCorrect = false;
+    let arrayIsShrinked = false;
+    let totalMonsters = 0;
 
     nextWaveInformation();
 
@@ -88,17 +87,17 @@
     const countDown = setInterval(countDownToNextWave, 1000);
     const updateInformation = setInterval(updateInfo, 100);
 
-    document.getElementById("reduceFood").addEventListener("click", function() { moveVillager('food'); });
-    document.getElementById("addFood").addEventListener("click", function() { addVillager('food'); });
-    document.getElementById("reduceWood").addEventListener("click", function() { moveVillager('wood'); });
-    document.getElementById("addWood").addEventListener("click", function() { addVillager('wood'); });
-    document.getElementById("reduceMineral").addEventListener("click", function() { moveVillager('mineral'); });
-    document.getElementById("addMineral").addEventListener("click", function() { addVillager('mineral'); });
+    document.getElementById("reduceFood").addEventListener("click", function () { moveVillager('food'); });
+    document.getElementById("addFood").addEventListener("click", function () { addVillager('food'); });
+    document.getElementById("reduceWood").addEventListener("click", function () { moveVillager('wood'); });
+    document.getElementById("addWood").addEventListener("click", function () { addVillager('wood'); });
+    document.getElementById("reduceMineral").addEventListener("click", function () { moveVillager('mineral'); });
+    document.getElementById("addMineral").addEventListener("click", function () { addVillager('mineral'); });
 
-    document.getElementById("purchaseHouse").addEventListener("click", function() { createItems('house', technologyLevel); });
-    document.getElementById("purchaseArmor").addEventListener("click", function() { createItems('armor', technologyLevel); });
-    document.getElementById("purchaseShield").addEventListener("click", function() { createItems('shield', technologyLevel); });
-    document.getElementById("purchaseWeapon").addEventListener("click", function() { createItems('weapon', technologyLevel); });
+    document.getElementById("purchaseHouse").addEventListener("click", function () { createItems('house', technologyLevel); });
+    document.getElementById("purchaseArmor").addEventListener("click", function () { createItems('armor', technologyLevel); });
+    document.getElementById("purchaseShield").addEventListener("click", function () { createItems('shield', technologyLevel); });
+    document.getElementById("purchaseWeapon").addEventListener("click", function () { createItems('weapon', technologyLevel); });
 
     function collect() {
 
@@ -374,10 +373,19 @@
     }
 
     function updateInfo() {
-        document.getElementById("waveStrength").innerHTML = `${nextWave[0].quantity} ${nextWave[0].name} <br>
+
+        if (totalMonsters === 3) {
+            document.getElementById("waveStrength").innerHTML = `${nextWave[0].quantity} ${nextWave[0].name} <br>
         ${nextWave[1].quantity} ${nextWave[1].name} <br>
         ${nextWave[2].quantity} ${nextWave[2].name} <br><br>
          Total Strength: ${totalStrength.toFixed(0)}`;
+        }
+
+        if (totalMonsters === 2) {
+            document.getElementById("waveStrength").innerHTML = `${nextWave[0].quantity} ${nextWave[0].name} <br>
+        ${nextWave[1].quantity} ${nextWave[1].name} <br><br>
+         Total Strength: ${totalStrength.toFixed(0)}`;
+        }
 
         document.getElementById("villagers").innerHTML = `Villagers: ${totalVillagers.toFixed(0)}`;
         document.getElementById("wood").innerHTML = `Wood: ${wood.toFixed(0)}`;
@@ -401,7 +409,7 @@
     function countDownToNextWave() {
         if (seconds === 0 && minutes === 0) {
             startBattle();
-            minutes = 5;
+            seconds = 10;
         }
 
         if (seconds === 0) {
@@ -421,16 +429,52 @@
     }
 
     function startBattle() {
-        nextWaveInformation();
         waveNumber++;
+        nextWaveInformation();
     }
 
     function nextWaveInformation() {
-        totalStrength = 0;
-        for (let b = 0; b < 3; b++) {
-            let newMonster = Math.floor(Math.random() * monsters.length);
-            nextWave.push({name: monsters[newMonster].name, strength: monsters[newMonster].strength, quantity: 1});
-            totalStrength += monsters[newMonster].strength;
+        nextWave = [];
+        powerLevelCorrect = false;
+        while (powerLevelCorrect != true) {
+            totalStrength = 0;
+            for (let b = 0; b < 3; b++) {
+                let newMonster = Math.floor(Math.random() * monsters.length) + 0;
+                nextWave.push({ name: monsters[newMonster].name, strength: monsters[newMonster].strength, quantity: 1 * waveNumber });
+                totalStrength += monsters[newMonster].strength * waveNumber;
+            }
+            totalMonsters = 3;
+            if (totalStrength < 30 * waveNumber) {
+                powerLevelCorrect = true;
+                arrayIsShrinked = false;
+
+                for (let c = 0; c < 2; c++) {
+                    if (nextWave[0].name === nextWave[1].name) {
+                        nextWave[0].quantity += nextWave[1].quantity;
+                        nextWave.splice(1, 1);
+                        arrayIsShrinked = true;
+                        totalMonsters--;
+                    }
+                }
+
+                if (arrayIsShrinked === false) {
+
+                    if (nextWave[2].name === nextWave[0].name) {
+                        nextWave[0].quantity += nextWave[2].quantity;
+                        nextWave.splice(2, 1);
+                        totalMonsters--;
+                    }
+                    else if (nextWave[2].name === nextWave[1].name) {
+                        nextWave[1].quantity += nextWave[2].quantity;
+                        nextWave.splice(2, 1);
+                        totalMonsters--;
+                    }
+                }
+
+            }
+            else {
+                nextWave = [];
+            }
         }
     }
 
