@@ -71,8 +71,8 @@
     let housesBought = 0;
     let totalDefense = 0;
     let totalStrength = 0;
-    let seconds = 10;
-    let minutes = 0;
+    let seconds = 0;
+    let minutes = 5;
     let nextWave = [];
     let waveNumber = 1;
     let powerLevelCorrect = false;
@@ -398,6 +398,10 @@
         document.getElementById("shields").innerHTML = `Shields: ${shields.toFixed(0)}`;
         document.getElementById("weapons").innerHTML = `Weapons: ${weapons.toFixed(0)}`;
         document.getElementById("armor").innerHTML = `Armor: ${armor.toFixed(0)}`;
+        document.getElementById("foodIncome").innerHTML = `Farms: ${foodIncome.toFixed(0)}`;
+        document.getElementById("woodIncome").innerHTML = `Lumber Camp: ${woodIncome.toFixed(0)}`;
+        document.getElementById("mineralIncome").innerHTML = `Mines: ${mineralIncome.toFixed(0)}`;
+        document.getElementById("untaskedVillagers").innerHTML = `Available Villagers: ${availableVillagers.toFixed(0)}`;
 
         totalDefense = totalVillagers + (armor * 2.5) + (weapons * 2) + (shields * 1.5);
 
@@ -409,7 +413,7 @@
     function countDownToNextWave() {
         if (seconds === 0 && minutes === 0) {
             startBattle();
-            seconds = 10;
+            minutes = 5;
         }
 
         if (seconds === 0) {
@@ -429,8 +433,45 @@
     }
 
     function startBattle() {
-        waveNumber++;
-        nextWaveInformation();
+        availableVillagers += woodIncome + foodIncome + mineralIncome;
+        woodIncome = 0;
+        foodIncome = 0;
+        mineralIncome = 0;
+        totalDefense = 150;
+        alert("Total Strength: " + totalStrength);
+        alert("Total Defense: " + totalDefense);
+
+        if (totalStrength > totalDefense*1.25) {
+            availableVillagers = 0;
+            totalVillagers = 0;
+            alert("Your village has been overrun! Game Over!");
+            clearInterval(resourceInterval);
+            clearInterval(incomingVillagers);
+            clearInterval(countDown);
+            clearInterval(updateInformation);
+        }
+        else if (totalStrength*1.25 < totalDefense) {
+            alert("Your village survived with no casualties!");
+            waveNumber++;
+            nextWaveInformation();
+        }
+        else {
+            if (totalDefense < totalStrength) {
+                (availableVillagers /= 2).toFixed(0);
+                totalVillagers = availableVillagers;
+                alert("Your village survived but suffered heavy casualties!");
+                waveNumber++;
+                nextWaveInformation();
+            }
+            else if (totalDefense >= totalStrength) {
+                (availableVillagers /= 1.5).toFixed(0);
+                totalVillagers = availableVillagers;
+                alert("Your village survived but suffered some casualties!");
+                waveNumber++;
+                nextWaveInformation();
+            }
+        }
+        updateInfo();
     }
 
     function nextWaveInformation() {
