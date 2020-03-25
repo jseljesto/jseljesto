@@ -68,8 +68,7 @@
     </select>
 
     <p style="position: absolute; top: 50%; right: 3%;">Transition?</p>
-    <input type="checkbox" id="transition" style="position: absolute; top: 53%; right: 1%;" 
-    onclick="addTransition()">
+    <input type="checkbox" id="transition" style="position: absolute; top: 53%; right: 1%;" onclick="addTransition()">
 
     <p style="position: absolute; top: 57%; right: 1%;">Amount of shadow?</p>
     <select id="boxShadow" style="position: absolute; top: 64%; right: 1%;" onchange="changeShadow()">
@@ -111,8 +110,8 @@
     let hoverColor = "";
 
     function changeName() {
-        document.getElementById("designButton").innerHTML = 
-        document.getElementById("buttonName").value;
+        document.getElementById("designButton").innerHTML =
+            document.getElementById("buttonName").value;
     }
 
     function changeColor() {
@@ -122,8 +121,8 @@
     }
 
     function changeTextColor() {
-        document.getElementById("designButton").style.color = 
-        document.getElementById("textColor").value;
+        document.getElementById("designButton").style.color =
+            document.getElementById("textColor").value;
     }
 
     function changeCorners() {
@@ -165,8 +164,8 @@
         document.getElementById("designButton").style.backgroundColor = bcColor;
         document.getElementById("buttonCSSCode").innerHTML = "#designButton { "
 
-        document.getElementById("buttonCSSCode").innerHTML += 
-        document.getElementById("designButton").style.cssText;
+        document.getElementById("buttonCSSCode").innerHTML +=
+            document.getElementById("designButton").style.cssText;
         document.getElementById("buttonCSSCode").innerHTML += `} #designButton:hover 
         { background-color: ${hoverColor}; }`
 

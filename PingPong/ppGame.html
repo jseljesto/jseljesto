@@ -29,8 +29,7 @@
     <strong>
         <h1 id="highscore" style="position: absolute; top: 7%;">Highscore:</h1>
     </strong>
-    <button onclick="localStorage.removeItem('savedScores'); location.reload();" 
-    style="position: absolute; 
+    <button onclick="localStorage.removeItem('savedScores'); location.reload();" style="position: absolute; 
     bottom: 5%; left: 1%">Clear</button>
     <strong>
         <h2 id="score" style="position:absolute; right: 35px;">Current Score: </h2>
@@ -42,8 +41,8 @@
         if (!user) {
             user = "Unknown user";
         }
-        let canvas = document.getElementById("myCanvas");
-        let ctx = canvas.getContext("2d");
+        const canvas = document.getElementById("myCanvas");
+        const ctx = canvas.getContext("2d");
         let x = canvas.width / 2;
         let y = canvas.height / 2;
 

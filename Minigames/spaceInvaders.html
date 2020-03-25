@@ -23,19 +23,19 @@
     <h1 id="header" style="font-size: 100px; text-align: center; text-shadow: 3px 3px black;">SPACE INVADERS!</h1>
     <button id="startBtn" style="font-size: 100px; position:absolute; left: 42%" onclick="startGame();">PLAY</button>
 
-    <h3 id="bulletRadiusLvl" class = "upgdHeaders" style="font-size: 20px; position:absolute; left:5%; top: 34%"></h3>
+    <h3 id="bulletRadiusLvl" class="upgdHeaders" style="font-size: 20px; position:absolute; left:5%; top: 34%"></h3>
     <button id="bulletRadiusUpgrade" class="upgButtons" onclick="upgradeGame('bulletRadius')"
         style="font-size: 20px; position:absolute; left:8%; top: 40%">UPGRADE</button>
 
-    <h3 id="multiplierLvl" class = "upgdHeaders" style="font-size: 20px; position:absolute; right:5%; top: 34%"></h3>
+    <h3 id="multiplierLvl" class="upgdHeaders" style="font-size: 20px; position:absolute; right:5%; top: 34%"></h3>
     <button id="multiplierUpgrade" class="upgButtons" onclick="upgradeGame('multiplier')"
         style="font-size: 20px; position:absolute; right:8%; top: 40%">UPGRADE</button>
 
-    <h3 id="bulletSpdLvl" class = "upgdHeaders" style="font-size: 20px; position:absolute; left:5%; top: 64%"></h3>
+    <h3 id="bulletSpdLvl" class="upgdHeaders" style="font-size: 20px; position:absolute; left:5%; top: 64%"></h3>
     <button id="bulletSpdUpgrade" class="upgButtons" onclick="upgradeGame('bulletSpd')"
         style="font-size: 20px; position:absolute; left:8%; top: 70%">UPGRADE</button>
 
-    <h3 id="cooldownLvl" class = "upgdHeaders" style="font-size: 20px; position:absolute; right:6%; top: 64%"></h3>
+    <h3 id="cooldownLvl" class="upgdHeaders" style="font-size: 20px; position:absolute; right:6%; top: 64%"></h3>
     <button id="cooldownUpgrade" class="upgButtons" onclick="upgradeGame('cooldown')"
         style="font-size: 20px; position:absolute; right:8%; top: 70%">UPGRADE</button>
 
@@ -44,8 +44,8 @@
 </body>
 <script>
 
-    let canvas = document.getElementById("myCanvas");
-    let ctx = canvas.getContext("2d");
+    const canvas = document.getElementById("myCanvas");
+    const ctx = canvas.getContext("2d");
 
     let upgrades = [];
     getUpgrades();
@@ -53,17 +53,17 @@
     let score = 0;
     getScore();
     document.getElementById("scoreBoard").innerHTML = `Score: ${score}`;
-    let shipWidth = 50;
-    let shipHeight = 50;
-    let shipY = 520;
+    const shipWidth = 50;
+    const shipHeight = 50;
+    const shipY = 520;
     let shipX = (canvas.width - shipWidth) / 2;
     let invaderX = 50;
     let invaderY = 10;
     let dx = 0;
-    let speedCap = 5;
+    const speedCap = 5;
     let turretY = shipY - 20;
     let turretX = shipX + 12.5;
-    let bulletSpeed = 2 + (upgrades[2] * 2);
+    const bulletSpeed = 2 + (upgrades[2] * 2);
     let coolDown = 150 - (upgrades[3] * 20);
     let bullets = [];
     let gameStarted = false;
@@ -148,7 +148,8 @@
             for (let d = 0; d < invaders.length; d++) {
                 for (let e = 0; e < bullets.length; e++) {
                     if (bullets[e].y <= invaders[d].y + 20 && bullets[e].y + 20 >= invaders[d].y) {
-                        if ((bullets[e].x + 20 + (upgrades[0] * 4)) >= invaders[d].x && bullets[e].x <= invaders[d].x + 20) {
+                        if ((bullets[e].x + 20 + (upgrades[0] * 4)) >= invaders[d].x
+                            && bullets[e].x <= invaders[d].x + 20) {
                             bullets.splice(e, 1);
                             invaders.splice(d, 1);
                             score = score + (1 + upgrades[1]);

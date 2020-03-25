@@ -27,6 +27,7 @@
         let secondPage = [];
         let firstPageItems = 0;
         let secondPageItems = 0;
+        let newElement = document.getElementById("leggTil");
 
 
         document.addEventListener("load", function () {
@@ -48,40 +49,18 @@
             }
         });
 
-        document.addEventListener("change", function() {
+        document.addEventListener("change", function () {
             let currentWord = document.getElementById("produkt").value;
             for (let i = 0; i < items.length; i++) {
-                    if (items[i].substring(0, currentWord.length) === currentWord) {
-                        document.getElementById("forslag").innerHTML = "Did you mean " + items[i];
-                        break;
-                    } else {
-                        document.getElementById("forslag").innerHTML = "Found no similar products.";
-                    }
+                if (items[i].substring(0, currentWord.length) === currentWord) {
+                    document.getElementById("forslag").innerHTML = "Did you mean " + items[i];
+                    break;
+                } else {
+                    document.getElementById("forslag").innerHTML = "Found no similar products.";
                 }
-            });
-
-        function createShoppingList() {
-            let shoppingListText = "<ul id='nyHandleliste'>";
-            for (let i of firstPage) {
-                let index = firstPage.indexOf(i);
-                shoppingListText += "<li>" + i + "<a id=" + index + "> &times;</a></li>";
             }
-            shoppingListText += "</ul>";
-            document.getElementById("handleliste").innerHTML = shoppingListText;
-        }
+        });
 
-        function createSecondPage() {
-            let shoppingListText = "<ul id='listeAndreSide'>";
-            for (let i of secondPage) {
-                let index = secondPage.indexOf(i);
-                shoppingListText += "<li>" + i + 
-                    "<a onclick='removeSecondPageElement(" + index + ")'> &times;</a></li>";
-            }
-            shoppingListText += "</ul>";
-            document.getElementById("side2").innerHTML = shoppingListText;
-        }
-
-        let newElement = document.getElementById("leggTil");
         newElement.addEventListener('click', function () {
             if (document.getElementById("produkt").value != "") {
                 let text = document.getElementById("antall").value + " " +
@@ -103,6 +82,27 @@
                 document.getElementById("produkt").value = "";
             }
         });
+
+        function createShoppingList() {
+            let shoppingListText = "<ul id='nyHandleliste'>";
+            for (let i of firstPage) {
+                let index = firstPage.indexOf(i);
+                shoppingListText += "<li>" + i + "<a id=" + index + "> &times;</a></li>";
+            }
+            shoppingListText += "</ul>";
+            document.getElementById("handleliste").innerHTML = shoppingListText;
+        }
+
+        function createSecondPage() {
+            let shoppingListText = "<ul id='listeAndreSide'>";
+            for (let i of secondPage) {
+                let index = secondPage.indexOf(i);
+                shoppingListText += "<li>" + i +
+                    "<a onclick='removeSecondPageElement(" + index + ")'> &times;</a></li>";
+            }
+            shoppingListText += "</ul>";
+            document.getElementById("side2").innerHTML = shoppingListText;
+        }
 
         function removeFirstPageElement(index) {
             firstPage.splice(index, 1);

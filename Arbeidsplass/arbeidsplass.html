@@ -24,8 +24,7 @@
             <input id="fodDato" type="date" min="1950-01-01" max="2000-01-01" required>
         </p>
         <p>
-            <label for="postkode" 
-            data-title="Skriv inn din firesifra postkode. Ikkje inkluder poststad.">
+            <label for="postkode" data-title="Skriv inn din firesifra postkode. Ikkje inkluder poststad.">
                 Postkode<em>*</em> : </label>
             <input id="postkode" type="number" required>
         </p>
@@ -235,7 +234,7 @@
                 setTimeout(() => {
                     let phoneNumber = Number(document.getElementById("telefonNr").value);
                     if (phoneNumber.length === 0) {
-                        let emptyPhoneNumber = "No valid information";
+                        const emptyPhoneNumber = "No valid information";
                         resolve(emptyPhoneNumber);
                     }
                     else if (validateNumber("telefonNr") === false) {
@@ -273,7 +272,7 @@
 
         async function createPerson(birthDayArray) {
             try {
-                const fullBirthDate = `${birthDayArray[2]}.${birthDayArray[1]}.${birthDayArray[0]}`
+                let fullBirthDate = `${birthDayArray[2]}.${birthDayArray[1]}.${birthDayArray[0]}`
                 let newPerson = new Person(await findName(), findGender(), fullBirthDate,
                     findPostalCode(), findAddress(), await findPhoneNumber(), await findHobbies());
                 personObjects.push(newPerson);

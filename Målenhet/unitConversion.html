@@ -200,21 +200,21 @@
         }
 
         function addExtraTempVal() {
-            let value = 0;
+            const extraValue = 0;
 
             if (firstUnit === "fahrenheit") {
-                value -= 32;
+                extraValue -= 32;
             }
             else if (firstUnit === "kelvin") {
-                value -= 274;
+                extraValue -= 274;
             }
             else if (secondUnit === "fahrenheit") {
-                value += 32;
+                extraValue += 32;
             }
             else if (secondUnit === "kelvin") {
-                value += 274;
+                extraValue += 274;
             }
-            return value;
+            return extraValue;
         }
 
         function convertUnits() {

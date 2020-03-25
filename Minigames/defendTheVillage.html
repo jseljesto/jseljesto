@@ -441,7 +441,7 @@
         alert("Total Strength: " + totalStrength);
         alert("Total Defense: " + totalDefense);
 
-        if (totalStrength > totalDefense*1.25) {
+        if (totalStrength > totalDefense * 1.25) {
             availableVillagers = 0;
             totalVillagers = 0;
             alert("Your village has been overrun! Game Over!");
@@ -450,7 +450,7 @@
             clearInterval(countDown);
             clearInterval(updateInformation);
         }
-        else if (totalStrength*1.25 < totalDefense) {
+        else if (totalStrength * 1.25 < totalDefense) {
             alert("Your village survived with no casualties!");
             waveNumber++;
             nextWaveInformation();
@@ -481,7 +481,8 @@
             totalStrength = 0;
             for (let b = 0; b < 3; b++) {
                 let newMonster = Math.floor(Math.random() * monsters.length) + 0;
-                nextWave.push({ name: monsters[newMonster].name, strength: monsters[newMonster].strength, quantity: 1 * waveNumber });
+                nextWave.push(
+                    { name: monsters[newMonster].name, strength: monsters[newMonster].strength, quantity: 1 * waveNumber });
                 totalStrength += monsters[newMonster].strength * waveNumber;
             }
             totalMonsters = 3;

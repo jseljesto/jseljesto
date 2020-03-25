@@ -18,8 +18,8 @@
         let wallsAbove = [];
         let wallsBelow = [];
 
-        let c = document.getElementById("myCanvas");
-        let ctx = c.getContext("2d");
+        const canvas = document.getElementById("myCanvas");
+        const ctx = canvas.getContext("2d");
         let currentX = 125;
         let currentY = 425;
         const objImage = document.getElementById("objectImage");
@@ -119,7 +119,7 @@
         }
 
         function createFinishLine() {
-            let finishLine = document.getElementById("finishLine");
+            const finishLine = document.getElementById("finishLine");
             ctx.drawImage(finishLine, 300, 0);
         }
 

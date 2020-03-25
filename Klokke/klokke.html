@@ -31,8 +31,13 @@
 
     <script>
 
-        let currentZone = 1;
+        const currentZone = 1;
         let zoneDiff = 0;
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        const radius = canvas.height / 2;
+        ctx.translate(radius, radius);
+        setInterval(drawClock, 1000);
 
         class Clock {
             constructor(hours, minutes, seconds) {
@@ -66,12 +71,6 @@
             }
 
         }
-
-        let canvas = document.getElementById("canvas");
-        let ctx = canvas.getContext("2d");
-        const radius = canvas.height / 2;
-        ctx.translate(radius, radius);
-        setInterval(drawClock, 1000);
 
 
 
@@ -115,10 +114,11 @@
 
             let clock = findCurrentTime();
             clock.hours = clock.hours % 12;
-            clock.hours = (clock.hours * Math.PI / 6) + 
-            (clock.minutes * Math.PI / (6 * 60)) + (clock.seconds * Math.PI / (360 * 60));
+            clock.hours = (clock.hours * Math.PI / 6) +
+                (clock.minutes * Math.PI / (6 * 60)) + (clock.seconds * Math.PI / (360 * 60));
             drawHand(ctx, clock.hours, radius * 0.5, radius * 0.07);
-            clock.minutes = (clock.minutes * Math.PI / 30) + (clock.seconds * Math.PI / (30 * 60));
+            clock.minutes = (clock.minutes * Math.PI / 30) +
+                (clock.seconds * Math.PI / (30 * 60));
             drawHand(ctx, clock.minutes, radius * 0.8, radius * 0.07);
             clock.seconds = (clock.seconds * Math.PI / 30);
             drawHand(ctx, clock.seconds, radius * 0.9, radius * 0.02);
@@ -151,8 +151,8 @@
             let clock = new Clock(h, m, s);
             clock.minutes = addZerosToCurrentTime(m);
             clock.seconds = addZerosToCurrentTime(s);
-            document.getElementById("tid").innerHTML = 
-            `${clock.hours}:${clock.minutes}:${clock.seconds}`;
+            document.getElementById("tid").innerHTML =
+                `${clock.hours}:${clock.minutes}:${clock.seconds}`;
             return clock;
         }
 
