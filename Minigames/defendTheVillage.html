@@ -47,6 +47,8 @@
 
     <p id="strengthLvl" style="position:absolute; top: 70%;">Total Defense: 5</p>
 
+    <button id="scoutBtn" style="position:absolute; top: 80%">Send Scout</button>
+
 </body>
 <script type="module">
 
@@ -98,6 +100,7 @@
     document.getElementById("purchaseArmor").addEventListener("click", function () { createItems('armor', technologyLevel); });
     document.getElementById("purchaseShield").addEventListener("click", function () { createItems('shield', technologyLevel); });
     document.getElementById("purchaseWeapon").addEventListener("click", function () { createItems('weapon', technologyLevel); });
+    document.getElementById("scoutBtn").addEventListener("click", function () { sendScout(); });
 
     function collect() {
 
@@ -518,6 +521,40 @@
                 nextWave = [];
             }
         }
+    }
+
+    function sendScout() {
+        if (availableVillagers === 0) {
+            alert("You don't have any villagers availabe for scouting!");
+        } else {
+            document.getElementById("scoutBtn").style.visibility = "hidden";
+            availableVillagers--;
+            setTimeout(function() {
+                let roll = Math.floor(Math.random() * 4 + 1);
+                switch(roll) {
+                    case 1:
+                        availableVillagers++;
+                        totalVillagers += technologyLevel;
+                        availableVillagers += technologyLevel;
+                        alert("Your scout has returned with some new villagers!");
+                        break;
+                    case 2:
+                        availableVillagers++;
+                        wood += (15*technologyLevel);
+                        food += (30*technologyLevel);
+                        alert("Your scout has returned with some resources!");
+                        break;
+                    case 3:
+                        availableVillagers++;
+                        alert("Your scout has returned unsuccesfully..");
+                        break;
+                    case 4:
+                        alert("Your scout never returned from his search..");
+                        break;
+                }
+            },60000);
+        }
+        document.getElementById("scoutBtn").style.visibility = "visible";
     }
 
 </script>
