@@ -39,6 +39,10 @@
     <button id="cooldownUpgrade" class="upgButtons" onclick="upgradeGame('cooldown')"
         style="font-size: 20px; position:absolute; right:8%; top: 70%">UPGRADE</button>
 
+    <p id="currentProgress">
+        <p id="progressBar">100%</p>
+    </p>
+
 
     <canvas id="myCanvas" width="800" height="600" style="visibility: hidden;"></canvas>
 </body>
@@ -68,6 +72,8 @@
     let bullets = [];
     let gameStarted = false;
     let upperRowLeft = 14;
+    let barWidth = 100;
+    let barToCooldownRatio = coolDown/barWidth;
 
     let invaders = [];
     for (let a = 0; a < 28; a++) {
@@ -88,7 +94,8 @@
         document.getElementById("myCanvas").style.visibility = "visible";
         document.getElementById("header").style.visibility = "visible";
         document.getElementById("scoreBoard").style.visibility = "visible";
-
+        document.getElementById("progressBar").style.visibility = "visible";
+        document.getElementById("currentProgress").style.visibility = "visible";
         dx = 0.15;
         gameStarted = true;
     }
@@ -106,6 +113,9 @@
             if (coolDown >= 150 - (upgrades[3] * 20)) {
                 bullets.push({ x: turretX, y: (turretY - 20) });
                 coolDown = 0;
+                barWidth = 0;
+                document.getElementById("progressBar").innerHTML = "0%";
+                document.getElementById("progressBar").style.width = 0 + "%";
             }
         }
     }
@@ -165,6 +175,9 @@
 
             if (coolDown < 150 - (upgrades[3] * 20)) {
                 coolDown++;
+                barWidth = (coolDown / barToCooldownRatio).toFixed(0);
+                document.getElementById("progressBar").innerHTML = barWidth + "%";
+                document.getElementById("progressBar").style.width = barWidth + "%";
             }
 
             if (Math.abs(dx) < speedCap) {
