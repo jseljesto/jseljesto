@@ -15,3 +15,4 @@ Defend the Village:
 
 Space Invaders:
 - Bullet can remove wrong invander if bulletspeed is upgraded (collision needs improvement).
+- Invanders stop moving in pattern if outermost invader is removed (game eventually crashes).

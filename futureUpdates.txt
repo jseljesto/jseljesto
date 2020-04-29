@@ -12,9 +12,7 @@ Quiz:
 - Making it fully compatible with Node.js and Pug
 
 Minigames:
-- Adding technology upgrades
-- Creating a function to send villagers to scout for resources or other villagers
-
+- Enable upgrades for SpaceInvaders after more testing.
 
 Future projects:
 - Secret message encoder/decoder
