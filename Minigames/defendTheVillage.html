@@ -374,6 +374,7 @@
     }
 
     function checkTechnologyPrice() {
+        document.getElementById("techPrice").innerHTML = `Price: ${100*(technologyLevel+1).toFixed(0)} Food ${100*(technologyLevel+1).toFixed(0)} Wood`;
         if (wood > 100*(technologyLevel+1)) {
             if (food > 100*(technologyLevel+1)) {
                 document.getElementById("upgradeTech").style.backgroundColor = "darkgreen";
@@ -432,7 +433,7 @@
         document.getElementById("untaskedVillagers").innerHTML = `Available Villagers: ${availableVillagers.toFixed(0)}`;
         document.getElementById("technology").innerHTML = `Technology Level: ${technologyLevel}`;
 
-        totalDefense = totalVillagers + (armor * 2.5) + (weapons * 2) + (shields * 1.5);
+        totalDefense = totalVillagers + (armor * 2.5 + technologyLevel) + (weapons * 2 + technologyLevel) + (shields * 1.5 + technologyLevel);
 
         checkHousePrices();
         checkPrices(technologyLevel);
@@ -466,7 +467,6 @@
         woodIncome = 0;
         foodIncome = 0;
         mineralIncome = 0;
-        totalDefense = 150;
         alert("Total Strength: " + totalStrength);
         alert("Total Defense: " + totalDefense);
 
