@@ -128,12 +128,14 @@
             turretY = shipY - 20;
             drawElement(turretX, turretY, 25, 20, "lightgreen");
 
+            //Makes sure invaders switch direction when reaching edge of screen
             invaderX += dx;
             if (invaders[0].x <= 0 || invaders[invaders.length - 1].x >= 780) {
                 invaderY += 20;
                 dx = -dx;
             }
 
+            //Draws invaders into two rows
             for (let i = 0; i < invaders.length; i++) {
                 drawElement(invaders[i].x, invaders[i].y, 20, 20, "white");
                 invaders[i].x += dx;
@@ -144,17 +146,20 @@
                 }
             }
 
+            //Draws bullets
             for (let b = 0; b < bullets.length; b++) {
                 drawElement(bullets[b].x, bullets[b].y, 20 + (upgrades[0] * 4), 20 + (upgrades[0] * 4), "lightgreen");
                 bullets[b].y -= bulletSpeed;
             }
 
+            //Checks if invaders have reached bottom of screen
             if (invaderY >= turretY) {
                 alert("The invaders have landed! You lost the game!");
                 clearInterval(interval);
                 window.location.reload();
             }
 
+            //Checks collision between bullets and invaders
             for (let d = 0; d < invaders.length; d++) {
                 for (let e = 0; e < bullets.length; e++) {
                     if (bullets[e].y <= invaders[d].y + 20 && bullets[e].y + 20 >= invaders[d].y) {
@@ -173,6 +178,7 @@
                 }
             }
 
+            //Progresses the cooldown bar
             if (coolDown < 150 - (upgrades[3] * 20)) {
                 coolDown++;
                 barWidth = (coolDown / barToCooldownRatio).toFixed(0);
@@ -180,10 +186,11 @@
                 document.getElementById("progressBar").style.width = barWidth + "%";
             }
 
+            //Increases speed of invaders to pressure player
             if (Math.abs(dx) < speedCap) {
                 dx = dx * 1.00005;
             }
-
+            //Checks if win conditions are met
             if (invaders.length === 0) {
                 document.getElementById("header").innerHTML = "YOU WON THE GAME!";
                 document.getElementById("myCanvas").style.visibility = hidden;
@@ -221,6 +228,35 @@
         let temp = JSON.parse(localStorage.getItem("minigameScore"));
         if (temp) {
             score = temp;
+        }
+    }
+
+    function upgradeGame(chosenUpgrade) {
+        switch(chosenUpgrade) {
+            case "bulletRadius":
+                if (score <= 50 + (upgrades[0]+1)) {
+                    upgrades[0]++;
+                    localStorage.setItem("currentUpgrades", JSON.stringify(upgrades));
+                }
+                break;
+            case "multiplier":
+                if (score <= 50 + (upgrades[1]+1)) {
+                    upgrades[1]++;
+                    localStorage.setItem("currentUpgrades", JSON.stringify(upgrades));
+                }
+                break;
+            case "bulletSpd":
+                if (score <= 50 + (upgrades[2]+1)) {
+                    upgrades[2]++;
+                    localStorage.setItem("currentUpgrades", JSON.stringify(upgrades));
+                }
+                break;
+            case "cooldown":
+                if (score <= 50 + (upgrades[3]+1)) {
+                    upgrades[3]++;
+                    localStorage.setItem("currentUpgrades", JSON.stringify(upgrades));
+                }
+                break;
         }
     }
 
