@@ -1,3 +1,6 @@
+Kalkulator:
+- Numbers shift towards the right instead of left when new numbers are added.
+
 Klokke:
 - Hand that shows time in seconds bugs out when seconds are between 15 and 45.
 
@@ -6,6 +9,8 @@ Labyrint:
 
 PingPong:
 - Ball sometimes gets stuck behind users paddle.
+- Singleplayer-screen appears every time singleplayer is chosen or leaderboard is cleared.
+- Paddle in multiplayer bugs out if ball passes the paddle.
 
 Quiz:
 - index.pug unable to find required functions from script src questionFunc.js.
@@ -15,4 +20,5 @@ Defend the Village:
 
 Space Invaders:
 - Bullet can remove wrong invander if bulletspeed is upgraded (collision needs improvement).
-- Invanders stop moving in pattern if outermost invader is removed (game eventually crashes).
+- Invanders can potentially stop moving if outermost invader is removed (game eventually crashes).
+- Invaders will sometimes switch places if one is removed.
