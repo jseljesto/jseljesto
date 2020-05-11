@@ -136,7 +136,7 @@
             }
             if (foundWall === false && currentX != 25) {
                 currentX -= 100;
-                ctx.clearRect(0, 0, c.width, c.height);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
                 drawMaze();
             }
         }
@@ -154,7 +154,7 @@
             }
             if (foundWall === false && currentX != 425) {
                 currentX += 100;
-                ctx.clearRect(0, 0, c.width, c.height);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
                 drawMaze();
             }
         }
@@ -172,7 +172,7 @@
             }
             if (foundWall === false && currentY != 25) {
                 currentY -= 100;
-                ctx.clearRect(0, 0, c.width, c.height);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
                 drawMaze();
             }
         }
@@ -190,7 +190,7 @@
             }
             if (foundWall === false && currentY != 425) {
                 currentY += 100;
-                ctx.clearRect(0, 0, c.width, c.height);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
                 drawMaze();
             }
         }
