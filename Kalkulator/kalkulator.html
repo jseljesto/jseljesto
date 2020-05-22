@@ -39,8 +39,14 @@
         let firstOperand = 0;
         let operator = "";
         let secondOperand = 0;
+        let boxPadding = 150;
 
         function clickNumber(val) {
+            if (document.getElementById("result").innerHTML != "0") {
+                boxPadding -= 15;
+            }
+            document.getElementById("result").style.paddingLeft = boxPadding + "px";
+
             if (operator.length === 0) {
                 firstOperand = parseFloat(firstOperand + val);
                 document.getElementById("result").innerHTML = firstOperand;
@@ -53,6 +59,7 @@
         }
 
         function clickOperator(op) {
+            boxPadding = 150;
             if (operator.length === 0) {
                 operator = op;
             } else {
@@ -64,6 +71,8 @@
         }
 
         function clearCalc() {
+            boxPadding = 150;
+            document.getElementById("result").style.paddingLeft = boxPadding + "px";
             currentNumber = 0;
             firstOperand = 0;
             operator = "";
@@ -72,6 +81,11 @@
         }
 
         function addDecimal() {
+            if (document.getElementById("result").innerHTML != "0") {
+                boxPadding -= 7.5;
+            }
+            document.getElementById("result").style.paddingLeft = boxPadding + "px";
+
             if (operator.length === 0) {
                 firstOperand += ".";
                 document.getElementById("result").innerHTML = firstOperand;
@@ -115,6 +129,7 @@
         }
 
         function findResult() {
+            boxPadding = 150;
             if (operator === "+") {
                 currentNumber = firstOperand + secondOperand;
             }
