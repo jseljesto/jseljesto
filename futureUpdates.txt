@@ -1,3 +1,7 @@
+Arbeidsplass:
+- Creating database for easier access to person objects
+- Adding workdays/workhours
+
 Klokke:
 - Adding several smaller clocks representing the most popular timezones
 
@@ -10,9 +14,10 @@ PingPong:
 
 Quiz:
 - Making it fully compatible with Node.js and Pug
+- Keeping track of score
 
 Minigames:
-- Enable upgrades for SpaceInvaders after more testing.
+- Enable upgrades for SpaceInvaders after more testing
 
 Future projects:
 - Secret message encoder/decoder
