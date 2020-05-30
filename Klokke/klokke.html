@@ -75,7 +75,6 @@
 
 
         function drawClock() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.arc(0, 0, radius, 0, 2 * Math.PI);
             ctx.fillStyle = "white";
             ctx.fill();
@@ -133,8 +132,8 @@
             ctx.moveTo(0, 0);
             ctx.rotate(pos);
             ctx.lineTo(0, -length);
-            ctx.rotate(-pos);
             ctx.stroke();
+            ctx.rotate(-pos);
         }
 
         function addZerosToCurrentTime(i) {
