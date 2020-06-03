@@ -7,6 +7,9 @@ Klokke:
 Labyrint:
 - Image doesn't show up occasionally. Refresh a few times for it to work properly.
 
+Minigames:
+- Fix some issues with collision against walls on SpaceInvaders
+
 PingPong:
 - Ball sometimes gets stuck behind users paddle.
 - Singleplayer-screen appears every time singleplayer is chosen or leaderboard is cleared.

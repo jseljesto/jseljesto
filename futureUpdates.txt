@@ -9,6 +9,12 @@ Knapp:
 - Making it easier to navigate around the site
 - Adding more complex features, such as animations and bubble effect
 
+Nettside:
+- Add icons to navigation bar
+
+Minigames:
+- Show upgrade cost when hovering over buttons
+
 PingPong:
 - Give users the ability to customize ball, paddle and the canvas
 
