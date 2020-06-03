@@ -59,11 +59,11 @@
     let score = 0;
     getScore();
     document.getElementById("scoreBoard").innerHTML = `Score: ${score}`;
-    const shipWidth = 50;
-    const shipHeight = 50;
-    const shipY = 120;
+    let shipWidth = 50;
+    let shipHeight = 50;
+    let shipY = 120;
     let shipX = (canvas.width - shipWidth) / 2;
-    let invaderX = 50;
+    let invaderX = 20;
     let invaderY = 10;
     let dx = 0;
     const speedCap = 5;
@@ -76,14 +76,22 @@
     let upperRowLeft = 14;
     let barWidth = 100;
     let barToCooldownRatio = coolDown/barWidth;
+    let invaderDisX = 50;
+    let invaderDisY = 50;
+    let smallRes = false;
+    if (document.getElementById("myCanvas").height < 1000) {
+        smallRes = true;
+    }
+
+    checkResolution();
 
     let invaders = [];
     for (let a = 0; a < 28; a++) {
         if (a < upperRowLeft) {
-            invaders.push({ x: (invaderX + (a * 50)), y: invaderY });
+            invaders.push({ x: (invaderX + (a * invaderDisX)), y: invaderY });
         } else {
             let temp = a - 14;
-            invaders.push({ x: (invaderX + (temp * 50)), y: invaderY + 50 });
+            invaders.push({ x: (invaderX + (temp * invaderDisX)), y: invaderY + invaderDisY });
         }
     }
 
@@ -126,9 +134,15 @@
         if (gameStarted) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             drawElement(shipX, shipY, shipWidth, shipHeight, "lightgreen");
+            if (smallRes === false) {
             turretX = shipX + 12.5;
-            turretY = shipY - 20;
+            turretY = shipY - 20; 
             drawElement(turretX, turretY, 25, 20, "lightgreen");
+            } else {
+            turretX = shipX + 6;
+            turretY = shipY - 10;
+            drawElement(turretX, turretY, 12.5, 10, "lightgreen");
+            }
 
             //Makes sure invaders switch direction when reaching edge of screen
             invaderX += dx;
@@ -139,7 +153,11 @@
 
             //Draws invaders into two rows
             for (let i = 0; i < invaders.length; i++) {
+                if (smallRes === false) {
                 drawElement(invaders[i].x, invaders[i].y, 20, 20, "white");
+            } else {
+                drawElement(invaders[i].x, invaders[i].y, 10, 10, "white");
+            }
                 invaders[i].x += dx;
                 if (i < upperRowLeft) {
                     invaders[i].y = invaderY;
@@ -150,7 +168,11 @@
 
             //Draws bullets
             for (let b = 0; b < bullets.length; b++) {
+                if (smallRes === false) {
                 drawElement(bullets[b].x, bullets[b].y, 20 + (upgrades[0] * 4), 20 + (upgrades[0] * 4), "lightgreen");
+                } else {
+                drawElement(bullets[b].x, bullets[b].y, 10 + (upgrades[0] * 4), 10 + (upgrades[0] * 4), "lightgreen");
+                }
                 bullets[b].y -= bulletSpeed;
             }
 
@@ -259,6 +281,15 @@
                     localStorage.setItem("currentUpgrades", JSON.stringify(upgrades));
                 }
                 break;
+        }
+    }
+
+    function checkResolution () {
+        if (smallRes === true) {
+            shipWidth = 25;
+            shipHeight = 25;
+            invaderDisY = 25;
+            invaderDisX = 20;
         }
     }
 
