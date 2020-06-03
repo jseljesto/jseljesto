@@ -257,26 +257,30 @@
 
     function upgradeGame(chosenUpgrade) {
         switch(chosenUpgrade) {
-            case "bulletRadius":
-                if (score <= 50 + (upgrades[0]+1)) {
+            case 'bulletRadius':
+                if (score >= 50 * (upgrades[0]+1)) {
+                    score -= 50 * (upgrades[0]+1);
                     upgrades[0]++;
                     localStorage.setItem("currentUpgrades", JSON.stringify(upgrades));
                 }
                 break;
-            case "multiplier":
-                if (score <= 50 + (upgrades[1]+1)) {
+            case 'multiplier':
+                if (score >= 50 * (upgrades[1]+1)) {
+                    score -= 50 * (upgrades[1]+1);
                     upgrades[1]++;
                     localStorage.setItem("currentUpgrades", JSON.stringify(upgrades));
                 }
                 break;
-            case "bulletSpd":
-                if (score <= 50 + (upgrades[2]+1)) {
+            case 'bulletSpd':
+                if (score >= 50 * (upgrades[2]+1)) {
+                    score -= 50 * (upgrades[2]+1);
                     upgrades[2]++;
                     localStorage.setItem("currentUpgrades", JSON.stringify(upgrades));
                 }
                 break;
-            case "cooldown":
-                if (score <= 50 + (upgrades[3]+1)) {
+            case 'cooldown':
+                if (score >= 50 * (upgrades[3]+1)) {
+                    score -= 50 * (upgrades[3]+1);
                     upgrades[3]++;
                     localStorage.setItem("currentUpgrades", JSON.stringify(upgrades));
                 }
