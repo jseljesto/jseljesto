@@ -16,6 +16,8 @@
     <button id="check">Check</button>
     <button id="next" style="visibility : hidden;">Next</button>
 
+    <p id="currentScore">Total Score : 0 out of 0</p>
+
     <script type="module">
 
         import { questionArray } from './questions.js';
@@ -103,6 +105,7 @@
                 }
             }
             qAnswered++;
+            document.getElementById("currentScore").innerHTML = `Total Score: ${points} out of ${qAnswered}`;
             document.getElementById("check").style.visibility = "hidden";
             document.getElementById("next").style.visibility = "visible";
 
