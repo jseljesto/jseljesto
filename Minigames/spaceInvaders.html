@@ -77,9 +77,9 @@
     let barWidth = 100;
     let barToCooldownRatio = coolDown/barWidth;
     let invaderDisX = 50;
-    let invaderDisY = 50;
+    let invaderDisY = 25;
     let smallRes = false;
-    if (document.getElementById("myCanvas").height < 1000) {
+    if (document.getElementById("myCanvas").height < 600) {
         smallRes = true;
     }
 
@@ -146,8 +146,8 @@
 
             //Makes sure invaders switch direction when reaching edge of screen
             invaderX += dx;
-            if (invaders[0].x <= 0 || invaders[invaders.length - 1].x >= 780) {
-                invaderY += 20;
+            if (invaders[0].x <= 0 || invaders[invaders.length - 1].x >= 290) {
+                invaderY += 10;
                 dx = -dx;
             }
 
@@ -156,13 +156,13 @@
                 if (smallRes === false) {
                 drawElement(invaders[i].x, invaders[i].y, 20, 20, "white");
             } else {
-                drawElement(invaders[i].x, invaders[i].y, 10, 10, "white");
+                drawElement(invaders[i].x, invaders[i].y, 5, 5, "white");
             }
                 invaders[i].x += dx;
                 if (i < upperRowLeft) {
                     invaders[i].y = invaderY;
                 } else {
-                    invaders[i].y = invaderY + 50;
+                    invaders[i].y = invaderY + 20;
                 }
             }
 
@@ -171,7 +171,7 @@
                 if (smallRes === false) {
                 drawElement(bullets[b].x, bullets[b].y, 20 + (upgrades[0] * 4), 20 + (upgrades[0] * 4), "lightgreen");
                 } else {
-                drawElement(bullets[b].x, bullets[b].y, 10 + (upgrades[0] * 4), 10 + (upgrades[0] * 4), "lightgreen");
+                drawElement(bullets[b].x, bullets[b].y, 3 + (upgrades[0] * 4), 3 + (upgrades[0] * 4), "lightgreen");
                 }
                 bullets[b].y -= bulletSpeed;
             }
@@ -288,8 +288,8 @@
         if (smallRes === true) {
             shipWidth = 25;
             shipHeight = 25;
-            invaderDisY = 25;
-            invaderDisX = 20;
+            invaderDisY = 10;
+            invaderDisX = 10;
         }
     }
 
