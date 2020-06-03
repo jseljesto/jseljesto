@@ -14,10 +14,6 @@ PingPong:
 
 Quiz:
 - Making it fully compatible with Node.js and Pug
-- Keeping track of score
-
-Minigames:
-- Enable upgrades for SpaceInvaders after more testing
 
 Future projects:
 - Secret message encoder/decoder
