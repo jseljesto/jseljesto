@@ -70,3 +70,15 @@
     bottom: 2%;
     visibility: hidden;
 }
+
+@media screen and (max-height: 600px) {
+    #myCanvas {
+        height: 200px;
+    }
+}
+
+@media screen and (max-height: 800px) {
+    #myCanvas {
+        height: 300px;
+    }
+}

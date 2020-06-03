@@ -8,10 +8,12 @@
             border: 2px solid black;
             position: absolute;
             margin: auto;
-            top: 0;
+            top: 120px;
             right: 0;
             left: 0;
-            bottom: 0;
+            bottom: 50px;
+            visibility: hidden;
+            width: 800px;
         }
     </style>
 </head>
@@ -23,28 +25,28 @@
     <h1 id="header" style="font-size: 100px; text-align: center; text-shadow: 3px 3px black;">SPACE INVADERS!</h1>
     <button id="startBtn" style="font-size: 100px; position:absolute; left: 42%" onclick="startGame();">PLAY</button>
 
-    <h3 id="bulletRadiusLvl" class="upgdHeaders" style="font-size: 20px; position:absolute; left:5%; top: 34%"></h3>
+    <h3 id="bulletRadiusLvl" class="upgdHeaders" style="font-size: 20px; position:absolute; left: 40px; top: 200px;"></h3>
     <button id="bulletRadiusUpgrade" class="upgButtons" onclick="upgradeGame('bulletRadius')"
-        style="font-size: 20px; position:absolute; left:8%; top: 40%">UPGRADE</button>
+        style="font-size: 20px; position:absolute; left: 100px; top: 250px;">UPGRADE</button>
 
-    <h3 id="multiplierLvl" class="upgdHeaders" style="font-size: 20px; position:absolute; right:5%; top: 34%"></h3>
+    <h3 id="multiplierLvl" class="upgdHeaders" style="font-size: 20px; position:absolute; right: 30px; top: 200px;"></h3>
     <button id="multiplierUpgrade" class="upgButtons" onclick="upgradeGame('multiplier')"
-        style="font-size: 20px; position:absolute; right:8%; top: 40%">UPGRADE</button>
+        style="font-size: 20px; position:absolute; right: 100px; top: 250px;">UPGRADE</button>
 
-    <h3 id="bulletSpdLvl" class="upgdHeaders" style="font-size: 20px; position:absolute; left:5%; top: 64%"></h3>
+    <h3 id="bulletSpdLvl" class="upgdHeaders" style="font-size: 20px; position:absolute; left: 40px; top: 380px;"></h3>
     <button id="bulletSpdUpgrade" class="upgButtons" onclick="upgradeGame('bulletSpd')"
-        style="font-size: 20px; position:absolute; left:8%; top: 70%">UPGRADE</button>
+        style="font-size: 20px; position:absolute; left: 100px; top: 430px;">UPGRADE</button>
 
-    <h3 id="cooldownLvl" class="upgdHeaders" style="font-size: 20px; position:absolute; right:6%; top: 64%"></h3>
+    <h3 id="cooldownLvl" class="upgdHeaders" style="font-size: 20px; position:absolute; right: 50px; top: 380px;"></h3>
     <button id="cooldownUpgrade" class="upgButtons" onclick="upgradeGame('cooldown')"
-        style="font-size: 20px; position:absolute; right:8%; top: 70%">UPGRADE</button>
+        style="font-size: 20px; position:absolute; right: 100px; top: 430px;">UPGRADE</button>
 
     <p id="currentProgress">
         <p id="progressBar">100%</p>
     </p>
 
 
-    <canvas id="myCanvas" width="800" height="600" style="visibility: hidden;"></canvas>
+    <canvas id="myCanvas"></canvas>
 </body>
 <script>
 
@@ -59,7 +61,7 @@
     document.getElementById("scoreBoard").innerHTML = `Score: ${score}`;
     const shipWidth = 50;
     const shipHeight = 50;
-    const shipY = 520;
+    const shipY = 120;
     let shipX = (canvas.width - shipWidth) / 2;
     let invaderX = 50;
     let invaderY = 10;
