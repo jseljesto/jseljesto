@@ -186,9 +186,9 @@
             //Checks collision between bullets and invaders
             for (let d = 0; d < invaders.length; d++) {
                 for (let e = 0; e < bullets.length; e++) {
-                    if (bullets[e].y <= invaders[d].y + 20 && bullets[e].y + 20 >= invaders[d].y) {
-                        if ((bullets[e].x + 20 + (upgrades[0] * 4)) >= invaders[d].x
-                            && bullets[e].x <= invaders[d].x + 20) {
+                    if (bullets[e].y <= invaders[d].y + 10 && bullets[e].y + 10 >= invaders[d].y) {
+                        if ((bullets[e].x + 10 + (upgrades[0] * 4)) >= invaders[d].x
+                            && bullets[e].x <= invaders[d].x + 10) {
                             bullets.splice(e, 1);
                             invaders.splice(d, 1);
                             score = score + (1 + upgrades[1]);
