@@ -27,8 +27,7 @@
         let secondPage = [];
         let firstPageItems = 0;
         let secondPageItems = 0;
-        let newElement = document.getElementById("leggTil");
-
+        let firstPageElements = document.getElementsByTagName("LI");
 
         document.addEventListener("load", function () {
             let shoppingListText = "<ul id='nyHandleliste'>";
@@ -38,15 +37,6 @@
             }
             shoppingListText += "</ul>";
             document.getElementById("handleliste").innerHTML = shoppingListText;
-        });
-
-
-        document.addEventListener("dblclick", function (element) {
-            if (element.target.id > 10) {
-                removeSecondPageElement(element.target.id);
-            } else {
-                removeFirstPageElement(element.target.id);
-            }
         });
 
         document.addEventListener("change", function () {
@@ -61,7 +51,7 @@
             }
         });
 
-        newElement.addEventListener('click', function () {
+        document.getElementById("leggTil").addEventListener("click", function () {
             if (document.getElementById("produkt").value != "") {
                 let text = document.getElementById("antall").value + " " +
                     document.getElementById("enhet").value + " " +
@@ -91,7 +81,13 @@
             }
             shoppingListText += "</ul>";
             document.getElementById("handleliste").innerHTML = shoppingListText;
-        }
+            firstPageElements = document.getElementsByTagName("LI");
+
+            for (let i = 0; i < firstPageElements.length; i++) {
+                    firstPageElements[i].addEventListener("click", function() {
+                    removeFirstPageElement(i); 
+                    }, true)}
+                    }
 
         function createSecondPage() {
             let shoppingListText = "<ul id='listeAndreSide'>";
