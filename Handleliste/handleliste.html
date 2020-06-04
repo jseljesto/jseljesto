@@ -27,7 +27,8 @@
         let secondPage = [];
         let firstPageItems = 0;
         let secondPageItems = 0;
-        let firstPageElements = document.getElementsByTagName("LI");
+        let listElements = document.getElementsByTagName("LI");
+        let productInput = document.getElementById("produkt");
 
         document.addEventListener("load", function () {
             let shoppingListText = "<ul id='nyHandleliste'>";
@@ -39,7 +40,7 @@
             document.getElementById("handleliste").innerHTML = shoppingListText;
         });
 
-        document.addEventListener("change", function () {
+        productInput.addEventListener("keydown", function () {
             let currentWord = document.getElementById("produkt").value;
             for (let i = 0; i < items.length; i++) {
                 if (items[i].substring(0, currentWord.length) === currentWord) {
@@ -81,24 +82,13 @@
             }
             shoppingListText += "</ul>";
             document.getElementById("handleliste").innerHTML = shoppingListText;
-            firstPageElements = document.getElementsByTagName("LI");
+            listElements = document.getElementsByTagName("LI");
 
-            for (let i = 0; i < firstPageElements.length; i++) {
-                    firstPageElements[i].addEventListener("click", function() {
+            for (let i = 0; i < listElements.length; i++) {
+                    listElements[i].addEventListener("click", function() {
                     removeFirstPageElement(i); 
                     }, true)}
-                    }
-
-        function createSecondPage() {
-            let shoppingListText = "<ul id='listeAndreSide'>";
-            for (let i of secondPage) {
-                let index = secondPage.indexOf(i);
-                shoppingListText += "<li>" + i +
-                    "<a onclick='removeSecondPageElement(" + index + ")'> &times;</a></li>";
             }
-            shoppingListText += "</ul>";
-            document.getElementById("side2").innerHTML = shoppingListText;
-        }
 
         function removeFirstPageElement(index) {
             firstPage.splice(index, 1);
@@ -107,14 +97,7 @@
             firstPageItems--;
             createShoppingList();
         }
-
-        function removeSecondPageElement(index) {
-            secondPage.splice(index, 1);
-            let updatedList = document.getElementById("listeAndreSide");
-            updatedList.removeChild(updatedList.childNodes[index]);
-            secondPageItems--;
-            shoppingListSecondPage();
-        }
+        
     </script>
 </body>
 
