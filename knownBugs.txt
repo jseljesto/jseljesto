@@ -1,5 +1,5 @@
 Klokke:
-- Can't change time zone on main clock at the moment.
+- Needs smoother interface.
 
 PingPong:
 - Ball sometimes gets stuck behind users paddle.
