@@ -9,3 +9,17 @@
     left: 36%;
     background-color: black;
 }
+
+#pstCanvas {
+    position: fixed;
+    top: 35%;
+    left: 50px;
+    background-color: black;
+}
+
+#cstCanvas {
+    position: fixed;
+    top: 35%;
+    right: 50px;
+    background-color: black;
+}

@@ -6,11 +6,14 @@
     <meta charset="UTF-8">
 </head>
 
-<body onload="findCurrentTime(); drawClock();">
+<body onload="drawClock(ctx, radius, zoneDiff); drawClock(cstCtx, stRadius, cstDiff); 
+    drawClock(pstCtx, stRadius, pstDiff);">
     <p id="tid"></p>
 
     <canvas id="canvas" width="400" height="400"></canvas>
-    <select id="tidssoner" onchange="changeTimeZone()" style="position: absolute; top: 20%;">
+    <canvas id="pstCanvas" width="200" height="200"></canvas>
+    <canvas id="cstCanvas" width="200" height="200"></canvas>
+    <select id="tidssoner" onchange="changeTimeZone()" style="position: fixed; bottom: 10%; left:38%;">
         <option value="-8" selected>UTC - 08:00 (Stillehavskysten USA)</option>
         <option value="-7" selected>UTC - 07:00 (Arizona, Rocky Mountains)</option>
         <option value="-6" selected>UTC - 06:00 (Mexico By, Midtvesten USA)</option>
@@ -30,14 +33,21 @@
     </select>
 
     <script>
-
         const currentZone = 1;
         let zoneDiff = 0;
+        let pstDiff = -9;
+        let cstDiff = 6;
         const canvas = document.getElementById("canvas");
         const ctx = canvas.getContext("2d");
+        const pstCanvas = document.getElementById("pstCanvas");
+        const pstCtx = pstCanvas.getContext("2d");
+        const cstCanvas = document.getElementById("cstCanvas");
+        const cstCtx = cstCanvas.getContext("2d");
         const radius = canvas.height / 2;
+        const stRadius = pstCanvas.height / 2;
         ctx.translate(radius, radius);
-        setInterval(drawClock, 1000);
+        pstCtx.translate(stRadius, stRadius);
+        cstCtx.translate(stRadius, stRadius);
 
         class Clock {
             constructor(hours, minutes, seconds) {
@@ -72,9 +82,11 @@
 
         }
 
+        setInterval(drawClock, 1000, ctx, radius, zoneDiff);
+        setInterval(drawClock, 1000, pstCtx, stRadius, pstDiff);
+        setInterval(drawClock, 1000, cstCtx, stRadius, cstDiff);
 
-
-        function drawClock() {
+        function drawClock(ctx, radius, zone) {
             ctx.beginPath();
             ctx.arc(0, 0, radius, 0, 2 * Math.PI);
             ctx.fillStyle = "white";
@@ -112,7 +124,7 @@
                 ctx.rotate(-ang);
             }
 
-            let newClock = findCurrentTime();
+            let newClock = findCurrentTime(zone);
             newClock.hours = newClock.hours % 12;
             newClock.hours = (newClock.hours * Math.PI / 6) +
                 (newClock.minutes * Math.PI / (6 * 60)) + (newClock.seconds * Math.PI / (360 * 60));
@@ -143,9 +155,9 @@
             }
             return i;
         }
-        function findCurrentTime() {
+        function findCurrentTime(zone) {
             let currentDate = new Date();
-            let h = currentDate.getHours() + zoneDiff;
+            let h = currentDate.getHours() + zone;
             if (h >= 24) {
                 h-= 24;
             }
@@ -154,8 +166,10 @@
             let clock = new Clock(h, m, s);
             clock.minutes = addZerosToCurrentTime(m);
             clock.seconds = addZerosToCurrentTime(s);
+            if (zone == "0") {
             document.getElementById("tid").innerHTML =
-                `${clock.hours}:${clock.minutes}:${clock.seconds}`;
+                `${clock.hours}:${clock.minutes}:${clock.seconds}`; 
+                }
             return clock;
         }
 
