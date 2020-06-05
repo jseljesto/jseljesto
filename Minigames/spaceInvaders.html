@@ -159,11 +159,11 @@
                 drawElement(invaders[i].x, invaders[i].y, 5, 5, "white");
             }
                 invaders[i].x += dx;
-                if (i < upperRowLeft) {
+               /* if (i < upperRowLeft) {
                     invaders[i].y = invaderY;
                 } else {
                     invaders[i].y = invaderY + 20;
-                }
+                } */
             }
 
             //Draws bullets
@@ -292,7 +292,7 @@
         if (smallRes === true) {
             shipWidth = 25;
             shipHeight = 25;
-            invaderDisY = 10;
+            invaderDisY = 15;
             invaderDisX = 10;
         }
     }
