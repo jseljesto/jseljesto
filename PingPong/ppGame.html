@@ -32,7 +32,7 @@
     <button onclick="localStorage.removeItem('savedScores'); location.reload();" style="position: absolute; 
     bottom: 5%; left: 1%">Clear</button>
     <strong>
-        <h2 id="score" style="position:absolute; right: 35px;">Current Score: </h2>
+        <h2 id="score" style="position:absolute; right: 35px;">Score: </h2>
     </strong>
     <canvas id="myCanvas" width="600" height="400"></canvas>
     <script>
@@ -100,7 +100,6 @@
 
         function disableMulti() {
             multiEnabled = false;
-            location.reload();
         }
 
         function compareScores(a, b) {
@@ -143,6 +142,7 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             drawBall();
             drawPaddle(paddleX, paddleY, paddleWidth, paddleHeight);
+            document.getElementById("score").style.visibility = "visible";
             if (multiEnabled === true) {
                 drawPaddle(oppX, oppY, oppWidth, oppHeight);
                 document.getElementById("score").style.visibility = "hidden";
