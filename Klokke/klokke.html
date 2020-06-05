@@ -87,6 +87,9 @@
         setInterval(drawClock, 1000, cstCtx, stRadius, cstDiff);
 
         function drawClock(ctx, radius, zone) {
+            if (zone == "0") {
+                zone = zoneDiff;
+            }
             ctx.beginPath();
             ctx.arc(0, 0, radius, 0, 2 * Math.PI);
             ctx.fillStyle = "white";
