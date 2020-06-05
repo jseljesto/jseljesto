@@ -2,9 +2,6 @@ Arbeidsplass:
 - Creating database for easier access to person objects
 - Adding workdays/workhours
 
-Klokke:
-- Adding several smaller clocks representing the most popular timezones
-
 Knapp:
 - Making it easier to navigate around the site
 - Adding more complex features, such as animations and bubble effect
