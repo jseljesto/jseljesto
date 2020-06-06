@@ -26,20 +26,24 @@
     <button id="startBtn" style="font-size: 100px; position:absolute; left: 42%" onclick="startGame();">PLAY</button>
 
     <h3 id="bulletRadiusLvl" class="upgdHeaders" style="font-size: 20px; position:absolute; left: 40px; top: 200px;"></h3>
-    <button id="bulletRadiusUpgrade" class="upgButtons" onclick="upgradeGame('bulletRadius')"
-        style="font-size: 20px; position:absolute; left: 100px; top: 250px;">UPGRADE</button>
+    <button id="bulletRadiusUpgrade" class="purchaseBtn" onclick="upgradeGame('bulletRadius')"
+        style="font-size: 20px; position:absolute; left: 100px; top: 250px;">
+        <span id="bulletRadiusPrice" class="btnText">Fully upgraded </span>UPGRADE</button>
 
     <h3 id="multiplierLvl" class="upgdHeaders" style="font-size: 20px; position:absolute; right: 30px; top: 200px;"></h3>
-    <button id="multiplierUpgrade" class="upgButtons" onclick="upgradeGame('multiplier')"
-        style="font-size: 20px; position:absolute; right: 100px; top: 250px;">UPGRADE</button>
+    <button id="multiplierUpgrade" class="purchaseBtn" onclick="upgradeGame('multiplier')"
+        style="font-size: 20px; position:absolute; right: 100px; top: 250px;">
+        <span id="multiplierPrice" class="btnText">Fully upgraded </span>UPGRADE</button>
 
     <h3 id="bulletSpdLvl" class="upgdHeaders" style="font-size: 20px; position:absolute; left: 40px; top: 380px;"></h3>
-    <button id="bulletSpdUpgrade" class="upgButtons" onclick="upgradeGame('bulletSpd')"
-        style="font-size: 20px; position:absolute; left: 100px; top: 430px;">UPGRADE</button>
+    <button id="bulletSpdUpgrade" class="purchaseBtn" onclick="upgradeGame('bulletSpd')"
+        style="font-size: 20px; position:absolute; left: 100px; top: 430px;">
+        <span id="bulletSpdPrice" class="btnText">Fully upgraded </span>UPGRADE</button>
 
     <h3 id="cooldownLvl" class="upgdHeaders" style="font-size: 20px; position:absolute; right: 50px; top: 380px;"></h3>
-    <button id="cooldownUpgrade" class="upgButtons" onclick="upgradeGame('cooldown')"
-        style="font-size: 20px; position:absolute; right: 100px; top: 430px;">UPGRADE</button>
+    <button id="cooldownUpgrade" class="purchaseBtn" onclick="upgradeGame('cooldown')"
+        style="font-size: 20px; position:absolute; right: 100px; top: 430px;">
+        <span id="cooldownPrice" class="btnText">Fully upgraded </span>UPGRADE</button>
 
     <p id="currentProgress">
         <p id="progressBar">100%</p>
@@ -55,10 +59,11 @@
 
     let upgrades = [];
     getUpgrades();
-    setUpgradeScreen();
     let score = 0;
     getScore();
     document.getElementById("scoreBoard").innerHTML = `Score: ${score}`;
+    localStorage.setItem("currentUpgrades", JSON.stringify(upgrades));
+    setUpgradeScreen();
     let shipWidth = 50;
     let shipHeight = 50;
     let shipY = 120;
@@ -69,8 +74,8 @@
     const speedCap = 5;
     let turretY = shipY - 20;
     let turretX = shipX + 12.5;
-    const bulletSpeed = 2 + (upgrades[2] * 2);
-    let coolDown = 150 - (upgrades[3] * 20);
+    const bulletSpeed = 2 + ((upgrades[2]-1) * 2);
+    let coolDown = 150 - ((upgrades[3]-1) * 20);
     let bullets = [];
     let gameStarted = false;
     let upperRowLeft = 14;
@@ -84,6 +89,7 @@
     }
 
     checkResolution();
+    checkPrices();
 
     let invaders = [];
     for (let a = 0; a < 28; a++) {
@@ -120,7 +126,7 @@
 
     function createBullet(event) {
         if (event.keyCode === 32) {
-            if (coolDown >= 150 - (upgrades[3] * 20)) {
+            if (coolDown >= 150 - ((upgrades[3]-1) * 20)) {
                 bullets.push({ x: turretX, y: (turretY - 20) });
                 coolDown = 0;
                 barWidth = 0;
@@ -169,9 +175,9 @@
             //Draws bullets
             for (let b = 0; b < bullets.length; b++) {
                 if (smallRes === false) {
-                drawElement(bullets[b].x, bullets[b].y, 20 + (upgrades[0] * 4), 20 + (upgrades[0] * 4), "lightgreen");
+                drawElement(bullets[b].x, bullets[b].y, 20 + ((upgrades[0]-1) * 4), 20 + ((upgrades[0]-1) * 4), "lightgreen");
                 } else {
-                drawElement(bullets[b].x, bullets[b].y, 3 + (upgrades[0] * 4), 3 + (upgrades[0] * 4), "lightgreen");
+                drawElement(bullets[b].x, bullets[b].y, 3 + ((upgrades[0]-1) * 4), 3 + ((upgrades[0]-1) * 4), "lightgreen");
                 }
                 bullets[b].y -= bulletSpeed;
             }
@@ -187,11 +193,11 @@
             for (let d = 0; d < invaders.length; d++) {
                 for (let e = 0; e < bullets.length; e++) {
                     if (bullets[e].y <= invaders[d].y + 10 && bullets[e].y + 10 >= invaders[d].y) {
-                        if ((bullets[e].x + 10 + (upgrades[0] * 4)) >= invaders[d].x
+                        if ((bullets[e].x + 10 + ((upgrades[0]-1) * 4)) >= invaders[d].x
                             && bullets[e].x <= invaders[d].x + 10) {
                             bullets.splice(e, 1);
                             invaders.splice(d, 1);
-                            score = score + (1 + upgrades[1]);
+                            score = score + (1 + (upgrades[1]-1));
                             document.getElementById("scoreBoard").innerHTML = `Score: ${score}`;
                             localStorage.setItem("minigameScore", JSON.stringify(score));
                             if (d <= upperRowLeft) {
@@ -203,7 +209,7 @@
             }
 
             //Progresses the cooldown bar
-            if (coolDown < 150 - (upgrades[3] * 20)) {
+            if (coolDown < 150 - ((upgrades[3]-1) * 20)) {
                 coolDown++;
                 barWidth = (coolDown / barToCooldownRatio).toFixed(0);
                 document.getElementById("progressBar").innerHTML = barWidth + "%";
@@ -235,7 +241,7 @@
             upgrades = JSON.parse(localStorage.getItem("currentUpgrades"));
         } else {
             for (let a = 0; a < 4; a++) {
-                upgrades.push(0);
+                upgrades.push(1);
                 localStorage.setItem("currentUpgrades", JSON.stringify(upgrades));
             }
         }
@@ -258,31 +264,47 @@
     function upgradeGame(chosenUpgrade) {
         switch(chosenUpgrade) {
             case 'bulletRadius':
-                if (score >= 50 * (upgrades[0]+1)) {
-                    score -= 50 * (upgrades[0]+1);
+                if (score >= 50 * (Math.pow(2, upgrades[0]))) {
+                    score -= 50 * (Math.pow(2, upgrades[0]));
                     upgrades[0]++;
                     localStorage.setItem("currentUpgrades", JSON.stringify(upgrades));
+                    localStorage.setItem("minigameScore", JSON.stringify(score));
+                    setUpgradeScreen();
+                    checkPrices();
+                    document.getElementById("scoreBoard").innerHTML = `Score: ${score}`;
                 }
                 break;
             case 'multiplier':
-                if (score >= 50 * (upgrades[1]+1)) {
-                    score -= 50 * (upgrades[1]+1);
+                if (score >= 50 * (Math.pow(2, upgrades[1]))) {
+                    score -= 50 * (Math.pow(2, upgrades[1]));
                     upgrades[1]++;
                     localStorage.setItem("currentUpgrades", JSON.stringify(upgrades));
+                    localStorage.setItem("minigameScore", JSON.stringify(score));
+                    setUpgradeScreen();
+                    checkPrices();
+                    document.getElementById("scoreBoard").innerHTML = `Score: ${score}`;
                 }
                 break;
             case 'bulletSpd':
-                if (score >= 50 * (upgrades[2]+1)) {
-                    score -= 50 * (upgrades[2]+1);
+                if (score >= 50 * (Math.pow(2, upgrades[2]))) {
+                    score -= 50 * (Math.pow(2, upgrades[2]));
                     upgrades[2]++;
                     localStorage.setItem("currentUpgrades", JSON.stringify(upgrades));
+                    localStorage.setItem("minigameScore", JSON.stringify(score));
+                    setUpgradeScreen();
+                    checkPrices();
+                    document.getElementById("scoreBoard").innerHTML = `Score: ${score}`;
                 }
                 break;
             case 'cooldown':
-                if (score >= 50 * (upgrades[3]+1)) {
-                    score -= 50 * (upgrades[3]+1);
+                if (score >= 50 * (Math.pow(2, upgrades[3]))) {
+                    score -= 50 * (Math.pow(2, upgrades[3]));
                     upgrades[3]++;
                     localStorage.setItem("currentUpgrades", JSON.stringify(upgrades));
+                    localStorage.setItem("minigameScore", JSON.stringify(score));
+                    setUpgradeScreen();
+                    checkPrices();
+                    document.getElementById("scoreBoard").innerHTML = `Score: ${score}`;
                 }
                 break;
         }
@@ -294,6 +316,51 @@
             shipHeight = 25;
             invaderDisY = 15;
             invaderDisX = 10;
+        }
+    }
+
+    function checkPrices() {
+        if (score >= 50 * (Math.pow(2, upgrades[0])) && upgrades[0] < 5) {
+            document.getElementById("bulletRadiusPrice").innerHTML = `Price: ${(50 * (Math.pow(2, upgrades[0]))) } Points`;
+            document.getElementById("bulletRadiusUpgrade").style.backgroundColor = "darkgreen";
+        } else if (score < 50 * (Math.pow(2, upgrades[0])) && upgrades[0] < 5){
+            document.getElementById("bulletRadiusPrice").innerHTML = `Price: ${(50 * (Math.pow(2, upgrades[0]))) } Points`;
+            document.getElementById("bulletRadiusUpgrade").style.backgroundColor = "red";
+        } else {
+            document.getElementById("bulletRadiusUpgrade").style.backgroundColor = "blue";
+            document.getElementById("bulletRadiusPrice").innerHTML = "Fully upgraded";
+        }
+        if (score >= 50 * (Math.pow(2, upgrades[1])) && upgrades[1] < 5) {
+            document.getElementById("multiplierPrice").innerHTML = `Price: ${(50 * (Math.pow(2, upgrades[1]))) } Points`;
+            document.getElementById("multiplierUpgrade").style.backgroundColor = "darkgreen";
+        } else if (score < 50 * (Math.pow(2, upgrades[0])) && upgrades[1] < 5){
+            document.getElementById("multiplierPrice").innerHTML = `Price: ${(50 * (Math.pow(2, upgrades[1]))) } Points`;
+            document.getElementById("bulletRadiusUpgrade").style.backgroundColor = "red";
+        } else {
+            document.getElementById("multiplierUpgrade").style.backgroundColor = "blue";
+            document.getElementById("multiplierPrice").innerHTML = "Fully upgraded";
+
+        }
+        if (score >= 50 * (Math.pow(2, upgrades[2])) && upgrades[2] < 5) {
+            document.getElementById("bulletSpdPrice").innerHTML = `Price: ${(50 * (Math.pow(2, upgrades[2]))) } Points`;
+            document.getElementById("bulletSpdUpgrade").style.backgroundColor = "darkgreen";
+        } else if (score < 50 * (Math.pow(2, upgrades[0])) && upgrades[2] < 5){
+            document.getElementById("bulletSpdPrice").innerHTML = `Price: ${(50 * (Math.pow(2, upgrades[2]))) } Points`;
+            document.getElementById("bulletRadiusUpgrade").style.backgroundColor = "red";
+        } else {
+            document.getElementById("bulletSpdUpgrade").style.backgroundColor = "blue";
+            document.getElementById("bulletSpdPrice").innerHTML = "Fully upgraded";
+        }
+        if (score >= 50 * (Math.pow(2, upgrades[3])) && upgrades[3] < 5) {
+            document.getElementById("cooldownPrice").innerHTML = `Price: ${(50 * (Math.pow(2, upgrades[3]))) } Points`;
+            document.getElementById("cooldownUpgrade").style.backgroundColor = "darkgreen";
+        } else if (score < 50 * (Math.pow(2, upgrades[0])) && upgrades[3] < 5){
+            document.getElementById("cooldownPrice").innerHTML = `Price: ${(50 * (Math.pow(2, upgrades[3]))) } Points`;
+            document.getElementById("bulletRadiusUpgrade").style.backgroundColor = "red";
+        } else {
+            document.getElementById("cooldownUpgrade").style.backgroundColor = "blue";
+            document.getElementById("cooldownPrice").innerHTML = "Fully upgraded";
+
         }
     }
 
