@@ -3,32 +3,33 @@
 
 <head>
     <link rel="stylesheet" href="stylesheet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <meta charset="UTF-8">
 </head>
 
 <body>
 
     <ul>
-        <li><a class="active" href="#home">Home</a></li>
-        <li><a href="#dome">Dome</a></li>
-        <li><a href="#lome">Lome</a></li>
+        <li><a class="active" href="#home"><i class="fa fa-home"></i> Home</a></li>
+        <li><a href="#dome"><i class="fa fa-search"></i> Search</a></li>
+        <li><a href="#lome"><i class="fa fa-user-circle-o"></i> User</a></li>
         <li class="dropdown">
-            <a href="javascript:void(0)" class="dropbtn">Grome</a>
+            <a href="javascript:void(0)" class="dropbtn"><i class="fa fa-archive"></i> Archive</a>
             <div class="dropdown-content">
                 <a href="#link1">Link 1</a>
                 <a href="#link2">Link 2</a>
                 <a href="#link3">Link 3</a>
             </div>
         </li>
-        <li><a href="#open"><span onclick="openBar()">Open</span></a></li>
+        <li><a href="#open"><span onclick="openBar()"><i class="fa fa-navicon"></i> Open</span></a></li>
     </ul>
 
     <div id="sidebar" class="sidebar">
         <a href="#" class="close" onclick="closeBar()">&times;</a>
-        <a href="#">Home</a>
-        <a href="#">Dome</a>
-        <a href="#">Lome</a>
-        <a href="#">Grome</a>
+        <a href="#"><i class="fa fa-home"></i> Home</a>
+        <a href="#"><i class="fa fa-search"></i>  Search</a>
+        <a href="#"><i class="fa fa-user-circle-o"></i> User</a>
+        <a href="#"><i class="fa fa-archive"></i>  Archive</a>
 
     </div>
 
