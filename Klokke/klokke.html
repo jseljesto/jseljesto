@@ -36,7 +36,7 @@
         const currentZone = 1;
         let zoneDiff = 0;
         let pstDiff = -9;
-        let cstDiff = 6;
+        let cstDiff = 7;
         const canvas = document.getElementById("canvas");
         const ctx = canvas.getContext("2d");
         const pstCanvas = document.getElementById("pstCanvas");
@@ -179,6 +179,7 @@
         function changeTimeZone() {
             let chosenTimeZone = parseFloat(document.getElementById("tidssoner").value);
             zoneDiff = chosenTimeZone - currentZone;
+            drawClock(ctx, radius, zoneDiff);
         }
     </script>
 </body>
