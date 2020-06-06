@@ -1,6 +1,3 @@
-Klokke:
-- Needs smoother interface.
-
 PingPong:
 - Ball sometimes gets stuck behind users paddle.
 
