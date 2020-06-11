@@ -9,48 +9,48 @@
 <body>
     <form id="skjema">
         <p>
-            <label for="namn" data-title="Fornamn og etternamn må inkluderast.">
-                Navn<em>*</em> : </label>
-            <input id="namn" type="text" placeholder="Skriv navnet ditt her:" required>
+            <label for="name" data-title="Firstname and lastname must be included.">
+                Name<em>*</em> : </label>
+            <input id="name" type="text" placeholder="Write your name here:" required>
         </p>
-        <p><label for="kjonn">Kjønn<em>*</em> :</label>
-            <input id="kjonn" type="text" list="valgKjonn" required>
-            <datalist id="valgKjonn">
-                <option value="Mann"></option>
-                <option value="Kvinne"></option>
+        <p><label for="gender">Gender<em>*</em> :</label>
+            <input id="gender" type="text" list="chooseGender" required>
+            <datalist id="chooseGender">
+                <option value="Male"></option>
+                <option value="Female"></option>
             </datalist>
         </p>
-        <p><label for="fodDato">Fødselsdato<em>*</em> : </label>
-            <input id="fodDato" type="date" min="1950-01-01" max="2000-01-01" required>
+        <p><label for="birthDate">Birth Date<em>*</em> : </label>
+            <input id="birthDate" type="date" min="1950-01-01" max="2000-01-01" required>
         </p>
         <p>
-            <label for="postkode" data-title="Skriv inn din firesifra postkode. Ikkje inkluder poststad.">
-                Postkode<em>*</em> : </label>
-            <input id="postkode" type="number" required>
+            <label for="postCode" data-title="Write your four number postcode. Do not include location.">
+                Postcode<em>*</em> : </label>
+            <input id="postCode" type="number" required>
         </p>
         <p>
-            <label for="adresse" data-title="Skriv inn di bustadsadresse.">
-                Adresse<em>*</em> : </label>
-            <input id="adresse" type="text" required>
+            <label for="address" data-title="Write your address here.">
+                Address<em>*</em> : </label>
+            <input id="address" type="text" required>
         </p>
-        <p><label for="telefonNr"> Telefonnummer:</label>
-            <input id="telefonNr" type="number">
+        <p><label for="phoneNumber"> phone Number:</label>
+            <input id="phoneNumber" type="number">
         </p>
-        <p><label for="hobbyer"> Hobbyer:</label><br>
-            <input id="Idrett" type="checkbox" value="Idrett">Idrett<br>
-            <input id="Matlaging" type="checkbox" value="Matlaging">Matlaging<br>
-            <input id="Lesing" type="checkbox" value="Lesing">Lesing<br>
-            <input id="Koding" type="checkbox" value="Koding">Koding<br>
-            <input id="Camping" type="checkbox" value="Camping">Camping<br>
+        <p><label for="hobbies"> Hobbies:</label><br>
+            <input id="athletics" type="checkbox" value="Athletics">Athletics<br>
+            <input id="cooking" type="checkbox" value="Cooking">Cooking<br>
+            <input id="reading" type="checkbox" value="Reading">Reading<br>
+            <input id="programming" type="checkbox" value="Programming">Programming<br>
+            <input id="camping" type="checkbox" value="Camping">Camping<br>
         </p>
     </form>
 
     <button id="sendInfo" onclick="createPerson(findBirthDate())">Send Inn</button>
     <button onclick="location.reload()" style="position: absolute; 
-    top: 420px; left: 45%">Lag ny person</button>
-    <p id="listOfPersons">Liste av personar: </p>
+    top: 420px; left: 45%">Create new person</button>
+    <p id="listOfPersons">List of persons: </p>
     <p id="personInfo"></p>
-    <button id="clearStorage" onclick="clearLocalStorage()">Omstill</button>
+    <button id="clearStorage" onclick="clearLocalStorage()">Reset</button>
     <input id="searchBar" type="text" style="position: absolute; top: 580px;">
     <button id="searchPerson" onclick="searchForPerson()" style="position: fixed; 
     top: 580px; left: 15%;">Søk</button>
@@ -172,8 +172,8 @@
         function findName() {
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
-                    let personName = document.getElementById("namn").value;
-                    if (validateText("namn") === false) {
+                    let personName = document.getElementById("name").value;
+                    if (validateText("name") === false) {
                         reject(false);
                     } else {
                         resolve(personName);
@@ -183,7 +183,7 @@
         }
 
         function findGender() {
-            let gender = document.getElementById("kjonn").value;
+            let gender = document.getElementById("gender").value;
             if (gender) {
                 return gender;
             } else {
@@ -194,7 +194,7 @@
 
         function findBirthDate() {
             let birthDayArray = [];
-            let inputDate = document.getElementById("fodDato").value;
+            let inputDate = document.getElementById("birthDate").value;
             let year = inputDate.substr(0, 4);
             birthDayArray.push(year);
             let month = inputDate.substr(5, 2);
@@ -210,7 +210,7 @@
         }
 
         function findPostalCode() {
-            let postalCode = document.getElementById("postkode").value;
+            let postalCode = document.getElementById("postCode").value;
             if (postalCode) {
                 return postalCode;
             } else {
@@ -220,7 +220,7 @@
         }
 
         function findAddress() {
-            let address = document.getElementById("adresse").value;
+            let address = document.getElementById("address").value;
             if (address) {
                 return address;
             } else {
@@ -232,12 +232,12 @@
         function findPhoneNumber() {
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
-                    let phoneNumber = Number(document.getElementById("telefonNr").value);
+                    let phoneNumber = Number(document.getElementById("phoneNumber").value);
                     if (phoneNumber.length === 0) {
                         const emptyPhoneNumber = "No valid information";
                         resolve(emptyPhoneNumber);
                     }
-                    else if (validateNumber("telefonNr") === false) {
+                    else if (validateNumber("phoneNumber") === false) {
                         reject(false);
                     } else {
                         resolve(phoneNumber);
@@ -259,7 +259,7 @@
         }
 
         async function findHobbies() {
-            const hobbies = ["Idrett", "Matlaging", "Lesing", "Koding", "Camping"];
+            const hobbies = ["athletics", "cooking", "reading", "programming", "camping"];
             let confirmedHobbies = [];
             for (let i = 0; i < hobbies.length; i++) {
                 if (await isChecked(document.getElementById(hobbies[i]))) {

@@ -106,7 +106,7 @@
 </body>
 <script>
 
-    let bcColor = "";
+    let bgColor = "";
     let hoverColor = "";
 
     function changeName() {
@@ -115,9 +115,9 @@
     }
 
     function changeColor() {
-        bcColor = document.getElementById("color").value;
+        bgColor = document.getElementById("color").value;
         document.getElementById("designButton").style.backgroundColor =
-            bcColor;
+            bgColor;
     }
 
     function changeTextColor() {
@@ -161,7 +161,7 @@
         document.getElementById("designButton").style.removeProperty("height");
         document.getElementById("designButton").style.removeProperty("width");
 
-        document.getElementById("designButton").style.backgroundColor = bcColor;
+        document.getElementById("designButton").style.backgroundColor = bgColor;
         document.getElementById("buttonCSSCode").innerHTML = "#designButton { "
 
         document.getElementById("buttonCSSCode").innerHTML +=

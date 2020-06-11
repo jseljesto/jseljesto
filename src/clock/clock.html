@@ -8,12 +8,12 @@
 
 <body onload="drawClock(ctx, radius, zoneDiff); drawClock(cstCtx, stRadius, cstDiff); 
     drawClock(pstCtx, stRadius, pstDiff);">
-    <p id="tid"></p>
+    <p id="currentTime"></p>
 
     <canvas id="canvas" width="400" height="400"></canvas>
     <canvas id="pstCanvas" width="200" height="200"></canvas>
     <canvas id="cstCanvas" width="200" height="200"></canvas>
-    <select id="tidssoner" onchange="changeTimeZone()" style="position: fixed; bottom: 10%; left:38%;">
+    <select id="timeZones" onchange="changeTimeZone()" style="position: fixed; bottom: 10%; left:38%;">
         <option value="-8" selected>UTC - 08:00 (Stillehavskysten USA)</option>
         <option value="-7" selected>UTC - 07:00 (Arizona, Rocky Mountains)</option>
         <option value="-6" selected>UTC - 06:00 (Mexico By, Midtvesten USA)</option>
@@ -170,14 +170,14 @@
             clock.minutes = addZerosToCurrentTime(m);
             clock.seconds = addZerosToCurrentTime(s);
             if (zone == "0") {
-            document.getElementById("tid").innerHTML =
+            document.getElementById("currentTime").innerHTML =
                 `${clock.hours}:${clock.minutes}:${clock.seconds}`; 
                 }
             return clock;
         }
 
         function changeTimeZone() {
-            let chosenTimeZone = parseFloat(document.getElementById("tidssoner").value);
+            let chosenTimeZone = parseFloat(document.getElementById("timeZones").value);
             zoneDiff = chosenTimeZone - currentZone;
             drawClock(ctx, radius, zoneDiff);
         }

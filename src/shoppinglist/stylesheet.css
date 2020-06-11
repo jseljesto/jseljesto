@@ -1,4 +1,4 @@
-#handleliste {
+#shoppingList {
     position: fixed;
     top: 22%;
     left: 30%;
@@ -8,15 +8,6 @@
     color: black;
 }
 
-#side2 {
-    position: fixed;
-    top: 22%;
-    left: 50%;
-    font-size: 25px;
-    cursor: pointer;
-    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-    color: black;
-}
 a:hover {
     color: red;
 }
@@ -26,7 +17,7 @@ a:hover {
     left: 30%;
 }
 
-#leggTil {
+#add {
     position:fixed;
     left: 43%;
     top: 20%;

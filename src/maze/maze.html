@@ -24,6 +24,9 @@
         let minutes = 0;
         let hours = 0;
 
+        drawMaze();
+        setInterval(timerCount, 1000);
+
         //Creating lines for maze
 
         function drawMaze() {
@@ -259,9 +262,6 @@
                 window.location.reload();
             }
         }
-
-        drawMaze();
-        setInterval(timerCount, 1000);
 
     </script>
 </body>

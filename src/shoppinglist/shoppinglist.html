@@ -8,16 +8,15 @@
 
 <body>
     <form id="input">
-        <p><label for="produkt"> Produkt :</label>
-            <input id="produkt" type="text" required></p>
-        <p><label for="antall"> Antall :</label>
-            <input id="antall" type="number"> Enhet: <input id="enhet" type="enhet"></p>
+        <p><label for="product"> Product :</label>
+            <input id="product" type="text" required></p>
+        <p><label for="number"> Number :</label>
+            <input id="number" type="number"> Unit: <input id="unit" type="unit"></p>
 
     </form>
-    <button id="leggTil">Legg Til</button>
-    <p id="handleliste"></p>
-    <p id="side2"></p>
-    <p id="forslag"></p>
+    <button id="add">Add</button>
+    <p id="shoppingList"></p>
+    <p id="suggestion"></p>
 
     <script type="module">
 
@@ -28,35 +27,35 @@
         let firstPageItems = 0;
         let secondPageItems = 0;
         let listElements = document.getElementsByTagName("LI");
-        let productInput = document.getElementById("produkt");
+        let productInput = document.getElementById("product");
 
         document.addEventListener("load", function () {
-            let shoppingListText = "<ul id='nyHandleliste'>";
+            let shoppingListText = "<ul id='newShoppingList'>";
             for (let i of firstPage) {
                 let index = firstPage.indexOf(i);
                 shoppingListText += "<li>" + i + "<a id=" + index + "> &times;</a></li>";
             }
             shoppingListText += "</ul>";
-            document.getElementById("handleliste").innerHTML = shoppingListText;
+            document.getElementById("shoppingList").innerHTML = shoppingListText;
         });
 
         productInput.addEventListener("keydown", function () {
-            let currentWord = document.getElementById("produkt").value;
+            let currentWord = document.getElementById("product").value;
             for (let i = 0; i < items.length; i++) {
                 if (items[i].substring(0, currentWord.length) === currentWord) {
-                    document.getElementById("forslag").innerHTML = "Did you mean " + items[i];
+                    document.getElementById("suggestion").innerHTML = "Did you mean " + items[i];
                     break;
                 } else {
-                    document.getElementById("forslag").innerHTML = "Found no similar products.";
+                    document.getElementById("suggestion").innerHTML = "Found no similar products.";
                 }
             }
         });
 
-        document.getElementById("leggTil").addEventListener("click", function () {
-            if (document.getElementById("produkt").value != "") {
-                let text = document.getElementById("antall").value + " " +
-                    document.getElementById("enhet").value + " " +
-                    document.getElementById("produkt").value;
+        document.getElementById("add").addEventListener("click", function () {
+            if (document.getElementById("product").value != "") {
+                let text = document.getElementById("number").value + " " +
+                    document.getElementById("unit").value + " " +
+                    document.getElementById("product").value;
                 if (firstPageItems <= 9) {
                     firstPage.push(text);
                     createShoppingList();
@@ -68,20 +67,20 @@
                     secondPageItems++;
                 }
 
-                document.getElementById("antall").value = "";
-                document.getElementById("enhet").value = "";
-                document.getElementById("produkt").value = "";
+                document.getElementById("number").value = "";
+                document.getElementById("unit").value = "";
+                document.getElementById("product").value = "";
             }
         });
 
         function createShoppingList() {
-            let shoppingListText = "<ul id='nyHandleliste'>";
+            let shoppingListText = "<ul id='newShoppingList'>";
             for (let i of firstPage) {
                 let index = firstPage.indexOf(i);
                 shoppingListText += "<li>" + i + "<a id=" + index + "> &times;</a></li>";
             }
             shoppingListText += "</ul>";
-            document.getElementById("handleliste").innerHTML = shoppingListText;
+            document.getElementById("shoppingList").innerHTML = shoppingListText;
             listElements = document.getElementsByTagName("LI");
 
             for (let i = 0; i < listElements.length; i++) {
@@ -92,7 +91,7 @@
 
         function removeFirstPageElement(index) {
             firstPage.splice(index, 1);
-            let updatedList = document.getElementById("nyHandleliste");
+            let updatedList = document.getElementById("newShoppingList");
             updatedList.removeChild(updatedList.childNodes[index]);
             firstPageItems--;
             createShoppingList();
