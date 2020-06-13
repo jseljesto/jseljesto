@@ -6,6 +6,9 @@ Knapp:
 - Making it easier to navigate around the site
 - Adding more complex features, such as animations and bubble effect
 
+Message Decoder:
+- Add functionality with other keys
+
 PingPong:
 - Give users the ability to customize ball, paddle and the canvas (popup with custom choices)
 
@@ -17,6 +20,5 @@ Quiz:
 
 
 Future projects:
-- Secret message encoder/decoder
 - Search engine
 - Maze solver
