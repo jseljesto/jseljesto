@@ -31,6 +31,9 @@
             case 8:
                 outputText.value = outputText.value.slice(0, -1);
                 break;
+            case 32:
+                outputText.value += " ";
+                break;
             case 190:
                 outputText.value += ".";
                 break;
@@ -54,6 +57,9 @@
                 }
                 break;
             }
+            if (encodeText.value.length === 0) {
+                    outputText.value = "";
+                }
         });
 
         encodeText.addEventListener("paste", function(e) {
