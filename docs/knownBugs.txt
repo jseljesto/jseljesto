@@ -1,6 +1,3 @@
-Message Decoder:
-- Output should be empty when user removes everything from encoder/decoder
-
 PingPong:
 - Ball sometimes gets stuck behind users paddle.
 
