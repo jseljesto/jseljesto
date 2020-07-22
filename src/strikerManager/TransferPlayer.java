@@ -81,6 +81,7 @@ public class TransferPlayer {
    stage.setScene(currentScene);
  }
  
+ @SuppressWarnings("unchecked")
  public void choosePlayer(String fullDirectory, String secondDirectory, String clubDirectory, 
                           String secondClubDirectory, Stage stage, 
                           ArrayList<Player> firstTeam, ArrayList<Player> secondTeam) throws FileNotFoundException, IOException {

@@ -31,7 +31,7 @@ public class CreateTeam {
    name.setPrefColumnCount(10);
    GridPane.setConstraints(name, 0, 0);
    grid.getChildren().add(name);
-   ChoiceBox cb = new ChoiceBox();
+   ChoiceBox<String> cb = new ChoiceBox<>();
    GridPane.setConstraints(cb, 1, 0);
    Button submit = new Button("Submit");
    GridPane.setConstraints(submit, 1, 1);

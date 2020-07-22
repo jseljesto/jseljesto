@@ -102,6 +102,7 @@ public class SquadViewer {
     });
   }
   
+  @SuppressWarnings("unchecked")
   public void viewSquad(String fullDirectory, String clubDirectory, Stage stage) throws FileNotFoundException, IOException {
     importedTeam = Load.loadTeamData(importedTeam, fullDirectory);
     ArrayList<TeamViewer> updatedTeam = new ArrayList<TeamViewer>();
