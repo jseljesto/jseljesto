@@ -120,9 +120,6 @@ public class PlayMatch {
       club2.sleptInn += firstPoints;
       club1.maolFor = club1.maol - club1.sleptInn;
       club2.maolFor = club2.maol - club2.sleptInn;
-      
-      //Maote � leggja til resultat i ein scena, og so writa klubbane til filene sine. Du finne fili med � ta
-      //Club-name og finne directory slik. Hugs og � auka runde i ligaen, og so writa dan ut.
     }
     
  /* Button playBtn = new Button();
@@ -164,5 +161,27 @@ public class PlayMatch {
     grid.add(view, 0, row);
     Scene playScene = new Scene(grid, 600, 500);
     stage.setScene(playScene);
+  }
+
+  public static void showMatchScreen(Club homeTeam, Club awayTeam) throws InterruptedException {
+
+    GridPane grid = new GridPane();
+    grid.setPadding(new Insets(10, 10, 10, 10));
+    grid.setVgap(5);
+    grid.setHgap(5);
+
+    Label homeTeamName = new Label(homeTeam.clubName);
+    grid.add(homeTeamName, 0, 0);
+    Label awayTeamName = new Label(awayTeam.clubName);
+    grid.add(awayTeamName, 5, 0);
+    Label result = new Label("0-0");
+    grid.add(result, 2, 3);
+
+    int matchTime = 0;
+    while (matchTime < 90) {
+      //Different events during game
+      matchTime++;
+      Thread.sleep(1000);
+    }
   }
 }
