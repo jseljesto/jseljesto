@@ -15,6 +15,9 @@ PingPong:
 Quiz:
 - Making it fully compatible with Node.js and Pug
 
+Striker Manager:
+- Create unique experience for chosen team with match screen
+
 
 
 
