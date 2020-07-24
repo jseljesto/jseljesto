@@ -41,8 +41,8 @@ public class SquadViewer {
   Load loader = new Load();
   
   public static void searchSquad(Stage stage) {
-    String directory = "C:/Users/jonkr/Documents/java-filer/strikerManager/Teams/";
-    String clubDirectory = "C:/Users/jonkr/Documents/java-filer/strikerManager/Clubs/";
+    String directory = "C:/Users/jonkr/Documents/GitHub-prosjekt/jseljesto/src/strikerManager/Teams/";
+    String clubDirectory = "C:/Users/jonkr/Documents/GitHub-prosjekt/jseljesto/src/strikerManager/Clubs/";
     
     //Lagar knappar og input til � s�ke opp team
     GridPane grid = new GridPane();
@@ -189,8 +189,9 @@ public class SquadViewer {
       public void handle(ActionEvent event) {
         try {
           //PlayMatch play = new PlayMatch();
-          Club importedClub = Load.loadClub(clubDirectory);                                        
-          PlayMatch.playNextMatch(importedClub, stage);
+          Club importedClub = Load.loadClub(clubDirectory); 
+          PlayMatch play = new PlayMatch();                                       
+          play.playNextMatch(importedClub, stage);
           return;
         } catch (IOException unntak) {
           System.out.println("Feil ved innlesing:" + unntak);

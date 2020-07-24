@@ -62,9 +62,9 @@ public class TransferPlayer {
      @Override
      public void handle(ActionEvent event) {
        try {
-       String directory = "C:/Users/jonkr/Documents/java-filer/strikerManager/Teams/";
+       String directory = "C:/Users/jonkr/Documents/GitHub-prosjekt/jseljesto/src/strikerManager/Teams/";
        String secondDirectory = directory + teamName.getText() + ".txt";
-       String secondClubDirectory = "C:/Users/jonkr/Documents/java-filer/strikerManager/Clubs/" + teamName.getText() + ".txt";
+       String secondClubDirectory = "C:/Users/jonkr/Documents/GitHub-prosjekt/jseljesto/src/strikerManager/Clubs/" + teamName.getText() + ".txt";
        ArrayList<Player> importedTeam2 = new ArrayList<Player>();
        importedTeam2 = Load.loadTeamData(importedTeam2, secondDirectory);
        TransferPlayer transfer = new TransferPlayer();

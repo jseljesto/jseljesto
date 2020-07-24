@@ -33,12 +33,12 @@ public class DataTransfers {
   
   public String findCorrectTeam(Player chosenPlayer) throws FileNotFoundException, IOException {
     String chosenTeam = "";
-    File folder = new File("C:/Users/jonkr/Documents/java-filer/strikerManager/Teams");
+    File folder = new File("C:/Users/jonkr/Documents/GitHub-prosjekt/jseljesto/src/strikerManager/Teams");
     File listOfFiles[] = folder.listFiles();
     for (int n = 0; n < listOfFiles.length; n++) {
       if (listOfFiles[n].isFile()) {
         if (listOfFiles[n].getName().endsWith(".txt")) {
-          String fullDirectory = "C:/Users/jonkr/Documents/java-filer/strikerManager/Teams/" + listOfFiles[n].getName();
+          String fullDirectory = "C:/Users/jonkr/Documents/GitHub-prosjekt/jseljesto/src/strikerManager/Teams/" + listOfFiles[n].getName();
           ArrayList<Player> importedTeam = new ArrayList<Player>();
           importedTeam = Load.loadTeamData(importedTeam, fullDirectory);
           for (int i = 0; i < importedTeam.size(); i++) {
@@ -56,7 +56,7 @@ public class DataTransfers {
   public static void computingTransfers(String controllingTeam) throws FileNotFoundException, IOException {
     
     //Create map for worst player by position
-    File folder = new File("C:/Users/jonkr/Documents/java-filer/strikerManager/Teams");
+    File folder = new File("C:/Users/jonkr/Documents/GitHub-prosjekt/jseljesto/src/strikerManager/Teams");
     File listOfFiles[] = folder.listFiles();
     LinkedHashMap<String, Integer> positions = new LinkedHashMap<String, Integer>();
     positions.put("GK", 0);
@@ -81,11 +81,11 @@ public class DataTransfers {
       int chosenTeam = rand.nextInt(listOfFiles.length); 
       lagNavn = listOfFiles[chosenTeam].getName();
       if (!lagNavn.equals(controllingTeam)) {
-        fullDirectory = "C:/Users/jonkr/Documents/java-filer/strikerManager/Teams/" + lagNavn;
+        fullDirectory = "C:/Users/jonkr/Documents/GitHub-prosjekt/jseljesto/src/strikerManager/Teams/" + lagNavn;
       }
     }
     //String lagNavn = listOfFiles[chosenTeam].getName();
-    String clubDirectory = "C:/Users/jonkr/Documents/java-filer/strikerManager/Clubs/" + lagNavn;
+    String clubDirectory = "C:/Users/jonkr/Documents/GitHub-prosjekt/jseljesto/src/strikerManager/Clubs/" + lagNavn;
     ArrayList<Player> importedTeam = new ArrayList<Player>();
     importedTeam = Load.loadTeamData(importedTeam, fullDirectory);
     Club importedClub;

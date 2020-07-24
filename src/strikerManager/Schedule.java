@@ -12,7 +12,7 @@ public class Schedule {
     String ligaNavn = league.name;
     int number = league.numOfClubs;
     String output = "";
-    File file = new File("C:/Users/jonkr/Documents/java-filer/strikerManager/Schedules/" + ligaNavn + ".txt");
+    File file = new File("C:/Users/jonkr/Documents/GitHub-prosjekt/jseljesto/src/strikerManager/Schedules/" + ligaNavn + ".txt");
     PrintWriter writeSchedule = new PrintWriter(file);
     ArrayList<Integer> matches = new ArrayList<Integer>(); 
     for (int i = 1; i < number; i++) {

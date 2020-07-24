@@ -71,7 +71,7 @@ public class CreateTeam {
    String secondNameTextFile = " ";
    int avgAld = 0;
    int teamAverage = 0;
-   String nationDirectory = "C:/Users/jonkr/Documents/java-filer/strikerManager/Nations/";
+   String nationDirectory = "C:/Users/jonkr/Documents/GitHub-prosjekt/jseljesto/src/strikerManager/Nations/";
   
    //System.out.println("Velg din nasjon: ");
    //String valgtNasjon = chosenNation.nextLine();
@@ -115,9 +115,9 @@ public class CreateTeam {
    }
    surnameTextReader.close();
 
-   String directory = "C:/Users/jonkr/Documents/java-filer/strikerManager/Teams/";
-   String clubDirectory = "C:/Users/jonkr/Documents/java-filer/strikerManager/Clubs/";
-   String leagueDirectory = "C:/Users/jonkr/Documents/java-filer/strikerManager/Leagues/";
+   String directory = "C:/Users/jonkr/Documents/GitHub-prosjekt/jseljesto/src/strikerManager/Teams/";
+   String clubDirectory = "C:/Users/jonkr/Documents/GitHub-prosjekt/jseljesto/src/strikerManager/Clubs/";
+   String leagueDirectory = "C:/Users/jonkr/Documents/GitHub-prosjekt/jseljesto/src/strikerManager/Leagues/";
    String teamDirectory = directory + clubName;
    String clubFullDirectory = clubDirectory + clubName;
    

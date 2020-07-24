@@ -11,7 +11,7 @@ import javafx.scene.image.ImageView;
 public class Load {
   
   public static ArrayList<Nasjon> loadNationData(ArrayList<Nasjon> nations) throws FileNotFoundException, IOException {
-    FileReader nasjonFileReader = new FileReader("nasjoner.txt");
+    FileReader nasjonFileReader = new FileReader("C:/Users/jonkr/Documents/GitHub-prosjekt/jseljesto/src/strikerManager/nasjoner.txt");
     BufferedReader nasjonTextReader = new BufferedReader(nasjonFileReader);
     String inputLine = "";
     
@@ -82,7 +82,7 @@ public class Load {
       int kitNumber = importedTeam.get(i).kitNumber;
       String firstName = importedTeam.get(i).firstName;
       String surName = importedTeam.get(i).surName;
-      Image image = new Image("file:///C:/Users/jonkr/Documents/java-filer/strikerManager/Logoes/" + importedTeam.get(i).nation + ".png");
+      Image image = new Image("file:///C:/Users/jonkr/Documents/GitHub-prosjekt/jseljesto/src/strikerManager/Logoes/" + importedTeam.get(i).nation + ".png");
       ImageView img = new ImageView();
       img.setImage(image);
       img.setFitWidth(25);
@@ -135,11 +135,11 @@ public class Load {
   
   public static String getAvailableLeague() throws FileNotFoundException, IOException {
     League availableLeague = null;
-    File folder = new File("C:/Users/jonkr/Documents/java-filer/strikerManager/Leagues");
+    File folder = new File("C:/Users/jonkr/Documents/GitHub-prosjekt/jseljesto/src/strikerManager/Leagues");
     File listOfFiles[] = folder.listFiles();
     if (listOfFiles.length == 0) {
       availableLeague = new League("Toppdivisjonen", 1, false, 0, 1);
-      File file = new File("C:/Users/jonkr/Documents/java-filer/strikerManager/Leagues/" + availableLeague.name + ".txt");
+      File file = new File("C:/Users/jonkr/Documents/GitHub-prosjekt/jseljesto/src/strikerManager/Leagues/" + availableLeague.name + ".txt");
       PrintWriter writeLeague = new PrintWriter(file);
       writeLeague.println(availableLeague.name + " " + availableLeague.tourneyLvl + " " + 
                           availableLeague.isSection + " " + availableLeague.numOfClubs + " " + availableLeague.runde);
@@ -151,7 +151,7 @@ public class Load {
           for (int n = 0; n < listOfFiles.length; n++) {
             if (listOfFiles[n].isFile()) {
               if (listOfFiles[n].getName().endsWith(".txt")) {
-                String fullDirectory = "C:/Users/jonkr/Documents/java-filer/strikerManager/Leagues/" + listOfFiles[n].getName();
+                String fullDirectory = "C:/Users/jonkr/Documents/GitHub-prosjekt/jseljesto/src/strikerManager/Leagues/" + listOfFiles[n].getName();
                 League test = Load.getLeague(fullDirectory);
                 if (test.numOfClubs < 18 && test.tourneyLvl < i) {
                   availableLeague = test;
@@ -165,7 +165,7 @@ public class Load {
       if (availableLeague == null) {
         //Ha ein maote fy � endra navnet pao divisjonane, so alle enda opp med � heita Unnamed Division
         availableLeague = new League("Unnamed Division", (listOfFiles.length)+1, false, 0, 1);
-        File file = new File("C:/Users/jonkr/Documents/java-filer/strikerManager/Leagues/" + availableLeague.name + ".txt");
+        File file = new File("C:/Users/jonkr/Documents/GitHub-prosjekt/jseljesto/src/strikerManager/Leagues/" + availableLeague.name + ".txt");
       PrintWriter writeLeague = new PrintWriter(file);
       writeLeague.println(availableLeague.name + " " + availableLeague.tourneyLvl + " " + 
                           availableLeague.isSection + " " + availableLeague.numOfClubs + " " + availableLeague.runde);
@@ -197,12 +197,12 @@ public class Load {
   
   public static int numOfAssignedClubs(League league) throws FileNotFoundException, IOException {
     int assignedClubs = 0;
-    File folder = new File("C:/Users/jonkr/Documents/java-filer/strikerManager/Clubs");
+    File folder = new File("C:/Users/jonkr/Documents/GitHub-prosjekt/jseljesto/src/strikerManager/Clubs");
     File listOfFiles[] = folder.listFiles();
     for (int n = 0; n < listOfFiles.length; n++) {
       if (listOfFiles[n].isFile()) {
         if (listOfFiles[n].getName().endsWith(".txt")) {
-          String fullDirectory = "C:/Users/jonkr/Documents/java-filer/strikerManager/Clubs/" + listOfFiles[n].getName();
+          String fullDirectory = "C:/Users/jonkr/Documents/GitHub-prosjekt/jseljesto/src/strikerManager/Clubs/" + listOfFiles[n].getName();
           Club importedClub = Load.loadClub(fullDirectory);
           if (importedClub.league.equals(league.name)) {
             assignedClubs++;

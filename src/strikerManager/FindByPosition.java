@@ -32,7 +32,7 @@ public class FindByPosition {
       for (int n = 0; n < listOfFiles.length; n++) {
         if (listOfFiles[n].isFile()) {
           if (listOfFiles[n].getName().endsWith(".txt") && !listOfFiles[n].getName().equals(chosenTeam)) {
-            String fullDirectory = "C:/Users/jonkr/Documents/java-filer/strikerManager/Teams/" + listOfFiles[n].getName();
+            String fullDirectory = "C:/Users/jonkr/Documents/GitHub-prosjekt/jseljesto/src/strikerManager/Teams/" + listOfFiles[n].getName();
             ArrayList<Player> importedTeam = new ArrayList<Player>();
             if (fullDirectory != chosenTeam) {
             importedTeam = Load.loadTeamData(importedTeam, fullDirectory);
