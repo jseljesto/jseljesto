@@ -35,7 +35,7 @@
 
     <script>
 
-        let currentNumber = 0;
+        let currentSum = 0;
         let firstOperand = 0;
         let operator = "";
         let secondOperand = 0;
@@ -63,7 +63,7 @@
                 operator = op;
             } else {
                 findSum();
-                firstOperand = currentNumber;
+                firstOperand = currentSum;
                 secondOperand = 0;
                 operator = op;
             }
@@ -72,7 +72,7 @@
         function clearCalc() {
             boxPadding = 150;
             document.getElementById("sum").style.paddingLeft = boxPadding + "px";
-            currentNumber = 0;
+            currentSum = 0;
             firstOperand = 0;
             operator = "";
             secondOperand = 0;
@@ -96,16 +96,16 @@
 
         function changeNegPos() {
             if (!operator) {
-                let temporaryNumber = firstOperand.toString();
-                if (temporaryNumber.charAt(0) === "-") {
+                let tempNumber = firstOperand.toString();
+                if (tempNumber.charAt(0) === "-") {
                     firstOperand = Math.abs(firstOperand);
                 } else {
                     firstOperand = -firstOperand;
                 }
                 document.getElementById("sum").innerHTML = firstOperand;
             } else {
-                let temporaryNumber = secondOperand.toString()
-                if (temporaryNumber.charAt(0) === "-") {
+                let tempNumber = secondOperand.toString()
+                if (tempNumber.charAt(0) === "-") {
                     secondOperand = Math.abs(secondOperand);
                 } else {
                     secondOperand = -secondOperand;
@@ -117,35 +117,35 @@
         function squareRoot() {
             if (secondOperand > 0) {
                 findSum();
-                currentNumber = Math.sqrt(currentNumber);
-                document.getElementById("sum").innerHTML = currentNumber;
+                currentSum = Math.sqrt(currentSum);
+                document.getElementById("sum").innerHTML = currentSum;
             } else {
-                currentNumber = Math.sqrt(firstOperand);
-                document.getElementById("sum").innerHTML = currentNumber;
+                currentSum = Math.sqrt(firstOperand);
+                document.getElementById("sum").innerHTML = currentSum;
             }
         }
 
         function findSum() {
             boxPadding = 150;
             if (operator === "+") {
-                currentNumber = firstOperand + secondOperand;
+                currentSum = firstOperand + secondOperand;
             }
             else if (operator === "-") {
-                currentNumber = firstOperand - secondOperand;
+                currentSum = firstOperand - secondOperand;
             }
             else if (operator === "*") {
-                currentNumber = firstOperand * secondOperand;
+                currentSum = firstOperand * secondOperand;
             }
             else if (operator === "/") {
-                currentNumber = firstOperand / secondOperand;
+                currentSum = firstOperand / secondOperand;
             }
             else if (operator === "%") {
-                currentNumber = firstOperand * secondOperand / 100;
+                currentSum = firstOperand * secondOperand / 100;
             }
             else {
                 alert("You haven't made any changes!");
             }
-            document.getElementById("sum").innerHTML = currentNumber;
+            document.getElementById("sum").innerHTML = currentSum;
             firstOperand = 0;
             secondOperand = 0;
             operator = "";

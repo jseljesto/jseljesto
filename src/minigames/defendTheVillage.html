@@ -7,7 +7,7 @@
 
 <body>
 
-    <h2 id="countdownText" style="position:absolute; right: 50%;">Next Wave: 05:00</h2>
+    <h2 id="countdownClock" style="position:absolute; right: 50%;">Next Wave: 05:00</h2>
     <h2 id="waveStrength" style="position:absolute; right: 1%">Total Strength: 0</h2>
 
     <p id="villagers">Villagers: 5</p>
@@ -79,7 +79,7 @@
     let minutes = 5;
     let nextWave = [];
     let waveNumber = 1;
-    let powerLevelCorrect = false;
+    let powerLevelIsCorrect = false;
     let arrayIsShrinked = false;
     let totalMonsters = 0;
 
@@ -88,14 +88,14 @@
 
     const resourceInterval = setInterval(collect, 1000);
     const incomingVillagers = setInterval(newVillagers, 1000);
-    const countDown = setInterval(countDownToNextWave, 1000);
+    const countDownToWave = setInterval(countDownToNextWave, 1000);
     const updateInformation = setInterval(updateInfo, 100);
 
-    document.getElementById("reduceFood").addEventListener("click", function () { moveVillager('food'); });
+    document.getElementById("reduceFood").addEventListener("click", function () { removeVillager('food'); });
     document.getElementById("addFood").addEventListener("click", function () { addVillager('food'); });
-    document.getElementById("reduceWood").addEventListener("click", function () { moveVillager('wood'); });
+    document.getElementById("reduceWood").addEventListener("click", function () { removeVillager('wood'); });
     document.getElementById("addWood").addEventListener("click", function () { addVillager('wood'); });
-    document.getElementById("reduceMineral").addEventListener("click", function () { moveVillager('mineral'); });
+    document.getElementById("reduceMineral").addEventListener("click", function () { removeVillager('mineral'); });
     document.getElementById("addMineral").addEventListener("click", function () { addVillager('mineral'); });
 
     document.getElementById("purchaseHouse").addEventListener("click", function () { createItems('house', technologyLevel); });
@@ -126,7 +126,7 @@
         }
     }
 
-    function moveVillager(resource) {
+    function removeVillager(resource) {
         switch (resource) {
             case "wood":
                 if (woodIncome > 0) {
@@ -294,7 +294,7 @@
         }
     }
 
-    function checkPrices(techLvl) {
+    function checkItemPrices(techLvl) {
         switch (techLvl) {
             case 0:
                 document.getElementById("shieldPrice").innerHTML = `Price: ${(15 * (1.2 ** shields)).toFixed(0)} Wood`;
@@ -436,7 +436,7 @@
         totalDefense = totalVillagers + (armor * 2.5 + technologyLevel) + (weapons * 2 + technologyLevel) + (shields * 1.5 + technologyLevel);
 
         checkHousePrices();
-        checkPrices(technologyLevel);
+        checkItemPrices(technologyLevel);
         checkTechnologyPrice();
     }
 
@@ -453,12 +453,12 @@
             seconds--;
         }
 
-        document.getElementById("countdownText").innerHTML = "Next Wave: 0" + minutes + ":";
+        document.getElementById("countdownClock").innerHTML = "Next Wave: 0" + minutes + ":";
 
         if (seconds < 10) {
-            document.getElementById("countdownText").innerHTML += "0" + seconds;
+            document.getElementById("countdownClock").innerHTML += "0" + seconds;
         } else {
-            document.getElementById("countdownText").innerHTML += seconds;
+            document.getElementById("countdownClock").innerHTML += seconds;
         }
     }
 
@@ -476,7 +476,7 @@
             alert("Your village has been overrun! Game Over!");
             clearInterval(resourceInterval);
             clearInterval(incomingVillagers);
-            clearInterval(countDown);
+            clearInterval(countDowntoWave);
             clearInterval(updateInformation);
         }
         else if (totalStrength * 1.25 < totalDefense) {
@@ -505,8 +505,8 @@
 
     function nextWaveInformation() {
         nextWave = [];
-        powerLevelCorrect = false;
-        while (powerLevelCorrect != true) {
+        powerLevelIsCorrect = false;
+        while (powerLevelIsCorrect != true) {
             totalStrength = 0;
             for (let b = 0; b < 3; b++) {
                 let newMonster = Math.floor(Math.random() * monsters.length) + 0;
@@ -516,7 +516,7 @@
             }
             totalMonsters = 3;
             if (totalStrength < 30 * waveNumber) {
-                powerLevelCorrect = true;
+                powerLevelIsCorrect = true;
                 arrayIsShrinked = false;
 
                 for (let c = 0; c < 2; c++) {
