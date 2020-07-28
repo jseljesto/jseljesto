@@ -11,6 +11,12 @@ public class DataTransfers {
   
   int indexOfPlayer = 0;
   
+  /**
+   * Checks if to players are equal objects.
+   * @param player1 The first player to be compared.
+   * @param player2 The second player to be compared.
+   * @return True if a match was found.
+   */
   public static boolean playerIsEqual(Player player1, Player player2) {
     Boolean test = false;
     if (player1.kitNumber == player2.kitNumber) {
@@ -31,6 +37,13 @@ public class DataTransfers {
     return test;
   }
   
+  /**
+   * Finds the team for chosen player.
+   * @param chosenPlayer The player to be transfered.
+   * @return The chosen players team.
+   * @throws FileNotFoundException
+   * @throws IOException
+   */
   public String findCorrectTeam(Player chosenPlayer) throws FileNotFoundException, IOException {
     String chosenTeam = "";
     File folder = new File("C:/Users/jonkr/Documents/GitHub-prosjekt/jseljesto/src/strikerManager/Teams");
@@ -53,6 +66,9 @@ public class DataTransfers {
     return chosenTeam;
   }
   
+    /**
+     * Creates transfers between AI teams.
+     */
   public static void computingTransfers(String controllingTeam) throws FileNotFoundException, IOException {
     
     //Create map for worst player by position

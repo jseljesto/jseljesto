@@ -70,6 +70,10 @@
             let timer = setTimeout(decipherText, 50, "decode");
         });
 
+        /**
+        * Deciphers the text into the output field.
+        * @param {string} type Type is either encode or decode.
+        */
         function decipherText(type) {
             outputText.value = "";
             let text = "";

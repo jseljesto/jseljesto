@@ -105,6 +105,9 @@
 
     document.addEventListener("mousemove", checkMouseMove, false);
 
+    /**
+    * Changes screen when starting a new game.
+    */
     function startGame() {
         document.getElementById("screen").style.visibility = "hidden";
         document.getElementById("myCanvas").style.visibility = "visible";
@@ -116,6 +119,14 @@
         gameStarted = true;
     }
 
+    /**
+    * Generic function to draw elements.
+    * @param {number} x The x-coordinate of the element.
+    * @param {number} y The y-coordinate of the element.
+    * @param {number} width The width of the element.
+    * @param {number} height The height of the element.
+    * @param {string} color The chosen color of the element.
+    */
     function drawElement(x, y, width, height, color) {
         ctx.beginPath();
         ctx.rect(x, y, width, height);
@@ -124,6 +135,10 @@
         ctx.closePath();
     }
 
+    /**
+    * Creates a bullet if spacebar has been pressed.
+    * @param {Event} event The button pressed.
+    */
     function createBullet(event) {
         if (event.keyCode === 32) {
             if (coolDown >= 150 - ((upgrades[3]-1) * 20)) {
@@ -136,6 +151,9 @@
         }
     }
 
+    /**
+    * Function to continuously draw the canvas and its elements.
+    */
     function draw() {
         if (gameStarted) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -228,6 +246,10 @@
         }
     }
 
+    /**
+    * Checks for mouse movement.
+    * @param {Event} e The current position of the cursor. 
+    */
     function checkMouseMove(e) {
         let currentX = e.clientX - canvas.offsetLeft;
         if (currentX > 25 && currentX < (canvas.width - 25)) {
@@ -235,6 +257,9 @@
         }
     }
 
+    /**
+    * Imports the current state of upgrades.
+    */
     function getUpgrades() {
         let temp = JSON.parse(localStorage.getItem("currentUpgrades"));
         if (temp) {
@@ -247,6 +272,9 @@
         }
     }
 
+    /**
+    * Changes the upgrade screen to fit current upgrades.
+    */
     function setUpgradeScreen() {
         document.getElementById("bulletRadiusLvl").innerHTML = `Bullet Radius Level: ${upgrades[0]} of 5`;
         document.getElementById("multiplierLvl").innerHTML = `Score Multiplier Level: ${upgrades[1]} of 5`;
@@ -254,6 +282,9 @@
         document.getElementById("cooldownLvl").innerHTML = `Cooldown Level: ${upgrades[3]} of 5`;
     }
 
+    /**
+    * Imports the current points score.
+    */
     function getScore() {
         let temp = JSON.parse(localStorage.getItem("minigameScore"));
         if (temp) {
@@ -261,6 +292,10 @@
         }
     }
 
+    /**
+    * Upgrades a certain element of the game.
+    * @param {string} chosenUpgrade The element of the game chosen to be upgraded.
+    */
     function upgradeGame(chosenUpgrade) {
         switch(chosenUpgrade) {
             case 'bulletRadius':
@@ -310,6 +345,9 @@
         }
     }
 
+    /**
+    * Checks if small resolution is small, and changes element sizes if true.
+    */
     function checkResolution () {
         if (smallRes === true) {
             shipWidth = 25;
@@ -319,6 +357,9 @@
         }
     }
 
+    /**
+    * Updates prices on current upgrades.
+    */
     function checkPrices() {
         if (score >= 50 * (Math.pow(2, upgrades[0])) && upgrades[0] < 5) {
             document.getElementById("bulletRadiusPrice").innerHTML = `Price: ${(50 * (Math.pow(2, upgrades[0]))) } Points`;

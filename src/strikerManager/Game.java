@@ -11,6 +11,9 @@ import java.io.*;
 
 public class Game extends Application {
   
+  /**
+   * Creates the menu of the game.
+   */
   public void start(Stage primaryStage) {
     
   GridPane grid = new GridPane();
@@ -56,6 +59,10 @@ public class Game extends Application {
   primaryStage.show();
  }
 
+ /**
+  * Starts the game.
+  * @param args
+  */
 public static void main(String[] args) {
   launch(args);
 }

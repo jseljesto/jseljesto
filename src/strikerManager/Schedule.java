@@ -8,6 +8,12 @@ import java.io.BufferedReader;
 
 public class Schedule {
   
+  /**
+   * Creates schedule of matches.
+   * @param league The league to get match schedule.
+   * @throws FileNotFoundException
+   * @throws IOException
+   */
   public static void createSchedule(League league) throws FileNotFoundException, IOException {
     String ligaNavn = league.name;
     int number = league.numOfClubs;
@@ -62,6 +68,15 @@ public class Schedule {
     writeSchedule.close();
   }
   
+  /**
+   * Loads a schedule of matches.
+   * @param scheduleDirectory Directory of the schedule.
+   * @param runde The current round of the league.
+   * @param numOfClubs Number of clubs assigned to league.
+   * @return List of fixtures.
+   * @throws FileNotFoundException
+   * @throws IOException
+   */
   public static ArrayList<Integer> loadMatches(String scheduleDirectory, int runde, int numOfClubs) throws FileNotFoundException, IOException {
     
     File scheduleFile = new File(scheduleDirectory);

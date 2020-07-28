@@ -57,7 +57,18 @@
     <p id="personSearched" style="position: absolute; top: 565px; left: 45%; "></p>
     <script>
 
+        /** Class to create a Person object. */
         class Person {
+            /**
+            * Creates a person object.
+            * @param {string} name The full name of the person.
+            * @param {string} gender The gender of the person.
+            * @param {number} birthDate The birth date of the person.
+            * @param {number} postalCode The current postal code of the person.
+            * @param {string} address The current address of the person.
+            * @param {number} phoneNumber The current telephone number of the person.
+            * @param {array} hobbies Array of hobbies of the person.
+            */
             constructor(name, gender, birthDate, postalCode, address, phoneNumber, hobbies) {
                 this._name = name;
                 this._gender = gender;
@@ -68,70 +79,126 @@
                 this._hobbies = hobbies;
             }
 
+            /**
+            * Get the name value.
+            * @return {string} name The name value.
+            */
             get name() {
                 return this._name;
             }
 
+            /**
+            * Set the name value.
+            * @param {string} name The name value.
+            */
             set name(name) {
                 if (typeof name === "string") {
                     this._name = name;
                 }
             }
 
+            /**
+            * Get the gender value.
+            * @return {string} gender The gender value.
+            */
             get gender() {
                 return this._gender;
             }
 
+            /**
+            * Set the gender value.
+            * @param {string} gender The gender value.
+            */
             set gender(gender) {
                 if (typeof gender === "string") {
                     this._gender = gender;
                 }
             }
 
+            /**
+            * Get the birthDate value.
+            * @return {number} birthDate The birthDate value.
+            */
             get birthDate() {
                 return this._birthDate;
             }
 
+            /**
+            * Set the birthDate value.
+            * @param {number} birthDate The birthDate value.
+            */
             set birthDate(birthDate) {
                 if (typeof birthDate === "number") {
                     this._birthDate = birthDate;
                 }
             }
 
+            /**
+            * Get the postalCode value.
+            * @return {number} postalCode The postalCode value.
+            */
             get postalCode() {
                 return this._postalCode;
             }
 
+            /**
+            * Set the postalCode value.
+            * @param {number} postalCode The postalCode value.
+            */
             set postalCode(postalCode) {
                 if (typeof postalCode === "number") {
                     this._postalCode = postalCode;
                 }
             }
 
+            /**
+            * Get the address value.
+            * @return {string} address The address value.
+            */
             get address() {
                 return this._address;
             }
 
+            /**
+            * Set the address value.
+            * @param {string} address The address value.
+            */
             set address(address) {
                 if (typeof address === "string") {
                     this._address = address;
                 }
             }
 
+            /**
+            * Get the phoneNumber value.
+            * @return {number} phoneNumber The phoneNumber value.
+            */
             get phoneNumber() {
                 return this._phoneNumber;
             }
 
+            /**
+            * Set the phoneNumber value.
+            * @param {number} phoneNumber The phoneNumber value.
+            */
             set phoneNumber(phoneNumber) {
                 if (typeof phoneNumber === "string") {
                     this._phoneNumber = phoneNumber;
                 }
             }
 
+            /**
+            * Get the hobbies value.
+            * @return {array} hobbies The hobbies value.
+            */
             get hobbies() {
                 return this._hobbies;
             }
 
+            /**
+            * Set the hobbies value.
+            * @param {array} hobbies The hobbies value.
+            */
             set hobbies(hobbies) {
                 if (hobbies.isArray()) {
                     this._hobbies = hobbies;
@@ -149,6 +216,10 @@
             }
         }
 
+        /**
+        * Function to check if name is valid.
+        * @param {string} textID The text to be validated.
+        */
         function validateText(textID) {
             const re = /^[A-Za-z]+$/;
             if (!(re.test(document.getElementById(textID).value))) {
@@ -159,6 +230,10 @@
             }
         }
 
+        /**
+        * Checks if a number is valid.
+        * @param {number} numberID The number to be validated.
+        */
         function validateNumber(numberID) {
             const re = /^[0-9]+$/;
             if (!(re.test(document.getElementById(numberID).value))) {
@@ -169,6 +244,9 @@
             }
         }
 
+        /**
+        * Exports name from form.
+        */
         function findName() {
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
@@ -182,6 +260,10 @@
             });
         }
 
+        /**
+        * Exports gender from form.
+        * @return {string} gender The chosen gender.
+        */
         function findGender() {
             let gender = document.getElementById("gender").value;
             if (gender) {
@@ -192,6 +274,10 @@
             }
         }
 
+        /**
+        * Exports birth date from form.
+        * @return {Array} birthDayArray The birthday of the person.
+        */
         function findBirthDate() {
             let birthDayArray = [];
             let inputDate = document.getElementById("birthDate").value;
@@ -209,6 +295,10 @@
             }
         }
 
+        /**
+        * Exports postal code from form.
+        * @param {number} postalCode The postal code inputed.
+        */
         function findPostalCode() {
             let postalCode = document.getElementById("postCode").value;
             if (postalCode) {
@@ -219,6 +309,10 @@
             }
         }
 
+        /**
+        * Exports address from form.
+        * @param {string} address The address inputed.
+        */
         function findAddress() {
             let address = document.getElementById("address").value;
             if (address) {
@@ -229,6 +323,9 @@
             }
         }
 
+        /**
+        * Exports a phone number from the form.
+        */
         function findPhoneNumber() {
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
@@ -246,6 +343,9 @@
             });
         }
 
+        /**
+        * Checks if hobby is checked off.
+        */
         function isChecked(id) {
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
@@ -258,6 +358,10 @@
             });
         }
 
+        /**
+        * Exports the chosen hobbies.
+        * @param{string} listOfConfirmedHobbies A string of the confirmed hobbies.
+        */
         async function findHobbies() {
             const hobbies = ["athletics", "cooking", "reading", "programming", "camping"];
             let confirmedHobbies = [];
@@ -270,6 +374,10 @@
             return listOfConfirmedHobbies;
         }
 
+        /**
+        * Creates a Person object from the imported information.
+        * @param {string} birthDayArray The birthday inputed in the form.
+        */
         async function createPerson(birthDayArray) {
             try {
                 let fullBirthDate = `${birthDayArray[2]}.${birthDayArray[1]}.${birthDayArray[0]}`
@@ -294,6 +402,9 @@
             }
         }
 
+        /**
+        * Search for a person in the database.
+        */
         function searchForPerson() {
             let searchedName = document.getElementById("searchBar").value;
             for (let p = 0; p <= personObjects.length; p++) {
@@ -310,6 +421,9 @@
             }
         }
 
+        /**
+        * Clears database of all Person objects.
+        */
         function clearLocalStorage() {
             localStorage.removeItem("personObjects");
             location.reload();

@@ -19,6 +19,14 @@ public class FindByPosition {
     return firstName + " " + surName + "\t" + "\t" + nation + "\t" + age + "\t" + position + "\t" + average + "\t" + potential + "\t" + lonn + "\t" + verdi;
   }
   
+  /**
+   * Finds players matching a certain position.
+   * @param posisjon The chosen position.
+   * @param budsjett The budget to be met.
+   * @param chosenTeam Team controlled by player.
+   * @param lowestValue Lowest acceptable player average.
+   * @return Array of all players matching the conditions.
+   */
   public static ArrayList<Player> findPlayers(String posisjon, int budsjett, String chosenTeam, int lowestValue) {
     
     ArrayList<Player> matchingPlayers = new ArrayList<Player>();

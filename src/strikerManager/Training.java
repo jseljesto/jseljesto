@@ -31,6 +31,14 @@ public class Training {
   return kitNumber + " " + firstName + " " + surName + " " + nation + " " + age + " " + position + " " + average + " " + potential + " " + lonn + " " + verdi;
  }
 
+ /**
+  * Enacts training session with player-controlled team.
+  * @param fullDirectory Directory of players.
+  * @param clubDirectory Directory of chosen club.
+  * @param stage The current stage.
+  * @throws FileNotFoundException
+  * @throws IOException
+  */
  public static void trainSquad(String fullDirectory, String clubDirectory, Stage stage) throws FileNotFoundException, IOException {
    
    ArrayList<Player> importedTeam = new ArrayList<Player>();

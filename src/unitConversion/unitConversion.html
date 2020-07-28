@@ -145,6 +145,10 @@
 
 
 
+        /**
+        * Changes both unit fields to the chosen unit.
+        * @param {string} newUnitType The chosen unit type.
+        */
         function toggleUnitType(newUnitType) {
             document.getElementById(shownUnitType + "ToConvert").style.visibility = "hidden";
             document.getElementById(shownUnitType + "Converted").style.visibility = "hidden";
@@ -154,12 +158,18 @@
             updateUnits();
         }
 
+        /**
+        * Updates the units on screen.
+        */
         function updateUnits() {
             firstUnit = document.getElementById(shownUnitType + "ToConvert").value;
             secondUnit = document.getElementById(shownUnitType + "Converted").value;
             document.getElementById("numberConverted").removeAttribute("value");
         }
 
+        /**
+        * Finds the keys of the chosen type.
+        */
         function findCorrectKeys() {
             if (shownUnitType === "length") {
                 let keys = Object.keys(lengthUnits);
@@ -179,6 +189,9 @@
             }
         }
 
+        /**
+        * Finds the values of the chosen type.
+        */
         function findCorrectValues() {
             if (shownUnitType === "length") {
                 let values = Object.values(lengthUnits);
@@ -199,6 +212,10 @@
 
         }
 
+        /**
+        * Function to fix temperature conversion.
+        * @return {number} extraValue The extra value to added to temp conversion.
+        */
         function addExtraTempVal() {
             let extraValue = 0;
 
@@ -217,6 +234,9 @@
             return extraValue;
         }
 
+        /**
+        * Converts a number from one unit to another.
+        */
         function convertUnits() {
             let keys = findCorrectKeys();
             let values = findCorrectValues();

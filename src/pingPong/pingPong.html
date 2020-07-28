@@ -70,6 +70,10 @@
 
         document.addEventListener("mousemove", checkMouseMove, false);
 
+        /**
+        * Checks for mouse movement.
+        * @param {Event} e The current position of the cursor.
+        */
         function checkMouseMove(e) {
             let currentY = e.clientY - canvas.offsetTop;
             if (currentY > 0 && currentY < canvas.height) {
@@ -77,6 +81,9 @@
             }
         }
 
+        /**
+        * Draws the ball element onto the canvas.
+        */
         function drawBall() {
             ctx.beginPath();
             ctx.arc(x, y, ballRadius, 0, Math.PI * 2, false);
@@ -85,6 +92,13 @@
             ctx.closePath();
         }
 
+        /**
+        * Draws paddle elements onto the canvas.
+        * @param {number} x The x-coordinate of the paddle.
+        * @param {number} y The y-coordinate of the paddle.
+        * @param {number} width The width of the paddle.
+        * @param {number} height The height of the paddle.
+        */
         function drawPaddle(x, y, width, height) {
             ctx.beginPath();
             ctx.rect(x, y, width, height);
@@ -93,14 +107,26 @@
             ctx.closePath();
         }
 
+        /**
+        * Enables the possibility of playing against AI.
+        */
         function enableMulti() {
             multiEnabled = true;
         }
 
+        /**
+        * Disable multiplayer option and turns back to single player.
+        */
         function disableMulti() {
             multiEnabled = false;
         }
 
+        /**
+        * Compares scores on the leaderboard.
+        * @param {Score} a The first chosen score.
+        * @param {Score} b The second chosen score.
+        * @return {number} comparison The result of the comparison. 
+        */
         function compareScores(a, b) {
             let scoreA = a.highscore;
             let scoreB = b.highscore;
@@ -113,6 +139,9 @@
             return comparison;
         }
 
+        /**
+        * Shows leaderboard on screen.
+        */
         function viewScores() {
             let testArray = JSON.parse(localStorage.getItem("savedScores"));
             if (testArray) {
@@ -125,6 +154,10 @@
             }
         }
 
+        /**
+        * Add score to the leaderboard.
+        * @param {Score} score The score to be added.
+        */
         function addScore(score) {
             if (scores.length === 10) {
                 if (score > scores[9].highscore) {
@@ -137,6 +170,9 @@
             localStorage.setItem("savedScores", JSON.stringify(scores));
         }
 
+        /**
+        * Generic draw function to update elements on screen.
+        */
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             drawBall();
@@ -279,6 +315,9 @@
 
         }
 
+        /**
+        * Changes screen when starting the game.
+        */
         function startGame() {
             dx = 1;
             document.getElementById("start").style.visibility = "hidden";

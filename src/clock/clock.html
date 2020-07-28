@@ -49,33 +49,64 @@
         pstCtx.translate(stRadius, stRadius);
         cstCtx.translate(stRadius, stRadius);
 
+        /** Class representing a clock. */
         class Clock {
+            /**
+            * Creates a clock object.
+            * @param{number} hours The current hour of the clock.
+            * @param{number} minutes The current minute of the clock.
+            * @param{number} seconds The current seconds of the clock.
+            */
             constructor(hours, minutes, seconds) {
                 this._hours = hours;
                 this._minutes = minutes;
                 this._seconds = seconds;
             }
 
+            /**
+            * Get the hour value.
+            * @return {number} hours The hour value.
+            */
             get hours() {
                 return this._hours;
             }
 
+            /**
+            * Set the hours value.
+            * @param {number} hours The hour value.
+            */
             set hours(hours) {
                 this._hours = hours;
             }
 
+            /**
+            * Get the minutes value.
+            * @return {number} minutes The minutes value.
+            */
             get minutes() {
                 return this._minutes;
             }
 
+            /**
+            * Set the minutes value.
+            * @param {number} minutes The minutes value.
+            */
             set minutes(minutes) {
                 this._minutes = minutes;
             }
 
+            /**
+            * Get the seconds value.
+            * @return {number} seconds The seconds value.
+            */
             get seconds() {
                 return this._seconds;
             }
 
+            /**
+            * Set the seconds value.
+            * @param {number} seconds The seconds value.
+            */
             set seconds(seconds) {
                 this._seconds = seconds;
             }
@@ -86,6 +117,12 @@
         setInterval(drawClock, 1000, pstCtx, stRadius, pstDiff);
         setInterval(drawClock, 1000, cstCtx, stRadius, cstDiff);
 
+        /**
+        * Draws the general clock on the canvas.
+        * @param {Ctx} ctx The context of the canvas.
+        * @param {number} radius The radius of the clock.
+        * @param {number} zone The time difference from the main clock.
+        */
         function drawClock(ctx, radius, zone) {
             if (zone == "0") {
                 zone = zoneDiff;
@@ -141,6 +178,13 @@
 
         }
 
+        /**
+        * Draws a clock hand to the canvas.
+        * @param {Ctx} ctx The context of the canvas.
+        * @param {number} pos The current position on the clock.
+        * @param {number} length The length of the hand.
+        * @param {number} width The width of the hand.
+        */
         function drawHand(ctx, pos, length, width) {
             ctx.beginPath();
             ctx.lineWidth = width;
@@ -152,12 +196,23 @@
             ctx.rotate(-pos);
         }
 
-        function addZerosToCurrentTime(i) {
-            if (i < 10) {
-                i = "0" + i;
+        /**
+        * Adds zeros to the front of singular digits.
+        * @param {number} number The number to check.
+        * @return {number} number The calculated number.
+        */
+        function addZerosToCurrentTime(number) {
+            if (number < 10) {
+                number = "0" + number;
             }
-            return i;
+            return number;
         }
+
+        /**
+        * Finds the current time where you are.
+        * @param {number} zone The zone difference from the main clock.
+        * @return {Clock} clock The clock object with correct time.
+        */
         function findCurrentTime(zone) {
             let currentDate = new Date();
             let h = currentDate.getHours() + zone;
@@ -176,6 +231,9 @@
             return clock;
         }
 
+        /**
+        * Changes time zone of the main clock.
+        */
         function changeTimeZone() {
             let chosenTimeZone = parseFloat(document.getElementById("timeZones").value);
             zoneDiff = chosenTimeZone - currentZone;

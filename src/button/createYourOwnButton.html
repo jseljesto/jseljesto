@@ -109,33 +109,51 @@
     let bgColor = "";
     let hoverColor = "";
 
+   /**
+   * Changes name shown on button.
+   */ 
     function changeName() {
         document.getElementById("designButton").innerHTML =
             document.getElementById("buttonName").value;
     }
 
+    /**
+    * Changes color of the button itself.
+    */
     function changeColor() {
         bgColor = document.getElementById("color").value;
         document.getElementById("designButton").style.backgroundColor =
             bgColor;
     }
 
+    /**
+    * Changes color of the button text.
+    */
     function changeTextColor() {
         document.getElementById("designButton").style.color =
             document.getElementById("textColor").value;
     }
 
+    /**
+    * Modifies the corners of the button to chosen value.
+    */
     function changeCorners() {
         document.getElementById("designButton").style.borderRadius =
             document.getElementById("roundedCorners").value + "px";
     }
 
+    /**
+    * Changes chosen color when hovering over button.
+    */
     function changeHoverColor() {
         hoverColor = document.getElementById("hoverColor").value;
         document.getElementById("designButton").style.backgroundColor =
             hoverColor;
     }
 
+    /**
+    * Adds small amount of transition when hovering over button.
+    */
     function addTransition() {
         if (document.getElementById("transition").checked) {
             document.getElementById("designButton").style.transition = "0.5s";
@@ -144,16 +162,25 @@
         }
     }
 
+    /**
+    * Changes strength of shadow on button.
+    */
     function changeShadow() {
         let shadowValue = document.getElementById("boxShadow").value + "px";
         document.getElementById("designButton").style.boxShadow =
             `${shadowValue} ${shadowValue} ${shadowValue} ${shadowColor()}`;
     }
 
+    /**
+    * Changes color of button shadow.
+    */
     function shadowColor() {
         return document.getElementById("shadowColor").value;
     }
 
+    /**
+    * Outputs the code for the button in HTML and CSS form.
+    */
     function outputCode() {
         document.getElementById("designButton").style.removeProperty("position");
         document.getElementById("designButton").style.removeProperty("top");

@@ -32,6 +32,13 @@ public class PlayMatch {
   int goalsHomeTeam = 0;
   int goalsAwayTeam = 0;
 
+  /**
+   * Plays the next batch of matches.
+   * @param chosenClub Club controlled by player.
+   * @param stage The current stage.
+   * @throws FileNotFoundException
+   * @throws IOException
+   */
   public void playNextMatch(Club chosenClub, Stage stage) throws FileNotFoundException, IOException {
 
     GridPane grid = new GridPane();
@@ -188,6 +195,16 @@ public class PlayMatch {
     stage.setScene(playScene);
   }
 
+    /**
+     * Shows the current players match on screen.
+     * @param homeTeam Team at home.
+     * @param awayTeam Team playing away.
+     * @param isHomeTeam True if player controlled team is playing at home.
+     * @param isAwayTeam True if player controlled team is playing away.
+     * @param stage The current stage.
+     * @throws IOException
+     * @throws InterruptedException
+     */
   public void showMatchScreen(Club homeTeam, Club awayTeam, Boolean isHomeTeam, boolean isAwayTeam, Stage stage)
       throws IOException, InterruptedException {
     GridPane grid = new GridPane();
@@ -293,6 +310,14 @@ public class PlayMatch {
      */
   }
 
+    /**
+     * Shows rewards won by player-controlled team.
+     * @param myTeam Team controlled by player.
+     * @param opponentTeam Opposing team in last match.
+     * @param myGoals Goals scored by player.
+     * @param opponentGoals Goals scored by opposing team.
+     * @param stage The current stage.
+     */
   public void showRewards(Club myTeam, Club opponentTeam, int myGoals, int opponentGoals, Stage stage) {
     double multiplier = 0;
     if (myGoals < opponentGoals) {

@@ -39,6 +39,13 @@ public class TransferPlayer {
  
  ArrayList<TeamViewer> updatedTeam = new ArrayList<TeamViewer>();
  
+ /**
+  * Finds all the teams available.
+  * @param fullDirectory Directory of players from player-controlled team.
+  * @param clubDirectory Directory of player-controlled club.
+  * @param stage Current stage.
+  * @param importedTeam Players from player-controlled team.
+  */
  public void findTeams(String fullDirectory, String clubDirectory, Stage stage, ArrayList<Player> importedTeam) {
    GridPane grid = new GridPane();
    grid.setPadding(new Insets(10, 10, 10, 10));
@@ -81,6 +88,18 @@ public class TransferPlayer {
    stage.setScene(currentScene);
  }
  
+ /**
+  * Transfers player from AI team to player-controlled team.
+  * @param fullDirectory Directory of player-controlled team.
+  * @param secondDirectory Directory of selling team.
+  * @param clubDirectory Directory of player-controlled club.
+  * @param secondClubDirectory Directory of selling club.
+  * @param stage The current Stage.
+  * @param firstTeam Players from player-controlled team.
+  * @param secondTeam Players from selling team.
+  * @throws FileNotFoundException
+  * @throws IOException
+  */
  @SuppressWarnings("unchecked")
  public void choosePlayer(String fullDirectory, String secondDirectory, String clubDirectory, 
                           String secondClubDirectory, Stage stage, 

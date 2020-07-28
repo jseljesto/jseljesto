@@ -105,6 +105,9 @@
     document.getElementById("scoutBtn").addEventListener("click", function () { sendScout(); });
     document.getElementById("upgradeTech").addEventListener("click", function () {upgradeTechnology()});
 
+    /**
+    * Function for concurring collection of resources.
+    */
     function collect() {
 
         wood = wood + woodIncome;
@@ -126,6 +129,10 @@
         }
     }
 
+    /**
+    * Removes a villager from a post and adds it to list of available villagers.
+    * @param {string} resource The chosen resource post.
+    */
     function removeVillager(resource) {
         switch (resource) {
             case "wood":
@@ -153,6 +160,10 @@
         document.getElementById("untaskedVillagers").innerHTML = `Available Villagers: ${availableVillagers.toFixed(0)}`;
     }
 
+    /**
+    * Adds a villager to a certain resource post.
+    * @param {string} resource The chosen resource post. 
+    */
     function addVillager(resource) {
         switch (resource) {
             case "wood":
@@ -180,6 +191,11 @@
         document.getElementById("untaskedVillagers").innerHTML = `Available Villagers: ${availableVillagers.toFixed(0)}`;
     }
 
+    /**
+    * Creates an item to add to village collection.
+    * @param {string} item The item to be created.
+    * @param {number} techLvl The current technological level of the player.
+    */
     function createItems(item, techLvl) {
         switch (item) {
             case "house":
@@ -286,6 +302,9 @@
         }
     }
 
+    /**
+    * Checks if player can afford to buy a new house.
+    */
     function checkHousePrices() {
         if (wood > (15 * (1.2 ** housesBought)).toFixed(0)) {
             document.getElementById("purchaseHouse").style.backgroundColor = "darkgreen";
@@ -294,6 +313,10 @@
         }
     }
 
+    /**
+    * Checks if player can afford to buy certain items.
+    * @param {number} techLvl The current technological level of the player.
+    */
     function checkItemPrices(techLvl) {
         switch (techLvl) {
             case 0:
@@ -373,6 +396,9 @@
         }
     }
 
+    /**
+    * Checks if player can afford to upgrade his technological level.
+    */
     function checkTechnologyPrice() {
         document.getElementById("techPrice").innerHTML = `Price: ${100*(technologyLevel+1).toFixed(0)} Food ${100*(technologyLevel+1).toFixed(0)} Wood`;
         if (wood > 100*(technologyLevel+1)) {
@@ -385,6 +411,9 @@
         }
     }
 
+    /**
+    * Function to randomly add new villagers to the village over time.
+    */
     function newVillagers() {
         let roll = Math.floor(Math.random() * 50 + 1);
         if (roll === 50) {
@@ -401,6 +430,9 @@
         }
     }
 
+    /**
+    * Updates the screen information.
+    */
     function updateInfo() {
 
         if (totalMonsters === 3) {
@@ -440,6 +472,9 @@
         checkTechnologyPrice();
     }
 
+    /**
+    * Counts down timer to next incoming wave.
+    */
     function countDownToNextWave() {
         if (seconds === 0 && minutes === 0) {
             startBattle();
@@ -462,6 +497,9 @@
         }
     }
 
+    /**
+    * Function to start battle between village and monsters.
+    */
     function startBattle() {
         availableVillagers += woodIncome + foodIncome + mineralIncome;
         woodIncome = 0;
@@ -503,6 +541,9 @@
         updateInfo();
     }
 
+    /**
+    * Updates information about the next incoming wave.
+    */
     function nextWaveInformation() {
         nextWave = [];
         powerLevelIsCorrect = false;
@@ -549,6 +590,9 @@
         }
     }
 
+    /**
+    * Function to send villager away to scout for resources or new villagers.
+    */
     function sendScout() {
         if (availableVillagers === 0) {
             alert("You don't have any villagers available for scouting!");
@@ -583,6 +627,9 @@
         document.getElementById("scoutBtn").style.visibility = "visible";
     }
 
+    /**
+    * Upgrades the techonology level of your village.
+    */
     function upgradeTechnology(){
         if (food > 100*(technologyLevel+1)) {
             if (wood > 100*(technologyLevel+1)) {

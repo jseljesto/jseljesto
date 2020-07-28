@@ -73,6 +73,9 @@
             }
         });
 
+        /**
+        * Creates a dynamic shopping list to be added to screen.
+        */
         function createShoppingList() {
             let shoppingListText = "<ul id='newShoppingList'>";
             for (let i of firstPage) {
@@ -84,11 +87,16 @@
             listElements = document.getElementsByTagName("LI");
 
             for (let i = 0; i < listElements.length; i++) {
-                    listElements[i].addEventListener("click", function() {
-                    removeFirstPageElement(i); 
-                    }, true)}
+                listElements[i].addEventListener("click", function () {
+                    removeFirstPageElement(i);
+                }, true)
             }
+        }
 
+        /**
+        * Removes an element from the shopping list
+        * @param {number} index The array index of the chosen element.
+        */
         function removeFirstPageElement(index) {
             firstPage.splice(index, 1);
             let updatedList = document.getElementById("newShoppingList");
@@ -96,7 +104,7 @@
             firstPageItems--;
             createShoppingList();
         }
-        
+
     </script>
 </body>
 

@@ -27,8 +27,9 @@
         drawMaze();
         setInterval(timerCount, 1000);
 
-        //Creating lines for maze
-
+        /**
+        * Draws the maze and its walls.
+        */
         function drawMaze() {
             leftWalls = [];
             rightWalls = [];
@@ -114,6 +115,11 @@
             isFinished();
         }
 
+        /**
+        * Loads images used on screen.
+        * @param {number} x The x-coordinate of the image object.
+        * @param {number} y The y-coordinate of the image object.
+        */
         function createImage(x, y) {
             let img = new Image();
             img.src = "image.png";
@@ -122,6 +128,9 @@
             }
         }
 
+        /**
+        * Loads the finish lane image onto the maze.
+        */
         function createFinishLine() {
             let finishLine = new Image();
             finishLine.src = "finishline.png";
@@ -130,6 +139,9 @@
             }
         }
 
+        /**
+        * Moves your character left in the maze if possible.
+        */
         function moveLeft() {
             let foundWall = false;
             let temp = [];
@@ -148,6 +160,9 @@
             }
         }
 
+        /**
+        * Moves your character right in the maze if possible.
+        */
         function moveRight() {
             let foundWall = false;
             let temp = [];
@@ -166,6 +181,9 @@
             }
         }
 
+        /**
+        * Moves your character upwards in the maze if possible.
+        */
         function moveUp() {
             let foundWall = false;
             let temp = [];
@@ -184,6 +202,9 @@
             }
         }
 
+        /**
+        * Moves your character downwards in the maze if possible.
+        */
         function moveDown() {
             let foundWall = false;
             let temp = [];
@@ -202,6 +223,10 @@
             }
         }
 
+        /**
+        * Determines the key pressed to move your character.
+        * @param {Event} event The key pressed.
+        */
         function moveObject(event) {
             switch (event.keyCode) {
                 case 37:
@@ -219,6 +244,9 @@
             }
         }
 
+        /**
+        * Shows the timer countdown on the screen.
+        */
         function timerCount() {
             seconds++;
             if (seconds >= 60) {
@@ -249,12 +277,18 @@
             }
         }
 
+        /**
+        * Showds your current coordinates in the canvas.
+        */
         function showCoords() {
             let x = event.screenX - 400;
             let y = event.screenY - 120;
             alert("X-coords: " + x + " Y-coords: " + y);
         }
 
+        /**
+        * Checks if character has reached the finish line.
+        */
         function isFinished() {
             if (currentX === 325 && currentY === 25) {
                 alert("Congrats! You reached the finish line in " + hours + " hours, "

@@ -40,6 +40,10 @@ public class SquadViewer {
   ArrayList<Player> importedTeam = new ArrayList<Player>();
   Load loader = new Load();
   
+    /**
+     * Search for a certain team.
+     * @param stage The current stage.
+     */
   public static void searchSquad(Stage stage) {
     String directory = "C:/Users/jonkr/Documents/GitHub-prosjekt/jseljesto/src/strikerManager/Teams/";
     String clubDirectory = "C:/Users/jonkr/Documents/GitHub-prosjekt/jseljesto/src/strikerManager/Clubs/";
@@ -102,6 +106,14 @@ public class SquadViewer {
     });
   }
   
+  /**
+   * View the players of a chosen team.
+   * @param fullDirectory Directory of players on chosen team.
+   * @param clubDirectory Directory of chosen club.
+   * @param stage The current stage.
+   * @throws FileNotFoundException
+   * @throws IOException
+   */
   @SuppressWarnings("unchecked")
   public void viewSquad(String fullDirectory, String clubDirectory, Stage stage) throws FileNotFoundException, IOException {
     importedTeam = Load.loadTeamData(importedTeam, fullDirectory);
