@@ -1,5 +1,13 @@
 <script>
 
+    numberCalc = decorator(numberCalc, hash);
+    let assignedNum = numberCalc.bind(null, 3);
+
+    for (let i = 0; i < 50; i++) {
+        let secondNum = Math.floor((Math.random() * 5) + 1);
+        assignedNum(secondNum);
+    }
+
     function numberCalc(firstNum, secondNum) {
         return firstNum + secondNum;
     }
@@ -21,14 +29,6 @@
 
     function hash(args) {
         return args[0] + "," + args[1];
-    }
-
-    numberCalc = decorator(numberCalc, hash);
-
-    for (let i = 0; i < 50; i++) {
-        let firstNum = Math.floor((Math.random() * 5) + 1);
-        let secondNum = Math.floor((Math.random() * 5) + 1);
-        numberCalc(firstNum, secondNum);
     }
 
 </script>
