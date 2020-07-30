@@ -64,16 +64,18 @@
     document.getElementById("scoreBoard").innerHTML = `Score: ${score}`;
     localStorage.setItem("currentUpgrades", JSON.stringify(upgrades));
     setUpgradeScreen();
-    let shipWidth = 50;
-    let shipHeight = 50;
-    let shipY = 120;
-    let shipX = (canvas.width - shipWidth) / 2;
+    let userShip = {
+        shipwidth: 50,
+        shipHeight: 50,
+        shipY: 120
+    }
+    userShip.shipX = (canvas.width - userShip.shipWidth) / 2;
     let invaderX = 20;
     let invaderY = 10;
     let dx = 0;
     const speedCap = 5;
-    let turretY = shipY - 20;
-    let turretX = shipX + 12.5;
+    let turretY = userShip.shipY - 20;
+    let turretX = userShip.shipX + 12.5;
     const bulletSpeed = 2 + ((upgrades[2]-1) * 2);
     let coolDown = 150 - ((upgrades[3]-1) * 20);
     let bullets = [];
@@ -157,14 +159,14 @@
     function draw() {
         if (gameStarted) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drawElement(shipX, shipY, shipWidth, shipHeight, "lightgreen");
+            drawElement(userShip.shipX, userShip.shipY, userShip.shipWidth, userShip.shipHeight, "lightgreen");
             if (smallRes === false) {
-            turretX = shipX + 12.5;
-            turretY = shipY - 20; 
+            turretX = userShip.shipX + 12.5;
+            turretY = userShip.shipY - 20; 
             drawElement(turretX, turretY, 25, 20, "lightgreen");
             } else {
-            turretX = shipX + 6;
-            turretY = shipY - 10;
+            turretX = userShip.shipX + 6;
+            turretY = userShip.shipY - 10;
             drawElement(turretX, turretY, 12.5, 10, "lightgreen");
             }
 
@@ -253,7 +255,7 @@
     function checkMouseMove(e) {
         let currentX = e.clientX - canvas.offsetLeft;
         if (currentX > 25 && currentX < (canvas.width - 25)) {
-            shipX = currentX - shipWidth / 2;
+            userShip.shipX = currentX - userShip.shipWidth / 2;
         }
     }
 
@@ -350,8 +352,8 @@
     */
     function checkResolution () {
         if (smallRes === true) {
-            shipWidth = 25;
-            shipHeight = 25;
+            userShip.shipWidth = 25;
+            userShip.shipHeight = 25;
             invaderDisY = 15;
             invaderDisX = 10;
         }
