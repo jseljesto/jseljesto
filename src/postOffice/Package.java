@@ -1,5 +1,6 @@
 public class Package {
 
+  public Person receiver;
   public int weight;
   public int x;
   public int y;
@@ -9,7 +10,8 @@ public class Package {
   public int distanceTravelled;
   public String status;
 
-  public Package(int wgt, int x, int y, boolean isFrag, boolean fastDel, String dest, int dTravelled, String stat) {
+  public Package(Person rec, int wgt, int x, int y, boolean isFrag, boolean fastDel, String dest, int dTravelled, String stat) {
+    this.receiver = rec;
     this.weight = wgt;
     this.x = x;
     this.y = y;
@@ -24,7 +26,8 @@ public class Package {
     String currentStatus = pack.status;
     if (map[pack.x][pack.y] != null) {
       if (map[pack.x][pack.y].location == pack.destination) {
-        System.out.println("Package ready to be picked up!");
+        System.out.println("Package ready to be picked up by " + pack.receiver.firstName + " " +
+        pack.receiver.lastName + "!");
         currentStatus = "Delivered";
         int bill = getBill(pack);
         System.out.println("The delivery will cost " + bill + "$");

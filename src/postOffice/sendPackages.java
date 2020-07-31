@@ -1,6 +1,8 @@
 public class sendPackages {
 
     public static void sendPackage(Package pack, PostOffice[][] map) {
+        System.out.println("Package to be sent to " + pack.receiver.firstName + " " 
+        + pack.receiver.lastName + " at " + pack.receiver.address + ", " + pack.receiver.postalCode);
         int finalX = 0;
         int finalY = 0;
         for (int i = 0; i < 20; i++) {
@@ -49,7 +51,9 @@ public class sendPackages {
         map[17][4] = new PostOffice("Clevale Post Office", "Clevale", 3700);
         map[19][19] = new PostOffice("Maesea Postal Service", "Maesea", 4400);
 
-        Package badmintonRacket = new Package(15, 19, 19, false, false, "Olkburg", 0, "To be sent");
+        Person example = new Person("Clay", "Potter", "Westvale Street", "4500 Olkburg");
+
+        Package badmintonRacket = new Package(example, 15, 19, 19, false, false, "Olkburg", 0, "To be sent");
         sendPackage(badmintonRacket, map);
     }
 
