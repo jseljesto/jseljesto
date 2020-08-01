@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="stylesheet.css" />
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <canvas id="solarCanvas" width="550" height="550"></canvas>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.6.3/fabric.min.js"></script>
+    <script>
+        let canvas = new fabric.StaticCanvas("solarCanvas");
+        canvas.setWidth(screen.width - 25);
+        canvas.setHeight(screen.height - 125);
+        let ctx = canvas.getContext();
+
+        let shadow = new fabric.Shadow({
+            color: "white", blur: 10
+        });
+        let star = new fabric.Circle({
+            radius: 4, fill: "white", left: 100, top: 100, shadow: shadow
+        });
+
+        let planet = new fabric.Circle({
+            radius: 50, fill: "purple", left: 400, top: 400, shadow: new fabric.Shadow({
+                color: "purple", blur: 20
+            })
+        });
+
+        planet.setGradient("fill", {
+            x1: 0,
+            y1: 0,
+            x2: 0,
+            y2: planet.height,
+            colorStops: {
+                0: "indigo",
+                0.25: "purple",
+                0.5: "white",
+                0.75: "purple",
+                1: "indigo"
+            }
+        });
+        //Maote å leggja til pattern, kan bli viktig!!
+
+        /*fabric.util.loadImage('./patterns/pattern.png', function (img) {
+            planet.setPatternFill({
+                source: img,
+                repeat: 'repeat'
+            });
+            canvas.renderAll();
+        }); */
+        canvas.add(star);
+        canvas.add(planet);
+
+        let stars = [];
+        stars.push(star);
+
+        let planets = [];
+        planets.push(planet);
+
+        for (let i = 0; i < 40; i++) {
+            let foundAvailableSpace = false;
+            outerloop:
+            while (foundAvailableSpace == false) {
+                let y = Math.floor(Math.random() * (screen.height - 125)) + 1;
+                let x = Math.floor(Math.random() * (screen.width - 25)) + 1;
+                for (let j = 0; j < stars.length; j++) {
+                    if ((x < stars[j].left - 5 || x > stars[j].left + 5)
+                        && (y < stars[j].top + 5 || y > stars[j].top - 5)) {
+                    } else {
+                        console.log(i + ": Found similarities: " + x + " " + y + " = " 
+                        + stars[j].left + " " + stars[j].top);
+                        break outerloop;
+                    }
+                }
+
+                for (let p = 0; p < planets.length; p++) {
+                    if ((x < planets[p].left - 100 || x > planets[p].left + 100)
+                        && (y < planets[p].top + 100 || y > planets[p].top - 100)) {
+                    } else {
+                        console.log(i + ": Found similarities with planet: " + x + " " + y + " = " 
+                        + planets[p].left + " " + planets[p].top);
+                        break outerloop;
+                    }
+                }
+                let newStar = new fabric.Circle({
+                    radius: 4, fill: "white", left: x, top: y, shadow: shadow
+                });
+                stars.push(newStar);
+                canvas.add(newStar);
+                foundAvailableSpace = true;
+            }
+        }
+    </script>
+</body>
+
+</html>
