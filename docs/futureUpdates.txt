@@ -16,12 +16,11 @@ Quiz:
 - Making it fully compatible with Node.js and Pug
 
 Striker Manager:
-- Create unique experience for chosen team with match screen
-
-
+- Adding screen showing league table
 
 
 
 Future projects:
 - Search engine
 - Maze solver
+- Solar system
