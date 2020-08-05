@@ -9,7 +9,10 @@
 <body>
     <canvas id="solarCanvas" width="550" height="550"></canvas>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.6.3/fabric.min.js"></script>
-    <script>
+    <script type="module">
+        import {gradients} from "./planetGradients.js";
+
+        console.log(gradients.length);
         let canvas = new fabric.StaticCanvas("solarCanvas");
         canvas.setWidth(screen.width - 25);
         canvas.setHeight(screen.height - 125);
@@ -17,29 +20,6 @@
 
         let shadow = new fabric.Shadow({
             color: "white", blur: 10
-        });
-        let star = new fabric.Circle({
-            radius: 4, fill: "white", left: 100, top: 100, shadow: shadow
-        });
-
-        let planet = new fabric.Circle({
-            radius: 50, fill: "purple", left: 400, top: 400, shadow: new fabric.Shadow({
-                color: "purple", blur: 20
-            })
-        });
-
-        planet.setGradient("fill", {
-            x1: 0,
-            y1: 0,
-            x2: 0,
-            y2: planet.height,
-            colorStops: {
-                0: "indigo",
-                0.25: "purple",
-                0.5: "white",
-                0.75: "purple",
-                1: "indigo"
-            }
         });
         //Maote å leggja til pattern, kan bli viktig!!
 
@@ -50,37 +30,79 @@
             });
             canvas.renderAll();
         }); */
-        canvas.add(star);
-        canvas.add(planet);
 
         let stars = [];
-        stars.push(star);
-
         let planets = [];
-        planets.push(planet);
 
-        for (let i = 0; i < 40; i++) {
+        //Create planets
+        for (let a = 0; a < 3; a++) {
+            let foundAvailableSpace = false;
+            planetOuterloop:
+            while (foundAvailableSpace === false) {
+                let y = Math.floor(Math.random() * (screen.height - 225)) + 1;
+                let x = Math.floor(Math.random() * (screen.width - 125)) + 1;
+                if (planets != undefined || planets.length > 0) {
+                    for (let j = 0; j < planets.length; j++) {
+                        if ((x < planets[j].left - 150 || x > planets[j].left + 150)
+                            && (y < planets[j].top + 150 || y > planets[j].top - 150)) {
+                        } else {
+                         /*   console.log(j + ": Found similarities: " + x + " " + y + " = "
+                                + planets[j].left + " " + planets[j].top); */
+                                a--;
+                            break planetOuterloop;
+                        }
+                    }
+                }
+                let newPlanet = new fabric.Circle({
+                    radius: 50, fill: "blue", left: x, top: y, shadow: shadow
+                });
+                console.log("X: " + x + " Y: " + y);
+                let chosenColor = Math.floor(Math.random() * gradients.length-1) + 1;
+                newPlanet.setGradient("fill", {
+                    x1: 0,
+                    y1: 0,
+                    x2: 0,
+                    y2: newPlanet.height,
+                    colorStops: {
+                        0: gradients[chosenColor].firstColor,
+                        0.25: gradients[chosenColor].secondColor,
+                        0.5: gradients[chosenColor].thirdColor,
+                        0.75: gradients[chosenColor].fourthColor,
+                        1: gradients[chosenColor].fifthColor
+                    }
+                });
+                planets.push(newPlanet);
+                canvas.add(newPlanet);
+                foundAvailableSpace = true;
+            }
+        }
+
+        //Create stars
+        for (let i = 0; i < 50; i++) {
             let foundAvailableSpace = false;
             outerloop:
             while (foundAvailableSpace == false) {
                 let y = Math.floor(Math.random() * (screen.height - 125)) + 1;
                 let x = Math.floor(Math.random() * (screen.width - 25)) + 1;
-                for (let j = 0; j < stars.length; j++) {
-                    if ((x < stars[j].left - 5 || x > stars[j].left + 5)
-                        && (y < stars[j].top + 5 || y > stars[j].top - 5)) {
-                    } else {
-                        console.log(i + ": Found similarities: " + x + " " + y + " = " 
-                        + stars[j].left + " " + stars[j].top);
-                        break outerloop;
+                if (stars != undefined || stars.length > 0) {
+                    for (let j = 0; j < stars.length; j++) {
+                        if ((x < stars[j].left - 5 || x > stars[j].left + 5)
+                            && (y < stars[j].top + 5 || y > stars[j].top - 5)) {
+                        } else {
+                         /*   console.log(i + ": Found similarities: " + x + " " + y + " = "
+                                + stars[j].left + " " + stars[j].top); */
+                            i--;
+                            break outerloop;
+                        }
                     }
                 }
-
                 for (let p = 0; p < planets.length; p++) {
-                    if ((x < planets[p].left - 100 || x > planets[p].left + 100)
-                        && (y < planets[p].top + 100 || y > planets[p].top - 100)) {
+                    if ((x < planets[p].left - 10 || x > planets[p].left + 100)
+                        && (y < planets[p].top + 10 || y > planets[p].top - 10)) {
                     } else {
-                        console.log(i + ": Found similarities with planet: " + x + " " + y + " = " 
-                        + planets[p].left + " " + planets[p].top);
+                     /*   console.log(i + ": Found similarities with planet: " + x + " " + y + " = "
+                            + planets[p].left + " " + planets[p].top); */
+                        i--;
                         break outerloop;
                     }
                 }
