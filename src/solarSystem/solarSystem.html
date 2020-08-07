@@ -118,12 +118,12 @@
         }
 
         let angle = 0;
-        setInterval(rotatePlanet, 100);
-        setInterval(blinkStars, 100);
+        setInterval(rotatePlanet, 50);
+        setInterval(blinkStars, 50);
 
         function rotatePlanet() {
             canvas.clear();
-            angle = angle + 2;
+            angle = angle + 0.50;
             for (let i = 0; i < planets.length; i++) {
                 planets[i].rotate(angle);
                 canvas.add(planets[i]);
@@ -133,18 +133,18 @@
         function blinkStars () {
             for (let i = 0; i < stars.length; i++) {
                 if(stars[i].shadow.blur == 1) {
-                    stars[i].shadow.blur += 0.20;
+                    stars[i].shadow.blur += 0.10;
                 }
                 else if (stars[i].shadow.blur == 10) {
-                    stars[i].shadow.blur -= 0.20;
+                    stars[i].shadow.blur -= 0.10;
                 }
                 else {
                     let roll = Math.floor(Math.random() * 10) + 1;
                     if (roll <= 5) {
-                        stars[i].shadow.blur += 0.20;
+                        stars[i].shadow.blur += 0.10;
                     }
                     else if (roll > 5) {
-                        stars[i].shadow.blur -= 0.20;
+                        stars[i].shadow.blur -= 0.10;
                     }
                 }
                 canvas.add(stars[i]);
