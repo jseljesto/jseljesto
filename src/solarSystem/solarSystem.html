@@ -56,6 +56,8 @@
                 let newPlanet = new fabric.Circle({
                     radius: 50, fill: "blue", left: x, top: y, shadow: shadow
                 });
+                let blurRadius = Math.floor(Math.random() * 10) + 1;
+                newPlanet.shadow.blur = blurRadius;
                 console.log("X: " + x + " Y: " + y);
                 let chosenColor = Math.floor(Math.random() * gradients.length-1) + 1;
                 newPlanet.setGradient("fill", {
@@ -114,7 +116,41 @@
                 foundAvailableSpace = true;
             }
         }
+
+        let angle = 0;
+        setInterval(rotatePlanet, 100);
+        setInterval(blinkStars, 100);
+
+        function rotatePlanet() {
+            canvas.clear();
+            angle = angle + 2;
+            for (let i = 0; i < planets.length; i++) {
+                planets[i].rotate(angle);
+                canvas.add(planets[i]);
+            }
+        }
+
+        function blinkStars () {
+            for (let i = 0; i < stars.length; i++) {
+                if(stars[i].shadow.blur == 1) {
+                    stars[i].shadow.blur++;
+                }
+                else if (stars[i].shadow.blur == 10) {
+                    stars[i].shadow.blur--;
+                }
+                else {
+                    let roll = Math.floor(Math.random() * 10) + 1;
+                    if (roll <= 5) {
+                        stars[i].shadow.blur++;
+                    }
+                    else if (roll > 5) {
+                        stars[i].shadow.blur--;
+                    }
+                }
+                canvas.add(stars[i]);
+            }
+        }
+
     </script>
 </body>
-
 </html>
