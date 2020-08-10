@@ -1,26 +1,45 @@
 Arbeidsplass:
-- Creating database for easier access to person objects
-- Adding workdays/workhours
+- Creating database for easier access to person objects.
+- Adding workdays/workhours.
+
+Clock:
+- Add name for different timezones.
+- Improving border of the clocks.
 
 Knapp:
-- Making it easier to navigate around the site
-- Adding more complex features, such as animations and bubble effect
+- Making it easier to navigate around the site.
+- Adding more complex features, such as animations and bubble effect.
+
+Maze:
+- Add background and better graphics for timer.
+- Creating larger maze.
+- Adding items to maze for upgrades.
 
 Message Decoder:
-- Add functionality with other keys
+- Add functionality with other keys.
+
+Minigames:
+- Add ability to see income of each resource.
 
 PingPong:
-- Give users the ability to customize ball, paddle and the canvas (popup with custom choices)
+- Give users the ability to customize ball, paddle and the canvas (popup with custom choices).
 
 Quiz:
-- Making it fully compatible with Node.js and Pug
+- Making it fully compatible with Node.js and Pug.
+
+Shopping list:
+- Ability to add suggested word to product input field.
+- Not suggesting words until at least three letters have been inputed.
+
+SolarSystem:
+- Add interactive panel with information of each planet.
+- Rework of redrawing objects.
 
 Striker Manager:
-- Adding screen showing league table
+- Adding screen showing league table.
 
 
 
 Future projects:
 - Search engine
 - Maze solver
-- Solar system
