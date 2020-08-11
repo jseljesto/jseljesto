@@ -24,6 +24,12 @@
         let minutes = 0;
         let hours = 0;
 
+        let finishLine = new Image();
+        finishLine.src = "finishline.png";
+        finishLine.onload = function () {
+            ctx.drawImage(finishLine, 300, 0);
+        }
+
         drawMaze();
         setInterval(timerCount, 1000);
 
@@ -124,7 +130,7 @@
             let img = new Image();
             img.src = "image.png";
             img.onload = function () {
-            ctx.drawImage(img, x, y);
+                ctx.drawImage(img, x, y);
             }
         }
 
@@ -132,11 +138,7 @@
         * Loads the finish lane image onto the maze.
         */
         function createFinishLine() {
-            let finishLine = new Image();
-            finishLine.src = "finishline.png";
-            finishLine.onload = function () {
-            ctx.drawImage(finishLine, 300, 0);
-            }
+                ctx.drawImage(finishLine, 300, 0);
         }
 
         /**
