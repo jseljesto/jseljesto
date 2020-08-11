@@ -193,27 +193,30 @@
             //Checks collision with top half of user paddle
             if (x <= (paddleX + paddleWidth)) {
                 if (y >= paddleY && y <= (paddleY + (paddleHeight / 2))) {
+                    console.log(dy);
                     if (dx > speedCap || dx < -speedCap) {
                         dx = -dx;
                     }
                     else {
                         dx = -dx * 1.2;
+                        dy *= 1.1;
                     }
 
                     let distTopMid = (paddleY + (paddleHeight / 2)) - y;
 
                     if (dy < 0) {
-                        dy = 1 * (distTopMid * 0.03) + (dx * 0.025);
+                        dy = 1 * (distTopMid * 0.01) + (dx * 0.200);
                         dy = Math.abs(dy);
                     }
                     else if (dy > 0 || dy === 0) {
-                        dy = 1 * (distTopMid * 0.03) + (dx * 0.025);
+                        dy = 1 * (distTopMid * 0.01) + (dx * 0.200);
                     }
                     score++;
                     document.getElementById("score").innerHTML = "Score: " + score;
                 }
                 //Checks collision with bottom half of user paddle
                 else if (y >= paddleY + (paddleHeight / 2) && y <= (paddleY + paddleHeight)) {
+                    console.log(dy);
                     if (dx > speedCap || dx < -speedCap) {
                         dx = -dx;
                     }
@@ -224,11 +227,11 @@
                     let distBotMid = y - (paddleY + (paddleHeight / 2));
 
                     if (dy < 0 || dy === 0) {
-                        dy = 1 * (distBotMid * 0.03) + (dx * 0.025);
+                        dy = 1 * (distBotMid * 0.01) + (dx * 0.200);
                         dy = -Math.abs(dy);
                     }
                     else if (dy > 0) {
-                        dy = 1 * (distBotMid * 0.03) + (dx * 0.025);
+                        dy = 1 * (distBotMid * 0.01) + (dx * 0.200);
                         dy = -dy;
                     }
                     if (multiEnabled === false) {
@@ -251,11 +254,11 @@
                         let distTopMid = (oppY + (oppHeight / 2)) - y;
 
                         if (dy < 0) {
-                            dy = 1 * (distTopMid * 0.03) + (dx * 0.025);
+                            dy = 1 * (distTopMid * 0.01) + (dx * 0.200);
                             dy = Math.abs(dy);
                         }
                         else if (dy > 0 || dy === 0) {
-                            dy = 1 * (distTopMid * 0.03) + (dx * 0.025);
+                            dy = 1 * (distTopMid * 0.01) + (dx * 0.200);
                         }
                         //oppSpeed = oppSpeed * 1.3;
                     }
@@ -270,11 +273,11 @@
                         let distBotMid = y - (oppY + (oppHeight / 2));
 
                         if (dy < 0 || dy === 0) {
-                            dy = 1 * (distBotMid * 0.03) + (dx * 0.025);
+                            dy = 1 * (distBotMid * 0.01) + (dx * 0.200);
                             dy = -Math.abs(dy);
                         }
                         else if (dy > 0) {
-                            dy = 1 * (distBotMid * 0.03) + (dx * 0.025);
+                            dy = 1 * (distBotMid * 0.01) + (dx * 0.200);
                             dy = -dy;
                         }
                         //oppSpeed = oppSpeed * 1.3;
