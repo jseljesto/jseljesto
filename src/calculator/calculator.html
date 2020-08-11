@@ -40,6 +40,8 @@
         let operator = "";
         let secondOperand = 0;
         let boxPadding = 150;
+        let decimalUsed = false;
+        let includesDecimal = false;
 
         /**
         * Saves the chosen value as an operand.
@@ -66,14 +68,17 @@
         * @param {string} op The chosen operator.
         */
         function clickOperator(op) {
-            boxPadding = 150;
-            if (!operator) {
-                operator = op;
-            } else {
-                findSum();
-                firstOperand = currentSum;
-                secondOperand = 0;
-                operator = op;
+            if (firstOperand > 0) {
+                boxPadding = 165;
+                if (!operator) {
+                    operator = op;
+                    decimalUsed = false;
+                } else {
+                    findSum();
+                    firstOperand = currentSum;
+                    secondOperand = 0;
+                    operator = op;
+                }
             }
         }
 
@@ -87,6 +92,8 @@
             firstOperand = 0;
             operator = "";
             secondOperand = 0;
+            decimalUsed = false;
+            includesDecimal = false;
             document.getElementById("sum").innerHTML = 0;
         }
 
@@ -94,17 +101,23 @@
         * Adds decimal symbol to the current sum.
         */
         function addDecimal() {
-            if (document.getElementById("sum").innerHTML != "0") {
-                boxPadding -= 7.5;
-            }
-            document.getElementById("sum").style.paddingLeft = boxPadding + "px";
+            if (firstOperand > 0 && decimalUsed === false) {
+                if (document.getElementById("sum").innerHTML != "0") {
+                    boxPadding -= 7.5;
+                }
+                document.getElementById("sum").style.paddingLeft = boxPadding + "px";
 
-            if (!operator) {
-                firstOperand += ".";
-                document.getElementById("sum").innerHTML = firstOperand;
-            } else {
-                secondOperand += ".";
-                document.getElementById("sum").innerHTML = secondOperand;
+                if (!operator) {
+                    firstOperand += ".";
+                    decimalUsed = true;
+                    includesDecimal = true;
+                    document.getElementById("sum").innerHTML = firstOperand;
+                } else {
+                    secondOperand += ".";
+                    decimalUsed = true;
+                    includesDecimal = true;
+                    document.getElementById("sum").innerHTML = secondOperand;
+                }
             }
         }
 
@@ -137,11 +150,15 @@
         function squareRoot() {
             if (secondOperand > 0) {
                 findSum();
-                currentSum = Math.sqrt(currentSum);
+                currentSum = Math.sqrt(currentSum).toFixed(2);
+                boxPadding = 127 - (15 * (currentSum.toString().length - 3));
                 document.getElementById("sum").innerHTML = currentSum;
+                document.getElementById("sum").style.paddingLeft = boxPadding + "px";
             } else {
-                currentSum = Math.sqrt(firstOperand);
+                currentSum = Math.sqrt(firstOperand).toFixed(2);
+                boxPadding = 127 - (15 * (currentSum.toString().length - 3));
                 document.getElementById("sum").innerHTML = currentSum;
+                document.getElementById("sum").style.paddingLeft = boxPadding + "px";
             }
         }
 
@@ -149,7 +166,6 @@
         * Finds the final sum of the two operands.
         */
         function findSum() {
-            boxPadding = 150;
             if (operator === "+") {
                 currentSum = firstOperand + secondOperand;
             }
@@ -169,9 +185,15 @@
                 alert("You haven't made any changes!");
             }
             document.getElementById("sum").innerHTML = currentSum;
+            boxPadding = 120 - (15 * (currentSum.toString().length - 3));
+            if (includesDecimal === true) {
+                boxPadding += 7;
+            }
+            document.getElementById("sum").style.paddingLeft = boxPadding + "px";
             firstOperand = 0;
             secondOperand = 0;
             operator = "";
+            decimalUsed = false;
         }
 
     </script>
