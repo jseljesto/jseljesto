@@ -52,14 +52,12 @@
                             break;
                         default:
                             outputText.value += alphabet[i+2];
+                            break;
                         }
                     }
                 }
                 break;
             }
-            if (encodeText.value.length === 0) {
-                    outputText.value = "";
-                }
         });
 
         encodeText.addEventListener("paste", function(e) {
