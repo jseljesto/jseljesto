@@ -41,12 +41,15 @@
 
         productInput.addEventListener("keydown", function () {
             let currentWord = document.getElementById("product").value;
-            for (let i = 0; i < items.length; i++) {
-                if (items[i].substring(0, currentWord.length) === currentWord) {
-                    document.getElementById("suggestion").innerHTML = "Did you mean " + items[i];
-                    break;
-                } else {
-                    document.getElementById("suggestion").innerHTML = "Found no similar products.";
+            if (currentWord.length >= 2) {
+                console.log("ok");
+                for (let i = 0; i < items.length; i++) {
+                    if (items[i].substring(0, currentWord.length) === currentWord) {
+                        document.getElementById("suggestion").innerHTML = "Did you mean " + items[i];
+                        break;
+                    } else {
+                        document.getElementById("suggestion").innerHTML = "Found no similar products.";
+                    }
                 }
             }
         });
