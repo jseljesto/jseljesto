@@ -1,3 +1,7 @@
+#backgroundTheme {
+    background-image: linear-gradient(to left, blue, #cce0ff, blue);
+}
+
 #currentTime {
     position: fixed;
     left: 50%;
@@ -7,19 +11,19 @@
     position: fixed;
     top: 15%;
     left: 36%;
-    background-color: black;
+    background-color: white;
 }
 
 #pstCanvas {
     position: fixed;
     top: 35%;
     left: 50px;
-    background-color: black;
+    background-color: white;
 }
 
-#cstCanvas {
+#castCanvas {
     position: fixed;
     top: 35%;
     right: 50px;
-    background-color: black;
+    background-color: white;
 }

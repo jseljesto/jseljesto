@@ -1,18 +1,20 @@
 <!DOCTYPE HTML>
-<html>
+<html id="backgroundTheme">
 
 <head>
     <link rel="stylesheet" href="stylesheet.css" />
     <meta charset="UTF-8">
 </head>
 
-<body onload="drawClock(ctx, radius, zoneDiff); drawClock(cstCtx, stRadius, cstDiff); 
+<body onload="drawClock(ctx, radius, zoneDiff); drawClock(castCtx, stRadius, castDiff); 
     drawClock(pstCtx, stRadius, pstDiff);">
     <p id="currentTime"></p>
 
     <canvas id="canvas" width="400" height="400"></canvas>
     <canvas id="pstCanvas" width="200" height="200"></canvas>
-    <canvas id="cstCanvas" width="200" height="200"></canvas>
+    <canvas id="castCanvas" width="200" height="200"></canvas>
+    <h3 style="position:absolute; top:25%; left: 3.5%;">Pacific Standard Time (PST)</h3>
+    <h3 style="position:absolute; top:25%; right: 1%;">Central Asia Standard Time (CAST)</h3>
     <select id="timeZones" onchange="changeTimeZone()" style="position: fixed; bottom: 10%; left:38%;">
         <option value="-8" selected>UTC - 08:00 (Stillehavskysten USA)</option>
         <option value="-7" selected>UTC - 07:00 (Arizona, Rocky Mountains)</option>
@@ -36,18 +38,18 @@
         const currentZone = 1;
         let zoneDiff = 0;
         let pstDiff = -9;
-        let cstDiff = 7;
+        let castDiff = 7;
         const canvas = document.getElementById("canvas");
         const ctx = canvas.getContext("2d");
         const pstCanvas = document.getElementById("pstCanvas");
         const pstCtx = pstCanvas.getContext("2d");
-        const cstCanvas = document.getElementById("cstCanvas");
-        const cstCtx = cstCanvas.getContext("2d");
+        const castCanvas = document.getElementById("castCanvas");
+        const castCtx = castCanvas.getContext("2d");
         const radius = canvas.height / 2;
         const stRadius = pstCanvas.height / 2;
         ctx.translate(radius, radius);
         pstCtx.translate(stRadius, stRadius);
-        cstCtx.translate(stRadius, stRadius);
+        castCtx.translate(stRadius, stRadius);
 
         /** Class representing a clock. */
         class Clock {
@@ -115,7 +117,7 @@
 
         setInterval(drawClock, 1000, ctx, radius, zoneDiff);
         setInterval(drawClock, 1000, pstCtx, stRadius, pstDiff);
-        setInterval(drawClock, 1000, cstCtx, stRadius, cstDiff);
+        setInterval(drawClock, 1000, castCtx, stRadius, castDiff);
 
         /**
         * Draws the general clock on the canvas.
@@ -131,6 +133,10 @@
             ctx.arc(0, 0, radius, 0, 2 * Math.PI);
             ctx.fillStyle = "white";
             ctx.fill();
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = "black";
+            ctx.stroke();
+
 
             ctx.beginPath();
             ctx.arc(0, 0, 10, 0, 2 * Math.PI);
