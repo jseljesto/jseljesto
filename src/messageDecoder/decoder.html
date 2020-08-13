@@ -27,6 +27,8 @@
         let encodeEnabled = false;
         let decodeEnabled = false;
         encodeText.addEventListener("keydown", function(e) {
+            let key = e.key;
+            let lowKey = key.toLowerCase();
             switch(e.keyCode) {
             case 8:
                 outputText.value = outputText.value.slice(0, -1);
@@ -42,7 +44,7 @@
                 break;
             default:
             for (let i = 0; i < alphabet.length; i++) {
-                if (e.key == alphabet[i]) {
+                if (lowKey == alphabet[i]) {
                     switch(i) {
                         case 24:
                             outputText.value += alphabet[0];
