@@ -1,22 +1,8 @@
-Calculator:
-- Bug in input field when using square root and decimal.
-- Checking for use of operators before entering first operand.
-- Checking for use of decimal before entering first operand.
-- Checking if user has clicked decimal more than once for each operand.
-
-Maze:
-- Blinking-effect happening with finish-object.
-
-MessageDecoder:
-- First letter in encode field fails to show up in output.
-
 Minigames:
-- Fix issue with mouse controller in canvas.
 - Fix interface in Defend the Village.
 
 PingPong:
 - Ball sometimes gets stuck behind users paddle.
-- Add further angle to ball when hitting at high speeds.
 
 Quiz:
 - index.pug unable to find required functions from script src questionFunc.js.
