@@ -61,6 +61,29 @@
 .purchaseBtn:hover .btnText {
     visibility: visible;
 }
+.incomeText {
+    position: relative;
+    display: inline-block;
+}
+
+.incomeText .averageIncome {
+    visibility: hidden;
+    width: 200px;
+    background-color: white;
+    color: black;
+    text-align: center;
+    border-radius: 3px;
+    z-index: 1;
+    position: absolute;
+    padding: 5px 0;
+    border: 2px solid black;
+    left: 0%;
+    bottom: 100%;
+}
+
+.incomeText:hover .averageIncome {
+    visibility: visible;
+}
 
 #currentProgress {
     width: 100%;

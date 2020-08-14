@@ -35,17 +35,23 @@
 
     <p id="untaskedVillagers" style="position:absolute; top: 360px;">Available Villagers: 5</p>
 
-    <button id="reduceFood" style="position:absolute; top: 412px; left: 75px;">-</button>
+    <button id="reduceFood" class="incomeText" style="position:absolute; top: 412px; left: 75px;">
+        <span id="averageFoodIncome" class="averageIncome">Food Income: 0</span>-</button>
     <p id="foodIncome" style="position:absolute; top: 400px;">Farms: 0</p>
-    <button id="addFood" style="position:absolute; top: 412px; left: 100px;">+</button>
+    <button id="addFood" class="incomeText" style="position:absolute; top: 412px; left: 100px;">
+        <span id="averageFoodIncome2" class="averageIncome">Food Income: 0</span>+</button>
 
-    <button id="reduceWood" style="position:absolute; top: 442px; left: 125px;">-</button>
+    <button id="reduceWood" class="incomeText" style="position:absolute; top: 442px; left: 125px;">
+        <span id="averageWoodIncome" class="averageIncome">Wood Income: 0</span>-</button>
     <p id="woodIncome" style="position:absolute; top: 430px;">Lumber Camp: 0</p>
-    <button id="addWood" style="position:absolute; top: 442px; left: 150px;">+</button>
+    <button id="addWood" class="incomeText" style="position:absolute; top: 442px; left: 150px;">
+        <span id="averageWoodIncome2" class="averageIncome">Wood Income: 0</span>+</button>
 
-    <button id="reduceMineral" style="position:absolute; top: 472px; left: 75px;">-</button>
+    <button id="reduceMineral" class="incomeText" style="position:absolute; top: 472px; left: 75px;">
+        <span id="averageMineralIncome" class="averageIncome">Mineral Income: 0</span>-</button>
     <p id="mineralIncome" style="position:absolute; top: 460px;">Mines: 0</p>
-    <button id="addMineral" style="position:absolute; top: 472px; left: 100px;">+</button>
+    <button id="addMineral" class="incomeText" style="position:absolute; top: 472px; left: 100px;">
+        <span id="averageMineralIncome2" class="averageIncome">Mineral Income: 0</span>+</button>
 
     <p id="strengthLvl" style="position:absolute; top: 500px;">Total Defense: 5</p>
 
@@ -464,6 +470,12 @@
         document.getElementById("mineralIncome").innerHTML = `Mines: ${mineralIncome.toFixed(0)}`;
         document.getElementById("untaskedVillagers").innerHTML = `Available Villagers: ${availableVillagers.toFixed(0)}`;
         document.getElementById("technology").innerHTML = `Technology Level: ${technologyLevel}`;
+        document.getElementById("averageFoodIncome").innerHTML = `Food Income: ${foodIncome.toFixed(0)}`;
+        document.getElementById("averageWoodIncome").innerHTML = `Wood Income: ${woodIncome.toFixed(0)}`;
+        document.getElementById("averageMineralIncome").innerHTML = `Mineral Income: ${mineralIncome.toFixed(0)}`;
+        document.getElementById("averageFoodIncome2").innerHTML = `Food Income: ${foodIncome.toFixed(0)}`;
+        document.getElementById("averageWoodIncome2").innerHTML = `Wood Income: ${woodIncome.toFixed(0)}`;
+        document.getElementById("averageMineralIncome2").innerHTML = `Mineral Income: ${mineralIncome.toFixed(0)}`;
 
         totalDefense = totalVillagers + (armor * 2.5 + technologyLevel) + (weapons * 2 + technologyLevel) + (shields * 1.5 + technologyLevel);
 
