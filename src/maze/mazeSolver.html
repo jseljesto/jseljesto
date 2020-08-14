@@ -50,8 +50,8 @@
             let atFinish = false;
             let isStuck = false;
 
-            for (let i = 0; i < 500; i++) {
-                //while (atFinish == false && isStuck == false) {
+            //for (let i = 0; i < 500; i++) {
+                while (atFinish == false && isStuck == false) {
                 let roll = Math.floor(Math.random() * 4) + 1;
                 if (currentRow == 10 && currentCol == 10) {
                     document.getElementById("cell_10_10").style.backgroundColor = "gold";
@@ -91,7 +91,6 @@
                         currentCol--;
                     }
                 }
-                console.log(currentCol + " " + currentRow);
                 if ((!document.getElementById("cell_" + currentCol + "_" +
                     (currentRow + 1))) || document.getElementById("cell_" + currentCol + "_" +
                         (currentRow + 1)).style.backgroundColor == "red") {
@@ -105,7 +104,6 @@
                                 currentRow)) || document.getElementById("cell_" + (currentCol - 1) + "_" +
                                     currentRow).style.backgroundColor == "red") {
                                 if (currentCol != 10 || currentRow != 10) {
-                                    console.log("You are stuck");
                                     document.getElementById("cell_" + currentCol + "_" + currentRow).style.backgroundColor = "red";
                                     let newPosition = path[path.length - 1];
                                     currentRow = newPosition.row;
