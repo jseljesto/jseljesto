@@ -11,8 +11,8 @@ Maze:
 - Creating larger maze.
 - Adding items to maze for upgrades.
 
-Minigames:
-- Add ability to see income of each resource.
+MazeSolver:
+- Removing walls to create a proper maze structure.
 
 PingPong:
 - Give users the ability to customize ball, paddle and the canvas (popup with custom choices).
