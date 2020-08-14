@@ -3,3 +3,15 @@
     left: 400px;
     top: 50px;
 }
+
+table {
+    border-spacing: 0;
+}
+
+table td {
+
+    width: 25px;
+    height: 25px;
+    border: 1px black solid;
+
+}

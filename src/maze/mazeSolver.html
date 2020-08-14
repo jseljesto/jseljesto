@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="stylesheet.css" />
+    <meta charset="UTF-8">
+</head>
+
+<body>
+
+    <p id="maze"></p>
+
+    <script>
+
+        mazeWidth = 10;
+        mazeHeight = 10;
+
+        createMaze();
+        solveMaze();
+
+        function createMaze() {
+
+            let table = document.createElement("table");
+            let tbody = document.createElement("tbody");
+            for (let rowIndex = 1; rowIndex <= mazeHeight; rowIndex++) {
+                let row = document.createElement("tr");
+                for (let colIndex = 1; colIndex <= mazeWidth; colIndex++) {
+                    let col = document.createElement("td");
+                    if (rowIndex == 1 && colIndex == 1) {
+                        col.style.backgroundColor = "blue";
+                        col.setAttribute("type", "start");
+                    }
+                    else if (rowIndex == mazeHeight && colIndex == mazeWidth) {
+                        col.style.backgroundColor = "green";
+                        col.setAttribute("type", "finish");
+                    }
+                    col.setAttribute("id", "cell_" + rowIndex + "_" + colIndex);
+                    row.appendChild(col);
+                }
+                tbody.appendChild(row);
+            }
+            table.appendChild(tbody);
+            document.getElementById("maze").appendChild(table);
+        }
+
+        function solveMaze() {
+            let currentCol = 1;
+            let currentRow = 1;
+            let atFinish = false;
+            let isStuck = false;
+
+            while (atFinish == false && isStuck == false) {
+                let roll = Math.floor(Math.random() * 4) + 1;
+                if (currentRow == 10 && currentCol == 10) {
+                    document.getElementById("cell_10_10").style.backgroundColor = "gold";
+                    atFinish = true;
+                    console.log("Finish!");
+                    break;
+                }
+                else if (currentRow < 10 && roll === 1) {
+                    if (document.getElementById("cell_" + currentCol + "_" +
+                        (currentRow + 1)).style.backgroundColor != "red") {
+                        document.getElementById("cell_" + currentCol + "_" + currentRow).style.backgroundColor = "red";
+                        currentRow++;
+                    }
+                }
+                else if (currentCol < 10 && roll === 2) {
+                    if (document.getElementById("cell_" + (currentCol + 1) + "_" +
+                        currentRow).style.backgroundColor != "red") {
+                        document.getElementById("cell_" + currentCol + "_" + currentRow).style.backgroundColor = "red";
+                        currentCol++;
+                    }
+                }
+                else if (currentRow > 1 && roll === 3) {
+                    if (document.getElementById("cell_" + currentCol + "_" +
+                        (currentRow - 1)).style.backgroundColor != "red") {
+                        document.getElementById("cell_" + currentCol + "_" + currentRow).style.backgroundColor = "red";
+                        currentRow--;
+                    }
+                }
+                else if (currentCol > 1 && roll === 4) {
+                    if (document.getElementById("cell_" + (currentCol - 1) + "_" +
+                        currentRow).style.backgroundColor != "red") {
+                        document.getElementById("cell_" + currentCol + "_" + currentRow).style.backgroundColor = "red";
+                        currentCol--;
+                    }
+                }
+                console.log(currentCol + " " + currentRow);
+                if ((!document.getElementById("cell_" + currentCol + "_" +
+                    (currentRow + 1))) || document.getElementById("cell_" + currentCol + "_" +
+                        (currentRow + 1)).style.backgroundColor == "red") {
+                    if ((!document.getElementById("cell_" + (currentCol + 1) + "_" +
+                        currentRow)) || document.getElementById("cell_" + (currentCol + 1) + "_" +
+                            currentRow).style.backgroundColor == "red") {
+                        if ((!document.getElementById("cell_" + currentCol + "_" +
+                            (currentRow - 1))) || document.getElementById("cell_" + currentCol + "_" +
+                                (currentRow - 1)).style.backgroundColor == "red") {
+                            if ((!document.getElementById("cell_" + (currentCol - 1) + "_" +
+                                currentRow)) || document.getElementById("cell_" + (currentCol - 1) + "_" +
+                                    currentRow).style.backgroundColor == "red") {
+                                if (currentCol != 10 || currentRow != 10) {
+                                    console.log("You are stuck");
+                                    isStuck = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>
