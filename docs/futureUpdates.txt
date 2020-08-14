@@ -2,10 +2,6 @@ Arbeidsplass:
 - Creating database for easier access to person objects.
 - Adding workdays/workhours.
 
-Clock:
-- Add name for different timezones.
-- Improving border of the clocks.
-
 Knapp:
 - Making it easier to navigate around the site.
 - Adding more complex features, such as animations and bubble effect.
@@ -14,9 +10,6 @@ Maze:
 - Add background and better graphics for timer.
 - Creating larger maze.
 - Adding items to maze for upgrades.
-
-Message Decoder:
-- Add functionality with other keys.
 
 Minigames:
 - Add ability to see income of each resource.
@@ -29,7 +22,6 @@ Quiz:
 
 Shopping list:
 - Ability to add suggested word to product input field.
-- Not suggesting words until at least three letters have been inputed.
 
 SolarSystem:
 - Add interactive panel with information of each planet.
@@ -40,6 +32,6 @@ Striker Manager:
 
 
 
+
 Future projects:
 - Search engine
-- Maze solver

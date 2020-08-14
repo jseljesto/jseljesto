@@ -1,6 +1,3 @@
-Minigames:
-- Fix interface in Defend the Village.
-
 PingPong:
 - Ball sometimes gets stuck behind users paddle.
 
