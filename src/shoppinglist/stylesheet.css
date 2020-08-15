@@ -18,7 +18,13 @@ a:hover {
 }
 
 #add {
-    position:fixed;
+    position: fixed;
     left: 43%;
     top: 20%;
+}
+
+#addSuggestion {
+    position: absolute;
+    left: 180px;
+    top: 15px;
 }

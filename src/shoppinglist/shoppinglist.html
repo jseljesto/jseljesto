@@ -14,6 +14,7 @@
             <input id="number" type="number"> Unit: <input id="unit" type="unit"></p>
 
     </form>
+    <button id="addSuggestion" style="visibility: hidden;">Yes</button>
     <button id="add">Add</button>
     <p id="shoppingList"></p>
     <p id="suggestion"></p>
@@ -39,20 +40,7 @@
             document.getElementById("shoppingList").innerHTML = shoppingListText;
         });
 
-        productInput.addEventListener("keydown", function () {
-            let currentWord = document.getElementById("product").value;
-            if (currentWord.length >= 2) {
-                console.log("ok");
-                for (let i = 0; i < items.length; i++) {
-                    if (items[i].substring(0, currentWord.length) === currentWord) {
-                        document.getElementById("suggestion").innerHTML = "Did you mean " + items[i];
-                        break;
-                    } else {
-                        document.getElementById("suggestion").innerHTML = "Found no similar products.";
-                    }
-                }
-            }
-        });
+        productInput.addEventListener("keydown", suggestWord);
 
         document.getElementById("add").addEventListener("click", function () {
             if (document.getElementById("product").value != "") {
@@ -74,6 +62,11 @@
                 document.getElementById("unit").value = "";
                 document.getElementById("product").value = "";
             }
+        });
+
+        document.getElementById("addSuggestion").addEventListener("click", function () {
+            let suggestedWord = suggestWord();
+            document.getElementById("product").value = suggestedWord;
         });
 
         /**
@@ -106,6 +99,24 @@
             updatedList.removeChild(updatedList.childNodes[index]);
             firstPageItems--;
             createShoppingList();
+        }
+
+        function suggestWord() {
+            let currentWord = document.getElementById("product").value;
+            let suggestedWord = "";
+            if (currentWord.length >= 2) {
+                for (let i = 0; i < items.length; i++) {
+                    if (items[i].substring(0, currentWord.length) === currentWord) {
+                        document.getElementById("suggestion").innerHTML = "Did you mean " + items[i];
+                        suggestedWord = items[i];
+                        document.getElementById("addSuggestion").style.visibility = "visible";
+                        break;
+                    } else {
+                        document.getElementById("suggestion").innerHTML = "Found no similar products.";
+                    }
+                }
+            }
+            return suggestedWord;
         }
 
     </script>
