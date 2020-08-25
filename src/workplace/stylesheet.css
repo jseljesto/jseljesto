@@ -58,3 +58,7 @@ label em {
   top: 420px;
   left: 80%;
 }
+
+table, td {
+  border: 1px solid black;
+}

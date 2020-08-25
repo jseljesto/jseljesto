@@ -55,6 +55,10 @@
     <button id="searchPerson" onclick="searchForPerson()" style="position: fixed; 
     top: 580px; left: 15%;">Søk</button>
     <p id="personSearched" style="position: absolute; top: 565px; left: 45%; "></p>
+
+    <table id="personTable" style="position: absolute; top: 700px;">
+
+    </table>
     <script>
 
         /** Class to create a Person object. */
@@ -207,12 +211,58 @@
 
         }
 
+        let tags = ["Name", "Gender", "BirthDate", "PostCode", "Address", "PhoneNumber", "Hobbies"];
+
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                loadXMLDoc(this);
+            }
+        };
+        xhttp.open("GET", "person.xml", true);
+        xhttp.send();
+
         let personObjects = [];
         const importedObjects = JSON.parse(localStorage.getItem("personObjects"));
         if (importedObjects) {
             personObjects = JSON.parse(localStorage.getItem("personObjects"));
             for (let a = 0; a <= personObjects.length; a++) {
                 document.getElementById("listOfPersons").innerHTML += "<br>" + personObjects[a]._name;
+            }
+        }
+
+        function loadXMLDoc(xmlFile) {
+            let xmlDoc = xmlFile.responseXML;
+            let txt = xmlDoc.getElementsByTagName("Name")[0].childNodes[0].nodeValue;
+            let test = xmlDoc.getElementsByTagName("person").length;
+            fillTable(test, xmlDoc);
+            alert(test);
+            alert(txt);
+        }
+
+        function fillTable(number, xmlFile) {
+            let table = document.getElementById("personTable");
+            let row = table.insertRow(0);
+            let cell1 = row.insertCell(0);
+            cell1.innerHTML = "Name";
+            let cell2 = row.insertCell(1);
+            cell2.innerHTML = "Gender";
+            let cell3 = row.insertCell(2);
+            cell3.innerHTML = "BirthDate";
+            let cell4 = row.insertCell(3);
+            cell4.innerHTML = "PostCode";
+            let cell5 = row.insertCell(4);
+            cell5.innerHTML = "Address";
+            let cell6 = row.insertCell(5);
+            cell6.innerHTML = "PhoneNumber";
+            let cell7 = row.insertCell(6);
+            cell7.innerHTML = "Hobbies";
+            for (let i = 1; i <= number; i++) {
+                let newRow = table.insertRow(i);
+                for (let j = 0; j < 7; j++) {
+                    let newCell = newRow.insertCell(j);
+                    newCell.innerHTML = xmlFile.getElementsByTagName(tags[j])[i-1].childNodes[0].nodeValue;
+                } 
             }
         }
 

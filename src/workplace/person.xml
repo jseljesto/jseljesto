@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<personList>
+    <person>
+        <Name>Tone Jensen</Name>
+        <Gender>Female</Gender>
+        <BirthDate>02.07.1986</BirthDate>
+        <PostCode>6351</PostCode>
+        <Address>Karl Johans Gate</Address>
+        <PhoneNumber>91568231</PhoneNumber>
+        <Hobbies>Reading,Camping</Hobbies>
+    </person>
+    <person>
+        <Name>Ivar Andersen</Name>
+        <Gender>Male</Gender>
+        <BirthDate>18.04.1983</BirthDate>
+        <PostCode>5574</PostCode>
+        <Address>Hans Tanks Gate</Address>
+        <PhoneNumber>91965829</PhoneNumber>
+        <Hobbies>Athletics,Cooking</Hobbies>
+    </person>
+</personList>
