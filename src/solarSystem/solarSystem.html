@@ -12,14 +12,30 @@
     <script type="module">
         import {gradients} from "./planetGradients.js";
 
-        console.log(gradients.length);
-        let canvas = new fabric.StaticCanvas("solarCanvas");
+        let canvas = new fabric.Canvas("solarCanvas");
         canvas.setWidth(screen.width - 25);
         canvas.setHeight(screen.height - 125);
         let ctx = canvas.getContext();
 
+        let planetTypes = ["Gas Planet", "Terrestial Planet"];
+
         let shadow = new fabric.Shadow({
             color: "white", blur: 10
+        });
+
+        canvas.on("mouse:up", function(e) {
+            if (e.target) {
+                let planetElement = document.createElement("P");
+                planetElement.style.position = "absolute";
+                planetElement.style.top = (e.target.top + 50) + "px";
+                planetElement.style.left = (e.target.left + 50) + "px";
+                planetElement.innerHTML = "Areal: " + e.target.areal;
+                planetElement.className = "planetInfo";
+                planetElement.onclick = function() {
+                    planetElement.remove();
+                }
+                document.body.appendChild(planetElement);
+            }
         });
         //Maote å leggja til pattern, kan bli viktig!!
 
@@ -54,8 +70,10 @@
                     }
                 }
                 let newPlanet = new fabric.Circle({
-                    radius: 50, fill: "blue", left: x, top: y, shadow: shadow
+                    radius: 50, fill: "blue", left: x, top: y, shadow: shadow, hoverCursor: "pointer", selectable: false
                 });
+                let roll = Math.floor(Math.random() * 1000) + 100;
+                newPlanet.areal = roll + "km^2";
                 let blurRadius = Math.floor(Math.random() * 10) + 1;
                 newPlanet.shadow.blur = blurRadius;
                 console.log("X: " + x + " Y: " + y);
@@ -109,7 +127,7 @@
                     }
                 }
                 let newStar = new fabric.Circle({
-                    radius: 4, fill: "white", left: x, top: y, shadow: shadow
+                    radius: 4, fill: "white", left: x, top: y, shadow: shadow, selectable: false, hoverCursor: "pointer"
                 });
                 stars.push(newStar);
                 canvas.add(newStar);
@@ -118,24 +136,24 @@
         }
 
         let angle = 0;
-        setInterval(rotatePlanet, 50);
-        setInterval(blinkStars, 50);
+        setInterval(rotatePlanet, 100);
+        setInterval(blinkStars, 100);
 
         function rotatePlanet() {
             canvas.clear();
-            angle = angle + 0.50;
+            //angle = angle + 0.50;
             for (let i = 0; i < planets.length; i++) {
-                planets[i].rotate(angle);
+                //planets[i].rotate(angle);
                 canvas.add(planets[i]);
             }
         }
 
         function blinkStars () {
             for (let i = 0; i < stars.length; i++) {
-                if(stars[i].shadow.blur == 1) {
+                if(stars[i].shadow.blur <= 1) {
                     stars[i].shadow.blur += 0.10;
                 }
-                else if (stars[i].shadow.blur == 10) {
+                else if (stars[i].shadow.blur >= 10) {
                     stars[i].shadow.blur -= 0.10;
                 }
                 else {
