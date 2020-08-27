@@ -10,7 +10,7 @@
     <canvas id="solarCanvas" width="550" height="550"></canvas>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.6.3/fabric.min.js"></script>
     <script type="module">
-        import {gradients} from "./planetGradients.js";
+        import { gradients } from "./planetGradients.js";
 
         let canvas = new fabric.Canvas("solarCanvas");
         canvas.setWidth(screen.width - 25);
@@ -23,18 +23,26 @@
             color: "white", blur: 10
         });
 
-        canvas.on("mouse:up", function(e) {
+        canvas.on("mouse:up", function (e) {
             if (e.target) {
-                let planetElement = document.createElement("P");
-                planetElement.style.position = "absolute";
-                planetElement.style.top = (e.target.top + 50) + "px";
-                planetElement.style.left = (e.target.left + 50) + "px";
-                planetElement.innerHTML = "Areal: " + e.target.areal;
-                planetElement.className = "planetInfo";
-                planetElement.onclick = function() {
-                    planetElement.remove();
+                if (e.target.clicked === false) {
+                    let planetElement = document.createElement("P");
+                    planetElement.style.position = "absolute";
+                    planetElement.style.top = (e.target.top + 50) + "px";
+                    planetElement.style.left = (e.target.left + 50) + "px";
+                    planetElement.innerHTML =
+                        `Surface Area: ${e.target.areal} <br>
+                Mass: ${e.target.mass} <br>
+                Mean Temperature: ${e.target.temp} <br>
+                Type: ${e.target.type}`;
+                    planetElement.className = "planetInfo";
+                    e.target.clicked = true;
+                    planetElement.onclick = function () {
+                        e.target.clicked = false;
+                        planetElement.remove();
+                    }
+                    document.body.appendChild(planetElement);
                 }
-                document.body.appendChild(planetElement);
             }
         });
         //Maote å leggja til pattern, kan bli viktig!!
@@ -62,22 +70,28 @@
                         if ((x < planets[j].left - 150 || x > planets[j].left + 150)
                             && (y < planets[j].top + 150 || y > planets[j].top - 150)) {
                         } else {
-                         /*   console.log(j + ": Found similarities: " + x + " " + y + " = "
-                                + planets[j].left + " " + planets[j].top); */
-                                a--;
+                            /*   console.log(j + ": Found similarities: " + x + " " + y + " = "
+                                   + planets[j].left + " " + planets[j].top); */
+                            a--;
                             break planetOuterloop;
                         }
                     }
                 }
                 let newPlanet = new fabric.Circle({
-                    radius: 50, fill: "blue", left: x, top: y, shadow: shadow, hoverCursor: "pointer", selectable: false
+                    radius: 50, fill: "blue", left: x, top: y, shadow: shadow, hoverCursor: "pointer", selectable: false, clicked: false
                 });
-                let roll = Math.floor(Math.random() * 1000) + 100;
+                let roll = Math.floor(Math.random() * 10000) + 1000;
                 newPlanet.areal = roll + "km^2";
+                roll = Math.floor(Math.random() * 10000) + 1000;
+                newPlanet.mass = roll + "kg";
+                roll = Math.floor(Math.random() * 750) - 270;
+                newPlanet.temp = roll + "℃"
                 let blurRadius = Math.floor(Math.random() * 10) + 1;
+                roll = Math.floor(Math.random() * 2);
+                newPlanet.type = planetTypes[roll];
                 newPlanet.shadow.blur = blurRadius;
                 console.log("X: " + x + " Y: " + y);
-                let chosenColor = Math.floor(Math.random() * gradients.length-1) + 1;
+                let chosenColor = Math.floor(Math.random() * gradients.length - 1) + 1;
                 newPlanet.setGradient("fill", {
                     x1: 0,
                     y1: 0,
@@ -109,8 +123,8 @@
                         if ((x < stars[j].left - 5 || x > stars[j].left + 5)
                             && (y < stars[j].top + 5 || y > stars[j].top - 5)) {
                         } else {
-                         /*   console.log(i + ": Found similarities: " + x + " " + y + " = "
-                                + stars[j].left + " " + stars[j].top); */
+                            /*   console.log(i + ": Found similarities: " + x + " " + y + " = "
+                                   + stars[j].left + " " + stars[j].top); */
                             i--;
                             break outerloop;
                         }
@@ -120,8 +134,8 @@
                     if ((x < planets[p].left - 10 || x > planets[p].left + 100)
                         && (y < planets[p].top + 10 || y > planets[p].top - 10)) {
                     } else {
-                     /*   console.log(i + ": Found similarities with planet: " + x + " " + y + " = "
-                            + planets[p].left + " " + planets[p].top); */
+                        /*   console.log(i + ": Found similarities with planet: " + x + " " + y + " = "
+                               + planets[p].left + " " + planets[p].top); */
                         i--;
                         break outerloop;
                     }
@@ -148,9 +162,9 @@
             }
         }
 
-        function blinkStars () {
+        function blinkStars() {
             for (let i = 0; i < stars.length; i++) {
-                if(stars[i].shadow.blur <= 1) {
+                if (stars[i].shadow.blur <= 1) {
                     stars[i].shadow.blur += 0.10;
                 }
                 else if (stars[i].shadow.blur >= 10) {
@@ -171,4 +185,5 @@
 
     </script>
 </body>
+
 </html>
