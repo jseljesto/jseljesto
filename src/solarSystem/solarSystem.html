@@ -11,6 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.6.3/fabric.min.js"></script>
     <script type="module">
         import { gradients } from "./planetGradients.js";
+        import { names } from "./planetNames.js";
 
         let canvas = new fabric.Canvas("solarCanvas");
         canvas.setWidth(screen.width - 25);
@@ -31,10 +32,11 @@
                     planetElement.style.top = (e.target.top + 50) + "px";
                     planetElement.style.left = (e.target.left + 50) + "px";
                     planetElement.innerHTML =
-                        `Surface Area: ${e.target.areal} <br>
-                Mass: ${e.target.mass} <br>
-                Mean Temperature: ${e.target.temp} <br>
-                Type: ${e.target.type}`;
+                        `Name: ${e.target.name} <br>
+                        Surface Area: ${e.target.areal} <br>
+                        Mass: ${e.target.mass} <br>
+                        Mean Temperature: ${e.target.temp} <br>
+                        Type: ${e.target.type}`;
                     planetElement.className = "planetInfo";
                     e.target.clicked = true;
                     planetElement.onclick = function () {
@@ -80,10 +82,10 @@
                 let newPlanet = new fabric.Circle({
                     radius: 50, fill: "blue", left: x, top: y, shadow: shadow, hoverCursor: "pointer", selectable: false, clicked: false
                 });
-                let roll = Math.floor(Math.random() * 10000) + 1000;
-                newPlanet.areal = roll + "km^2";
-                roll = Math.floor(Math.random() * 10000) + 1000;
-                newPlanet.mass = roll + "kg";
+                let roll = Math.floor(Math.random() * 4.999e+10) + 1.000e+7;
+                newPlanet.areal = roll.toExponential(3) + "km^2";
+                roll = Math.floor(Math.random() * 5.000e+27) + 1.000e+23;
+                newPlanet.mass = roll.toExponential(3) + "kg";
                 roll = Math.floor(Math.random() * 750) - 270;
                 newPlanet.temp = roll + "℃"
                 let blurRadius = Math.floor(Math.random() * 10) + 1;
@@ -91,6 +93,8 @@
                 newPlanet.type = planetTypes[roll];
                 newPlanet.shadow.blur = blurRadius;
                 console.log("X: " + x + " Y: " + y);
+                roll = Math.floor(Math.random() * names.length - 1) + 1;
+                newPlanet.name = names[roll];
                 let chosenColor = Math.floor(Math.random() * gradients.length - 1) + 1;
                 newPlanet.setGradient("fill", {
                     x1: 0,
