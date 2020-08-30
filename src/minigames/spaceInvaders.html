@@ -167,7 +167,7 @@
 
             //Makes sure invaders switch direction when reaching edge of screen
             invaderX += dx;
-            if (invaders[0].x <= 0 || invaders[invaders.length - 1].x >= 790) {
+            if (invaders[0].x <= 0 || (invaders[invaders.length - 1].x >= 790 || invaders[upperRowLeft-1].x >= 790)) {
                 invaderY += 10;
                 dx = -dx;
             }
