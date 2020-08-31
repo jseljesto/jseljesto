@@ -1,8 +1,8 @@
-Arbeidsplass:
+Workplace:
 - Creating database for easier access to person objects.
 - Adding workdays/workhours.
 
-Knapp:
+Button:
 - Making it easier to navigate around the site.
 - Adding more complex features, such as animations and bubble effect.
 
@@ -19,13 +19,6 @@ PingPong:
 
 Quiz:
 - Making it fully compatible with Node.js and Pug.
-
-Shopping list:
-- Ability to add suggested word to product input field.
-
-SolarSystem:
-- Add interactive panel with information of each planet.
-- Rework of redrawing objects.
 
 Striker Manager:
 - Adding screen showing league table.
