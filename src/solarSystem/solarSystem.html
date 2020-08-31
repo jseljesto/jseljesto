@@ -72,8 +72,6 @@
                         if ((x < planets[j].left - 150 || x > planets[j].left + 150)
                             && (y < planets[j].top + 150 || y > planets[j].top - 150)) {
                         } else {
-                            /*   console.log(j + ": Found similarities: " + x + " " + y + " = "
-                                   + planets[j].left + " " + planets[j].top); */
                             a--;
                             break planetOuterloop;
                         }
@@ -127,8 +125,6 @@
                         if ((x < stars[j].left - 5 || x > stars[j].left + 5)
                             && (y < stars[j].top + 5 || y > stars[j].top - 5)) {
                         } else {
-                            /*   console.log(i + ": Found similarities: " + x + " " + y + " = "
-                                   + stars[j].left + " " + stars[j].top); */
                             i--;
                             break outerloop;
                         }
@@ -138,8 +134,6 @@
                     if ((x < planets[p].left - 10 || x > planets[p].left + 100)
                         && (y < planets[p].top + 10 || y > planets[p].top - 10)) {
                     } else {
-                        /*   console.log(i + ": Found similarities with planet: " + x + " " + y + " = "
-                               + planets[p].left + " " + planets[p].top); */
                         i--;
                         break outerloop;
                     }
