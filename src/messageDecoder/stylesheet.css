@@ -1,0 +1,16 @@
+#outputTitle {
+    position: absolute; 
+    top: 145px; 
+    left: 950px;
+}
+
+#output {
+    position: absolute; 
+    top: 200px; 
+    left: 800px;
+}
+
+@media screen and (max-width: 1200px) {
+    #outputTitle{top:445px; left:220px;}
+    #output{top: 500px; left: 100px;}
+}

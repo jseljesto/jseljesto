@@ -7,13 +7,13 @@
 <meta charset="UTF-8">
 
 <body>
-    <form id="input">
-        <p><label for="product"> Product :</label>
-            <input id="product" type="text" required></p>
-        <p><label for="number"> Number :</label>
-            <input id="number" type="number"> Unit: <input id="unit" type="unit"></p>
+        <p id="product"><label for="product"> Product :</label>
+            <input id="productInput" type="text" required></p>
+        <p id="number"><label for="number"> Number :</label>
+            <input id="numberInput" type="number"></p>
+        <p id="unit"><label for="unit"> Unit :</label>
+            <input id="unitInput" type="unit"></p>
 
-    </form>
     <button id="addSuggestion" style="visibility: hidden;">Yes</button>
     <button id="add">Add</button>
     <p id="shoppingList"></p>
@@ -43,10 +43,10 @@
         productInput.addEventListener("keydown", suggestWord);
 
         document.getElementById("add").addEventListener("click", function () {
-            if (document.getElementById("product").value != "") {
-                let text = document.getElementById("number").value + " " +
-                    document.getElementById("unit").value + " " +
-                    document.getElementById("product").value;
+            if (document.getElementById("productInput").value != "") {
+                let text = document.getElementById("numberInput").value + " " +
+                    document.getElementById("unitInput").value + " " +
+                    document.getElementById("productInput").value;
                 if (firstPageItems <= 9) {
                     firstPage.push(text);
                     createShoppingList();
@@ -58,9 +58,9 @@
                     secondPageItems++;
                 }
 
-                document.getElementById("number").value = "";
-                document.getElementById("unit").value = "";
-                document.getElementById("product").value = "";
+                document.getElementById("numberInput").value = "";
+                document.getElementById("unitInput").value = "";
+                document.getElementById("productInput").value = "";
             }
         });
 
@@ -102,7 +102,7 @@
         }
 
         function suggestWord() {
-            let currentWord = document.getElementById("product").value;
+            let currentWord = document.getElementById("productInput").value;
             let suggestedWord = "";
             if (currentWord.length >= 2) {
                 for (let i = 0; i < items.length; i++) {

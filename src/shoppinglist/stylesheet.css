@@ -12,9 +12,22 @@ a:hover {
     color: red;
 }
 
-#input {
-    position: fixed;
-    left: 30%;
+#product {
+    position: absolute;
+    top: 75px;
+    left: 35%;
+}
+
+#number {
+    position: absolute;
+    top: 100px;
+    left: 35%;
+}
+
+#unit {
+    position: absolute;
+    top: 100px;
+    left: 53%;
 }
 
 #add {
@@ -27,4 +40,8 @@ a:hover {
     position: absolute;
     left: 180px;
     top: 15px;
+}
+
+@media screen and (max-width: 1400px) {
+   #unit{top:125px; left:35%;}
 }
