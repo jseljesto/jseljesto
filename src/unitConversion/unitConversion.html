@@ -15,11 +15,11 @@
     </ul>
 
 
-    <input id="numberToConvert" type="number" style="position: fixed; top: 30%; left: 20%;">
-    <input id="numberConverted" type="number" style="position: fixed; top: 30%; left: 51%;" readonly>
+    <input id="numberToConvert" type="number">
+    <input id="numberConverted" type="number" readonly>
 
-    <select id="lengthToConvert" class="lengthConverter" onchange="updateUnits()"
-        style="position: fixed; top: 30%; left: 34%;">
+    <select id="lengthToConvert" class="leftUnit" onchange="updateUnits()"
+        style="visibility: visible;">
         <option value="meter" selected>Meter (m)</option>
         <option value="centimeter">Centimeter (cm)</option>
         <option value="millimeter">Millimeter (mm)</option>
@@ -30,8 +30,8 @@
         <option value="tomme">Tomme (inch)</option>
     </select>
 
-    <select id="lengthConverted" class="lengthConverter" onchange="updateUnits()"
-        style="position: fixed; top: 30%; left: 65%;">
+    <select id="lengthConverted" class="rightUnit" onchange="updateUnits()"
+        style="visibility: visible;">
         <option value="meter" selected>Meter (m)</option>
         <option value="centimeter">Centimeter (cm)</option>
         <option value="millimeter">Millimeter (mm)</option>
@@ -42,8 +42,7 @@
         <option value="tomme">Tomme (inch)</option>
     </select>
 
-    <select id="weightToConvert" class="weightConverter" onchange="updateUnits()"
-        style="position: fixed; top: 30%; left: 34%; visibility: hidden;">
+    <select id="weightToConvert" class="leftUnit" onchange="updateUnits()">
         <option value="gram" selected>Gram (g)</option>
         <option value="kilogram">Kilogram (kg)</option>
         <option value="milligram">Milligram (mg)</option>
@@ -52,8 +51,7 @@
         <option value="ounce">Ounce (oz)</option>
     </select>
 
-    <select id="weightConverted" class="weightConverter" onchange="updateUnits()"
-        style="position: fixed; top: 30%; left: 65%; visibility: hidden;">
+    <select id="weightConverted" class="rightUnit" onchange="updateUnits()">
         <option value="gram" selected>Gram (g)</option>
         <option value="kilogram">Kilogram (kg)</option>
         <option value="milligram">Milligram (mg)</option>
@@ -62,8 +60,7 @@
         <option value="ounce">Ounce (oz)</option>
     </select>
 
-    <select id="timeToConvert" class="timeConverter" onchange="updateUnits()"
-        style="position: fixed; top: 30%; left: 34%; visibility: hidden;">
+    <select id="timeToConvert" class="leftUnit" onchange="updateUnits()">
         <option value="sekund" selected>Sekund</option>
         <option value="minutt">Minutt</option>
         <option value="timer">Timer</option>
@@ -73,8 +70,7 @@
         <option value="år">År</option>
     </select>
 
-    <select id="timeConverted" class="timeConverter" onchange="updateUnits()"
-        style="position: fixed; top: 30%; left: 65%; visibility: hidden;">
+    <select id="timeConverted" class="rightUnit" onchange="updateUnits()">
         <option value="sekund" selected>Sekund</option>
         <option value="minutt">Minutt</option>
         <option value="timer">Timer</option>
@@ -84,22 +80,19 @@
         <option value="år">År</option>
     </select>
 
-    <select id="temperatureToConvert" class="temperaturConverter" onchange="updateUnits()"
-        style="position: fixed; top: 30%; left: 34%; visibility: hidden;">
+    <select id="temperatureToConvert" class="leftUnit" onchange="updateUnits()">
         <option value="celsius" selected>Celsius (°C)</option>
         <option value="fahrenheit">Fahrenheit (ºF)</option>
         <option value="kelvin">Kelvin (K)</option>
     </select>
 
-    <select id="temperatureConverted" class="temperaturConverter" onchange="updateUnits()"
-        style="position: fixed; top: 30%; left: 65%; visibility: hidden;">
+    <select id="temperatureConverted" class="rightUnit" onchange="updateUnits()">
         <option value="celsius" selected>Celsius (°C)</option>
         <option value="fahrenheit">Fahrenheit (ºF)</option>
         <option value="kelvin">Kelvin (K)</option>
     </select>
 
-    <button id="buttonConverter" onclick="convertUnits()"
-        style="position: fixed; top: 30%; right: 18%;">Convert</button>
+    <button id="buttonConverter" onclick="convertUnits()">Convert</button>
 
 
     <script>

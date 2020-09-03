@@ -1,8 +1,8 @@
 ul {
     list-style-type: none;
     position: fixed;
-    top: 15%;
-    left: 35%;
+    top: 100px;
+    left: 750px;
     overflow: hidden;
   }
 
@@ -23,3 +23,53 @@ li a {
 li a:hover {
     background-color: black;
   }
+
+.leftUnit {
+  position: absolute; 
+  top: 290px; 
+  left: 650px; 
+  visibility: hidden;
+}
+
+.rightUnit {
+  position: absolute;
+  top: 290px; 
+  right: 550px; 
+  visibility: hidden;
+}
+
+#numberToConvert {
+  position: absolute; 
+  top: 290px; 
+  left: 450px;
+}
+
+#numberConverted {
+  position: absolute; 
+  top: 290px; 
+  right: 700px;
+}
+
+#buttonConverter {
+  position: absolute; 
+  top: 290px; 
+  right: 450px;
+}
+
+@media screen and (max-width: 1700px) {
+  .leftUnit{top:325px; left:700px;}
+  #numberToConvert{top:300px; left:680px;}
+  .rightUnit{top:375px; left:700px;}
+  #numberConverted{top:350px; left:680px;}
+  #buttonConverter{top:400px; left:730px;}
+  ul{left: 600px;}
+}
+
+@media screen and (max-width: 900px) {
+  .leftUnit{top:325px; left: 250px;}
+  #numberToConvert{top:300px; left:230px;}
+  .rightUnit{top:375px; left:250px;}
+  #numberConverted{top:350px; left:230px;}
+  #buttonConverter{top:400px; left:280px;}
+  ul{left: 150px;}
+}
