@@ -1,0 +1,18 @@
+table {
+	position: absolute;
+	top: 200px;
+	left: 700px;
+	}
+
+table td {
+	width: 100px;
+	height: 100px;
+	border: 1px black solid;
+	cursor: pointer;
+	background-color: black;
+	}
+
+
+.matchImages {
+	visibility: hidden;
+}

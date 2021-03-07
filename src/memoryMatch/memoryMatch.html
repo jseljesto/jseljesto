@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" type="text/css" href="stylesheet.css">
+<style>
+</style>
+<body>
+
+	<div id="popUp" class="popup">
+		<div id="popup-content" class="popup-content">
+		</div>
+	</div>
+
+	<h1 id="score" style="position: absolute; top: 50px; left: 45%;">Score: 0p</h1>
+	<h1 id="chancesLeft" style="position: absolute; bottom: 110px; left: 43%;">Chances Left: 10</h1>
+	<table>
+		<tr>
+			<td id="box1" onclick="checkTargetBox(1)"><img id="image1" class="matchImages" src="" width="100" height="100"></td>
+			<td id="box2" onclick="checkTargetBox(2)"><img id="image2" class="matchImages" src="" width="100" height="100"></td>
+			<td id="box3" onclick="checkTargetBox(3)"><img id="image3" class="matchImages" src="" width="100" height="100"></td>
+			<td id="box4" onclick="checkTargetBox(4)"><img id="image4" class="matchImages" src="" width="100" height="100"></td>
+		</tr>
+		<tr>
+			<td id="box5" onclick="checkTargetBox(5)"><img id="image5" class="matchImages" src="" width="100" height="100"></td>
+			<td id="box6" onclick="checkTargetBox(6)"><img id="image6" class="matchImages" src="" width="100" height="100"></td>
+			<td id="box7" onclick="checkTargetBox(7)"><img id="image7" class="matchImages" src="" width="100" height="100"></td>
+			<td id="box8" onclick="checkTargetBox(8)"><img id="image8" class="matchImages" src="" width="100" height="100"></td>
+		</tr>
+		<tr>
+			<td id="box9" onclick="checkTargetBox(9)"><img id="image9" class="matchImages" src="" width="100" height="100"></td>
+			<td id="box10" onclick="checkTargetBox(10)"><img id="image10" class="matchImages" src="" width="100" height="100"></td>
+			<td id="box11" onclick="checkTargetBox(11)"><img id="image11" class="matchImages" src="" width="100" height="100"></td>
+			<td id="box12" onclick="checkTargetBox(12)"><img id="image12" class="matchImages" src="" width="100" height="100"></td>
+		</tr>
+		<tr>
+			<td id="box13" onclick="checkTargetBox(13)"><img id="image13" class="matchImages" src="" width="100" height="100"></td>
+			<td id="box14" onclick="checkTargetBox(14)"><img id="image14" class="matchImages" src="" width="100" height="100"></td>
+			<td id="box15" onclick="checkTargetBox(15)"><img id="image15" class="matchImages" src="" width="100" height="100"></td>
+			<td id="box16" onclick="checkTargetBox(16)"><img id="image16" class="matchImages" src="" width="100" height="100"></td>
+		</tr>
+	</table>
+	<script>
+
+		let availablePlaces = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+		let firstPick = "";
+		let firstVisibleBox = 0;
+		let secondVisibleBox = 0;
+		let secondPick = "";
+		let placings = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+		let score = 0;
+		let chancesLeft = 10;
+		let pairsFound = 0;
+		let sum = 0;
+
+		availablePlaces.sort(function(a,b) {
+			return 0.5 - Math.random()
+		});
+
+		for (let i = 1; i <= 16; i++) {
+			let currentNumber = (availablePlaces[i-1]);
+			if (i === 1 || i === 2) {
+				document.getElementById("image" + currentNumber).src = "ruby.png";
+				placings[currentNumber - 1] = "ruby";
+			}
+			if (i === 3 || i === 4) {
+				document.getElementById("image" + currentNumber).src = "sapphire.png";
+				placings[currentNumber - 1] = "sapphire";
+			}
+			if (i === 5 || i === 6) {
+				document.getElementById("image" + currentNumber).src = "emerald.png";
+				placings[currentNumber - 1] = "emerald";
+			}
+			if (i === 7 || i === 8) {
+				document.getElementById("image" + currentNumber).src = "diamond.png";
+				placings[currentNumber - 1] = "diamond";
+			}
+			if (i === 9 || i === 10) {
+				document.getElementById("image" + currentNumber).src = "coal.png";
+				placings[currentNumber - 1] = "coal";
+			}
+			if (i === 11 || i === 12) {
+				document.getElementById("image" + currentNumber).src = "bronze.png";
+				placings[currentNumber - 1] = "bronze";
+			}
+			if (i === 13 || i === 14) {
+				document.getElementById("image" + currentNumber).src = "silver.png";
+				placings[currentNumber - 1] = "silver";
+			}
+			if (i === 15 || i === 16) {
+				document.getElementById("image" + currentNumber).src = "gold.png";
+				placings[currentNumber - 1] = "gold";
+			}
+		}
+
+		function checkTargetBox(number) {
+			document.getElementById("image" + number).style.visibility = "visible";
+			document.getElementById("box" + number).style.backgroundColor = "white";
+			if (!firstPick) {
+				firstPick = placings[number-1];
+				firstVisibleBox = number;
+				document.getElementById("box" + firstVisibleBox).style.pointerEvents = "none";
+			}
+			else {
+				secondPick = placings[number-1];
+				secondVisibleBox = number;
+				document.getElementById("box" + secondVisibleBox).style.pointerEvents = "none";
+				setTimeout(checkMatch, 500);
+			}
+		}
+
+		function checkMatch() {
+			if (firstPick === secondPick) {
+				pairsFound++;
+				switch(secondPick) {
+					case "coal":
+						score += 10;
+						document.getElementById("score").innerHTML = "Score: " + score;
+						break;
+					case "bronze":
+						score += 20;
+						document.getElementById("score").innerHTML = "Score: " + score;
+						break;
+					case "silver":
+						score += 30;
+						document.getElementById("score").innerHTML = "Score: " + score;
+						break;
+					case "gold":
+						score += 40;
+						document.getElementById("score").innerHTML = "Score: " + score;
+						break;
+					case "sapphire":
+						score += 50;
+						document.getElementById("score").innerHTML = "Score: " + score;
+						break;
+					case "emerald":
+						score += 60;
+						document.getElementById("score").innerHTML = "Score: " + score;
+						break;
+					case "ruby":
+						score += 70;
+						document.getElementById("score").innerHTML = "Score: " + score;
+						break;
+					case "diamond":
+						score += 80;
+						document.getElementById("score").innerHTML = "Score: " + score;
+						break;
+				}
+			}
+			else {
+				document.getElementById("image" + firstVisibleBox).style.visibility = "hidden";
+				document.getElementById("box" + firstVisibleBox).style.backgroundColor = "black";
+				document.getElementById("image" + secondVisibleBox).style.visibility = "hidden";
+				document.getElementById("box" + secondVisibleBox).style.backgroundColor = "black";
+				document.getElementById("box" + firstVisibleBox).style.pointerEvents = "auto";
+				document.getElementById("box" + secondVisibleBox).style.pointerEvents = "auto";
+				chancesLeft -= 1;
+				document.getElementById("chancesLeft").innerHTML = "Chances Left: " + chancesLeft;
+			}
+			firstPick = "";
+			secondPick = "";
+	}
+	</script>
+</body>
+</html>
