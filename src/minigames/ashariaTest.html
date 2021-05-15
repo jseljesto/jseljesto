@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body background="Regiontest1.png" style="background-repeat:no-repeat;height:1269px;overflow:visible"
+    onkeydown="movePlayer(event)">
+    <canvas id="canvas" width="1700" height="1600"></canvas>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.6.3/fabric.min.js"></script>
+<script>
+
+    let curX = 350;
+    let curY = 250;
+    let fabCanvas = new fabric.Canvas("canvas");
+    fabCanvas.setWidth(1700);
+    fabCanvas.setHeight(1600);
+
+    const interval = setInterval(draw, 10);
+
+    function draw() {
+        fabCanvas.clear();
+        let player = new fabric.Circle({
+            left: curX, top: curY, fill: "blue", radius: 6, hoverCursor: "pointer", selectable: false
+        });
+        fabCanvas.add(player);
+    }
+
+    function movePlayer(e) {
+        console.log(curY);
+        if (curY > 900 && curY < 955) {
+            document.body.style.overflow = "visible";
+        }
+        else {
+            document.body.style.overflow = "hidden";
+        }
+        switch (e.keyCode) {
+            case 37:
+                curX -= 5;
+                console.log("Venstre");
+                break;
+            case 38:
+                console.log("Opp");
+                curY -= 5;
+                break;
+            case 39:
+                console.log("Høgre");
+                curX += 5;
+                break;
+            case 40:
+                console.log("Ned");
+                curY += 5;
+                break;
+        }
+    }
+
+</script>
+
+</html>
