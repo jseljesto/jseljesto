@@ -41,15 +41,22 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.6.3/fabric.min.js"></script>
 <script>
+
+    //important variables for playable character
     let cClass = "";
     let race = "";
     let cName = "";
+
+    //position of player on map
     let curX = 350;
     let curY = 250;
+
+    //popup-menu for character customisation
     let popup = document.getElementById("popUp");
     let content = document.getElementById("popup-content");
     let span = document.getElementsByClassName("close")[0];
     popup.style.display = "block";
+
     let fabCanvas = new fabric.Canvas("canvas");
     fabCanvas.setWidth(1700);
     fabCanvas.setHeight(1600);
