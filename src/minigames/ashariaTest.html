@@ -2,18 +2,54 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="minigameSheet.css" />
 </head>
 
 <body background="Regiontest1.png" style="background-repeat:no-repeat;height:1269px;overflow:visible"
     onkeydown="movePlayer(event)">
+
+    <div id="popUp" class="popup">
+        <div id="popup-content" class="popup-content">
+            <span class="close" onclick="closeWindow();">&times;</span>
+            <p style="position: absolute; top: 16px";>Name: </p>
+            <input type="text" id="name" style="position: absolute; top: 28px; left: 70px">
+            <p style="position: absolute; top: 41px";>Class: </p>
+            <select id="characterClass" style="position: absolute; top: 55px; left: 67px";>
+                <option value="Cleric">Cleric</option>
+                <option value="Wizard">Wizard</option>
+                <option value="Paladin">Paladin</option>
+                <option value="Rogue">Rogue</option>
+                <option value="Ranger">Ranger</option>
+                <option value="Druid">Druid</option>
+            </select>
+            <p style="position: absolute; top: 66px";>Race: </p>
+            <select id="characterRace" style="position: absolute; top: 80px; left: 67px";>
+                <option value="Human">Human</option>
+                <option value="Elf">Elf</option>
+                <option value="Dwarf">Dwarf</option>
+                <option value="Lizardfolk">Rogue</option>
+            </select>
+            <button id="closeMenu" onclick="startGame();" style="position: absolute; bottom: 5px; left: 45%">Start Game</button>
+        </div>
+    </div>
+
+    <p id="chosenName" style="position: absolute; right: 700px; top: 200px">Name: </p>
+    <p id="chosenTypes" style="position: absolute; right: 700px; top: 250px">Race & Class: </p>
+
     <canvas id="canvas" width="1700" height="1600"></canvas>
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.6.3/fabric.min.js"></script>
 <script>
-
+    let cClass = "";
+    let race = "";
+    let cName = "";
     let curX = 350;
     let curY = 250;
+    let popup = document.getElementById("popUp");
+    let content = document.getElementById("popup-content");
+    let span = document.getElementsByClassName("close")[0];
+    popup.style.display = "block";
     let fabCanvas = new fabric.Canvas("canvas");
     fabCanvas.setWidth(1700);
     fabCanvas.setHeight(1600);
@@ -54,6 +90,20 @@
                 curY += 5;
                 break;
         }
+    }
+
+    function closeWindow() {
+        popup.style.display = "none";
+    }
+
+    function startGame() {
+        closeWindow();
+        cName = document.getElementById("name").value;
+        document.getElementById("chosenName").innerHTML = "Name: " + cName;
+        race = document.getElementById("characterRace").value;
+        cClass = document.getElementById("characterClass").value;
+        document.getElementById("chosenTypes").innerHTML = "Race & Class: " + race + " " + cClass;
+
     }
 
 </script>
