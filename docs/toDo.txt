@@ -1,0 +1,14 @@
+- Gjera alle HTML-programmi responsive med mindre skjerma. Test ut dei ulike programmi og sjekk ette dei elementi som eventuelt mao
+  endrast når skjermen blir smalare.
+
+  Space Invaders:
+  - Alt krasja totalt i hop og trenge ein major oppdatering. Bakgrunnsfarge bør og endrast.
+  
+  Maze:
+  - Maze forsvinne ut av skjermen og mao endrast.
+
+  Clock:
+  - Klokkene og teksten kollidera totalt med kvarandre og mao endrast. Vil heller ha dei to mindre klokkene pao samme rad og dan større pao ein eigen.
+
+  Button:
+  - Testen krasja eventuelt med kvarandre og da ville ha vore bedre vis dei va stacka opp som ein tabell vis skjermen blir ein viss størrelse.
