@@ -11,10 +11,10 @@
     <div id="popUp" class="popup">
         <div id="popup-content" class="popup-content">
             <span class="close" onclick="closeWindow();">&times;</span>
-            <p style="position: absolute; top: 16px";>Name: </p>
+            <p style="position: absolute; top: 16px" ;>Name: </p>
             <input type="text" id="name" style="position: absolute; top: 28px; left: 70px">
-            <p style="position: absolute; top: 41px";>Class: </p>
-            <select id="characterClass" onchange="changeClass();" style="position: absolute; top: 55px; left: 67px";>
+            <p style="position: absolute; top: 41px" ;>Class: </p>
+            <select id="characterClass" onchange="changeClass();" style="position: absolute; top: 55px; left: 67px" ;>
                 <option disabled selected value>Select Class:</option>
                 <option value="Cleric">Cleric</option>
                 <option value="Wizard">Wizard</option>
@@ -23,8 +23,8 @@
                 <option value="Ranger">Ranger</option>
                 <!--<option value="Druid">Druid</option> -->
             </select>
-            <p style="position: absolute; top: 66px";>Race: </p>
-            <select id="characterRace" style="position: absolute; top: 80px; left: 67px";>
+            <p style="position: absolute; top: 66px" ;>Race: </p>
+            <select id="characterRace" style="position: absolute; top: 80px; left: 67px" ;>
                 <option disabled selected value>Select Race:</option>
                 <option value="Human">Human</option>
                 <option value="Elf">Elf</option>
@@ -36,7 +36,8 @@
             <p id="characterWIS" class="characterValues" style="position: absolute; right: 200px; top: 60px">WIS: </p>
             <p id="characterDEX" class="characterValues" style="position: absolute; right: 200px; top: 80px">DEX: </p>
             <p id="characterSPE" class="characterValues" style="position: absolute; right: 200px; top: 100px">SPE: </p>
-            <button id="closeMenu" onclick="startGame();" style="position: absolute; bottom: 5px; left: 45%">Start Game</button>
+            <button id="closeMenu" onclick="startGame();" style="position: absolute; bottom: 5px; left: 45%">Start
+                Game</button>
         </div>
     </div>
 
@@ -156,64 +157,64 @@
 
     function changeClass() {
         let chosenClass = document.getElementById("characterClass").value;
-        switch(chosenClass) {
-        case "Cleric":
-            document.getElementById("characterVIT").innerHTML = "VIT: " + (VIT+2);
-            document.getElementById("characterSTR").innerHTML = "STR: " + (STR-3);
-            document.getElementById("characterWIS").innerHTML = "WIS: " + (WIS+3);
-            document.getElementById("characterDEX").innerHTML = "DEX: " + DEX;
-            document.getElementById("characterSPE").innerHTML = "SPE: " + (SPE-2);
-            player1.vit = VIT+2, player1.str = STR-3, player1.wis = WIS+3, player1.dex = DEX, player1.spe = SPE-2;
-            break;
-        case "Paladin":
-            document.getElementById("characterVIT").innerHTML = "VIT: " + (VIT+2);
-            document.getElementById("characterSTR").innerHTML = "STR: " + (STR+3);
-            document.getElementById("characterWIS").innerHTML = "WIS: " + (WIS-1);
-            document.getElementById("characterDEX").innerHTML = "DEX: " + (DEX-3);
-            document.getElementById("characterSPE").innerHTML = "SPE: " + (SPE-1);
-            player1.vit = VIT+2, player1.str = STR+3, player1.wis = WIS-1, player1.dex = DEX-3, player1.spe = SPE-1;
-            break;
-        case "Wizard":
-            document.getElementById("characterVIT").innerHTML = "VIT: " + (VIT-2);
-            document.getElementById("characterSTR").innerHTML = "STR: " + (STR-3);
-            document.getElementById("characterWIS").innerHTML = "WIS: " + (WIS+3);
-            document.getElementById("characterDEX").innerHTML = "DEX: " + DEX;
-            document.getElementById("characterSPE").innerHTML = "SPE: " + (SPE+2);
-            player1.vit = VIT-2, player1.str = STR-3, player1.wis = WIS+3, player1.dex = DEX, player1.spe = SPE+2;
-            break;
-        case "Rogue":
-            document.getElementById("characterVIT").innerHTML = "VIT: " + (VIT-3);
-            document.getElementById("characterSTR").innerHTML = "STR: " + STR;
-            document.getElementById("characterWIS").innerHTML = "WIS: " + (WIS-2);
-            document.getElementById("characterDEX").innerHTML = "DEX: " + (DEX+2);
-            document.getElementById("characterSPE").innerHTML = "SPE: " + (SPE+3);
-            player1.vit = VIT-3, player1.str = STR, player1.wis = WIS-2, player1.dex = DEX+2, player1.spe = SPE+3;
-            break;
-        case "Ranger":
-            document.getElementById("characterVIT").innerHTML = "VIT: " + (VIT-2);
-            document.getElementById("characterSTR").innerHTML = "STR: " + (STR-2);
-            document.getElementById("characterWIS").innerHTML = "WIS: " + WIS;
-            document.getElementById("characterDEX").innerHTML = "DEX: " + (DEX+3);
-            document.getElementById("characterSPE").innerHTML = "SPE: " + (SPE+1);
-            player1.vit = VIT-2, player1.str = STR-2, player1.wis = WIS, player1.dex = DEX+3, player1.spe = SPE+1;
-            break;
-        /*else if (chosenClass == "Druid") {
-            document.getElementById("characterVIT").innerHTML = "VIT: " + (VIT-3);
-            document.getElementById("characterSTR").innerHTML = "STR: " + (STR-2);
-            document.getElementById("characterWIS").innerHTML = "WIS: " + (WIS+2);
-            document.getElementById("characterDEX").innerHTML = "DEX: " + (DEX+2);
-            document.getElementById("characterSPE").innerHTML = "SPE: " + (SPE+1);
-        } */
-        default:
-            document.getElementById("characterVIT").innerHTML = "VIT: " + VIT;
-            document.getElementById("characterSTR").innerHTML = "STR: " + STR;
-            document.getElementById("characterWIS").innerHTML = "WIS: " + WIS;
-            document.getElementById("characterDEX").innerHTML = "DEX: " + DEX;
-            document.getElementById("characterSPE").innerHTML = "SPE: " + SPE;
-            player1.vit = VIT, player1.str = STR, player1.wis = WIS, player1.dex = DEX, player1.spe = SPE;
-            break;
+        switch (chosenClass) {
+            case "Cleric":
+                document.getElementById("characterVIT").innerHTML = "VIT: " + (VIT + 2);
+                document.getElementById("characterSTR").innerHTML = "STR: " + (STR - 3);
+                document.getElementById("characterWIS").innerHTML = "WIS: " + (WIS + 3);
+                document.getElementById("characterDEX").innerHTML = "DEX: " + DEX;
+                document.getElementById("characterSPE").innerHTML = "SPE: " + (SPE - 2);
+                player1.vit = VIT + 2, player1.str = STR - 3, player1.wis = WIS + 3, player1.dex = DEX, player1.spe = SPE - 2;
+                break;
+            case "Paladin":
+                document.getElementById("characterVIT").innerHTML = "VIT: " + (VIT + 2);
+                document.getElementById("characterSTR").innerHTML = "STR: " + (STR + 3);
+                document.getElementById("characterWIS").innerHTML = "WIS: " + (WIS - 1);
+                document.getElementById("characterDEX").innerHTML = "DEX: " + (DEX - 3);
+                document.getElementById("characterSPE").innerHTML = "SPE: " + (SPE - 1);
+                player1.vit = VIT + 2, player1.str = STR + 3, player1.wis = WIS - 1, player1.dex = DEX - 3, player1.spe = SPE - 1;
+                break;
+            case "Wizard":
+                document.getElementById("characterVIT").innerHTML = "VIT: " + (VIT - 2);
+                document.getElementById("characterSTR").innerHTML = "STR: " + (STR - 3);
+                document.getElementById("characterWIS").innerHTML = "WIS: " + (WIS + 3);
+                document.getElementById("characterDEX").innerHTML = "DEX: " + DEX;
+                document.getElementById("characterSPE").innerHTML = "SPE: " + (SPE + 2);
+                player1.vit = VIT - 2, player1.str = STR - 3, player1.wis = WIS + 3, player1.dex = DEX, player1.spe = SPE + 2;
+                break;
+            case "Rogue":
+                document.getElementById("characterVIT").innerHTML = "VIT: " + (VIT - 3);
+                document.getElementById("characterSTR").innerHTML = "STR: " + STR;
+                document.getElementById("characterWIS").innerHTML = "WIS: " + (WIS - 2);
+                document.getElementById("characterDEX").innerHTML = "DEX: " + (DEX + 2);
+                document.getElementById("characterSPE").innerHTML = "SPE: " + (SPE + 3);
+                player1.vit = VIT - 3, player1.str = STR, player1.wis = WIS - 2, player1.dex = DEX + 2, player1.spe = SPE + 3;
+                break;
+            case "Ranger":
+                document.getElementById("characterVIT").innerHTML = "VIT: " + (VIT - 2);
+                document.getElementById("characterSTR").innerHTML = "STR: " + (STR - 2);
+                document.getElementById("characterWIS").innerHTML = "WIS: " + WIS;
+                document.getElementById("characterDEX").innerHTML = "DEX: " + (DEX + 3);
+                document.getElementById("characterSPE").innerHTML = "SPE: " + (SPE + 1);
+                player1.vit = VIT - 2, player1.str = STR - 2, player1.wis = WIS, player1.dex = DEX + 3, player1.spe = SPE + 1;
+                break;
+            /*else if (chosenClass == "Druid") {
+                document.getElementById("characterVIT").innerHTML = "VIT: " + (VIT-3);
+                document.getElementById("characterSTR").innerHTML = "STR: " + (STR-2);
+                document.getElementById("characterWIS").innerHTML = "WIS: " + (WIS+2);
+                document.getElementById("characterDEX").innerHTML = "DEX: " + (DEX+2);
+                document.getElementById("characterSPE").innerHTML = "SPE: " + (SPE+1);
+            } */
+            default:
+                document.getElementById("characterVIT").innerHTML = "VIT: " + VIT;
+                document.getElementById("characterSTR").innerHTML = "STR: " + STR;
+                document.getElementById("characterWIS").innerHTML = "WIS: " + WIS;
+                document.getElementById("characterDEX").innerHTML = "DEX: " + DEX;
+                document.getElementById("characterSPE").innerHTML = "SPE: " + SPE;
+                player1.vit = VIT, player1.str = STR, player1.wis = WIS, player1.dex = DEX, player1.spe = SPE;
+                break;
+        }
     }
-}
 
 </script>
 
