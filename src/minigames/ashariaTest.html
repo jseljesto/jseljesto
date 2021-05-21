@@ -36,6 +36,8 @@
             <p id="characterWIS" class="characterValues" style="position: absolute; right: 200px; top: 60px">WIS: </p>
             <p id="characterDEX" class="characterValues" style="position: absolute; right: 200px; top: 80px">DEX: </p>
             <p id="characterSPE" class="characterValues" style="position: absolute; right: 200px; top: 100px">SPE: </p>
+            <p id="formError" style="position: absolute; right: 39%; top: 475px; visibility: hidden; color: red;">There
+                are fields that needs to be filled out!</p>
             <button id="closeMenu" onclick="startGame();" style="position: absolute; bottom: 5px; left: 45%">Start
                 Game</button>
         </div>
@@ -71,7 +73,9 @@
         str: 0,
         wis: 0,
         dex: 0,
-        spe: 0
+        spe: 0,
+        lvl: 1,
+        xp: 0
     }];
 
     //position of player on map
@@ -88,6 +92,9 @@
     fabCanvas.setWidth(1700);
     fabCanvas.setHeight(1600);
 
+    let gameStarted = false;
+    document.body.style.overflow = "hidden";
+
     const interval = setInterval(draw, 10);
 
     loadTemplateValues();
@@ -101,30 +108,32 @@
     }
 
     function movePlayer(e) {
-        console.log(curY);
-        if (curY > 900 && curY < 955) {
-            document.body.style.overflow = "visible";
-        }
-        else {
-            document.body.style.overflow = "hidden";
-        }
-        switch (e.keyCode) {
-            case 37:
-                curX -= 5;
-                console.log("Venstre");
-                break;
-            case 38:
-                console.log("Opp");
-                curY -= 5;
-                break;
-            case 39:
-                console.log("Høgre");
-                curX += 5;
-                break;
-            case 40:
-                console.log("Ned");
-                curY += 5;
-                break;
+        if (gameStarted == true) {
+            console.log(curY);
+            if (curY > 900 && curY < 955) {
+                document.body.style.overflow = "visible";
+            }
+            else {
+                document.body.style.overflow = "hidden";
+            }
+            switch (e.keyCode) {
+                case 37:
+                    curX -= 5;
+                    console.log("Venstre");
+                    break;
+                case 38:
+                    console.log("Opp");
+                    curY -= 5;
+                    break;
+                case 39:
+                    console.log("Høgre");
+                    curX += 5;
+                    break;
+                case 40:
+                    console.log("Ned");
+                    curY += 5;
+                    break;
+            }
         }
     }
 
@@ -133,18 +142,25 @@
     }
 
     function startGame() {
-        closeWindow();
-        player1.name = document.getElementById("name").value;
-        document.getElementById("chosenName").innerHTML = "Name: " + player1.name;
-        player1.race = document.getElementById("characterRace").value;
-        player1.class = document.getElementById("characterClass").value;
-        document.getElementById("chosenTypes").innerHTML = "Race & Class: " + player1.race + " " + player1.class;
-        document.getElementById("chosenVIT").innerHTML = "VIT: " + player1.vit;
-        document.getElementById("chosenSTR").innerHTML = "STR: " + player1.str;
-        document.getElementById("chosenWIS").innerHTML = "WIS: " + player1.wis;
-        document.getElementById("chosenDEX").innerHTML = "DEX: " + player1.dex;
-        document.getElementById("chosenSPE").innerHTML = "SPE: " + player1.spe;
-
+        if (document.getElementById("name").value != "" && document.getElementById("characterClass").value != "" &&
+            document.getElementById("characterRace").value != "") {
+            document.getElementById("formError").style.visibility = "hidden";
+            gameStarted = true;
+            closeWindow();
+            player1.name = document.getElementById("name").value;
+            document.getElementById("chosenName").innerHTML = "Name: " + player1.name;
+            player1.race = document.getElementById("characterRace").value;
+            player1.class = document.getElementById("characterClass").value;
+            document.getElementById("chosenTypes").innerHTML = "Race & Class: " + player1.race + " " + player1.class;
+            document.getElementById("chosenVIT").innerHTML = "VIT: " + player1.vit;
+            document.getElementById("chosenSTR").innerHTML = "STR: " + player1.str;
+            document.getElementById("chosenWIS").innerHTML = "WIS: " + player1.wis;
+            document.getElementById("chosenDEX").innerHTML = "DEX: " + player1.dex;
+            document.getElementById("chosenSPE").innerHTML = "SPE: " + player1.spe;
+        }
+        else {
+            document.getElementById("formError").style.visibility = "visible";
+        }
     }
 
     function loadTemplateValues() {
