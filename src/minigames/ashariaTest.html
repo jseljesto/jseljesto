@@ -59,6 +59,7 @@
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.6.3/fabric.min.js"></script>
+<script src="battleScreen.js"></script>
 <script>
 
     //Template values for playable characters
@@ -110,7 +111,7 @@
     function draw() {
         fabCanvas.clear();
         let player = new fabric.Circle({
-            left: curX, top: curY, fill: "blue", radius: 6, hoverCursor: "pointer", selectable: false
+            left: curX, top: curY, fill: "blue", radius: 6, hoverCursor: "pointer", visible: true, selectable: false
         });
         fabCanvas.add(player);
     }
@@ -168,7 +169,7 @@
             document.getElementById("chosenHP").innerHTML = "HP: " + player1.hp;
             document.getElementById("chosenMP").innerHTML = "MP: " + player1.mp;
 
-            
+
         }
         else {
             document.getElementById("formError").style.visibility = "visible";
