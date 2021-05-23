@@ -36,6 +36,8 @@
             <p id="characterWIS" class="characterValues" style="position: absolute; right: 200px; top: 60px">WIS: </p>
             <p id="characterDEX" class="characterValues" style="position: absolute; right: 200px; top: 80px">DEX: </p>
             <p id="characterSPE" class="characterValues" style="position: absolute; right: 200px; top: 100px">SPE: </p>
+            <p id="characterHP" class="characterValues" style="position: absolute; right: 200px; top: 140px">HP: </p>
+            <p id="characterMP" class="characterValues" style="position: absolute; right: 200px; top: 160px">MP: </p>
             <p id="formError" style="position: absolute; right: 39%; top: 475px; visibility: hidden; color: red;">There
                 are fields that needs to be filled out!</p>
             <button id="closeMenu" onclick="startGame();" style="position: absolute; bottom: 5px; left: 45%">Start
@@ -50,6 +52,8 @@
     <p id="chosenWIS" style="position: absolute; right: 700px; top: 310px">WIS: </p>
     <p id="chosenDEX" style="position: absolute; right: 700px; top: 330px">DEX: </p>
     <p id="chosenSPE" style="position: absolute; right: 700px; top: 350px">SPE: </p>
+    <p id="chosenHP" style="position: absolute; right: 700px; top: 390px">HP: </p>
+    <p id="chosenMP" style="position: absolute; right: 700px; top: 410px">MP: </p>
 
     <canvas id="canvas" width="1700" height="1600"></canvas>
 </body>
@@ -63,6 +67,8 @@
     const VIT = 10;
     const WIS = 10;
     const DEX = 10;
+    const HP = 10 + (3 * VIT);
+    const MP = 10 + (2 * WIS);
 
     //first playable character
     let player1 = [{
@@ -75,7 +81,9 @@
         dex: 0,
         spe: 0,
         lvl: 1,
-        xp: 0
+        xp: 0,
+        hp: 0,
+        mp: 0
     }];
 
     //position of player on map
@@ -157,6 +165,10 @@
             document.getElementById("chosenWIS").innerHTML = "WIS: " + player1.wis;
             document.getElementById("chosenDEX").innerHTML = "DEX: " + player1.dex;
             document.getElementById("chosenSPE").innerHTML = "SPE: " + player1.spe;
+            document.getElementById("chosenHP").innerHTML = "HP: " + player1.hp;
+            document.getElementById("chosenMP").innerHTML = "MP: " + player1.mp;
+
+            
         }
         else {
             document.getElementById("formError").style.visibility = "visible";
@@ -169,6 +181,16 @@
         document.getElementById("characterWIS").innerHTML = "WIS: " + WIS;
         document.getElementById("characterDEX").innerHTML = "DEX: " + DEX;
         document.getElementById("characterSPE").innerHTML = "SPE: " + SPE;
+        document.getElementById("characterHP").innerHTML = "HP: " + HP;
+        document.getElementById("characterMP").innerHTML = "MP: " + MP;
+    }
+
+    function correctStats() {
+        player1.hp = 10 + (3 * player1.vit);
+        player1.mp = 10 + (2 * player1.wis);
+        document.getElementById("characterHP").innerHTML = "HP: " + player1.hp;
+        document.getElementById("characterMP").innerHTML = "MP: " + player1.mp;
+
     }
 
     function changeClass() {
@@ -230,6 +252,7 @@
                 player1.vit = VIT, player1.str = STR, player1.wis = WIS, player1.dex = DEX, player1.spe = SPE;
                 break;
         }
+        correctStats();
     }
 
 </script>
