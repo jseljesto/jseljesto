@@ -92,6 +92,7 @@
     height: 30px;
     bottom: 2%;
     visibility: hidden;
+    border: 2px solid black;
 }
 
 #progressBar {
@@ -104,6 +105,31 @@
     position: absolute;
     bottom: 2%;
     visibility: hidden;
+    border: 2px solid black;
+}
+
+.statBar {
+    width: 200px;
+    background-color: black;
+    position: absolute;
+    height: 18px;
+    bottom: 2%;
+    visibility: hidden;
+    border: 2px solid black;
+}
+
+.remainingValues {
+     width: 200px;
+     height: 18px;
+     background-color: red;
+     text-align: center;
+     line-height: 18px;
+     color: white;
+     position: absolute;
+     bottom: 2%;
+     visibility: hidden;
+     border: 2px solid black;
+
 }
 .popup {
 	display: none;

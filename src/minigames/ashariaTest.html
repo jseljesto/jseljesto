@@ -55,6 +55,15 @@
     <p id="chosenHP" style="position: absolute; right: 700px; top: 390px">HP: </p>
     <p id="chosenMP" style="position: absolute; right: 700px; top: 410px">MP: </p>
 
+    <p id="player1HP" class="statBar" style="visibility: hidden; position: absolute; left: 100px; top: 150px;"></p>
+    <p id="player1curHP" class="remainingValues" style="visibility: hidden; position: absolute; left: 100px; top: 150px;"></p>
+    <p id="player1MP" class="statBar" style="visibility: hidden; position: absolute; left: 100px; top: 200px;"></p>
+    <p id="player1curMP" class="remainingValues" style="visibility: hidden; position: absolute; left: 100px; top: 200px; background-color: blue;"></p>
+    <p id="enemy1HP" class="statBar" style="visibility: hidden; position: absolute; left: 100px; top: 250px;"></p>
+    <p id="enemy1curHP" class="remainingValues" style="visibility: hidden; position: absolute; left: 100px; top: 250px;"></p>
+    <p id="enemy1MP" class="statBar" style="visibility: hidden; position: absolute; left: 100px; top: 300px;"></p>
+    <p id="enemy1curMP" class="remainingValues" style="visibility: hidden; position: absolute; left: 100px; top: 300px; background-color: blue;"></p>
+
     <canvas id="canvas" width="1700" height="1600"></canvas>
 </body>
 
@@ -102,6 +111,7 @@
     fabCanvas.setHeight(1600);
 
     let gameStarted = false;
+    let onMapScreen = true;
     document.body.style.overflow = "hidden";
 
     const interval = setInterval(draw, 10);
@@ -109,11 +119,13 @@
     loadTemplateValues();
 
     function draw() {
-        fabCanvas.clear();
-        let player = new fabric.Circle({
-            left: curX, top: curY, fill: "blue", radius: 6, hoverCursor: "pointer", visible: true, selectable: false
-        });
-        fabCanvas.add(player);
+        if (onMapScreen == true) {
+            fabCanvas.clear();
+            let player = new fabric.Circle({
+                left: curX, top: curY, fill: "blue", radius: 6, hoverCursor: "pointer", visible: true, selectable: false
+            });
+            fabCanvas.add(player);
+        }
     }
 
     function movePlayer(e) {
@@ -156,6 +168,7 @@
             document.getElementById("formError").style.visibility = "hidden";
             gameStarted = true;
             closeWindow();
+            startBattle();
             player1.name = document.getElementById("name").value;
             document.getElementById("chosenName").innerHTML = "Name: " + player1.name;
             player1.race = document.getElementById("characterRace").value;
