@@ -61,6 +61,21 @@
 .purchaseBtn:hover .btnText {
     visibility: visible;
 }
+
+.menuButtons {
+    border: 1px solid black;
+    background-color: cornflowerblue;
+    color: white;
+    text-align: center;
+    width: 100px;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.menuButtons:hover {
+    background-color: blue;
+}
+
 .incomeText {
     position: relative;
     display: inline-block;

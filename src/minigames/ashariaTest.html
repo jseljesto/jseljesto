@@ -55,14 +55,27 @@
     <p id="chosenHP" style="position: absolute; right: 700px; top: 390px">HP: </p>
     <p id="chosenMP" style="position: absolute; right: 700px; top: 410px">MP: </p>
 
+    <p id="player1Name" style="visibility: hidden; position: absolute; left: 100px; top: 100px;"></p>
+    <p id="enemy1Name" style="visibility: hidden; position: absolute; left: 300px; top: 100px;"></p>
     <p id="player1HP" class="statBar" style="visibility: hidden; position: absolute; left: 100px; top: 150px;"></p>
     <p id="player1curHP" class="remainingValues" style="visibility: hidden; position: absolute; left: 100px; top: 150px;"></p>
+    <p id="player1HPNumber" style="visibility: hidden; position: absolute; left: 310px; top: 150px;"></p>
     <p id="player1MP" class="statBar" style="visibility: hidden; position: absolute; left: 100px; top: 200px;"></p>
     <p id="player1curMP" class="remainingValues" style="visibility: hidden; position: absolute; left: 100px; top: 200px; background-color: blue;"></p>
+    <p id="player1MPNumber" style="visibility: hidden; position: absolute; left: 310px; top: 200px;"></p>
     <p id="enemy1HP" class="statBar" style="visibility: hidden; position: absolute; left: 100px; top: 250px;"></p>
     <p id="enemy1curHP" class="remainingValues" style="visibility: hidden; position: absolute; left: 100px; top: 250px;"></p>
+    <p id="enemy1HPNumber" style="visibility: hidden; position: absolute; left: 310px; top: 250px;" ></p>
     <p id="enemy1MP" class="statBar" style="visibility: hidden; position: absolute; left: 100px; top: 300px;"></p>
     <p id="enemy1curMP" class="remainingValues" style="visibility: hidden; position: absolute; left: 100px; top: 300px; background-color: blue;"></p>
+    <p id="enemy1MPNumber" style="visibility: hidden; position: absolute; left: 310px; top: 300px;" ></p>
+
+    <button id="playerAbilities" class="menuButtons" onmousedown="buttonClicked(this)" 
+    onmouseup = "buttonUnclicked(this)" style="position: absolute; visibility: hidden; top: 10px; left: 10px;">Abilities</button>
+    <button id="playerItems" class="menuButtons" onmousedown="buttonClicked(this)" 
+    onmouseup = "buttonUnclicked(this)" style="position: absolute; visibility: hidden; top: 40px; left: 10px;">Items</button>
+    <button id="playerFlee" class="menuButtons" onmousedown="buttonClicked(this)" 
+    onmouseup = "buttonUnclicked(this)" style="position: absolute; visibility: hidden; top: 70px; left: 10px;">Flee</button>
 
     <canvas id="canvas" width="1700" height="1600"></canvas>
 </body>
@@ -81,7 +94,7 @@
     const MP = 10 + (2 * WIS);
 
     //first playable character
-    let player1 = [{
+    let player1 = {
         name: "",
         race: "",
         class: "",
@@ -93,8 +106,11 @@
         lvl: 1,
         xp: 0,
         hp: 0,
-        mp: 0
-    }];
+        hpLeft: 0,
+        mp: 0,
+        mpLeft: 0
+    };
+    
 
     //position of player on map
     let curX = 350;
@@ -167,9 +183,9 @@
             document.getElementById("characterRace").value != "") {
             document.getElementById("formError").style.visibility = "hidden";
             gameStarted = true;
+            player1.name = document.getElementById("name").value;
             closeWindow();
             startBattle();
-            player1.name = document.getElementById("name").value;
             document.getElementById("chosenName").innerHTML = "Name: " + player1.name;
             player1.race = document.getElementById("characterRace").value;
             player1.class = document.getElementById("characterClass").value;
@@ -179,8 +195,8 @@
             document.getElementById("chosenWIS").innerHTML = "WIS: " + player1.wis;
             document.getElementById("chosenDEX").innerHTML = "DEX: " + player1.dex;
             document.getElementById("chosenSPE").innerHTML = "SPE: " + player1.spe;
-            document.getElementById("chosenHP").innerHTML = "HP: " + player1.hp;
-            document.getElementById("chosenMP").innerHTML = "MP: " + player1.mp;
+            document.getElementById("chosenHP").innerHTML = "HP: " + player1.hpLeft + "/" + player1.hp;
+            document.getElementById("chosenMP").innerHTML = "MP: " + player1.mpLeft + "/" + player1.mp;
 
 
         }
@@ -201,7 +217,9 @@
 
     function correctStats() {
         player1.hp = 10 + (3 * player1.vit);
+        player1.hpLeft = player1.hp;
         player1.mp = 10 + (2 * player1.wis);
+        player1.mpLeft = player1.mp;
         document.getElementById("characterHP").innerHTML = "HP: " + player1.hp;
         document.getElementById("characterMP").innerHTML = "MP: " + player1.mp;
 

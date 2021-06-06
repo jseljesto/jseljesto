@@ -1,4 +1,4 @@
-let testMonster = [{
+let testMonster = {
     name: "Bear",
     race: "",
     class: "",
@@ -10,13 +10,16 @@ let testMonster = [{
     lvl: 1,
     xp: 0,
     hp: 31,
-    mp: 18
-}];
+    hpLeft: 31,
+    mp: 18,
+    mpLeft: 18
+};
 
 function startBattle() {
     onMapScreen = false;
     hideMap();
     unhideBattleScreen();
+    addStats();
 }
 
 function hideMap() {
@@ -43,4 +46,30 @@ function unhideBattleScreen() {
     document.getElementById("player1curMP").style.visibility = "visible";
     document.getElementById("enemy1curHP").style.visibility = "visible";
     document.getElementById("enemy1curMP").style.visibility = "visible";
+    document.getElementById("player1HPNumber").style.visibility = "visible";
+    document.getElementById("player1MPNumber").style.visibility = "visible";
+    document.getElementById("enemy1HPNumber").style.visibility = "visible";
+    document.getElementById("enemy1MPNumber").style.visibility = "visible";
+    document.getElementById("player1Name").style.visibility = "visible";
+    document.getElementById("enemy1Name").style.visibility = "visible";
+    document.getElementById("playerAbilities").style.visibility = "visible";
+    document.getElementById("playerItems").style.visibility = "visible";
+    document.getElementById("playerFlee").style.visibility = "visible";
+}
+
+function addStats() {
+    document.getElementById("player1HPNumber").innerHTML = player1.hpLeft + "/" + player1.hp;
+    document.getElementById("player1MPNumber").innerHTML = player1.mpLeft + "/" + player1.mp;
+    document.getElementById("enemy1HPNumber").innerHTML = testMonster.hpLeft + "/" + testMonster.hp;
+    document.getElementById("enemy1MPNumber").innerHTML = testMonster.mpLeft + "/" + testMonster.mp;
+    document.getElementById("player1Name").innerHTML = player1.name;
+    document.getElementById("enemy1Name").innerHTML = testMonster.name;
+}
+
+function buttonClicked(_this) {
+    _this.style.backgroundColor = "yellow"
+}
+
+function buttonUnclicked(_this) {
+    _this.style.backgroundColor = "cornflowerblue";
 }
