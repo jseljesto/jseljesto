@@ -37,6 +37,38 @@ function hideMap() {
     document.getElementById("chosenMP").style.visibility = "hidden";
 }
 
+function unhideMap() {
+    document.getElementById("chosenName").style.visibility = "visible";
+    document.getElementById("chosenTypes").style.visibility = "visible";
+    document.getElementById("chosenVIT").style.visibility = "visible"; 
+    document.getElementById("chosenSTR").style.visibility = "visible"; 
+    document.getElementById("chosenWIS").style.visibility = "visible"; 
+    document.getElementById("chosenDEX").style.visibility = "visible"; 
+    document.getElementById("chosenSPE").style.visibility = "visible"; 
+    document.getElementById("chosenHP").style.visibility = "visible"; 
+    document.getElementById("chosenMP").style.visibility = "visible";
+}
+
+function hideBattleScreen() {
+    document.getElementById("player1HP").style.visibility = "hidden";
+    document.getElementById("player1MP").style.visibility = "hidden";
+    document.getElementById("enemy1HP").style.visibility = "hidden";
+    document.getElementById("enemy1MP").style.visibility = "hidden";
+    document.getElementById("player1curHP").style.visibility = "hidden";
+    document.getElementById("player1curMP").style.visibility = "hidden";
+    document.getElementById("enemy1curHP").style.visibility = "hidden";
+    document.getElementById("enemy1curMP").style.visibility = "hidden";
+    document.getElementById("player1HPNumber").style.visibility = "hidden";
+    document.getElementById("player1MPNumber").style.visibility = "hidden";
+    document.getElementById("enemy1HPNumber").style.visibility = "hidden";
+    document.getElementById("enemy1MPNumber").style.visibility = "hidden";
+    document.getElementById("player1Name").style.visibility = "hidden";
+    document.getElementById("enemy1Name").style.visibility = "hidden";
+    document.getElementById("playerAbilities").style.visibility = "hidden";
+    document.getElementById("playerItems").style.visibility = "hidden";
+    document.getElementById("playerFlee").style.visibility = "hidden";
+}
+
 function unhideBattleScreen() {
     document.getElementById("player1HP").style.visibility = "visible";
     document.getElementById("player1MP").style.visibility = "visible";
@@ -72,4 +104,11 @@ function buttonClicked(_this) {
 
 function buttonUnclicked(_this) {
     _this.style.backgroundColor = "cornflowerblue";
+}
+
+function toMenu() {
+    onMapScreen = true;
+    unhideMap();
+    hideBattleScreen();
+    document.body.style.background = "url(RegionTest1.png) no-repeat";
 }

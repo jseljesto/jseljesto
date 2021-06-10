@@ -56,26 +56,26 @@
     <p id="chosenMP" style="position: absolute; right: 700px; top: 410px">MP: </p>
 
     <p id="player1Name" style="visibility: hidden; position: absolute; left: 100px; top: 100px;"></p>
-    <p id="enemy1Name" style="visibility: hidden; position: absolute; left: 300px; top: 100px;"></p>
+    <p id="enemy1Name" style="visibility: hidden; position: absolute; right: 300px; top: 100px;"></p>
     <p id="player1HP" class="statBar" style="visibility: hidden; position: absolute; left: 100px; top: 150px;"></p>
     <p id="player1curHP" class="remainingValues" style="visibility: hidden; position: absolute; left: 100px; top: 150px;"></p>
     <p id="player1HPNumber" style="visibility: hidden; position: absolute; left: 310px; top: 150px;"></p>
     <p id="player1MP" class="statBar" style="visibility: hidden; position: absolute; left: 100px; top: 200px;"></p>
     <p id="player1curMP" class="remainingValues" style="visibility: hidden; position: absolute; left: 100px; top: 200px; background-color: blue;"></p>
     <p id="player1MPNumber" style="visibility: hidden; position: absolute; left: 310px; top: 200px;"></p>
-    <p id="enemy1HP" class="statBar" style="visibility: hidden; position: absolute; left: 100px; top: 250px;"></p>
-    <p id="enemy1curHP" class="remainingValues" style="visibility: hidden; position: absolute; left: 100px; top: 250px;"></p>
-    <p id="enemy1HPNumber" style="visibility: hidden; position: absolute; left: 310px; top: 250px;" ></p>
-    <p id="enemy1MP" class="statBar" style="visibility: hidden; position: absolute; left: 100px; top: 300px;"></p>
-    <p id="enemy1curMP" class="remainingValues" style="visibility: hidden; position: absolute; left: 100px; top: 300px; background-color: blue;"></p>
-    <p id="enemy1MPNumber" style="visibility: hidden; position: absolute; left: 310px; top: 300px;" ></p>
+    <p id="enemy1HP" class="statBar" style="visibility: hidden; position: absolute; right: 100px; top: 150px;"></p>
+    <p id="enemy1curHP" class="remainingValues" style="visibility: hidden; position: absolute; right: 100px; top: 150px;"></p>
+    <p id="enemy1HPNumber" style="visibility: hidden; position: absolute; right: 310px; top: 150px;" ></p>
+    <p id="enemy1MP" class="statBar" style="visibility: hidden; position: absolute; right: 100px; top: 200px;"></p>
+    <p id="enemy1curMP" class="remainingValues" style="visibility: hidden; position: absolute; right: 100px; top: 200px; background-color: blue;"></p>
+    <p id="enemy1MPNumber" style="visibility: hidden; position: absolute; right: 310px; top: 200px;" ></p>
 
     <button id="playerAbilities" class="menuButtons" onmousedown="buttonClicked(this)" 
-    onmouseup = "buttonUnclicked(this)" style="position: absolute; visibility: hidden; top: 10px; left: 10px;">Abilities</button>
+    onmouseup = "buttonUnclicked(this)" style="position: absolute; visibility: hidden; bottom: 8%; left: 10px;">Abilities</button>
     <button id="playerItems" class="menuButtons" onmousedown="buttonClicked(this)" 
-    onmouseup = "buttonUnclicked(this)" style="position: absolute; visibility: hidden; top: 40px; left: 10px;">Items</button>
+    onmouseup = "buttonUnclicked(this)" style="position: absolute; visibility: hidden; bottom: 5%; left: 10px;">Items</button>
     <button id="playerFlee" class="menuButtons" onmousedown="buttonClicked(this)" 
-    onmouseup = "buttonUnclicked(this)" style="position: absolute; visibility: hidden; top: 70px; left: 10px;">Flee</button>
+    onmouseup = "buttonUnclicked(this)" onclick="toMenu()" style="position: absolute; visibility: hidden; bottom: 2%; left: 10px;">Flee</button>
 
     <canvas id="canvas" width="1700" height="1600"></canvas>
 </body>
