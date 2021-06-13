@@ -35,6 +35,7 @@ function hideMap() {
     document.getElementById("chosenSPE").style.visibility = "hidden"; 
     document.getElementById("chosenHP").style.visibility = "hidden"; 
     document.getElementById("chosenMP").style.visibility = "hidden";
+    document.getElementById("battleTest").style.visibility = "hidden";
 }
 
 function unhideMap() {
@@ -47,6 +48,7 @@ function unhideMap() {
     document.getElementById("chosenSPE").style.visibility = "visible"; 
     document.getElementById("chosenHP").style.visibility = "visible"; 
     document.getElementById("chosenMP").style.visibility = "visible";
+    document.getElementById("battleTest").style.visibility = "visible";
 }
 
 function hideBattleScreen() {

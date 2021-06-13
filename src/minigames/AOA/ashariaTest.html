@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="minigameSheet.css" />
+    <link rel="stylesheet" href="gameSheet.css" />
 </head>
 
 <body background="Regiontest1.png" style="background-repeat:no-repeat;height:1269px;overflow:visible"
@@ -76,12 +76,14 @@
     onmouseup = "buttonUnclicked(this)" style="position: absolute; visibility: hidden; bottom: 5%; left: 10px;">Items</button>
     <button id="playerFlee" class="menuButtons" onmousedown="buttonClicked(this)" 
     onmouseup = "buttonUnclicked(this)" onclick="toMenu()" style="position: absolute; visibility: hidden; bottom: 2%; left: 10px;">Flee</button>
+    <button onclick="startBattle()" id="battleTest" style="position: absolute; top: 5%; right: 5%">To Battle</button>
 
     <canvas id="canvas" width="1700" height="1600"></canvas>
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.6.3/fabric.min.js"></script>
 <script src="battleScreen.js"></script>
+<script src="character.js"></script>
 <script>
 
     //Template values for playable characters
@@ -94,22 +96,7 @@
     const MP = 10 + (2 * WIS);
 
     //first playable character
-    let player1 = {
-        name: "",
-        race: "",
-        class: "",
-        vit: 0,
-        str: 0,
-        wis: 0,
-        dex: 0,
-        spe: 0,
-        lvl: 1,
-        xp: 0,
-        hp: 0,
-        hpLeft: 0,
-        mp: 0,
-        mpLeft: 0
-    };
+    let player1 = new Character("", "", "", 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0);
     
 
     //position of player on map
@@ -185,7 +172,6 @@
             gameStarted = true;
             player1.name = document.getElementById("name").value;
             closeWindow();
-            startBattle();
             document.getElementById("chosenName").innerHTML = "Name: " + player1.name;
             player1.race = document.getElementById("characterRace").value;
             player1.class = document.getElementById("characterClass").value;
