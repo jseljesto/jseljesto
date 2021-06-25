@@ -71,7 +71,7 @@
     <p id="enemy1MPNumber" style="visibility: hidden; position: absolute; right: 310px; top: 200px;" ></p>
 
     <button id="playerAbilities" class="menuButtons" onmousedown="buttonClicked(this)" 
-    onmouseup = "buttonUnclicked(this)" style="position: absolute; visibility: hidden; bottom: 8%; left: 10px;">Abilities</button>
+    onmouseup = "buttonUnclicked(this)" onclick="showMoves()" style="position: absolute; visibility: hidden; bottom: 8%; left: 10px;">Abilities</button>
     <button id="playerItems" class="menuButtons" onmousedown="buttonClicked(this)" 
     onmouseup = "buttonUnclicked(this)" style="position: absolute; visibility: hidden; bottom: 5%; left: 10px;">Items</button>
     <button id="playerFlee" class="menuButtons" onmousedown="buttonClicked(this)" 
@@ -97,7 +97,7 @@
     const MP = 10 + (2 * WIS);
 
     //first playable character
-    let player1 = new Character("", "", "", 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0);
+    let player1 = new Character("", "", "", 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, ["Normal Strike", "Fast Strike", "Mega Strike", "Slow Strike", "Double Strike", "Triple Strike"]);
     
 
     //position of player on map

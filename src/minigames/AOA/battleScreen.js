@@ -15,6 +15,10 @@ let testMonster = {
     mpLeft: 18
 };
 
+let movesShown = 0;
+let x = 100;
+let y = 250;
+
 function startBattle() {
     onMapScreen = false;
     hideMap();
@@ -113,4 +117,28 @@ function toMenu() {
     unhideMap();
     hideBattleScreen();
     document.body.style.background = "url(RegionTest1.png) no-repeat";
+}
+
+function showMoves() {
+    for (let i = 0; i < player1.availableMoves.length; i++) {
+        createMoveElement();
+    }
+}
+
+function createMoveElement() {
+    let moveButton = document.createElement("BUTTON");
+    moveButton.style.position = "absolute";
+    moveButton.style.width = "50px";
+    moveButton.style.height = "50px";
+    moveButton.style.top = y + "px";
+    moveButton.style.left = x + "px";
+    moveButton.className = "moves";
+    document.body.appendChild(moveButton);
+    x += 60;
+    movesShown++;
+
+    if ((movesShown) % 5 === 0) {
+        x = 100;
+        y += 60;
+    }
 }

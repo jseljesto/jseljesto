@@ -1,6 +1,6 @@
 class Character {
 
-    constructor(name, race, type, vit, str, wis, dex, spe, lvl, xp, hp, hpLeft, mp, mpLeft) {
+    constructor(name, race, type, vit, str, wis, dex, spe, lvl, xp, xpNext, hp, hpLeft, mp, mpLeft, availableMoves) {
         this._name = name;
         this._race = race;
         this._type = type;
@@ -11,10 +11,12 @@ class Character {
         this._spe = spe;
         this._lvl = lvl;
         this._xp = xp;
+        this._xpNext = xpNext;
         this._hp = hp;
         this._hpLeft = hpLeft;
         this._mp = mp;
         this._mpLeft = mpLeft;
+        this._availableMoves = availableMoves;
     }
 
     /**
@@ -239,6 +241,22 @@ class Character {
     */
     set mpLeft(mpLeft) {
         this._mpLeft = mpLeft;
+    }
+
+    /**
+    * Get the available moves of the character.
+    * @return {string} availableMoves The available moves.
+    */
+     get availableMoves() {
+        return this._availableMoves;
+    }
+
+    /**
+     * Set the available moves of the character
+    * @param {string} availableMoves The available moves.
+    */
+    set availableMoves(availableMoves) {
+        this._availableMoves = availableMoves;
     }
 
 }

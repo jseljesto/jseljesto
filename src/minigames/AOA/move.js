@@ -1,6 +1,6 @@
 class Move {
 
-    constructor(name, pow, acc, mp, effects, targets, img) {
+    constructor(name, pow, acc, mp, effects, targets, img, desc, type) {
         this._name = name;
         this._pow = pow;
         this._acc = acc;
@@ -8,6 +8,9 @@ class Move {
         this._effects = effects;
         this._targets = targets;
         this._img = img;
+        this._desc = desc;
+        this._type = type;
+        moveList.push(this);
     }
 
     /**
@@ -121,4 +124,40 @@ class Move {
     set img(img) {
         this._img = img;
     }
+
+    /**
+    * Get the description of the move.
+    * @return {string} desc The desc value.
+    */
+     get desc() {
+        return this._desc;
+    }
+
+    /**
+     * Set the description of the move.
+    * @param {string} desc The desc value.
+    */
+    set desc(desc) {
+        this._desc = desc;
+    }
+
+    /**
+    * Get the magic type.
+    * @return {string} type The type value.
+    */
+     get type() {
+        return this._type;
+    }
+
+    /**
+     * Set the magic type.
+    * @param {string} type The type value.
+    */
+    set type(type) {
+        this._type = type;
+    }
 }
+
+let moveList = [];
+let normalStrike = new Move("Normal Strike", 10, 90, 0, "", "All", "The most basic attack. User swings his weapon at the opponent with good precision.", "Normal");
+let scratch = new Move("Scratch", 10, 70, 0, 0, "All", "", "User uses their large claws to swing at their opponent.", "Normal");
