@@ -31,7 +31,7 @@ class Move {
 
     /**
     * Get the power value.
-    * @return {string} pow The power value.
+    * @return {number} pow The power value.
     */
      get pow() {
         return this._pow;
@@ -39,7 +39,7 @@ class Move {
 
     /**
      * Set the power value.
-    * @param {string} pow The power value.
+    * @param {number} pow The power value.
     */
     set pow(pow) {
         this._pow = pow;
@@ -47,7 +47,7 @@ class Move {
 
     /**
     * Get the accuracy value.
-    * @return {string} acc The accuracy value.
+    * @return {number} acc The accuracy value.
     */
      get acc() {
         return this._acc;
@@ -55,7 +55,7 @@ class Move {
 
     /**
      * Set the accuracy value.
-    * @param {string} acc The accuracy value.
+    * @param {number} acc The accuracy value.
     */
     set acc(acc) {
         this._acc = acc;
@@ -63,7 +63,7 @@ class Move {
 
     /**
     * Get the mp value.
-    * @return {string} mp The mp value.
+    * @return {number} mp The mp value.
     */
      get mp() {
         return this._mp;
@@ -71,7 +71,7 @@ class Move {
 
     /**
      * Set the mp value.
-    * @param {string} mp The mp value.
+    * @param {number} mp The mp value.
     */
     set mp(mp) {
         this._mp = mp;
