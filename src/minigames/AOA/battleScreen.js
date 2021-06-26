@@ -32,12 +32,12 @@ function hideMap() {
 
     document.getElementById("chosenName").style.visibility = "hidden";
     document.getElementById("chosenTypes").style.visibility = "hidden";
-    document.getElementById("chosenVIT").style.visibility = "hidden"; 
-    document.getElementById("chosenSTR").style.visibility = "hidden"; 
-    document.getElementById("chosenWIS").style.visibility = "hidden"; 
-    document.getElementById("chosenDEX").style.visibility = "hidden"; 
-    document.getElementById("chosenSPE").style.visibility = "hidden"; 
-    document.getElementById("chosenHP").style.visibility = "hidden"; 
+    document.getElementById("chosenVIT").style.visibility = "hidden";
+    document.getElementById("chosenSTR").style.visibility = "hidden";
+    document.getElementById("chosenWIS").style.visibility = "hidden";
+    document.getElementById("chosenDEX").style.visibility = "hidden";
+    document.getElementById("chosenSPE").style.visibility = "hidden";
+    document.getElementById("chosenHP").style.visibility = "hidden";
     document.getElementById("chosenMP").style.visibility = "hidden";
     document.getElementById("battleTest").style.visibility = "hidden";
 }
@@ -45,12 +45,12 @@ function hideMap() {
 function unhideMap() {
     document.getElementById("chosenName").style.visibility = "visible";
     document.getElementById("chosenTypes").style.visibility = "visible";
-    document.getElementById("chosenVIT").style.visibility = "visible"; 
-    document.getElementById("chosenSTR").style.visibility = "visible"; 
-    document.getElementById("chosenWIS").style.visibility = "visible"; 
-    document.getElementById("chosenDEX").style.visibility = "visible"; 
-    document.getElementById("chosenSPE").style.visibility = "visible"; 
-    document.getElementById("chosenHP").style.visibility = "visible"; 
+    document.getElementById("chosenVIT").style.visibility = "visible";
+    document.getElementById("chosenSTR").style.visibility = "visible";
+    document.getElementById("chosenWIS").style.visibility = "visible";
+    document.getElementById("chosenDEX").style.visibility = "visible";
+    document.getElementById("chosenSPE").style.visibility = "visible";
+    document.getElementById("chosenHP").style.visibility = "visible";
     document.getElementById("chosenMP").style.visibility = "visible";
     document.getElementById("battleTest").style.visibility = "visible";
 }
@@ -121,24 +121,40 @@ function toMenu() {
 
 function showMoves() {
     for (let i = 0; i < player1.availableMoves.length; i++) {
-        createMoveElement();
+        createMoveElement(player1.availableMoves[i]);
     }
 }
 
-function createMoveElement() {
+function createMoveElement(selectedMove) {
     let moveButton = document.createElement("BUTTON");
-    moveButton.style.position = "absolute";
-    moveButton.style.width = "50px";
-    moveButton.style.height = "50px";
     moveButton.style.top = y + "px";
     moveButton.style.left = x + "px";
     moveButton.className = "moves";
     document.body.appendChild(moveButton);
+    let tooltip = document.createElement("SPAN");
+    tooltip.className = "tooltips";
+    let searchedMove = findMove(selectedMove);
+    tooltip.innerHTML = `<b>Name:</b> ${searchedMove.name} <br>
+    <b>Pow:</b> ${searchedMove.pow} <br>
+    <b>Acc:</b> ${searchedMove.acc} <br>
+    <b>MP:</b> ${searchedMove.mp} <br><br>
+    <b>Description:</b> ${searchedMove.desc} <br><br>
+    <b>Type:</b> ${searchedMove.type}`;
+    moveButton.appendChild(tooltip);
+
     x += 60;
     movesShown++;
 
     if ((movesShown) % 5 === 0) {
         x = 100;
         y += 60;
+    }
+}
+
+function findMove(selectedMove) {
+    for (let i = 0; i < moveList.length; i++) {
+        if (selectedMove === moveList[i].name) {
+            return moveList[i];
+        }
     }
 }

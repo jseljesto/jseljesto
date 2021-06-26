@@ -159,5 +159,5 @@ class Move {
 }
 
 let moveList = [];
-let normalStrike = new Move("Normal Strike", 10, 90, 0, "", "All", "The most basic attack. User swings his weapon at the opponent with good precision.", "Normal");
-let scratch = new Move("Scratch", 10, 70, 0, 0, "All", "", "User uses their large claws to swing at their opponent.", "Normal");
+let normalStrike = new Move("Normal Strike", 10, 90, 0, "", "All", "", "The most basic attack. User swings his weapon at the opponent with good precision.", "Normal");
+let scratch = new Move("Scratch", 10, 70, 0, "", "All", "", "User uses their large claws to swing at their opponent.", "Normal");

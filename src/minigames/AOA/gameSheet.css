@@ -110,10 +110,28 @@
     border: 1px solid black;
     background-image: linear-gradient(to bottom right, black, white);
     cursor: pointer;
+    width: 50px;
+    height: 50px;
+    position: absolute;
 }
 
 .moves:hover {
     box-shadow: 0px 0px 4px 4px cornflowerblue;
+}
+
+.tooltips {
+    position: absolute;
+    z-index: 1;
+    border: 2px solid black;
+    visibility: hidden;
+    background-color: white;
+    color: black;
+    padding: 5px 0px;
+    width: 200px;
+}
+
+.moves:hover > .tooltips {
+    visibility: visible;
 }
 
 
