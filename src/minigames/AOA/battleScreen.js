@@ -19,6 +19,9 @@ let movesShown = 0;
 let x = 100;
 let y = 250;
 
+/**
+ * Changes from mapScreen to battleScreen.
+ */
 function startBattle() {
     onMapScreen = false;
     hideMap();
@@ -26,6 +29,9 @@ function startBattle() {
     addStats();
 }
 
+/**
+ * Hides the map screen.
+ */
 function hideMap() {
     document.body.style.background = "white";
     fabCanvas.clear();
@@ -42,6 +48,9 @@ function hideMap() {
     document.getElementById("battleTest").style.visibility = "hidden";
 }
 
+/**
+ * Makes the map visible again.
+ */
 function unhideMap() {
     document.getElementById("chosenName").style.visibility = "visible";
     document.getElementById("chosenTypes").style.visibility = "visible";
@@ -55,6 +64,9 @@ function unhideMap() {
     document.getElementById("battleTest").style.visibility = "visible";
 }
 
+/**
+ * Hides the battle screen.
+ */
 function hideBattleScreen() {
     document.getElementById("player1HP").style.visibility = "hidden";
     document.getElementById("player1MP").style.visibility = "hidden";
@@ -75,6 +87,9 @@ function hideBattleScreen() {
     document.getElementById("playerFlee").style.visibility = "hidden";
 }
 
+/**
+ * Makes the battle screen visible again.
+ */
 function unhideBattleScreen() {
     document.getElementById("player1HP").style.visibility = "visible";
     document.getElementById("player1MP").style.visibility = "visible";
@@ -95,6 +110,9 @@ function unhideBattleScreen() {
     document.getElementById("playerFlee").style.visibility = "visible";
 }
 
+/**
+ * Adds the battling characters stats to the screen.
+ */
 function addStats() {
     document.getElementById("player1HPNumber").innerHTML = player1.hpLeft + "/" + player1.hp;
     document.getElementById("player1MPNumber").innerHTML = player1.mpLeft + "/" + player1.mp;
@@ -104,14 +122,25 @@ function addStats() {
     document.getElementById("enemy1Name").innerHTML = testMonster.name;
 }
 
+/**
+ * Changes color of button when clicked.
+ * @param {*} _this the chosen button
+ */
 function buttonClicked(_this) {
     _this.style.backgroundColor = "yellow"
 }
 
+/**
+ * Changes color of button when unclicked.
+ * @param {*} _this the chosen button
+ */
 function buttonUnclicked(_this) {
     _this.style.backgroundColor = "cornflowerblue";
 }
 
+/**
+ * Returns the user to the map screen.
+ */
 function toMenu() {
     onMapScreen = true;
     unhideMap();
@@ -119,12 +148,19 @@ function toMenu() {
     document.body.style.background = "url(RegionTest1.png) no-repeat";
 }
 
+/**
+ * Shows the currently avaiable moves of the chosen character.
+ */
 function showMoves() {
     for (let i = 0; i < player1.availableMoves.length; i++) {
         createMoveElement(player1.availableMoves[i]);
     }
 }
 
+/**
+ * Creates a button and tooltip for the chosen move.
+ * @param {move} selectedMove the chosen move.
+ */
 function createMoveElement(selectedMove) {
     let moveButton = document.createElement("BUTTON");
     moveButton.style.top = y + "px";
@@ -151,6 +187,11 @@ function createMoveElement(selectedMove) {
     }
 }
 
+/**
+ * Finds the data of the chosen move.
+ * @param {move} selectedMove the chosen move
+ * @returns the chosen moves data and stats.
+ */
 function findMove(selectedMove) {
     for (let i = 0; i < moveList.length; i++) {
         if (selectedMove === moveList[i].name) {

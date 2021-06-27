@@ -58,24 +58,28 @@
     <p id="player1Name" style="visibility: hidden; position: absolute; left: 100px; top: 100px;"></p>
     <p id="enemy1Name" style="visibility: hidden; position: absolute; right: 300px; top: 100px;"></p>
     <p id="player1HP" class="statBar" style="visibility: hidden; position: absolute; left: 100px; top: 150px;"></p>
-    <p id="player1curHP" class="remainingValues" style="visibility: hidden; position: absolute; left: 100px; top: 150px;"></p>
+    <p id="player1curHP" class="remainingValues"
+        style="visibility: hidden; position: absolute; left: 100px; top: 150px;"></p>
     <p id="player1HPNumber" style="visibility: hidden; position: absolute; left: 310px; top: 150px;"></p>
     <p id="player1MP" class="statBar" style="visibility: hidden; position: absolute; left: 100px; top: 200px;"></p>
-    <p id="player1curMP" class="remainingValues" style="visibility: hidden; position: absolute; left: 100px; top: 200px; background-color: blue;"></p>
+    <p id="player1curMP" class="remainingValues"
+        style="visibility: hidden; position: absolute; left: 100px; top: 200px; background-color: blue;"></p>
     <p id="player1MPNumber" style="visibility: hidden; position: absolute; left: 310px; top: 200px;"></p>
     <p id="enemy1HP" class="statBar" style="visibility: hidden; position: absolute; right: 100px; top: 150px;"></p>
-    <p id="enemy1curHP" class="remainingValues" style="visibility: hidden; position: absolute; right: 100px; top: 150px;"></p>
-    <p id="enemy1HPNumber" style="visibility: hidden; position: absolute; right: 310px; top: 150px;" ></p>
+    <p id="enemy1curHP" class="remainingValues"
+        style="visibility: hidden; position: absolute; right: 100px; top: 150px;"></p>
+    <p id="enemy1HPNumber" style="visibility: hidden; position: absolute; right: 310px; top: 150px;"></p>
     <p id="enemy1MP" class="statBar" style="visibility: hidden; position: absolute; right: 100px; top: 200px;"></p>
-    <p id="enemy1curMP" class="remainingValues" style="visibility: hidden; position: absolute; right: 100px; top: 200px; background-color: blue;"></p>
-    <p id="enemy1MPNumber" style="visibility: hidden; position: absolute; right: 310px; top: 200px;" ></p>
+    <p id="enemy1curMP" class="remainingValues"
+        style="visibility: hidden; position: absolute; right: 100px; top: 200px; background-color: blue;"></p>
+    <p id="enemy1MPNumber" style="visibility: hidden; position: absolute; right: 310px; top: 200px;"></p>
 
-    <button id="playerAbilities" class="menuButtons" onmousedown="buttonClicked(this)" 
-    onmouseup = "buttonUnclicked(this)" onclick="showMoves()" style="position: absolute; visibility: hidden; bottom: 8%; left: 10px;">Abilities</button>
-    <button id="playerItems" class="menuButtons" onmousedown="buttonClicked(this)" 
-    onmouseup = "buttonUnclicked(this)" style="position: absolute; visibility: hidden; bottom: 5%; left: 10px;">Items</button>
-    <button id="playerFlee" class="menuButtons" onmousedown="buttonClicked(this)" 
-    onmouseup = "buttonUnclicked(this)" onclick="toMenu()" style="position: absolute; visibility: hidden; bottom: 2%; left: 10px;">Flee</button>
+    <button id="playerAbilities" class="menuButtons" onmousedown="buttonClicked(this)" onmouseup="buttonUnclicked(this)"
+        onclick="showMoves()" style="position: absolute; visibility: hidden; bottom: 8%; left: 10px;">Abilities</button>
+    <button id="playerItems" class="menuButtons" onmousedown="buttonClicked(this)" onmouseup="buttonUnclicked(this)"
+        style="position: absolute; visibility: hidden; bottom: 5%; left: 10px;">Items</button>
+    <button id="playerFlee" class="menuButtons" onmousedown="buttonClicked(this)" onmouseup="buttonUnclicked(this)"
+        onclick="toMenu()" style="position: absolute; visibility: hidden; bottom: 2%; left: 10px;">Flee</button>
     <button onclick="startBattle()" id="battleTest" style="position: absolute; top: 5%; right: 5%">To Battle</button>
 
     <canvas id="canvas" width="1700" height="1600"></canvas>
@@ -87,7 +91,7 @@
 <script src="move.js"></script>
 <script>
 
-    //Template values for playable characters
+    //Template values for playable characters.
     const STR = 10;
     const SPE = 10;
     const VIT = 10;
@@ -96,15 +100,15 @@
     const HP = 10 + (3 * VIT);
     const MP = 10 + (2 * WIS);
 
-    //first playable character
+    //First playable character.
     let player1 = new Character("", "", "", 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, ["Normal Strike"]);
-    
 
-    //position of player on map
+
+    //Position of player on map.
     let curX = 350;
     let curY = 250;
 
-    //popup-menu for character customisation
+    //Popup-menu for character customisation.
     let popup = document.getElementById("popUp");
     let content = document.getElementById("popup-content");
     let span = document.getElementsByClassName("close")[0];
@@ -116,12 +120,17 @@
 
     let gameStarted = false;
     let onMapScreen = true;
+
+    //Stops player from scrolling down when moving character.
     document.body.style.overflow = "hidden";
 
     const interval = setInterval(draw, 10);
 
     loadTemplateValues();
 
+    /**
+     * Draws the player onto the map.
+     */
     function draw() {
         if (onMapScreen == true) {
             fabCanvas.clear();
@@ -132,6 +141,9 @@
         }
     }
 
+    /**
+     * Checks if arrow-keys are pressed, then moves character accordingly.
+     */
     function movePlayer(e) {
         if (gameStarted == true) {
             console.log(curY);
@@ -162,10 +174,17 @@
         }
     }
 
+    /**
+     * Closes the pop-up window.
+     */
     function closeWindow() {
         popup.style.display = "none";
     }
 
+    /**
+     * Collects the input from pop-up window and starts the game for the player.
+     * Shows error if player has missing information.
+     */
     function startGame() {
         if (document.getElementById("name").value != "" && document.getElementById("characterClass").value != "" &&
             document.getElementById("characterRace").value != "") {
@@ -192,6 +211,9 @@
         }
     }
 
+    /**
+     * Loads template values of character stats.
+     */
     function loadTemplateValues() {
         document.getElementById("characterVIT").innerHTML = "VIT: " + VIT;
         document.getElementById("characterSTR").innerHTML = "STR: " + STR;
@@ -202,6 +224,9 @@
         document.getElementById("characterMP").innerHTML = "MP: " + MP;
     }
 
+    /**
+     * Gives characters correct HP and MP based on VIT and WIS stats.
+     */
     function correctStats() {
         player1.hp = 10 + (3 * player1.vit);
         player1.hpLeft = player1.hp;
@@ -212,6 +237,9 @@
 
     }
 
+    /**
+     * Changes the stat values shown on screen every time user changes class in pop-up window.
+     */
     function changeClass() {
         let chosenClass = document.getElementById("characterClass").value;
         switch (chosenClass) {

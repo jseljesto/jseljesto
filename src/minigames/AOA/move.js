@@ -17,7 +17,7 @@ class Move {
     * Get the name value.
     * @return {string} name The name value.
     */
-     get name() {
+    get name() {
         return this._name;
     }
 
@@ -33,7 +33,7 @@ class Move {
     * Get the power value.
     * @return {number} pow The power value.
     */
-     get pow() {
+    get pow() {
         return this._pow;
     }
 
@@ -49,7 +49,7 @@ class Move {
     * Get the accuracy value.
     * @return {number} acc The accuracy value.
     */
-     get acc() {
+    get acc() {
         return this._acc;
     }
 
@@ -65,7 +65,7 @@ class Move {
     * Get the mp value.
     * @return {number} mp The mp value.
     */
-     get mp() {
+    get mp() {
         return this._mp;
     }
 
@@ -81,7 +81,7 @@ class Move {
     * Get the extra effects of move.
     * @return {string} effects Extra effects.
     */
-     get effects() {
+    get effects() {
         return this._effects;
     }
 
@@ -97,7 +97,7 @@ class Move {
     * Get the moves targets.
     * @return {string} targets The chosen targets.
     */
-     get targets() {
+    get targets() {
         return this._targets;
     }
 
@@ -113,7 +113,7 @@ class Move {
     * Get the image value.
     * @return {string} img Image link.
     */
-     get img() {
+    get img() {
         return this._img;
     }
 
@@ -129,7 +129,7 @@ class Move {
     * Get the description of the move.
     * @return {string} desc The desc value.
     */
-     get desc() {
+    get desc() {
         return this._desc;
     }
 
@@ -145,7 +145,7 @@ class Move {
     * Get the magic type.
     * @return {string} type The type value.
     */
-     get type() {
+    get type() {
         return this._type;
     }
 

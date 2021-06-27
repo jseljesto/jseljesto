@@ -247,7 +247,7 @@ class Character {
     * Get the available moves of the character.
     * @return {string[]} availableMoves The available moves.
     */
-     get availableMoves() {
+    get availableMoves() {
         return this._availableMoves;
     }
 
