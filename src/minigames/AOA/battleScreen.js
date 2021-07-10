@@ -152,6 +152,10 @@ function toMenu() {
  * Shows the currently avaiable moves of the chosen character.
  */
 function showMoves() {
+    document.getElementById("playerAbilities").style.visibility = "hidden";
+    document.getElementById("playerItems").style.visibility = "hidden";
+    document.getElementById("playerFlee").style.visibility = "hidden";
+    document.getElementById("goBack").style.visibility = "visible";
     for (let i = 0; i < player1.availableMoves.length; i++) {
         createMoveElement(player1.availableMoves[i]);
     }
@@ -166,6 +170,9 @@ function createMoveElement(selectedMove) {
     moveButton.style.top = y + "px";
     moveButton.style.left = x + "px";
     moveButton.className = "moves";
+    moveButton.onclick = function() {
+        useMove(selectedMove);
+    };
     document.body.appendChild(moveButton);
     let tooltip = document.createElement("SPAN");
     tooltip.className = "tooltips";
@@ -198,4 +205,67 @@ function findMove(selectedMove) {
             return moveList[i];
         }
     }
+}
+
+function useMove (moveName) {
+    removeMoveElements();
+    let move = findMove(moveName);
+    let roll = Math.floor(Math.random() * 11);
+    let variation = 0.95 + (roll/100);
+    let damage = Math.round((((player1.str * 0.065) * move.pow) + 10) * variation);
+    characterDamaged(damage, testMonster);
+    changeCurrentMP(player1, move.mp);
+    returnToBattleMenu();
+}
+
+function removeMoveElements() {
+    let elementsFound = document.getElementsByClassName("moves");
+    while (elementsFound.length > 0) {
+        elementsFound[0].parentNode.removeChild(elementsFound[0]);
+    }
+}
+
+function returnToBattleMenu() {
+    removeMoveElements();
+    movesShown = 0;
+    x = 100;
+    y = 250;
+    document.getElementById("playerAbilities").style.visibility = "visible";
+    document.getElementById("playerItems").style.visibility = "visible";
+    document.getElementById("playerFlee").style.visibility = "visible";
+    document.getElementById("goBack").style.visibility = "hidden";
+}
+
+function characterDamaged(damage, character) {
+    character.hpLeft -= damage;
+    document.getElementById("enemy1HPNumber").innerHTML = character.hpLeft + "/" + character.hp;
+    let hpBarWidth = 200 * character.hpLeft/character.hp;
+    document.getElementById("enemy1curHP").style.width = hpBarWidth + "px";
+    if (hpBarWidth <= 0) {
+        document.getElementById("enemy1HPNumber").innerHTML = 0 + "/" + character.hp;
+        document.getElementById("enemy1curHP").style.width = 0 + "px";
+    }
+    changeHpBarColour((character.hpLeft/character.hp) * 100, "enemy1curHP");
+}
+
+function changeHpBarColour(percentage, elementID) {
+    if (percentage >= 75) {
+        document.getElementById(elementID).style.backgroundColor = 'rgb(' + 14 + ',' + 180 + ',' + 14 + ')';
+    }
+    else if (percentage >= 50 && percentage < 75) {
+        document.getElementById(elementID).style.backgroundColor = "yellow";
+    }
+    else if (percentage >= 25 && percentage < 50) {
+        document.getElementById(elementID).style.backgroundColor = "orange";
+    }
+    else if (percentage >= 0 && percentage < 25) {
+        document.getElementById(elementID).style.backgroundColor = "red";
+    }
+}
+
+function changeCurrentMP(character, mp) {
+    character.mpLeft -= mp;
+    document.getElementById("player1MPNumber").innerHTML = player1.mpLeft + "/" + player1.mp;
+    let mpBarWidth = 200 * character.mpLeft/character.mp;
+    document.getElementById("player1curMP").style.width = mpBarWidth + "px";
 }
