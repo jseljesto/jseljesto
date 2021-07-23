@@ -1,19 +1,4 @@
-let testMonster = {
-    name: "Bear",
-    race: "",
-    class: "",
-    vit: 8,
-    str: 8,
-    wis: 4,
-    dex: 6,
-    spe: 7,
-    lvl: 1,
-    xp: 0,
-    hp: 31,
-    hpLeft: 31,
-    mp: 18,
-    mpLeft: 18
-};
+let testMonster = new Monster("Bear", "", "", 8, 8, 4, 6, 7, 1, 10, 31, 31, 18, 18, ["Scratch"]);
 
 let movesShown = 0;
 let x = 100;
@@ -170,7 +155,7 @@ function createMoveElement(selectedMove) {
     moveButton.style.top = y + "px";
     moveButton.style.left = x + "px";
     moveButton.className = "moves";
-    moveButton.onclick = function() {
+    moveButton.onclick = function () {
         useMove(selectedMove);
     };
     document.body.appendChild(moveButton);
@@ -207,14 +192,18 @@ function findMove(selectedMove) {
     }
 }
 
-function useMove (moveName) {
+function useMove(moveName) {
     removeMoveElements();
     let move = findMove(moveName);
     let roll = Math.floor(Math.random() * 11);
-    let variation = 0.95 + (roll/100);
+    let variation = 0.95 + (roll / 100);
     let damage = Math.round((((player1.str * 0.065) * move.pow) + 10) * variation);
-    characterDamaged(damage, testMonster);
-    changeCurrentMP(player1, move.mp);
+    if (move.mp <= player1.mpLeft) {
+        changeCurrentMP(player1, move.mp);
+        characterDamaged(damage, testMonster);
+    } else {
+        alert("You do not have enough MP left!");
+    }
     returnToBattleMenu();
 }
 
@@ -239,13 +228,14 @@ function returnToBattleMenu() {
 function characterDamaged(damage, character) {
     character.hpLeft -= damage;
     document.getElementById("enemy1HPNumber").innerHTML = character.hpLeft + "/" + character.hp;
-    let hpBarWidth = 200 * character.hpLeft/character.hp;
+    let hpBarWidth = 200 * character.hpLeft / character.hp;
     document.getElementById("enemy1curHP").style.width = hpBarWidth + "px";
     if (hpBarWidth <= 0) {
         document.getElementById("enemy1HPNumber").innerHTML = 0 + "/" + character.hp;
         document.getElementById("enemy1curHP").style.width = 0 + "px";
     }
-    changeHpBarColour((character.hpLeft/character.hp) * 100, "enemy1curHP");
+    changeHpBarColour((character.hpLeft / character.hp) * 100, "enemy1curHP");
+    //isCharacterDead(character);
 }
 
 function changeHpBarColour(percentage, elementID) {
@@ -266,6 +256,14 @@ function changeHpBarColour(percentage, elementID) {
 function changeCurrentMP(character, mp) {
     character.mpLeft -= mp;
     document.getElementById("player1MPNumber").innerHTML = player1.mpLeft + "/" + player1.mp;
-    let mpBarWidth = 200 * character.mpLeft/character.mp;
+    let mpBarWidth = 200 * character.mpLeft / character.mp;
     document.getElementById("player1curMP").style.width = mpBarWidth + "px";
+}
+
+function isCharacterDead(character) {
+    if (character.hpLeft <= 0) {
+        return true;
+    } else {
+        return false;
+    }
 }

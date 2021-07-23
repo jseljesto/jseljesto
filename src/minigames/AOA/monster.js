@@ -1,6 +1,6 @@
-class Character {
+class Monster {
 
-    constructor(name, race, type, vit, str, wis, dex, spe, lvl, xp, xpNext, hp, hpLeft, mp, mpLeft, availableMoves) {
+    constructor(name, race, type, vit, str, wis, dex, spe, lvl, baseXp, hp, hpLeft, mp, mpLeft, availableMoves) {
         this._name = name;
         this._race = race;
         this._type = type;
@@ -10,8 +10,7 @@ class Character {
         this._dex = dex;
         this._spe = spe;
         this._lvl = lvl;
-        this._xp = xp;
-        this._xpNext = xpNext;
+        this._baseXp = baseXp;
         this._hp = hp;
         this._hpLeft = hpLeft;
         this._mp = mp;
@@ -164,35 +163,19 @@ class Character {
     }
 
     /**
-    * Get the xp value.
+    * Get the base xp value.
     * @return {number} xp The xp value.
     */
-    get xp() {
-        return this._xp;
+    get baseXp() {
+        return this._baseXp;
     }
 
     /**
-     * Set the xp value.
+     * Set the base xp value.
     * @param {number} xp The xp value.
     */
-    set xp(xp) {
-        this._xp = xp;
-    }
-
-    /**
-    * Get the next lvl xp value.
-    * @return {number} xpNext The next lvl xp value.
-    */
-     get xpNext() {
-        return this._xpNext;
-    }
-
-    /**
-     * Set the next lvl xp value.
-    * @param {number} xpNext The next lvl xp value.
-    */
-    set xpNext(xpNext) {
-        this._xpNext = xpNext;
+    set baseXp(baseXp) {
+        this._baseXp = baseXp;
     }
 
     /**
