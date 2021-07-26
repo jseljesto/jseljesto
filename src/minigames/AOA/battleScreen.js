@@ -1,8 +1,7 @@
-let testMonster = new Monster("Bear", "", "", 8, 8, 4, 6, 7, 1, 10, 31, 31, 18, 18, ["Scratch"]);
-
 let movesShown = 0;
 let x = 100;
 let y = 250;
+let targetedChar = "";
 
 /**
  * Changes from mapScreen to battleScreen.
@@ -53,20 +52,25 @@ function unhideMap() {
  * Hides the battle screen.
  */
 function hideBattleScreen() {
-    document.getElementById("player1HP").style.visibility = "hidden";
-    document.getElementById("player1MP").style.visibility = "hidden";
-    document.getElementById("enemy1HP").style.visibility = "hidden";
-    document.getElementById("enemy1MP").style.visibility = "hidden";
-    document.getElementById("player1curHP").style.visibility = "hidden";
-    document.getElementById("player1curMP").style.visibility = "hidden";
-    document.getElementById("enemy1curHP").style.visibility = "hidden";
-    document.getElementById("enemy1curMP").style.visibility = "hidden";
-    document.getElementById("player1HPNumber").style.visibility = "hidden";
-    document.getElementById("player1MPNumber").style.visibility = "hidden";
-    document.getElementById("enemy1HPNumber").style.visibility = "hidden";
-    document.getElementById("enemy1MPNumber").style.visibility = "hidden";
-    document.getElementById("player1Name").style.visibility = "hidden";
-    document.getElementById("enemy1Name").style.visibility = "hidden";
+    for (let i = 1; i <= amountOfCharacters; i++) {
+        document.getElementById("player" + i + "HP").style.visibility = "hidden";
+        document.getElementById("player" + i + "MP").style.visibility = "hidden";
+        document.getElementById("player" + i + "curHP").style.visibility = "hidden";
+        document.getElementById("player" + i + "curMP").style.visibility = "hidden";
+        document.getElementById("player" + i + "HPNumber").style.visibility = "hidden";
+        document.getElementById("player" + i + "MPNumber").style.visibility = "hidden";
+        document.getElementById("player" + i + "Name").style.visibility = "hidden";
+    }
+    for (let j = 1; j <= amountofMonsters; j++) {
+        document.getElementById("enemy" + j + "HP").style.visibility = "hidden";
+        document.getElementById("enemy" + j + "MP").style.visibility = "hidden";
+        document.getElementById("enemy" + j + "curHP").style.visibility = "hidden";
+        document.getElementById("enemy" + j + "curMP").style.visibility = "hidden";
+        document.getElementById("enemy" + j + "HPNumber").style.visibility = "hidden";
+        document.getElementById("enemy" + j + "MPNumber").style.visibility = "hidden";
+        document.getElementById("enemy" + j + "Name").style.visibility = "hidden";
+    }
+
     document.getElementById("playerAbilities").style.visibility = "hidden";
     document.getElementById("playerItems").style.visibility = "hidden";
     document.getElementById("playerFlee").style.visibility = "hidden";
@@ -76,20 +80,24 @@ function hideBattleScreen() {
  * Makes the battle screen visible again.
  */
 function unhideBattleScreen() {
-    document.getElementById("player1HP").style.visibility = "visible";
-    document.getElementById("player1MP").style.visibility = "visible";
-    document.getElementById("enemy1HP").style.visibility = "visible";
-    document.getElementById("enemy1MP").style.visibility = "visible";
-    document.getElementById("player1curHP").style.visibility = "visible";
-    document.getElementById("player1curMP").style.visibility = "visible";
-    document.getElementById("enemy1curHP").style.visibility = "visible";
-    document.getElementById("enemy1curMP").style.visibility = "visible";
-    document.getElementById("player1HPNumber").style.visibility = "visible";
-    document.getElementById("player1MPNumber").style.visibility = "visible";
-    document.getElementById("enemy1HPNumber").style.visibility = "visible";
-    document.getElementById("enemy1MPNumber").style.visibility = "visible";
-    document.getElementById("player1Name").style.visibility = "visible";
-    document.getElementById("enemy1Name").style.visibility = "visible";
+    for (let i = 1; i <= amountOfCharacters; i++) {
+        document.getElementById("player" + i + "HP").style.visibility = "visible";
+        document.getElementById("player" + i + "MP").style.visibility = "visible";
+        document.getElementById("player" + i + "curHP").style.visibility = "visible";
+        document.getElementById("player" + i + "curMP").style.visibility = "visible";
+        document.getElementById("player" + i + "HPNumber").style.visibility = "visible";
+        document.getElementById("player" + i + "MPNumber").style.visibility = "visible";
+        document.getElementById("player" + i + "Name").style.visibility = "visible";
+    }
+    for (let j = 1; j <= amountofMonsters; j++) {
+        document.getElementById("enemy" + j + "HP").style.visibility = "visible";
+        document.getElementById("enemy" + j + "MP").style.visibility = "visible";
+        document.getElementById("enemy" + j + "curHP").style.visibility = "visible";
+        document.getElementById("enemy" + j + "curMP").style.visibility = "visible";
+        document.getElementById("enemy" + j + "HPNumber").style.visibility = "visible";
+        document.getElementById("enemy" + j + "MPNumber").style.visibility = "visible";
+        document.getElementById("enemy" + j + "Name").style.visibility = "visible";
+    }
     document.getElementById("playerAbilities").style.visibility = "visible";
     document.getElementById("playerItems").style.visibility = "visible";
     document.getElementById("playerFlee").style.visibility = "visible";
@@ -99,12 +107,16 @@ function unhideBattleScreen() {
  * Adds the battling characters stats to the screen.
  */
 function addStats() {
-    document.getElementById("player1HPNumber").innerHTML = player1.hpLeft + "/" + player1.hp;
-    document.getElementById("player1MPNumber").innerHTML = player1.mpLeft + "/" + player1.mp;
-    document.getElementById("enemy1HPNumber").innerHTML = testMonster.hpLeft + "/" + testMonster.hp;
-    document.getElementById("enemy1MPNumber").innerHTML = testMonster.mpLeft + "/" + testMonster.mp;
-    document.getElementById("player1Name").innerHTML = player1.name;
-    document.getElementById("enemy1Name").innerHTML = testMonster.name;
+    for (let i = 1; i <= amountOfCharacters; i++) {
+        document.getElementById("player" + i + "HPNumber").innerHTML = currentCharacters[i-1].hpLeft + "/" + currentCharacters[i-1].hp;
+        document.getElementById("player" + i + "MPNumber").innerHTML = currentCharacters[i-1].mpLeft + "/" + currentCharacters[i-1].mp;
+        document.getElementById("player" + i + "Name").innerHTML = currentCharacters[i-1].name;
+    }
+    for (let j = 1; j <= amountofMonsters; j++) {
+        document.getElementById("enemy" + j + "HPNumber").innerHTML = currentMonsters[j-1].hpLeft + "/" + currentMonsters[j-1].hp;
+        document.getElementById("enemy" + j + "MPNumber").innerHTML = currentMonsters[j-1].mpLeft + "/" + currentMonsters[j-1].mp;
+        document.getElementById("enemy" + j + "Name").innerHTML = currentMonsters[j-1].name;
+    }
 }
 
 /**
@@ -156,7 +168,8 @@ function createMoveElement(selectedMove) {
     moveButton.style.left = x + "px";
     moveButton.className = "moves";
     moveButton.onclick = function () {
-        useMove(selectedMove);
+        //useMove(selectedMove);
+        targetCharacter(selectedMove);
     };
     document.body.appendChild(moveButton);
     let tooltip = document.createElement("SPAN");
@@ -266,4 +279,14 @@ function isCharacterDead(character) {
     } else {
         return false;
     }
+}
+
+function targetCharacter(selectedMove) {
+    let target1 = document.createElement("BUTTON");
+    target1.style.top = 100 + "px";
+    target1.style.right = 200 + "px";
+    target1.className = "targets";
+    let text = document.createTextNode("TargetTest");
+    target1.appendChild(text);
+    document.body.appendChild(target1);
 }

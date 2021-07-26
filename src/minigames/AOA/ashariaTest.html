@@ -91,6 +91,8 @@
 <script src="battleScreen.js"></script>
 <script src="character.js"></script>
 <script src="move.js"></script>
+<script src="monster.js"></script>
+<script src="levels.js"></script>
 <script>
 
     //Template values for playable characters.
@@ -101,10 +103,13 @@
     const DEX = 10;
     const HP = 10 + (3 * VIT);
     const MP = 10 + (2 * WIS);
+    let amountOfCharacters = 0;
+    let currentCharacters = [];
 
     //First playable character.
     let player1 = new Character("", "", "", 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, ["Normal Strike"]);
-
+    amountOfCharacters++;
+    currentCharacters.push(player1);
 
     //Position of player on map.
     let curX = 350;

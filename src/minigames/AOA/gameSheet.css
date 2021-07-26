@@ -138,6 +138,12 @@
     visibility: visible;
 }
 
+.targets {
+    position: absolute;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
 
 @media screen and (min-height: 600px) {
     #myCanvas {
