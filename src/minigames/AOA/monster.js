@@ -259,8 +259,8 @@ class Monster {
     }
 
 }
-let amountofMonsters = 0;
+let amountOfMonsters = 0;
 let currentMonsters = [];
 let testMonster = new Monster("Bear", "", "", 8, 8, 4, 6, 7, 1, 10, 31, 31, 18, 18, ["Scratch"]);
-amountofMonsters++;
+amountOfMonsters++;
 currentMonsters.push(testMonster);

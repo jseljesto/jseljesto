@@ -75,7 +75,7 @@
     <p id="enemy1MPNumber" style="visibility: hidden; position: absolute; right: 310px; top: 200px;"></p>
 
     <button id="playerAbilities" class="menuButtons" onmousedown="buttonClicked(this)" onmouseup="buttonUnclicked(this)"
-        onclick="showMoves()" style="position: absolute; visibility: hidden; bottom: 8%; left: 10px;">Abilities</button>
+        onclick="showMoves(currentPlayer)" style="position: absolute; visibility: hidden; bottom: 8%; left: 10px;">Abilities</button>
     <button id="playerItems" class="menuButtons" onmousedown="buttonClicked(this)" onmouseup="buttonUnclicked(this)"
         style="position: absolute; visibility: hidden; bottom: 5%; left: 10px;">Items</button>
     <button id="goBack" class="menuButtons" onmousedown="buttonClicked(this)" onmouseup="buttonUnclicked(this)"
@@ -105,6 +105,9 @@
     const MP = 10 + (2 * WIS);
     let amountOfCharacters = 0;
     let currentCharacters = [];
+
+    //Currently selected player in battle.
+    let currentPlayer = "";
 
     //First playable character.
     let player1 = new Character("", "", "", 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, ["Normal Strike"]);

@@ -2,6 +2,8 @@ let movesShown = 0;
 let x = 100;
 let y = 250;
 let targetedChar = "";
+let combatantsSorted = [];
+let currentUnitTurn = 0;
 
 /**
  * Changes from mapScreen to battleScreen.
@@ -11,6 +13,8 @@ function startBattle() {
     hideMap();
     unhideBattleScreen();
     addStats();
+    sortBySpeed();
+    nextUnitsTurn(combatantsSorted);
 }
 
 /**
@@ -61,7 +65,7 @@ function hideBattleScreen() {
         document.getElementById("player" + i + "MPNumber").style.visibility = "hidden";
         document.getElementById("player" + i + "Name").style.visibility = "hidden";
     }
-    for (let j = 1; j <= amountofMonsters; j++) {
+    for (let j = 1; j <= amountOfMonsters; j++) {
         document.getElementById("enemy" + j + "HP").style.visibility = "hidden";
         document.getElementById("enemy" + j + "MP").style.visibility = "hidden";
         document.getElementById("enemy" + j + "curHP").style.visibility = "hidden";
@@ -89,7 +93,7 @@ function unhideBattleScreen() {
         document.getElementById("player" + i + "MPNumber").style.visibility = "visible";
         document.getElementById("player" + i + "Name").style.visibility = "visible";
     }
-    for (let j = 1; j <= amountofMonsters; j++) {
+    for (let j = 1; j <= amountOfMonsters; j++) {
         document.getElementById("enemy" + j + "HP").style.visibility = "visible";
         document.getElementById("enemy" + j + "MP").style.visibility = "visible";
         document.getElementById("enemy" + j + "curHP").style.visibility = "visible";
@@ -98,9 +102,6 @@ function unhideBattleScreen() {
         document.getElementById("enemy" + j + "MPNumber").style.visibility = "visible";
         document.getElementById("enemy" + j + "Name").style.visibility = "visible";
     }
-    document.getElementById("playerAbilities").style.visibility = "visible";
-    document.getElementById("playerItems").style.visibility = "visible";
-    document.getElementById("playerFlee").style.visibility = "visible";
 }
 
 /**
@@ -108,14 +109,41 @@ function unhideBattleScreen() {
  */
 function addStats() {
     for (let i = 1; i <= amountOfCharacters; i++) {
-        document.getElementById("player" + i + "HPNumber").innerHTML = currentCharacters[i-1].hpLeft + "/" + currentCharacters[i-1].hp;
-        document.getElementById("player" + i + "MPNumber").innerHTML = currentCharacters[i-1].mpLeft + "/" + currentCharacters[i-1].mp;
-        document.getElementById("player" + i + "Name").innerHTML = currentCharacters[i-1].name;
+        document.getElementById("player" + i + "HPNumber").innerHTML = currentCharacters[i - 1].hpLeft + "/" + currentCharacters[i - 1].hp;
+        document.getElementById("player" + i + "MPNumber").innerHTML = currentCharacters[i - 1].mpLeft + "/" + currentCharacters[i - 1].mp;
+        document.getElementById("player" + i + "Name").innerHTML = currentCharacters[i - 1].name;
     }
-    for (let j = 1; j <= amountofMonsters; j++) {
-        document.getElementById("enemy" + j + "HPNumber").innerHTML = currentMonsters[j-1].hpLeft + "/" + currentMonsters[j-1].hp;
-        document.getElementById("enemy" + j + "MPNumber").innerHTML = currentMonsters[j-1].mpLeft + "/" + currentMonsters[j-1].mp;
-        document.getElementById("enemy" + j + "Name").innerHTML = currentMonsters[j-1].name;
+    for (let j = 1; j <= amountOfMonsters; j++) {
+        document.getElementById("enemy" + j + "HPNumber").innerHTML = currentMonsters[j - 1].hpLeft + "/" + currentMonsters[j - 1].hp;
+        document.getElementById("enemy" + j + "MPNumber").innerHTML = currentMonsters[j - 1].mpLeft + "/" + currentMonsters[j - 1].mp;
+        document.getElementById("enemy" + j + "Name").innerHTML = currentMonsters[j - 1].name;
+    }
+}
+
+function sortBySpeed() {
+    let combatants = [];
+    for (let i = 0; i < currentCharacters.length; i++) {
+        combatants.push(currentCharacters[i]);
+    }
+    for (let j = 0; j < currentMonsters.length; j++) {
+        combatants.push(currentMonsters[j]);
+    }
+    combatantsSorted = combatants.sort(function (a, b) {
+        return b.spe - a.spe;
+    });
+    currentUnitTurn = 0;
+
+}
+
+function nextUnitsTurn(combatantsSorted) {
+    if (combatantsSorted[currentUnitTurn] instanceof Character) {
+        document.getElementById("playerAbilities").style.visibility = "visible";
+        document.getElementById("playerItems").style.visibility = "visible";
+        document.getElementById("playerFlee").style.visibility = "visible";
+        currentPlayer = combatantsSorted[currentUnitTurn];
+    }
+    else if (combatantsSorted[currentUnitTurn] instanceof Monster) {
+
     }
 }
 
@@ -124,7 +152,7 @@ function addStats() {
  * @param {*} _this the chosen button
  */
 function buttonClicked(_this) {
-    _this.style.backgroundColor = "yellow"
+    _this.style.backgroundColor = "yellow";
 }
 
 /**
@@ -148,13 +176,13 @@ function toMenu() {
 /**
  * Shows the currently avaiable moves of the chosen character.
  */
-function showMoves() {
+function showMoves(character) {
     document.getElementById("playerAbilities").style.visibility = "hidden";
     document.getElementById("playerItems").style.visibility = "hidden";
     document.getElementById("playerFlee").style.visibility = "hidden";
     document.getElementById("goBack").style.visibility = "visible";
-    for (let i = 0; i < player1.availableMoves.length; i++) {
-        createMoveElement(player1.availableMoves[i]);
+    for (let i = 0; i < character.availableMoves.length; i++) {
+        createMoveElement(character.availableMoves[i]);
     }
 }
 
