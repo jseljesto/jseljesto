@@ -136,6 +136,9 @@ function sortBySpeed() {
 }
 
 function nextUnitsTurn(combatantsSorted) {
+    if (currentUnitTurn >= combatantsSorted.length) {
+        currentUnitTurn = 0;
+    }
     if (combatantsSorted[currentUnitTurn] instanceof Character) {
         document.getElementById("playerAbilities").style.visibility = "visible";
         document.getElementById("playerItems").style.visibility = "visible";
@@ -143,8 +146,15 @@ function nextUnitsTurn(combatantsSorted) {
         currentPlayer = combatantsSorted[currentUnitTurn];
     }
     else if (combatantsSorted[currentUnitTurn] instanceof Monster) {
-
+        randomMove(combatantsSorted[currentUnitTurn]);
     }
+}
+
+function randomMove(monster) {
+    let numOfMoves = monster.availableMoves.length;
+    let selectedNum = Math.floor(Math.random() * numOfMoves);
+    let randomTarget = Math.floor(Math.random() * currentCharacters.length);
+    useMove(monster.availableMoves[selectedNum], monster, currentCharacters[randomTarget]);
 }
 
 /**
@@ -246,11 +256,17 @@ function useMove(moveName, character, target) {
     } else {
         alert("You do not have enough MP left!");
     }
-    returnToBattleMenu();
+    currentUnitTurn++;
+    nextUnitsTurn(combatantsSorted);
+    //returnToBattleMenu();
 }
 
 function removeMoveElements() {
     let elementsFound = document.getElementsByClassName("moves");
+    while (elementsFound.length > 0) {
+        elementsFound[0].parentNode.removeChild(elementsFound[0]);
+    }
+    elementsFound = document.getElementsByClassName("targets");
     while (elementsFound.length > 0) {
         elementsFound[0].parentNode.removeChild(elementsFound[0]);
     }
@@ -360,7 +376,6 @@ function createMonsterTargets(selectedMove) {
 function findRightChar() {
     for (let i = 0; i < currentCharacters.length; i++) {
         if (currentPlayer.name == currentCharacters[i].name) {
-            alert("Yes");
             currentPlayerIndex = i;
             return currentCharacters[i];
         }
@@ -372,7 +387,7 @@ function findRightChar() {
 
 function findRightMonster() {
     for (let i = 0; i < currentMonsters.length; i++) {
-        if (currentMonster.name == currentMonsters[i].name) {
+        if (currentOpponent.name == currentMonsters[i].name) {
             currentMonsterIndex = i;
             return currentMonsters[i];
         }
