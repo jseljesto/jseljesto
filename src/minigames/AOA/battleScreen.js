@@ -197,7 +197,8 @@ function createMoveElement(selectedMove) {
     moveButton.className = "moves";
     moveButton.onclick = function () {
         //useMove(selectedMove);
-        targetCharacter(selectedMove);
+        createCharTargets(selectedMove);
+        createMonsterTargets(selectedMove)
     };
     document.body.appendChild(moveButton);
     let tooltip = document.createElement("SPAN");
@@ -233,15 +234,15 @@ function findMove(selectedMove) {
     }
 }
 
-function useMove(moveName) {
+function useMove(moveName, character, target) {
     removeMoveElements();
     let move = findMove(moveName);
     let roll = Math.floor(Math.random() * 11);
     let variation = 0.95 + (roll / 100);
-    let damage = Math.round((((player1.str * 0.065) * move.pow) + 10) * variation);
-    if (move.mp <= player1.mpLeft) {
-        changeCurrentMP(player1, move.mp);
-        characterDamaged(damage, testMonster);
+    let damage = Math.round((((character.str * 0.065) * move.pow) + 10) * variation);
+    if (move.mp <= character.mpLeft) {
+        changeCurrentMP(character, move.mp);
+        characterDamaged(damage, target);
     } else {
         alert("You do not have enough MP left!");
     }
@@ -268,14 +269,25 @@ function returnToBattleMenu() {
 
 function characterDamaged(damage, character) {
     character.hpLeft -= damage;
-    document.getElementById("enemy1HPNumber").innerHTML = character.hpLeft + "/" + character.hp;
     let hpBarWidth = 200 * character.hpLeft / character.hp;
-    document.getElementById("enemy1curHP").style.width = hpBarWidth + "px";
-    if (hpBarWidth <= 0) {
-        document.getElementById("enemy1HPNumber").innerHTML = 0 + "/" + character.hp;
-        document.getElementById("enemy1curHP").style.width = 0 + "px";
+    if (character instanceof Character) {
+        document.getElementById("player" + (currentPlayerIndex + 1) + "HPNumber").innerHTML = character.hpLeft + "/" + character.hp;
+        document.getElementById("player" + (currentPlayerIndex + 1) + "curHP").style.width = hpBarWidth + "px";
+        if (hpBarWidth <= 0) {
+            document.getElementById("player" + (currentPlayerIndex + 1) + "HPNumber").innerHTML = 0 + "/" + character.hp;
+            document.getElementById("player" + (currentPlayerIndex + 1) + "curHP").style.width = 0 + "px";
+        }
+        changeHpBarColour((character.hpLeft / character.hp) * 100, "player" + (currentPlayerIndex + 1) + "curHP");
     }
-    changeHpBarColour((character.hpLeft / character.hp) * 100, "enemy1curHP");
+    else if (character instanceof Monster) {
+        document.getElementById("enemy" + (currentMonsterIndex + 1) + "HPNumber").innerHTML = character.hpLeft + "/" + character.hp;
+        document.getElementById("enemy" + (currentMonsterIndex + 1) + "curHP").style.width = hpBarWidth + "px";
+        if (hpBarWidth <= 0) {
+            document.getElementById("enemy" + (currentMonsterIndex + 1) + "HPNumber").innerHTML = 0 + "/" + character.hp;
+            document.getElementById("enemy" + (currentMonsterIndex + 1) + "curHP").style.width = 0 + "px";
+        }
+        changeHpBarColour((character.hpLeft / character.hp) * 100, "enemy" + (currentMonsterIndex + 1) + "curHP");
+    }
     //isCharacterDead(character);
 }
 
@@ -296,9 +308,15 @@ function changeHpBarColour(percentage, elementID) {
 
 function changeCurrentMP(character, mp) {
     character.mpLeft -= mp;
-    document.getElementById("player1MPNumber").innerHTML = player1.mpLeft + "/" + player1.mp;
     let mpBarWidth = 200 * character.mpLeft / character.mp;
-    document.getElementById("player1curMP").style.width = mpBarWidth + "px";
+    if (character instanceof Character) {
+        document.getElementById("player" + (currentPlayerIndex + 1) + "MPNumber").innerHTML = character.mpLeft + "/" + character.mp;
+        document.getElementById("player" + (currentPlayerIndex + 1) + "curMP").style.width = mpBarWidth + "px";
+    }
+    else if (character instanceof Monster) {
+        document.getElementById("enemy" + (currentMonsterIndex + 1) + "MPNumber").innerHTML = character.mpLeft + "/" + character.mp;
+        document.getElementById("enemy" + (currentMonsterIndex + 1) + "curMP").style.width = mpBarWidth + "px";
+    }
 }
 
 function isCharacterDead(character) {
@@ -309,12 +327,57 @@ function isCharacterDead(character) {
     }
 }
 
-function targetCharacter(selectedMove) {
-    let target1 = document.createElement("BUTTON");
-    target1.style.top = 100 + "px";
-    target1.style.right = 200 + "px";
-    target1.className = "targets";
-    let text = document.createTextNode("TargetTest");
-    target1.appendChild(text);
-    document.body.appendChild(target1);
+function createCharTargets(selectedMove) {
+    for (let i = 0; i < currentCharacters.length; i++) {
+        let target = document.createElement("BUTTON");
+        target.className = "targets";
+        target.style.top = ((i * 200) + 100) + "px";
+        target.style.left = 200 + "px";
+        let text = document.createTextNode("TargetTest");
+        target.onclick = function () {
+            useMove(selectedMove, currentPlayer, currentCharacters[i]);
+        };
+        target.appendChild(text);
+        document.body.appendChild(target);
+    }
+}
+
+function createMonsterTargets(selectedMove) {
+    for (let i = 0; i < currentMonsters.length; i++) {
+        let target = document.createElement("BUTTON");
+        target.className = "targets";
+        target.style.top = ((i * 200) + 100) + "px";
+        target.style.right = 200 + "px";
+        let text = document.createTextNode("TargetTest");
+        target.onclick = function () {
+            useMove(selectedMove, findRightChar(), currentMonsters[i]);
+        };
+        target.appendChild(text);
+        document.body.appendChild(target);
+    }
+}
+
+function findRightChar() {
+    for (let i = 0; i < currentCharacters.length; i++) {
+        if (currentPlayer.name == currentCharacters[i].name) {
+            alert("Yes");
+            currentPlayerIndex = i;
+            return currentCharacters[i];
+        }
+        else {
+            return false;
+        }
+    }
+}
+
+function findRightMonster() {
+    for (let i = 0; i < currentMonsters.length; i++) {
+        if (currentMonster.name == currentMonsters[i].name) {
+            currentMonsterIndex = i;
+            return currentMonsters[i];
+        }
+        else {
+            return false;
+        }
+    }
 }

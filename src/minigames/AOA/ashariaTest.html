@@ -75,11 +75,13 @@
     <p id="enemy1MPNumber" style="visibility: hidden; position: absolute; right: 310px; top: 200px;"></p>
 
     <button id="playerAbilities" class="menuButtons" onmousedown="buttonClicked(this)" onmouseup="buttonUnclicked(this)"
-        onclick="showMoves(currentPlayer)" style="position: absolute; visibility: hidden; bottom: 8%; left: 10px;">Abilities</button>
+        onclick="showMoves(currentPlayer)"
+        style="position: absolute; visibility: hidden; bottom: 8%; left: 10px;">Abilities</button>
     <button id="playerItems" class="menuButtons" onmousedown="buttonClicked(this)" onmouseup="buttonUnclicked(this)"
         style="position: absolute; visibility: hidden; bottom: 5%; left: 10px;">Items</button>
     <button id="goBack" class="menuButtons" onmousedown="buttonClicked(this)" onmouseup="buttonUnclicked(this)"
-        onclick="returnToBattleMenu() "style="position: absolute; visibility: hidden; bottom: 5%; left: 10px;">Back</button>
+        onclick="returnToBattleMenu() "
+        style="position: absolute; visibility: hidden; bottom: 5%; left: 10px;">Back</button>
     <button id="playerFlee" class="menuButtons" onmousedown="buttonClicked(this)" onmouseup="buttonUnclicked(this)"
         onclick="toMenu()" style="position: absolute; visibility: hidden; bottom: 2%; left: 10px;">Flee</button>
     <button onclick="startBattle()" id="battleTest" style="position: absolute; top: 5%; right: 5%">To Battle</button>
@@ -108,6 +110,7 @@
 
     //Currently selected player in battle.
     let currentPlayer = "";
+    let currentPlayerIndex = 0;
 
     //First playable character.
     let player1 = new Character("", "", "", 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, ["Normal Strike"]);

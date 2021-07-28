@@ -183,7 +183,7 @@ class Character {
     * Get the next lvl xp value.
     * @return {number} xpNext The next lvl xp value.
     */
-     get xpNext() {
+    get xpNext() {
         return this._xpNext;
     }
 
