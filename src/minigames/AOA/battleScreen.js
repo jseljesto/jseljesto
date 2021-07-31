@@ -135,8 +135,11 @@ function sortBySpeed() {
 
 }
 
+/**
+ * Find the next players turn, and removes dead combatants from the queue.
+ * @param {*} combatantsSorted participating characters and monsters.
+ */
 function nextUnitsTurn(combatantsSorted) {
-    //FIKS DA SLIK AT DA IKKJE REGNA MED KARAKTERA SOM ALLEREDE E DØDE. NÅR ALLE MONSTRE/KARAKTERA ER DØDE, SKAL BATTLE ENDA. LAG EIN EKSTRA METODE FY DA SISTA.
     do {
         if (currentUnitTurn >= combatantsSorted.length) {
             currentUnitTurn = 0;
