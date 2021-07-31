@@ -136,9 +136,18 @@ function sortBySpeed() {
 }
 
 function nextUnitsTurn(combatantsSorted) {
-    if (currentUnitTurn >= combatantsSorted.length) {
-        currentUnitTurn = 0;
-    }
+    //FIKS DA SLIK AT DA IKKJE REGNA MED KARAKTERA SOM ALLEREDE E DØDE. NÅR ALLE MONSTRE/KARAKTERA ER DØDE, SKAL BATTLE ENDA. LAG EIN EKSTRA METODE FY DA SISTA.
+    do {
+        if (currentUnitTurn >= combatantsSorted.length) {
+            currentUnitTurn = 0;
+        }
+        if (combatantsSorted[currentUnitTurn].hpLeft == 0) {
+            combatantsSorted.splice(currentUnitTurn, 1);
+            if (currentUnitTurn >= combatantsSorted.length) {
+                currentUnitTurn = 0;
+            }
+        }
+    } while (combatantsSorted[currentUnitTurn].hpLeft == 0);
     if (combatantsSorted[currentUnitTurn] instanceof Character) {
         document.getElementById("playerAbilities").style.visibility = "visible";
         document.getElementById("playerItems").style.visibility = "visible";
@@ -285,26 +294,20 @@ function returnToBattleMenu() {
 
 function characterDamaged(damage, character) {
     character.hpLeft -= damage;
+    if (isCharacterDead(character)) {
+        character.hpLeft = 0;
+    }
     let hpBarWidth = 200 * character.hpLeft / character.hp;
     if (character instanceof Character) {
         document.getElementById("player" + (currentPlayerIndex + 1) + "HPNumber").innerHTML = character.hpLeft + "/" + character.hp;
         document.getElementById("player" + (currentPlayerIndex + 1) + "curHP").style.width = hpBarWidth + "px";
-        if (hpBarWidth <= 0) {
-            document.getElementById("player" + (currentPlayerIndex + 1) + "HPNumber").innerHTML = 0 + "/" + character.hp;
-            document.getElementById("player" + (currentPlayerIndex + 1) + "curHP").style.width = 0 + "px";
-        }
         changeHpBarColour((character.hpLeft / character.hp) * 100, "player" + (currentPlayerIndex + 1) + "curHP");
     }
     else if (character instanceof Monster) {
         document.getElementById("enemy" + (currentMonsterIndex + 1) + "HPNumber").innerHTML = character.hpLeft + "/" + character.hp;
         document.getElementById("enemy" + (currentMonsterIndex + 1) + "curHP").style.width = hpBarWidth + "px";
-        if (hpBarWidth <= 0) {
-            document.getElementById("enemy" + (currentMonsterIndex + 1) + "HPNumber").innerHTML = 0 + "/" + character.hp;
-            document.getElementById("enemy" + (currentMonsterIndex + 1) + "curHP").style.width = 0 + "px";
-        }
         changeHpBarColour((character.hpLeft / character.hp) * 100, "enemy" + (currentMonsterIndex + 1) + "curHP");
     }
-    //isCharacterDead(character);
 }
 
 function changeHpBarColour(percentage, elementID) {
@@ -394,5 +397,19 @@ function findRightMonster() {
         else {
             return false;
         }
+    }
+}
+
+function areMonstersDead() {
+    for (let i = 0; i < currentMonsters.length; i++) {
+        if (currentMonsters[i].hpLeft == 0) {
+            currentMonsters.splice(i, 1);
+            -1;
+        }
+    }
+    if (currentMonsters.length == 0) {
+        return true;
+    } else {
+        return false;
     }
 }
