@@ -105,7 +105,7 @@ function unhideBattleScreen() {
 }
 
 /**
- * Adds the battling characters stats to the screen.
+ * Adds the combatants stats to the screen.
  */
 function addStats() {
     for (let i = 1; i <= amountOfCharacters; i++) {
@@ -120,6 +120,9 @@ function addStats() {
     }
 }
 
+/**
+ * Creates a battle order queue based on combatants speed.
+ */
 function sortBySpeed() {
     let combatants = [];
     for (let i = 0; i < currentCharacters.length; i++) {
@@ -137,7 +140,7 @@ function sortBySpeed() {
 
 /**
  * Find the next players turn, and removes dead combatants from the queue.
- * @param {*} combatantsSorted participating characters and monsters.
+ * @param {array} combatantsSorted participating characters and monsters.
  */
 function nextUnitsTurn(combatantsSorted) {
     do {
@@ -162,6 +165,10 @@ function nextUnitsTurn(combatantsSorted) {
     }
 }
 
+/**
+ * Finds a random move for monster to use.
+ * @param {Monster} monster The currently selected monster.
+ */
 function randomMove(monster) {
     let numOfMoves = monster.availableMoves.length;
     let selectedNum = Math.floor(Math.random() * numOfMoves);
@@ -171,7 +178,7 @@ function randomMove(monster) {
 
 /**
  * Changes color of button when clicked.
- * @param {*} _this the chosen button
+ * @param {Button} _this the chosen button
  */
 function buttonClicked(_this) {
     _this.style.backgroundColor = "yellow";
@@ -179,7 +186,7 @@ function buttonClicked(_this) {
 
 /**
  * Changes color of button when unclicked.
- * @param {*} _this the chosen button
+ * @param {Button} _this the chosen button
  */
 function buttonUnclicked(_this) {
     _this.style.backgroundColor = "cornflowerblue";
@@ -196,7 +203,7 @@ function toMenu() {
 }
 
 /**
- * Shows the currently avaiable moves of the chosen character.
+ * Shows the currently available moves of the chosen character.
  */
 function showMoves(character) {
     document.getElementById("playerAbilities").style.visibility = "hidden";
@@ -210,7 +217,7 @@ function showMoves(character) {
 
 /**
  * Creates a button and tooltip for the chosen move.
- * @param {move} selectedMove the chosen move.
+ * @param {Move} selectedMove the chosen move.
  */
 function createMoveElement(selectedMove) {
     let moveButton = document.createElement("BUTTON");
@@ -218,7 +225,6 @@ function createMoveElement(selectedMove) {
     moveButton.style.left = x + "px";
     moveButton.className = "moves";
     moveButton.onclick = function () {
-        //useMove(selectedMove);
         createCharTargets(selectedMove);
         createMonsterTargets(selectedMove)
     };
@@ -245,7 +251,7 @@ function createMoveElement(selectedMove) {
 
 /**
  * Finds the data of the chosen move.
- * @param {move} selectedMove the chosen move
+ * @param {move} selectedMove the chosen move.
  * @returns the chosen moves data and stats.
  */
 function findMove(selectedMove) {
@@ -256,6 +262,12 @@ function findMove(selectedMove) {
     }
 }
 
+/**
+ * Uses the selected move on selected target.
+ * @param {String} moveName name of the selected move.
+ * @param {Character} character the character using the move.
+ * @param {Character/Monster} target the selected moves target.
+ */
 function useMove(moveName, character, target) {
     removeMoveElements();
     let move = findMove(moveName);
@@ -270,9 +282,11 @@ function useMove(moveName, character, target) {
     }
     currentUnitTurn++;
     nextUnitsTurn(combatantsSorted);
-    //returnToBattleMenu();
 }
 
+/**
+ * Removes all move and target buttons from screen.
+ */
 function removeMoveElements() {
     let elementsFound = document.getElementsByClassName("moves");
     while (elementsFound.length > 0) {
@@ -284,6 +298,9 @@ function removeMoveElements() {
     }
 }
 
+/**
+ * Returns the player to the battle menu.
+ */
 function returnToBattleMenu() {
     removeMoveElements();
     movesShown = 0;
@@ -295,10 +312,18 @@ function returnToBattleMenu() {
     document.getElementById("goBack").style.visibility = "hidden";
 }
 
+/**
+ * Calculates the remaining HP of the targeted combatant.
+ * @param {Number} damage damage taken.
+ * @param {Character} character target combatant.
+ */
 function characterDamaged(damage, character) {
     character.hpLeft -= damage;
     if (isCharacterDead(character)) {
         character.hpLeft = 0;
+        if (character instanceof Monster) {
+            giveXp(character);
+        }
     }
     let hpBarWidth = 200 * character.hpLeft / character.hp;
     if (character instanceof Character) {
@@ -313,6 +338,11 @@ function characterDamaged(damage, character) {
     }
 }
 
+/**
+ * Changes colour of the HP bar based on percentage of health remaining.
+ * @param {Number} percentage percentage of health remaining.
+ * @param {ID} elementID id of the HP bar element.
+ */
 function changeHpBarColour(percentage, elementID) {
     if (percentage >= 75) {
         document.getElementById(elementID).style.backgroundColor = 'rgb(' + 14 + ',' + 180 + ',' + 14 + ')';
@@ -328,6 +358,11 @@ function changeHpBarColour(percentage, elementID) {
     }
 }
 
+/**
+ * Changes current MP of the chosen character
+ * @param {Character} character the chosen character
+ * @param {Number} mp number to be subtracted from previous remaining MP.
+ */
 function changeCurrentMP(character, mp) {
     character.mpLeft -= mp;
     let mpBarWidth = 200 * character.mpLeft / character.mp;
@@ -341,6 +376,11 @@ function changeCurrentMP(character, mp) {
     }
 }
 
+/**
+ * Checks if the chosen character is dead.
+ * @param {Character} character the chosen character
+ * @returns true if dead and false if not.
+ */
 function isCharacterDead(character) {
     if (character.hpLeft <= 0) {
         return true;
@@ -349,6 +389,10 @@ function isCharacterDead(character) {
     }
 }
 
+/**
+ * Creates targets on characters.
+ * @param {Move} selectedMove move selected by current character.
+ */
 function createCharTargets(selectedMove) {
     for (let i = 0; i < currentCharacters.length; i++) {
         let target = document.createElement("BUTTON");
@@ -364,6 +408,10 @@ function createCharTargets(selectedMove) {
     }
 }
 
+/**
+ * Creates targets on monsters.
+ * @param {Move} selectedMove move selected by current character.
+ */
 function createMonsterTargets(selectedMove) {
     for (let i = 0; i < currentMonsters.length; i++) {
         let target = document.createElement("BUTTON");
@@ -379,6 +427,10 @@ function createMonsterTargets(selectedMove) {
     }
 }
 
+/**
+ * Finds the right character in character array.
+ * @returns character if found, and false if not.
+ */
 function findRightChar() {
     for (let i = 0; i < currentCharacters.length; i++) {
         if (currentPlayer.name == currentCharacters[i].name) {
@@ -391,6 +443,10 @@ function findRightChar() {
     }
 }
 
+/**
+ * Finds the right monster in monster array.
+ * @returns monster if found, and false if not.
+ */
 function findRightMonster() {
     for (let i = 0; i < currentMonsters.length; i++) {
         if (currentOpponent.name == currentMonsters[i].name) {
@@ -403,6 +459,10 @@ function findRightMonster() {
     }
 }
 
+/**
+ * Checks if all monsters in battle are dead.
+ * @returns true if array is empty, false if not.
+ */
 function areMonstersDead() {
     for (let i = 0; i < currentMonsters.length; i++) {
         if (currentMonsters[i].hpLeft == 0) {
@@ -414,5 +474,18 @@ function areMonstersDead() {
         return true;
     } else {
         return false;
+    }
+}
+
+/**
+ * Gives characters XP based on the slayed monsters baseXP.
+ * @param {Monster} monster the slayed monster.
+ */
+function giveXP(monster) {
+    let xpEarned = monster.baseXp * (1 + (monster.lvl * 0,03));
+    for (let i = 0; i < currentCharacters.length; i++) {
+        if (currentCharacters[i].hpLeft > 0) {
+            currentCharacters[i].xp += xpEarned;
+        }
     }
 }
