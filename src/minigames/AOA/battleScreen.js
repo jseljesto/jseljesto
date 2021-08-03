@@ -5,6 +5,7 @@ let targetedChar = "";
 let combatantsSorted = [];
 let currentUnitTurn = 0;
 
+
 /**
  * Changes from mapScreen to battleScreen.
  */
@@ -274,6 +275,7 @@ function useMove(moveName, character, target) {
     let roll = Math.floor(Math.random() * 11);
     let variation = 0.95 + (roll / 100);
     let damage = Math.round((((character.str * 0.065) * move.pow) + 10) * variation);
+    console.log(character.name + " does " + damage + " to " + target.name);
     if (move.mp <= character.mpLeft) {
         changeCurrentMP(character, move.mp);
         characterDamaged(damage, target);
@@ -321,9 +323,7 @@ function characterDamaged(damage, character) {
     character.hpLeft -= damage;
     if (isCharacterDead(character)) {
         character.hpLeft = 0;
-        if (character instanceof Monster) {
-            giveXp(character);
-        }
+        giveXP(character);
     }
     let hpBarWidth = 200 * character.hpLeft / character.hp;
     if (character instanceof Character) {
@@ -332,9 +332,13 @@ function characterDamaged(damage, character) {
         changeHpBarColour((character.hpLeft / character.hp) * 100, "player" + (currentPlayerIndex + 1) + "curHP");
     }
     else if (character instanceof Monster) {
-        document.getElementById("enemy" + (currentMonsterIndex + 1) + "HPNumber").innerHTML = character.hpLeft + "/" + character.hp;
-        document.getElementById("enemy" + (currentMonsterIndex + 1) + "curHP").style.width = hpBarWidth + "px";
-        changeHpBarColour((character.hpLeft / character.hp) * 100, "enemy" + (currentMonsterIndex + 1) + "curHP");
+        let index = findRightMonster(character);
+        document.getElementById("enemy" + (index + 1) + "HPNumber").innerHTML = character.hpLeft + "/" + character.hp;
+        document.getElementById("enemy" + (index + 1) + "curHP").style.width = hpBarWidth + "px";
+        changeHpBarColour((character.hpLeft / character.hp) * 100, "enemy" + (index + 1) + "curHP");
+        if (areMonstersDead() === true) {
+            alert("All Monsters are dead");
+        }
     }
 }
 
@@ -395,16 +399,18 @@ function isCharacterDead(character) {
  */
 function createCharTargets(selectedMove) {
     for (let i = 0; i < currentCharacters.length; i++) {
-        let target = document.createElement("BUTTON");
-        target.className = "targets";
-        target.style.top = ((i * 200) + 100) + "px";
-        target.style.left = 200 + "px";
-        let text = document.createTextNode("TargetTest");
-        target.onclick = function () {
-            useMove(selectedMove, currentPlayer, currentCharacters[i]);
-        };
-        target.appendChild(text);
-        document.body.appendChild(target);
+        if (currentCharacters[i].hpLeft > 0) {
+            let target = document.createElement("BUTTON");
+            target.className = "targets";
+            target.style.top = ((i * 200) + 100) + "px";
+            target.style.left = 200 + "px";
+            let text = document.createTextNode("TargetTest");
+            target.onclick = function () {
+                useMove(selectedMove, currentPlayer, currentCharacters[i]);
+            };
+            target.appendChild(text);
+            document.body.appendChild(target);
+        }
     }
 }
 
@@ -414,16 +420,18 @@ function createCharTargets(selectedMove) {
  */
 function createMonsterTargets(selectedMove) {
     for (let i = 0; i < currentMonsters.length; i++) {
-        let target = document.createElement("BUTTON");
-        target.className = "targets";
-        target.style.top = ((i * 200) + 100) + "px";
-        target.style.right = 200 + "px";
-        let text = document.createTextNode("TargetTest");
-        target.onclick = function () {
-            useMove(selectedMove, findRightChar(), currentMonsters[i]);
-        };
-        target.appendChild(text);
-        document.body.appendChild(target);
+        if (currentMonsters[i].hpLeft > 0) {
+            let target = document.createElement("BUTTON");
+            target.className = "targets";
+            target.style.top = ((i * 200) + 100) + "px";
+            target.style.right = 200 + "px";
+            let text = document.createTextNode("TargetTest");
+            target.onclick = function () {
+                useMove(selectedMove, findRightChar(), currentMonsters[i]);
+            };
+            target.appendChild(text);
+            document.body.appendChild(target);
+        }
     }
 }
 
@@ -447,30 +455,28 @@ function findRightChar() {
  * Finds the right monster in monster array.
  * @returns monster if found, and false if not.
  */
-function findRightMonster() {
+function findRightMonster(character) {
     for (let i = 0; i < currentMonsters.length; i++) {
-        if (currentOpponent.name == currentMonsters[i].name) {
-            currentMonsterIndex = i;
-            return currentMonsters[i];
-        }
-        else {
-            return false;
+        if (character.name === currentMonsters[i].name) {
+            return i;
         }
     }
+    return false;
 }
 
 /**
  * Checks if all monsters in battle are dead.
- * @returns true if array is empty, false if not.
+ * @returns true if number equals array size, false if not.
  */
 function areMonstersDead() {
+    let numDead = 0;
     for (let i = 0; i < currentMonsters.length; i++) {
         if (currentMonsters[i].hpLeft == 0) {
-            currentMonsters.splice(i, 1);
-            -1;
+            numDead++;
         }
     }
-    if (currentMonsters.length == 0) {
+    if (currentMonsters.length == numDead) {
+        currentMonsters = [];
         return true;
     } else {
         return false;
