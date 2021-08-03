@@ -478,14 +478,60 @@ function areMonstersDead() {
 }
 
 /**
- * Gives characters XP based on the slayed monsters baseXP.
+ * Gives alive characters XP based on the slayed monsters baseXP.
  * @param {Monster} monster the slayed monster.
  */
 function giveXP(monster) {
-    let xpEarned = monster.baseXp * (1 + (monster.lvl * 0,03));
+    let xpEarned = monster.baseXp * (1 + (monster.lvl * 0, 03));
     for (let i = 0; i < currentCharacters.length; i++) {
         if (currentCharacters[i].hpLeft > 0) {
             currentCharacters[i].xp += xpEarned;
+            checkLvlUp(currentCharacters[i]);
+        }
+    }
+}
+
+/**
+ * Checks if character can lvl up, and does so if true.
+ * @param {Character} character the chosen character.
+ */
+function checkLvlUp(character) {
+    while (character.xp >= character.xpNext) {
+        character.lvl++;
+        increaseStats(character, 3);
+        character.xp -= character.xpNext;
+        for (let i = 0; i <= levels.length; i++) {
+            if (levels[i].lvl === character.lvl) {
+                character.xpNext = levels[i].xp;
+                break;
+            }
+        }
+    }
+}
+
+/**
+ * Increase the stats of the chosen character.
+ * @param {*} character the chosen character.
+ * @param {*} numOfRolls number of random rolls to decide what stat gets increased.
+ */
+function increaseStats(character, numOfRolls) {
+    let charClass = findCorrectClass(character);
+    for (let i = 0; i < numOfRolls; i++) {
+        let roll = Math.floor(Math.random() * 100) + 1;
+        if (roll <= charClass[0].vit) {
+            character.vit++;
+        }
+        else if (roll <= charClass[0].vit + charClass[1].str) {
+            character.str++;
+        }
+        else if (roll <= charClass[0].vit + charClass[1].str + charClass[2].wis) {
+            character.wis++;
+        }
+        else if (roll <= charClass[0].vit + charClass[1].str + charClass[2].wis + charClass[3].dex) {
+            character.dex++;
+        }
+        else if (roll <= charClass[0].vit + charClass[1].str + charClass[2].wis + charClass[3].dex + charClass[4].spe) {
+            character.spe++;
         }
     }
 }
