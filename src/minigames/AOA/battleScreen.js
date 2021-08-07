@@ -79,6 +79,7 @@ function hideBattleScreen() {
     document.getElementById("playerAbilities").style.visibility = "hidden";
     document.getElementById("playerItems").style.visibility = "hidden";
     document.getElementById("playerFlee").style.visibility = "hidden";
+    document.getElementById("goBack").style.visibility = "hidden";
 }
 
 /**
