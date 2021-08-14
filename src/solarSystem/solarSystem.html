@@ -131,7 +131,6 @@
         //Create stars
         function createStars() {
             for (let i = 0; i < 50; i++) {
-                console.log("make one");
                 let foundAvailableSpace = false;
                 let noNearbyStars = false;
                 let x; let y;
@@ -157,26 +156,26 @@
                     }
                     if (noNearbyStars == true) {
                         for (let p = 0; p < planets.length; p++) {
-                            if ((x < planets[p].left - 50 || x > planets[p].left + 150)
-                                || (y < planets[p].top - 50 || y > planets[p].top + 150)) {
+                            if ((x < planets[p].left - 10 || x > planets[p].left + 150)
+                                || (y < planets[p].top - 10 || y > planets[p].top + 150)) {
                                 if (p == planets.length - 1) {
                                     foundAvailableSpace = true;
                                 }
                             }
                             else {
-                                break;
-                                console.log("MAJOR MISHAP");
                                 i--;
+                                break;
                             }
                         }
                     }
                 }
-                console.log("made it");
-                let newStar = new fabric.Circle({
+                if (foundAvailableSpace === true) {
+                    let newStar = new fabric.Circle({
                     radius: 4, fill: "white", left: x, top: y, shadow: shadow, selectable: false, hoverCursor: "pointer"
                 });
                 stars.push(newStar);
                 canvas.add(newStar);
+                }
             }
         }
 
