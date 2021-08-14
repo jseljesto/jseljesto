@@ -68,8 +68,6 @@
 
         viewScores();
 
-        document.addEventListener("mousemove", checkMouseMove, false);
-
         /**
         * Checks for mouse movement.
         * @param {Event} e The current position of the cursor.
@@ -240,9 +238,9 @@
                     }
                 }
             }
-           //Checks collision with AI paddle (both top and bottom half, similar to user paddle)
+            //Checks collision with AI paddle (both top and bottom half, similar to user paddle)
             if (multiEnabled === true) {
-                if ((x + ballRadius)>= oppX) {
+                if ((x + ballRadius) >= oppX) {
                     if (y >= oppY && y <= (oppY + (paddleHeight / 2))) {
                         if (dx > speedCap || dx < -speedCap) {
                             dx = -dx;
@@ -295,14 +293,12 @@
                     addScore(score);
                 }
                 document.location.reload();
-                clearInterval(interval);
             }
             //Checks if ball passes AI paddle and win condition is granted
             if (multiEnabled === true) {
                 if (x + dx > canvas.width + ballRadius) {
                     alert('You won!');
                     document.location.reload();
-                    clearInterval(interval);
                 }
             }
 
@@ -332,6 +328,7 @@
         function startGame() {
             dx = 1;
             document.getElementById("start").style.visibility = "hidden";
+            document.addEventListener("mousemove", checkMouseMove, false);
         }
     </script>
 </body>

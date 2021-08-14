@@ -19,6 +19,9 @@
         let ctx = canvas.getContext();
 
         let planetTypes = ["Gas Planet", "Terrestial Planet"];
+        let stars = [];
+        let planets = [];
+        let increment = 0.01;
 
         let shadow = new fabric.Shadow({
             color: "white", blur: 10
@@ -47,115 +50,142 @@
                 }
             }
         });
-        //Maote å leggja til pattern, kan bli viktig!!
 
-        /*fabric.util.loadImage('./patterns/pattern.png', function (img) {
-            planet.setPatternFill({
-                source: img,
-                repeat: 'repeat'
-            });
-            canvas.renderAll();
-        }); */
-
-        let stars = [];
-        let planets = [];
+        createPlanets();
+        createStars();
 
         //Create planets
-        for (let a = 0; a < 3; a++) {
+        function createPlanets() {
+            for (let i = 0; i < 3; i++) {
+                let coordinates = findAvailableSpacePlanets();
+                createPlanetElement(coordinates);
+            }
+        };
+
+        function findAvailableSpacePlanets() {
             let foundAvailableSpace = false;
-            planetOuterloop:
+            let x; let y;
             while (foundAvailableSpace === false) {
-                let y = Math.floor(Math.random() * (screen.height - 225)) + 1;
-                let x = Math.floor(Math.random() * (screen.width - 125)) + 1;
-                if (planets != undefined || planets.length > 0) {
+                y = Math.floor(Math.random() * (screen.height - 225)) + 1;
+                x = Math.floor(Math.random() * (screen.width - 125)) + 1;
+                if (planets != undefined && planets.length > 0) {
                     for (let j = 0; j < planets.length; j++) {
                         if ((x < planets[j].left - 150 || x > planets[j].left + 150)
-                            && (y < planets[j].top + 150 || y > planets[j].top - 150)) {
-                        } else {
-                            a--;
-                            break planetOuterloop;
+                            && (y < planets[j].top + 250 || y > planets[j].top - 250)) {
+                            if (j == planets.length - 1) {
+                                foundAvailableSpace = true;
+                                return [x, y];
+                            }
+                        }
+                        else {
+                            break;
                         }
                     }
                 }
-                let newPlanet = new fabric.Circle({
-                    radius: 50, fill: "blue", left: x, top: y, shadow: shadow, hoverCursor: "pointer", selectable: false, clicked: false
-                });
-                let roll = Math.floor(Math.random() * 4.999e+10) + 1.000e+7;
-                newPlanet.areal = roll.toExponential(3) + "km^2";
-                roll = Math.floor(Math.random() * 5.000e+27) + 1.000e+23;
-                newPlanet.mass = roll.toExponential(3) + "kg";
-                roll = Math.floor(Math.random() * 750) - 270;
-                newPlanet.temp = roll + "℃"
-                let blurRadius = Math.floor(Math.random() * 10) + 1;
-                roll = Math.floor(Math.random() * 2);
-                newPlanet.type = planetTypes[roll];
-                newPlanet.shadow.blur = blurRadius;
-                console.log("X: " + x + " Y: " + y);
-                roll = Math.floor(Math.random() * names.length - 1) + 1;
-                newPlanet.name = names[roll];
-                let chosenColor = Math.floor(Math.random() * gradients.length - 1) + 1;
-                newPlanet.setGradient("fill", {
-                    x1: 0,
-                    y1: 0,
-                    x2: 0,
-                    y2: newPlanet.height,
-                    colorStops: {
-                        0: gradients[chosenColor].firstColor,
-                        0.25: gradients[chosenColor].secondColor,
-                        0.5: gradients[chosenColor].thirdColor,
-                        0.75: gradients[chosenColor].fourthColor,
-                        1: gradients[chosenColor].fifthColor
-                    }
-                });
-                planets.push(newPlanet);
-                canvas.add(newPlanet);
-                foundAvailableSpace = true;
+                else {
+                    foundAvailableSpace = true;
+                    return [x, y];
+                }
             }
         }
 
+        function createPlanetElement(coordinates) {
+            let newPlanet = new fabric.Circle({
+                radius: 50, fill: "blue", left: coordinates[0], top: coordinates[1], shadow: shadow, hoverCursor: "pointer", selectable: false, clicked: false
+            });
+            givePlanetValues(newPlanet);
+            planets.push(newPlanet);
+            canvas.add(newPlanet);
+        }
+
+        function givePlanetValues(planet) {
+            let roll = Math.floor(Math.random() * 4.999e+10) + 1.000e+7;
+            planet.areal = roll.toExponential(3) + "km^2";
+            roll = Math.floor(Math.random() * 5.000e+27) + 1.000e+23;
+            planet.mass = roll.toExponential(3) + "kg";
+            roll = Math.floor(Math.random() * 750) - 270;
+            planet.temp = roll + "℃"
+            let blurRadius = Math.floor(Math.random() * 10) + 1;
+            roll = Math.floor(Math.random() * 2);
+            planet.type = planetTypes[roll];
+            planet.shadow.blur = blurRadius;
+            console.log("X: " + planet.left + " Y: " + planet.top);
+            roll = Math.floor(Math.random() * names.length - 1) + 1;
+            planet.name = names[roll];
+            let chosenColor = Math.floor(Math.random() * gradients.length - 1) + 1;
+            planet.setGradient("fill", {
+                x1: 0,
+                y1: 0,
+                x2: 0,
+                y2: planet.height,
+                colorStops: {
+                    0: gradients[chosenColor].firstColor,
+                    0.25: gradients[chosenColor].secondColor,
+                    0.5: gradients[chosenColor].thirdColor,
+                    0.75: gradients[chosenColor].fourthColor,
+                    1: gradients[chosenColor].fifthColor
+                }
+            });
+        }
+
         //Create stars
-        for (let i = 0; i < 50; i++) {
-            let foundAvailableSpace = false;
-            outerloop:
-            while (foundAvailableSpace == false) {
-                let y = Math.floor(Math.random() * (screen.height - 125)) + 1;
-                let x = Math.floor(Math.random() * (screen.width - 25)) + 1;
-                if (stars != undefined || stars.length > 0) {
-                    for (let j = 0; j < stars.length; j++) {
-                        if ((x < stars[j].left - 5 || x > stars[j].left + 5)
-                            && (y < stars[j].top + 5 || y > stars[j].top - 5)) {
-                        } else {
-                            i--;
-                            break outerloop;
+        function createStars() {
+            for (let i = 0; i < 50; i++) {
+                console.log("make one");
+                let foundAvailableSpace = false;
+                let noNearbyStars = false;
+                let x; let y;
+                while (noNearbyStars == false && foundAvailableSpace == false) {
+                    noNearbyStars = false;
+                    y = Math.floor(Math.random() * (screen.height - 125)) + 1;
+                    x = Math.floor(Math.random() * (screen.width - 25)) + 1;
+                    if (stars != undefined && stars.length > 0) {
+                        for (let j = 0; j < stars.length; j++) {
+                            if ((x < stars[j].left - 5 || x > stars[j].left + 5)
+                                && (y < stars[j].top + 5 || y > stars[j].top - 5)) {
+                                if (j == stars.length - 1) {
+                                    noNearbyStars = true;
+                                }
+                            }
+                            else {
+                                break;
+                            }
+                        }
+                    }
+                    else {
+                        noNearbyStars = true;
+                    }
+                    if (noNearbyStars == true) {
+                        for (let p = 0; p < planets.length; p++) {
+                            if ((x < planets[p].left - 50 || x > planets[p].left + 150)
+                                || (y < planets[p].top - 50 || y > planets[p].top + 150)) {
+                                if (p == planets.length - 1) {
+                                    foundAvailableSpace = true;
+                                }
+                            }
+                            else {
+                                break;
+                                console.log("MAJOR MISHAP");
+                                i--;
+                            }
                         }
                     }
                 }
-                for (let p = 0; p < planets.length; p++) {
-                    if ((x < planets[p].left - 10 || x > planets[p].left + 100)
-                        && (y < planets[p].top + 10 || y > planets[p].top - 10)) {
-                    } else {
-                        i--;
-                        break outerloop;
-                    }
-                }
+                console.log("made it");
                 let newStar = new fabric.Circle({
                     radius: 4, fill: "white", left: x, top: y, shadow: shadow, selectable: false, hoverCursor: "pointer"
                 });
                 stars.push(newStar);
                 canvas.add(newStar);
-                foundAvailableSpace = true;
             }
         }
 
-        let angle = 0;
-        setInterval(rotatePlanet, 100);
-        setInterval(blinkStars, 100);
+        setInterval(drawPlanets, 100);
+        setInterval(blinkStars, 50);
 
-        function rotatePlanet() {
+        function drawPlanets() {
             canvas.clear();
-            //angle = angle + 0.50;
             for (let i = 0; i < planets.length; i++) {
-                //planets[i].rotate(angle);
                 canvas.add(planets[i]);
             }
         }
@@ -163,20 +193,12 @@
         function blinkStars() {
             for (let i = 0; i < stars.length; i++) {
                 if (stars[i].shadow.blur <= 1) {
-                    stars[i].shadow.blur += 0.10;
+                    increment = 0.01;
                 }
-                else if (stars[i].shadow.blur >= 10) {
-                    stars[i].shadow.blur -= 0.10;
+                else if (stars[i].shadow.blur >= 2) {
+                    increment = -0.01;
                 }
-                else {
-                    let roll = Math.floor(Math.random() * 10) + 1;
-                    if (roll <= 5) {
-                        stars[i].shadow.blur += 0.10;
-                    }
-                    else if (roll > 5) {
-                        stars[i].shadow.blur -= 0.10;
-                    }
-                }
+                stars[i].shadow.blur += increment;
                 canvas.add(stars[i]);
             }
         }
