@@ -51,17 +51,27 @@
             }
         });
 
-        createPlanets();
-        createStars();
+        setInterval(drawPlanets, 100);
+        setInterval(blinkStars, 50);
+        createPlanetsAndStars();
 
-        //Create planets
-        function createPlanets() {
+        /**
+         * Creates the planet and stars and places them on screen.
+         */
+        function createPlanetsAndStars() {
             for (let i = 0; i < 3; i++) {
                 let coordinates = findAvailableSpacePlanets();
                 createPlanetElement(coordinates);
             }
+            for (let j = 0; j < 50; j++) {
+                let coordinates = findAvailableSpaceStars();
+                createStarElement(coordinates);
+            }
         };
 
+        /**
+         * Checks for avaiable spaces on the map for potential planets.
+         */
         function findAvailableSpacePlanets() {
             let foundAvailableSpace = false;
             let x; let y;
@@ -89,6 +99,10 @@
             }
         }
 
+        /**
+         * Creates a planet element and adds it to the canvas.
+         * @param {Array} coordinates The coordinates of the potential planet.
+         */
         function createPlanetElement(coordinates) {
             let newPlanet = new fabric.Circle({
                 radius: 50, fill: "blue", left: coordinates[0], top: coordinates[1], shadow: shadow, hoverCursor: "pointer", selectable: false, clicked: false
@@ -98,6 +112,10 @@
             canvas.add(newPlanet);
         }
 
+        /**
+         * Gives the planet it's key attributes
+         * @param {Object} planet The selected planet.
+         */
         function givePlanetValues(planet) {
             let roll = Math.floor(Math.random() * 4.999e+10) + 1.000e+7;
             planet.areal = roll.toExponential(3) + "km^2";
@@ -128,9 +146,10 @@
             });
         }
 
-        //Create stars
-        function createStars() {
-            for (let i = 0; i < 50; i++) {
+        /**
+         * Checks for available spaces for a potential star.
+         */
+        function findAvailableSpaceStars() {
                 let foundAvailableSpace = false;
                 let noNearbyStars = false;
                 let x; let y;
@@ -170,18 +189,25 @@
                     }
                 }
                 if (foundAvailableSpace === true) {
-                    let newStar = new fabric.Circle({
-                    radius: 4, fill: "white", left: x, top: y, shadow: shadow, selectable: false, hoverCursor: "pointer"
+                    return [x, y];
+                }
+            }
+
+        /**
+         * Creates a star element and adds it to the canvas.
+         * @param coordinates The selected stars coordinates.
+         */
+        function createStarElement(coordinates) {
+            let newStar = new fabric.Circle({
+                    radius: 4, fill: "white", left: coordinates[0], top: coordinates[1], shadow: shadow, selectable: false, hoverCursor: "pointer"
                 });
                 stars.push(newStar);
                 canvas.add(newStar);
-                }
-            }
         }
 
-        setInterval(drawPlanets, 100);
-        setInterval(blinkStars, 50);
-
+        /**
+         * Draws the planets onto the canvas.
+         */
         function drawPlanets() {
             canvas.clear();
             for (let i = 0; i < planets.length; i++) {
@@ -189,6 +215,9 @@
             }
         }
 
+        /**
+         * Draws the stars onto the canvas and gives it a blur effect.
+         */
         function blinkStars() {
             for (let i = 0; i < stars.length; i++) {
                 if (stars[i].shadow.blur <= 1) {
