@@ -50,51 +50,63 @@ public class Training {
    int row = 0;
    int teamAverage = 0;
    
+
+   //FileReader tekstFilLeser = new FileReader(file);
+   //BufferedReader tekstLeser = new BufferedReader(tekstFilLeser);
+   
    GridPane grid = new GridPane();
    grid.setPadding(new Insets(10, 10, 10, 10));
    grid.setVgap(5);
    grid.setHgap(5);
    
-   //Increases player attribute based on chance and player potential.
    for (int l = 0; l <= 19; l++) {
     if (importedTeam.get(l).average != importedTeam.get(l).potential) {
      treningkast = rand.nextInt(100) + 1;
      if (treningkast > 60 && treningkast <= 85) {
+      //System.out.println(importedTeam.get(l).surName + " har aukt med +1");
        Label increase = new Label(importedTeam.get(l).surName + " har aukt med +1");
        grid.add(increase, 0, row);
        row++;
       importedTeam.get(l).average = importedTeam.get(l).average + 1;
+      //System.out.println("Gammal verdi: " + importedTeam.get(l).verdi);
       Label oldValue = new Label("Gammal verdi: " + importedTeam.get(l).verdi);
        grid.add(oldValue, 0, row);
        row++;
       CorrectValue.correct(importedTeam);
+      //System.out.println("Ny verdi: " + importedTeam.get(l).verdi);
       Label newValue = new Label("Ny verdi: " + importedTeam.get(l).verdi);
        grid.add(newValue, 0, row);
        row++;
      }
      if (treningkast > 85 && treningkast <= 95 && (importedTeam.get(l).potential - importedTeam.get(l).average != 1)) {
+      //System.out.println(importedTeam.get(l).surName + " har aukt med +2");
        Label increase = new Label(importedTeam.get(l).surName + " har aukt med +2");
        grid.add(increase, 0, row);
        row++;
       importedTeam.get(l).average = importedTeam.get(l).average + 2;
+      //System.out.println("Gammal verdi: " + importedTeam.get(l).verdi);
       Label oldValue = new Label("Gammal verdi: " + importedTeam.get(l).verdi);
        grid.add(oldValue, 0, row);
        row++;
       CorrectValue.correct(importedTeam);
+      //System.out.println("Ny verdi: " + importedTeam.get(l).verdi);
       Label newValue = new Label("Ny verdi: " + importedTeam.get(l).verdi);
        grid.add(newValue, 0, row);
        row++;
      }
      if (treningkast > 95 && (importedTeam.get(l).potential - importedTeam.get(l).average != 1)
        && (importedTeam.get(l).potential - importedTeam.get(l).average != 2)) {
+      //System.out.println(importedTeam.get(l).surName + " har aukt med +3");
        Label increase = new Label(importedTeam.get(l).surName + " har aukt med +3");
        grid.add(increase, 0, row);
        row++;
       importedTeam.get(l).average = importedTeam.get(l).average + 3;
+      //System.out.println("Gammal verdi: " + importedTeam.get(l).verdi);
       Label oldValue = new Label("Gammal verdi: " + importedTeam.get(l).verdi);
        grid.add(oldValue, 0, row);
        row++;
       CorrectValue.correct(importedTeam);
+      //System.out.println("Ny verdi: " + importedTeam.get(l).verdi);
       Label newValue = new Label("Ny verdi: " + importedTeam.get(l).verdi);
        grid.add(newValue, 0, row);
        row++;
@@ -111,7 +123,6 @@ public class Training {
    teamAverage /= importedTeam.size();
    importedClub.clubAvg = teamAverage;
 
-   //Prints out updated versions of team and club to their respective files.
    for (int k = 0; k <= 19; k++) {
     out.println(importedTeam.get(k).kitNumber + " " + importedTeam.get(k).firstName + " " + importedTeam.get(k).surName + " " + importedTeam.get(k).nation + " " + importedTeam.get(k).age + " " + importedTeam.get(k).position + " " + importedTeam.get(k).average + " " + importedTeam.get(k).potential + " " + importedTeam.get(k).lonn + " " + importedTeam.get(k).verdi);
    }
@@ -122,7 +133,6 @@ public class Training {
    
    clubOut.close();
    
-   //Button to return to menu.
    Button menu = new Button();
    menu.setText("Back to Menu");
    menu.setOnAction(new EventHandler<ActionEvent>() {
@@ -135,7 +145,6 @@ public class Training {
         }
       });
    
-   //Button to view the newly updated squad.
    Button view = new Button();
    view.setText("View squad");
    view.setOnAction(new EventHandler<ActionEvent>() {

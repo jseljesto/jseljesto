@@ -114,7 +114,6 @@ public class TransferPlayer {
    Club sellingClub;
    sellingClub = Load.loadClub(secondClubDirectory);
    
-   //Creats a table of the selling clubs players.
    TableColumn<TeamViewer, Integer> numberCol = new TableColumn<>("Kit Number");
    numberCol.setCellValueFactory(new PropertyValueFactory<>("kitNumber"));
    TableColumn<TeamViewer, String> firstNameCol = new TableColumn<>("First Name");
@@ -142,7 +141,6 @@ public class TransferPlayer {
    vbox.setPadding(new Insets(10, 0, 0, 10));
    vbox.getChildren().add(transferTable);
    
-   //Button to return to the menu screen.
    Button btn = new Button();
    btn.setText("Back to Menu");
    btn.setOnAction(new EventHandler<ActionEvent>() {
@@ -154,12 +152,10 @@ public class TransferPlayer {
      }
    });
    
-   //Button to buy the selected player.
    Button buyBtn = new Button();
    buyBtn.setText("Buy selected player");
    buyBtn.setOnAction(new EventHandler<ActionEvent>() {
      @Override
-     //Checks if the team is eligble to buy the selected player.
      public void handle(ActionEvent event) {
        if (transferTable.getSelectionModel().getSelectedItem() == null) {
          Alert alert = new Alert(AlertType.INFORMATION);
@@ -190,7 +186,6 @@ public class TransferPlayer {
              insufficientFunds.setContentText("You don't have enough budget to buy this player");
              insufficientFunds.showAndWait();
            } else {
-             //Transfers player to your team if all conditions are met.
              int pos = updatedTeam.indexOf(selectedPlayer);
              Player newPlayer = secondTeam.get(pos);
              secondTeam.remove(pos);
@@ -206,7 +201,6 @@ public class TransferPlayer {
                  break;
                }
              }
-             //Updates club attributes after new arrival.
              newPlayer.kitNumber = j;
              firstTeam.add(newPlayer);
              currentClub.clubAvg = Load.getAverage(firstTeam);
@@ -224,7 +218,6 @@ public class TransferPlayer {
              File clubFile2 = new File(secondClubDirectory);
              PrintWriter writeClub2 = new PrintWriter(clubFile2);
              
-             //Writes updated team and club to their respective files.
              for (int k = 0; k < firstTeam.size(); k++) {
                writeTeam.println(firstTeam.get(k).kitNumber + " " + firstTeam.get(k).firstName + " " + 
                                  firstTeam.get(k).surName + " " + firstTeam.get(k).nation + " " + 

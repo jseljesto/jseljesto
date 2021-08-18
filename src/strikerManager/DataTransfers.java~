@@ -100,7 +100,7 @@ public class DataTransfers {
         fullDirectory = "C:/Users/jonkr/Documents/GitHub-prosjekt/jseljesto/src/strikerManager/Teams/" + lagNavn;
       }
     }
-    
+    //String lagNavn = listOfFiles[chosenTeam].getName();
     String clubDirectory = "C:/Users/jonkr/Documents/GitHub-prosjekt/jseljesto/src/strikerManager/Clubs/" + lagNavn;
     ArrayList<Player> importedTeam = new ArrayList<Player>();
     importedTeam = Load.loadTeamData(importedTeam, fullDirectory);
@@ -127,6 +127,8 @@ public class DataTransfers {
       }
     }
     
+    //System.out.println(worstPosition + " " + lowestValue);
+    
     //Finds replacements to strengthen club
     ArrayList<Player> listOfTargets = new ArrayList<Player>();
     listOfTargets = FindByPosition.findPlayers(worstPosition, importedClub.budsjett, lagNavn, lowestValue);
@@ -145,5 +147,9 @@ public class DataTransfers {
     String selectedTeam = findATeam.findCorrectTeam(bestPlayer);
     
     System.out.println(lagNavn + " bought " + bestPlayer.firstName + " " + bestPlayer.surName + " from " + selectedTeam);
+    
+    //Mangla � selgja spelaren. So her ska du henta da andra laget som ha dan valgte spelaren, og so skal overgangen
+    //skje, men berre dersom reglane blir fulgt, som feks. troppst�rrelse. indexOfPlayer e indeksen for spelaren i
+    //klubben du pr�ve � s�kja frao.
   }
 }

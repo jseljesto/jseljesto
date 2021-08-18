@@ -48,7 +48,7 @@ public class SquadViewer {
     String directory = "C:/Users/jonkr/Documents/GitHub-prosjekt/jseljesto/src/strikerManager/Teams/";
     String clubDirectory = "C:/Users/jonkr/Documents/GitHub-prosjekt/jseljesto/src/strikerManager/Clubs/";
     
-    //Creates buttons and input to search for team
+    //Lagar knappar og input til � s�ke opp team
     GridPane grid = new GridPane();
     grid.setPadding(new Insets(10, 10, 10, 10));
     grid.setVgap(5);
@@ -90,7 +90,7 @@ public class SquadViewer {
         } else {
           try {
             
-            //Finds chosen team and makes list of elements
+            //Finner valgt lag og lagar liste av element
             String lagNavn = name.getText() + ".txt";
             String fullDirectory = directory + lagNavn;
             String fullClubDirectory = clubDirectory + lagNavn;
@@ -123,7 +123,7 @@ public class SquadViewer {
     TableView<TeamViewer> table = new TableView<>();
     table.setEditable(false);
     
-    //Sets up columns in table
+    //Setter opp columns i table
     TableColumn<TeamViewer, Integer> numberCol = new TableColumn<>("Kit Number");
     numberCol.setCellValueFactory(new PropertyValueFactory<>("kitNumber"));
     TableColumn<TeamViewer, String> firstNameCol = new TableColumn<>("First Name");
@@ -144,17 +144,15 @@ public class SquadViewer {
     verdiCol.setCellValueFactory(new PropertyValueFactory<>("verdi"));
     
     
-    //Adds data to columns
+    //Legger inn data og columns
     table.setItems(data);
     table.getColumns().addAll(numberCol, firstNameCol, surNameCol, nationCol, ageCol, posCol, averageCol, lonnCol, verdiCol);
     
-    //Changes scene to the player table
+    //Byttar scene til den nye tabellen
     final VBox vbox = new VBox();
     vbox.setSpacing(5);
     vbox.setPadding(new Insets(10, 0, 0, 10));
     vbox.getChildren().add(table);
-    
-    //Button to go back to menu.
     Button btn = new Button();
     btn.setText("Back to Menu");
     btn.setOnAction(new EventHandler<ActionEvent>() {
@@ -167,7 +165,6 @@ public class SquadViewer {
       }
     });
     
-    //Button to give the team a training session.
     Button trainingBtn = new Button();
     trainingBtn.setText("Train team");
     trainingBtn.setOnAction(new EventHandler<ActionEvent>() {
@@ -184,7 +181,6 @@ public class SquadViewer {
       
     });
     
-    //Button to buy a player from another team.
     Button buyBtn = new Button();
     buyBtn.setText("Buy a player");
     buyBtn.setOnAction(new EventHandler<ActionEvent>() {
@@ -197,7 +193,6 @@ public class SquadViewer {
       }
     });
     
-    //Plays the next match in the fixture list.
     Button playBtn = new Button();
     playBtn.setText("Play Next Match");
     playBtn.setOnAction(new EventHandler<ActionEvent>() {
@@ -205,6 +200,7 @@ public class SquadViewer {
       @Override
       public void handle(ActionEvent event) {
         try {
+          //PlayMatch play = new PlayMatch();
           Club importedClub = Load.loadClub(clubDirectory); 
           PlayMatch play = new PlayMatch();                                       
           play.playNextMatch(importedClub, stage);

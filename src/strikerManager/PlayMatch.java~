@@ -3,6 +3,10 @@ import java.io.IOException;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
+//import java.util.Timer;
+//import java.util.TimerTask;
+
+//import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -157,6 +161,16 @@ public class PlayMatch {
       }
     }
 
+    /*
+     * Button playBtn = new Button(); playBtn.setText("Play Next Match");
+     * playBtn.setOnAction(new EventHandler<ActionEvent>() {
+     * 
+     * @Override public void handle(ActionEvent event) { try { PlayMatch play = new
+     * PlayMatch(); Club importedClub = loader.loadClub(clubDirectory);
+     * play.playNextMatch(chosenClub, stage); } catch (IOException unntak) {
+     * System.out.println("Feil ved innlesing:" + unntak); } } });
+     */
+
     Button test = new Button();
     test.setText("Quick Sim");
     test.setOnAction(new EventHandler<ActionEvent>() {
@@ -172,6 +186,10 @@ public class PlayMatch {
         }
       }
     });
+
+    /*
+     * grid.add(playBtn, 0, row); row++;
+     */
     grid.add(test, 0, row);
     Scene playScene = new Scene(grid, 600, 500);
     stage.setScene(playScene);
@@ -207,6 +225,21 @@ public class PlayMatch {
     propertyHome.setValue(posHome);
     propertyAway.setValue(posAway);
     Random rand = new Random();
+
+    /*
+     * Button testBtn = new Button(); testBtn.setText("Test");
+     * testBtn.setOnAction(new EventHandler<ActionEvent>() {
+     * 
+     * @Override public void handle(ActionEvent event) { int homeRoll =
+     * rand.nextInt(100 - homeTeam.clubAvg) + homeTeam.clubAvg; int awayRoll =
+     * rand.nextInt(100 - awayTeam.clubAvg) + awayTeam.clubAvg; if (homeRoll >
+     * awayRoll) { possessionHome++; possessionAway--; } else if (awayRoll >
+     * homeRoll) { possessionHome--; possessionAway++; }
+     * System.out.println(possessionHome); posHome =
+     * Integer.toString(possessionHome); posAway = Integer.toString(possessionAway);
+     * propertyHome.setValue(posHome); propertyAway.setValue(posAway); } });
+     * grid.add(testBtn, 8, 5);
+     */
 
     int matchTime = 0;
     while (matchTime < 90) {
@@ -262,6 +295,19 @@ public class PlayMatch {
 
     Scene matchScene = new Scene(grid, 600, 500);
     stage.setScene(matchScene);
+
+    /*
+     * TimerTask task = new TimerTask() { public void run() { int homeRoll =
+     * rand.nextInt(100 - homeTeam.clubAvg) + homeTeam.clubAvg; int awayRoll =
+     * rand.nextInt(100 - awayTeam.clubAvg) + awayTeam.clubAvg; if (homeRoll >
+     * awayRoll) { possessionHome++; possessionAway--; } else if (awayRoll >
+     * homeRoll) { possessionHome--; possessionAway++; } posHome =
+     * Integer.toString(possessionHome); posAway = Integer.toString(possessionAway);
+     * propertyHome.setValue(posHome); propertyAway.setValue(posAway); } }; //
+     * Different events during game // task.start();
+     * 
+     * Timer timer = new Timer(); timer.schedule(task, 1000l);
+     */
   }
 
     /**
@@ -352,7 +398,12 @@ public class PlayMatch {
 
     grid.add(view, 0, 5);
 
+    // Add images to gold and ballCoinz
+
     Scene prizeScene = new Scene(grid, 600, 500);
     stage.setScene(prizeScene);
+
+    // Writing out the clubs to txt, and adding gold to budget and ballCoinz to
+    // club.
   }
 }
