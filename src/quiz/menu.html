@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://kit.fontawesome.com/786681c2dd.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="stylesheet.css" />
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <button id="back" onclick="createButtons(categories, 'Main')"style="position:absolute; visibility: hidden; top:10px; right:10px;">Back</button>
+    <script src="topics.js"></script>
+    <script>
+        let categories = [{ name: "Arts", color: "yellow", textColor: "black", icon: "fas fa-palette fa-5x" },
+        { name: "Business", color: "lightblue", textColor: "black", icon: "fas fa-coins fa-5x" },
+        { name: "Educational", color: "green", textColor: "white", icon: "fas fa-school fa-5x" },
+        { name: "Entertainment", color: "blue", textColor: "white", icon: "fas fa-tv fa-5x" },
+        { name: "Games", color: "blue", textColor: "white", icon: "fas fa-gamepad fa-5x" },
+        { name: "Geography", color: "blue", textColor: "white", icon: "fas fa-earth-europa fa-5x" },
+        { name: "History", color: "yellow", textColor: "black", icon: "fas fa-landmark fa-5x" },
+        { name: "Lifestyle", color: "pink", textColor: "black", icon: "fab fa-gratipay fa-5x" },
+        { name: "Literature", color: "brown", textColor: "white", icon: "fas fa-book fa-5x" },
+        { name: "Movies", color: "red", textColor: "white", icon: "fas fa-video fa-5x" },
+        { name: "Music", color: "purple", textColor: "white", icon: "fas fa-music fa-5x" },
+        { name: "Nature", color: "green", textColor: "white", icon: "fas fa-hiking fa-5x" },
+        { name: "Science", color: "white", textColor: "black", icon: "fas fa-flask fa-5x" },
+        { name: "Sports", color: "black", textColor: "white", icon: "fas fa-futbol fa-5x" },
+        ];
+
+        createButtons(categories, "Main");
+
+        function createButtons(array, type) {
+            if (type === "Main") {
+                document.getElementById("back").style.visibility = "hidden";
+            }
+            deleteElements();
+            let x = 100;
+            let y = 100;
+
+            for (let i = 1; i <= array.length; i++) {
+                let button = document.createElement("DIV");
+                button.id = array[i - 1].name;
+                button.className = "quizButtons";
+                button.style.top = y + "px";
+                button.style.left = x + "px";
+                button.style.borderRadius = "15px";
+                button.style.textAlign = "center";
+                button.style.backgroundColor = array[i - 1].color;
+                button.style.color = array[i - 1].textColor;
+                button.onclick = function () {
+                    if (type == "Main") {
+                        document.getElementById("back").style.visibility = "visible";
+                        createButtons(findRightArray(button.id), "Sub");
+                    }
+                    else if (type === "Sub") {
+                        startQuiz();
+                    }
+                }
+                x += 200;
+                if (i % 5 === 0) {
+                    x = 100;
+                    y += 200;
+                }
+
+                let icon = document.createElement("I");
+                icon.style.position = "relative";
+                icon.style.top = 15 + "%";
+                icon.style.textAlign = "center";
+                icon.className = array[i - 1].icon;
+                button.appendChild(icon);
+
+                let text = document.createElement("DIV");
+                text.style.position = "relative";
+                text.style.top = 30 + "%";
+                text.style.textAlign = "center";
+                text.style.margin = "0 auto";
+                text.innerHTML = array[i - 1].name;
+                button.appendChild(text);
+                document.body.appendChild(button);
+            }
+        }
+
+        function deleteElements() {
+            let elementsFound = document.getElementsByClassName("quizButtons");
+            while (elementsFound.length > 0) {
+                elementsFound[0].parentNode.removeChild(elementsFound[0]);
+            }
+        }
+
+        function findRightArray(text) {
+            if (text === "Arts") {
+                return arts;
+            }
+            else if (text === "Business") {
+                return business;
+            }
+            else if (text === "Educational") {
+                return educational;
+            }
+            else if (text === "Entertainment") {
+                return entertainment;
+            }
+            else if (text === "Games") {
+                return games;
+            }
+            else if (text === "Geography") {
+                return geography;
+            }
+            else if (text === "History") {
+                return history;
+            }
+            else if (text === "Lifestyle") {
+                return lifestyle;
+            }
+            else if (text === "Literature") {
+                return literature;
+            }
+            else if (text === "Movies") {
+                return movies;
+            }
+            else if (text === "Music") {
+                return music;
+            }
+            else if (text === "Nature") {
+                return nature;
+            }
+            else if (text === "Science") {
+                return science;
+            }
+            else if (text === "Sports") {
+                return sports;
+            }
+        }
+    </script>
+</body>
+
+</html>

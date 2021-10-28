@@ -2,57 +2,82 @@
 <html>
 
 <head>
+    <script src="https://kit.fontawesome.com/786681c2dd.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="stylesheet.css" />
     <meta charset="UTF-8">
 </head>
 
 <body>
 
     <p id="questionsheet"></p>
-    <input type="radio" id="radio1" name="answer" value=""><label id="option1"></label><br>
-    <input type="radio" id="radio2" name="answer" value=""><label id="option2"></label><br>
-    <input type="radio" id="radio3" name="answer" value=""><label id="option3"></label><br>
-    <input type="radio" id="radio4" name="answer" value=""><label id="option4"></label><br><br>
+    <input type="radio" id="radio1" name="answer" value=""><label class="answerButton" id="option1"></label><br>
+    <input type="radio" id="radio2" name="answer" value=""><label class="answerButton" id="option2"></label><br>
+    <input type="radio" id="radio3" name="answer" value=""><label class="answerButton" id="option3"></label><br>
+    <input type="radio" id="radio4" name="answer" value=""><label class="answerButton" id="option4"></label><br><br>
 
     <button id="check">Check</button>
     <button id="next" style="visibility : hidden;">Next</button>
 
     <p id="currentScore">Total Score : 0 out of 0</p>
 
+    <script src="norway.js"></script>
     <script type="module">
-
-        import { questionArray } from './questions.js';
 
         let qAnswered = 0;
         let answers = [];
         let points = 0;
+        let nextButton = document.getElementById("next");
+        let checkButton = document.getElementById('check');
+        nextButton.addEventListener('click', findNextQuestion, false);
+        checkButton.addEventListener('click', checkAnswer, false);
+        for (let i = 1; i <= 4; i++) {
+            document.getElementById("option" + i).addEventListener("click", function () {
+                checkSelectedButton("radio" + i, "option" + i);
+            }, false);
+        }
 
         const numOfQuestions = questionArray.length;
+        loadQuestions();
 
-        //Randomizes questions
+        //Randomizes questions and answers
 
-        questionArray.sort(function (a, b) {
-            return 0.5 - Math.random()
-        });
+        function loadQuestions() {
 
-        answers = [questionArray[qAnswered].answers.correctAnswer, questionArray[qAnswered].answers.wrongAnswer1,
-        questionArray[qAnswered].answers.wrongAnswer2, questionArray[qAnswered].answers.wrongAnswer3];
+            questionArray.sort(function (a, b) {
+                return 0.5 - Math.random()
+            });
 
-        answers.sort(function (a, b) {
-            return 0.5 - Math.random()
-        });
+            answers = [questionArray[qAnswered].answers.correctAnswer, questionArray[qAnswered].answers.wrongAnswer1,
+            questionArray[qAnswered].answers.wrongAnswer2, questionArray[qAnswered].answers.wrongAnswer3];
 
-        document.getElementById("questionsheet").innerHTML = questionArray[qAnswered].question;
-        document.getElementById("option1").innerHTML = answers[0];
-        document.getElementById("radio1").value = answers[0];
-        document.getElementById("option2").innerHTML = answers[1];
-        document.getElementById("radio2").value = answers[1];
-        document.getElementById("option3").innerHTML = answers[2];
-        document.getElementById("radio3").value = answers[2];
-        document.getElementById("option4").innerHTML = answers[3];
-        document.getElementById("radio4").value = answers[3];
+            answers.sort(function (a, b) {
+                return 0.5 - Math.random()
+            });
 
-        let nextButton = document.getElementById("next");
-        nextButton.addEventListener('click', function () {
+            document.getElementById("questionsheet").innerHTML = questionArray[qAnswered].question;
+            document.getElementById("option1").innerHTML = answers[0];
+            document.getElementById("radio1").value = answers[0];
+            document.getElementById("option2").innerHTML = answers[1];
+            document.getElementById("radio2").value = answers[1];
+            document.getElementById("option3").innerHTML = answers[2];
+            document.getElementById("radio3").value = answers[2];
+            document.getElementById("option4").innerHTML = answers[3];
+            document.getElementById("radio4").value = answers[3];
+
+        }
+
+        function checkSelectedButton(radio, option) {
+            document.getElementById(radio).checked = true;
+            for (let j = 1; j <= 4; j++) {
+                if (document.getElementById("radio" + i).checked === true) {
+                    document.getElementById("radio" + i).style.backgroundColor = yellow;
+                } else {
+                    document.getElementById("radio" + i).style.backgroundColor = lightblue;
+                }
+            }
+        }
+
+        function findNextQuestion() {
 
             if (qAnswered === numOfQuestions) {
                 document.getElementById("next").style.visibility = "visible";
@@ -85,11 +110,9 @@
                 document.getElementById("check").style.visibility = "visible";
                 document.getElementById("next").style.visibility = "hidden";
             }
+        }
 
-        }, false);
-
-        let checkButton = document.getElementById('check');
-        checkButton.addEventListener('click', function () {
+        function checkAnswer() {
             for (let i = 1; i < 5; i++) {
                 if (document.getElementById("radio" + i).checked) {
                     if (document.getElementById("radio" + i).value ===
@@ -108,8 +131,7 @@
             document.getElementById("currentScore").innerHTML = `Total Score: ${points} out of ${qAnswered}`;
             document.getElementById("check").style.visibility = "hidden";
             document.getElementById("next").style.visibility = "visible";
-
-        }, false);
+        }
 
     </script>
 </body>
