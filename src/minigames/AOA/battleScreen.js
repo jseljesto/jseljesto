@@ -234,6 +234,7 @@ function createMoveElement(selectedMove) {
     let tooltip = document.createElement("SPAN");
     tooltip.className = "tooltips";
     let searchedMove = findMove(selectedMove);
+    checkMoveType(searchedMove, tooltip), checkElementType(searchedMove, tooltip);
     tooltip.innerHTML = `<b>Name:</b> ${searchedMove.name} <br>
     <b>Pow:</b> ${searchedMove.pow} <br>
     <b>Acc:</b> ${searchedMove.acc} <br>
@@ -350,16 +351,16 @@ function characterDamaged(damage, character) {
  */
 function changeHpBarColour(percentage, elementID) {
     if (percentage >= 75) {
-        document.getElementById(elementID).style.backgroundColor = 'rgb(' + 14 + ',' + 180 + ',' + 14 + ')';
+        document.getElementById(elementID).style.background = 'linear-gradient(#33FF33, #27AD27)';
     }
     else if (percentage >= 50 && percentage < 75) {
-        document.getElementById(elementID).style.backgroundColor = "yellow";
+        document.getElementById(elementID).style.background = 'linear-gradient(#FFFB00, #D6D300)';
     }
     else if (percentage >= 25 && percentage < 50) {
-        document.getElementById(elementID).style.backgroundColor = "orange";
+        document.getElementById(elementID).style.background = 'linear-gradient(#FF9700, #D67F00)';
     }
     else if (percentage >= 0 && percentage < 25) {
-        document.getElementById(elementID).style.backgroundColor = "red";
+        document.getElementById(elementID).style.background = 'linear-gradient(#FF0000, #AF0000)';
     }
 }
 
@@ -489,7 +490,7 @@ function areMonstersDead() {
  * @param {Monster} monster the slayed monster.
  */
 function giveXP(monster) {
-    let xpEarned = monster.baseXp * (1 + (monster.lvl * 0, 03));
+    let xpEarned = monster.baseXp * (1 + (monster.lvl * 0.03));
     for (let i = 0; i < currentCharacters.length; i++) {
         if (currentCharacters[i].hpLeft > 0) {
             currentCharacters[i].xp += xpEarned;
@@ -506,6 +507,7 @@ function checkLvlUp(character) {
     while (character.xp >= character.xpNext) {
         character.lvl++;
         increaseStats(character, 3);
+        alert(character.vit + " " + character.str + " " + character.wis + " " + character.dex + " " + character.spe);
         character.xp -= character.xpNext;
         for (let i = 0; i <= levels.length; i++) {
             if (levels[i].lvl === character.lvl) {
@@ -517,27 +519,49 @@ function checkLvlUp(character) {
 }
 
 /**
+ * Finds the correct class stat distribution of the chosen character.
+ * @param {Character} character the chosen character.
+ * @returns array of the correct classes stat distribution.
+ */
+function findClassStats(character) {
+    switch(character.class) {
+        case "Cleric":
+            return [25, 10, 30, 20, 15];
+        case "Paladin":
+            return [30, 30, 15, 10, 15];
+        case "Wizard":
+            return [15, 10, 30, 20, 25];
+        case "Rogue":
+            return [10, 20, 15, 25, 30];
+        case "Ranger":
+            return [15, 10, 20, 30, 25];
+        default:
+            return false;
+    }
+}
+
+/**
  * Increase the stats of the chosen character.
  * @param {*} character the chosen character.
  * @param {*} numOfRolls number of random rolls to decide what stat gets increased.
  */
 function increaseStats(character, numOfRolls) {
-    let charClass = findCorrectClass(character);
+    let charClass = findClassStats(character);
     for (let i = 0; i < numOfRolls; i++) {
         let roll = Math.floor(Math.random() * 100) + 1;
-        if (roll <= charClass[0].vit) {
+        if (roll <= charClass[0]) {
             character.vit++;
         }
-        else if (roll <= charClass[0].vit + charClass[1].str) {
+        else if (roll <= charClass[0] + charClass[1]) {
             character.str++;
         }
-        else if (roll <= charClass[0].vit + charClass[1].str + charClass[2].wis) {
+        else if (roll <= charClass[0] + charClass[1] + charClass[2]) {
             character.wis++;
         }
-        else if (roll <= charClass[0].vit + charClass[1].str + charClass[2].wis + charClass[3].dex) {
+        else if (roll <= charClass[0] + charClass[1] + charClass[2] + charClass[3]) {
             character.dex++;
         }
-        else if (roll <= charClass[0].vit + charClass[1].str + charClass[2].wis + charClass[3].dex + charClass[4].spe) {
+        else if (roll <= charClass[0] + charClass[1] + charClass[2] + charClass[3] + charClass[4]) {
             character.spe++;
         }
     }

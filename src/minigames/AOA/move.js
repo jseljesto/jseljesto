@@ -1,6 +1,6 @@
 class Move {
 
-    constructor(name, pow, acc, mp, effects, targets, img, desc, type) {
+    constructor(name, pow, acc, mp, effects, targets, img, desc, type, element) {
         this._name = name;
         this._pow = pow;
         this._acc = acc;
@@ -10,6 +10,7 @@ class Move {
         this._img = img;
         this._desc = desc;
         this._type = type;
+        this._element = element;
         moveList.push(this);
     }
 
@@ -156,8 +157,55 @@ class Move {
     set type(type) {
         this._type = type;
     }
+
+    /**
+    * Get the element type.
+    * @return {string} type The type value.
+    */
+     get element() {
+        return this._element;
+    }
+
+    /**
+     * Set the element type.
+    * @param {string} type The type value.
+    */
+    set element(element) {
+        this._element = element;
+    }
 }
 
 let moveList = [];
-let normalStrike = new Move("Normal Strike", 10, 90, 1, "", "All", "", "The most basic attack. User swings his weapon at the opponent with good precision.", "Normal");
-let scratch = new Move("Scratch", 10, 70, 0, "", "All", "", "User uses their large claws to swing at their opponent.", "Normal");
+let normalStrike = new Move("Normal Strike", 10, 90, 1, "", "All", "", "The most basic attack. User swings his weapon at the opponent with good precision.", "Melee", "Normal");
+let scratch = new Move("Scratch", 10, 70, 0, "", "All", "", "User uses their large claws to swing at their opponent.", "Melee", "Normal");
+
+/**
+ * Changes tooltip background based on move type.
+ * @param {Move} move the selected move.
+ * @param {*} tooltip the tooltip to be shown.
+ */
+function checkMoveType(move, tooltip) {
+    if (move.type === "Magical") {
+        tooltip.style.backgroundBlendMode = "multiply";
+        tooltip.style.backgroundImage = "radial-gradient(circle at center center, #cac3c3, #ffffff), repeating-radial-gradient(circle at center center, #cac3c3, #cac3c3, 17px, transparent 34px, transparent 17px)";
+    }
+    else if (move.type === "Ranged") {
+        tooltip.style.backgroundImage = "repeating-linear-gradient( 45deg, #ffffff, #ffffff 2px, #0000ff 2px, #0000ff 10px)";
+    }
+    else if (move.type === "Melee") {
+        tooltip.style.backgroundImage = "url(sword.png)";
+        tooltip.style.backgroundRepeat = "no-repeat";
+    }
+}
+
+/**
+ * Changes tooltip color based on move element.
+ * @param {Move} move the selected move.
+ * @param {*} tooltip the tooltip to be shown.
+ */
+function checkElementType(move, tooltip) {
+    if (move.element === "Normal") {
+        tooltip.style.color = "white";
+        tooltip.style.backgroundColor = "rgba(0, 0, 255, 0.5)";
+    }
+}
