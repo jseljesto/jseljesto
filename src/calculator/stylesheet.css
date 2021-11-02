@@ -5,6 +5,7 @@
 .keys {
   height: 50px;
   width: 50px;
+  font-size: 25px;
   border-radius: 5px;
   border-color: black;
 }
@@ -16,6 +17,7 @@
 .operators {
   height: 50px;
   width: 50px;
+  font-size: 25px;
   border-radius: 5px;
   border-color: black;
   color: blue;

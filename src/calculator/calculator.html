@@ -10,9 +10,9 @@
 
     <p id="sum">0</p>
     <p style="position:fixed; left:42%; top:25%;">
-        <button class="operators" onclick="squareRoot()">sqrt</button>
+        <button class="operators" onclick="squareRoot()">&#8730;</button>
         <button class="operators" onclick="clickOperator('%')">%</button>
-        <button class="operators" onclick="changeNegPos()">+/-</button>
+        <button class="operators" onclick="changeArithmeticSign()">+/-</button>
         <button class="operators" onclick="clickOperator('/')">/</button><br><br>
         <button class="keys" onclick="clickNumber('7')">7</button>
         <button class="keys" onclick="clickNumber('8')">8</button>
@@ -38,7 +38,7 @@
         let currentSum = 0;
         let firstOperand = 0;
         let operator = "";
-        let secondOperand = 0;
+        let secondOperand;
         let boxPadding = 150;
         let decimalUsed = false;
         let includesDecimal = false;
@@ -68,7 +68,7 @@
         * @param {string} op The chosen operator.
         */
         function clickOperator(op) {
-            if (firstOperand > 0) {
+            if (firstOperand != 0) {
                 boxPadding = 165;
                 if (!operator) {
                     operator = op;
@@ -101,7 +101,7 @@
         * Adds decimal symbol to the current sum.
         */
         function addDecimal() {
-            if (firstOperand > 0 && decimalUsed === false) {
+            if (firstOperand != 0 && decimalUsed === false) {
                 if (document.getElementById("sum").innerHTML != "0") {
                     boxPadding -= 7.5;
                 }
@@ -124,7 +124,7 @@
         /**
         * Changes the current value from negative to positive, or vise versa.
         */
-        function changeNegPos() {
+        function changeArithmeticSign() {
             if (!operator) {
                 let tempNumber = firstOperand.toString();
                 if (tempNumber.charAt(0) === "-") {
@@ -148,7 +148,7 @@
         * Finds the square root of the current sum.
         */
         function squareRoot() {
-            if (secondOperand > 0) {
+            if (secondOperand != 0) {
                 findSum();
                 currentSum = Math.sqrt(currentSum).toFixed(2);
                 boxPadding = 127 - (15 * (currentSum.toString().length - 3));
