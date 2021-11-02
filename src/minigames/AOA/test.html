@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="gameSheet.css" />
+</head>
+
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.6.3/fabric.min.js"></script>
+    <script src="battleScreen.js"></script>
+    <script src="character.js"></script>
+    <script src="move.js"></script>
+    <script src="monster.js"></script>
+    <script src="levels.js"></script>
+    <script>
+        let player1 = new Character("", "", "Cleric", 0, 0, 0, 0, 0, 1, 5500, 1000, 0, 0, 0, 0, ["Normal Strike"]);
+        increaseStats(player1, 300);
+        console.log(`${player1.vit} ${player1.str} ${player1.wis} ${player1.dex} ${player1.spe}`);
+    </script>
+</body>
+</html>

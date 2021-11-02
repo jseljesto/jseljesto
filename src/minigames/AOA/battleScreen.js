@@ -4,6 +4,7 @@ let y = 250;
 let targetedChar = "";
 let combatantsSorted = [];
 let currentUnitTurn = 0;
+let battleIsOver = false;
 
 
 /**
@@ -145,25 +146,32 @@ function sortBySpeed() {
  * @param {array} combatantsSorted participating characters and monsters.
  */
 function nextUnitsTurn(combatantsSorted) {
-    do {
-        if (currentUnitTurn >= combatantsSorted.length) {
-            currentUnitTurn = 0;
-        }
-        if (combatantsSorted[currentUnitTurn].hpLeft == 0) {
-            combatantsSorted.splice(currentUnitTurn, 1);
+    if (battleIsOver == false) {
+        do {
             if (currentUnitTurn >= combatantsSorted.length) {
                 currentUnitTurn = 0;
             }
+            if (combatantsSorted[currentUnitTurn].hpLeft == 0) {
+                combatantsSorted.splice(currentUnitTurn, 1);
+                if (currentUnitTurn >= combatantsSorted.length) {
+                    currentUnitTurn = 0;
+                }
+            }
+        } while (combatantsSorted[currentUnitTurn].hpLeft == 0);
+        if (combatantsSorted[currentUnitTurn] instanceof Character) {
+            document.getElementById("playerAbilities").style.visibility = "visible";
+            document.getElementById("playerItems").style.visibility = "visible";
+            document.getElementById("playerFlee").style.visibility = "visible";
+            currentPlayer = combatantsSorted[currentUnitTurn];
+            currentPlayerIndex = findRightChar(currentPlayer);
+            console.log("It is " + currentPlayer.name + " turn. Index " + currentPlayerIndex);
         }
-    } while (combatantsSorted[currentUnitTurn].hpLeft == 0);
-    if (combatantsSorted[currentUnitTurn] instanceof Character) {
-        document.getElementById("playerAbilities").style.visibility = "visible";
-        document.getElementById("playerItems").style.visibility = "visible";
-        document.getElementById("playerFlee").style.visibility = "visible";
-        currentPlayer = combatantsSorted[currentUnitTurn];
-    }
-    else if (combatantsSorted[currentUnitTurn] instanceof Monster) {
-        randomMove(combatantsSorted[currentUnitTurn]);
+        else if (combatantsSorted[currentUnitTurn] instanceof Monster) {
+            console.log("It is " + combatantsSorted[currentUnitTurn].name + "'s turn");
+            currentPlayer = combatantsSorted[currentUnitTurn];
+            currentMonsterIndex = findRightMonster(currentPlayer);
+            randomMove(combatantsSorted[currentUnitTurn]);
+        }
     }
 }
 
@@ -173,7 +181,7 @@ function nextUnitsTurn(combatantsSorted) {
  */
 function randomMove(monster) {
     let numOfMoves = monster.availableMoves.length;
-    let selectedNum = Math.floor(Math.random() * numOfMoves);
+    let selectedNum = Math.floor(Math.random() * numOfMoves)
     let randomTarget = Math.floor(Math.random() * currentCharacters.length);
     useMove(monster.availableMoves[selectedNum], monster, currentCharacters[randomTarget]);
 }
@@ -228,7 +236,7 @@ function createMoveElement(selectedMove) {
     moveButton.className = "moves";
     moveButton.onclick = function () {
         createCharTargets(selectedMove);
-        createMonsterTargets(selectedMove)
+        createMonsterTargets(selectedMove);
     };
     document.body.appendChild(moveButton);
     let tooltip = document.createElement("SPAN");
@@ -323,22 +331,26 @@ function returnToBattleMenu() {
  */
 function characterDamaged(damage, character) {
     character.hpLeft -= damage;
-    if (isCharacterDead(character)) {
+    if (character.hpLeft < 0) {
         character.hpLeft = 0;
         giveXP(character);
     }
     let hpBarWidth = 200 * character.hpLeft / character.hp;
     if (character instanceof Character) {
-        document.getElementById("player" + (currentPlayerIndex + 1) + "HPNumber").innerHTML = character.hpLeft + "/" + character.hp;
-        document.getElementById("player" + (currentPlayerIndex + 1) + "curHP").style.width = hpBarWidth + "px";
-        changeHpBarColour((character.hpLeft / character.hp) * 100, "player" + (currentPlayerIndex + 1) + "curHP");
+        let index = findRightChar(character);
+        document.getElementById("player" + (index + 1) + "HPNumber").innerHTML = character.hpLeft + "/" + character.hp;
+        document.getElementById("player" + (index + 1) + "curHP").style.width = hpBarWidth + "px";
+        changeHpBarColour((character.hpLeft / character.hp) * 100, "player" + (index + 1) + "curHP");
+        if (areAllDead(currentCharacters) === true) {
+            alert("All Players are dead");
+        }
     }
     else if (character instanceof Monster) {
         let index = findRightMonster(character);
         document.getElementById("enemy" + (index + 1) + "HPNumber").innerHTML = character.hpLeft + "/" + character.hp;
         document.getElementById("enemy" + (index + 1) + "curHP").style.width = hpBarWidth + "px";
         changeHpBarColour((character.hpLeft / character.hp) * 100, "enemy" + (index + 1) + "curHP");
-        if (areMonstersDead() === true) {
+        if (areAllDead(currentMonsters) === true) {
             alert("All Monsters are dead");
         }
     }
@@ -383,19 +395,6 @@ function changeCurrentMP(character, mp) {
 }
 
 /**
- * Checks if the chosen character is dead.
- * @param {Character} character the chosen character
- * @returns true if dead and false if not.
- */
-function isCharacterDead(character) {
-    if (character.hpLeft <= 0) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-/**
  * Creates targets on characters.
  * @param {Move} selectedMove move selected by current character.
  */
@@ -429,7 +428,7 @@ function createMonsterTargets(selectedMove) {
             target.style.right = 200 + "px";
             let text = document.createTextNode("TargetTest");
             target.onclick = function () {
-                useMove(selectedMove, findRightChar(), currentMonsters[i]);
+                useMove(selectedMove, currentPlayer, currentMonsters[i]);
             };
             target.appendChild(text);
             document.body.appendChild(target);
@@ -441,16 +440,13 @@ function createMonsterTargets(selectedMove) {
  * Finds the right character in character array.
  * @returns character if found, and false if not.
  */
-function findRightChar() {
+function findRightChar(character) {
     for (let i = 0; i < currentCharacters.length; i++) {
-        if (currentPlayer.name == currentCharacters[i].name) {
-            currentPlayerIndex = i;
-            return currentCharacters[i];
-        }
-        else {
-            return false;
+        if (character.name == currentCharacters[i].name) {
+            return i;
         }
     }
+    return false;
 }
 
 /**
@@ -470,15 +466,15 @@ function findRightMonster(character) {
  * Checks if all monsters in battle are dead.
  * @returns true if number equals array size, false if not.
  */
-function areMonstersDead() {
+function areAllDead(array) {
     let numDead = 0;
-    for (let i = 0; i < currentMonsters.length; i++) {
-        if (currentMonsters[i].hpLeft == 0) {
+    for (let i = 0; i < array.length; i++) {
+        if (array[i].hpLeft == 0) {
             numDead++;
         }
     }
-    if (currentMonsters.length == numDead) {
-        currentMonsters = [];
+    if (array.length == numDead) {
+        battleIsOver = true;
         return true;
     } else {
         return false;
@@ -524,7 +520,7 @@ function checkLvlUp(character) {
  * @returns array of the correct classes stat distribution.
  */
 function findClassStats(character) {
-    switch(character.class) {
+    switch (character.class) {
         case "Cleric":
             return [25, 10, 30, 20, 15];
         case "Paladin":

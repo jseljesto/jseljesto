@@ -64,6 +64,17 @@
     <p id="player1curMP" class="remainingValues"
         style="visibility: hidden; position: absolute; left: 100px; top: 200px; background: linear-gradient(#0080FF, #0055AA);"></p>
     <p id="player1MPNumber" style="visibility: hidden; position: absolute; left: 310px; top: 200px;"></p>
+
+    <p id="player2Name" style="visibility: hidden; position: absolute; left: 100px; top: 300px;"></p>
+    <p id="player2HP" class="statBar" style="visibility: hidden; position: absolute; left: 100px; top: 350px;"></p>
+    <p id="player2curHP" class="remainingValues"
+        style="visibility: hidden; position: absolute; left: 100px; top: 350px;"></p>
+    <p id="player2HPNumber" style="visibility: hidden; position: absolute; left: 310px; top: 350px;"></p>
+    <p id="player2MP" class="statBar" style="visibility: hidden; position: absolute; left: 100px; top: 400px;"></p>
+    <p id="player2curMP" class="remainingValues"
+        style="visibility: hidden; position: absolute; left: 100px; top: 400px; background: linear-gradient(#0080FF, #0055AA);"></p>
+    <p id="player2MPNumber" style="visibility: hidden; position: absolute; left: 310px; top: 400px;"></p>
+
     <p id="enemy1Name" style="visibility: hidden; position: absolute; right: 300px; top: 100px;"></p>
     <p id="enemy1HP" class="statBar" style="visibility: hidden; position: absolute; right: 100px; top: 150px;"></p> 
     <p id="enemy1curHP" class="remainingValues"
@@ -94,6 +105,7 @@
     <button id="playerFlee" class="menuButtons" onmousedown="buttonClicked(this)" onmouseup="buttonUnclicked(this)"
         onclick="toMenu()" style="position: absolute; visibility: hidden; bottom: 2%; left: 10px;">Flee</button>
     <button onclick="startBattle()" id="battleTest" style="position: absolute; top: 5%; right: 5%">To Battle</button>
+    <button onclick="createPopup()"style="position: absolute; top: 10%; right: 5%" >Ny spelar</button>
 
     <canvas id="canvas" width="1700" height="1600"></canvas>
 
@@ -113,6 +125,11 @@
     const DEX = 10;
     const HP = 10 + (3 * VIT);
     const MP = 10 + (2 * WIS);
+    let currentVIT = 0;
+    let currentSTR = 0;
+    let currentWIS = 0;
+    let currentDEX = 0;
+    let currentSPE = 0;
     let amountOfCharacters = 0;
     let currentCharacters = [];
 
@@ -121,19 +138,10 @@
     let currentPlayerIndex = 0;
 
     //First playable character.
-    let player1 = new Character("", "", "", 0, 0, 0, 0, 0, 1, 0, 1000, 0, 0, 0, 0, ["Normal Strike"]);
-    amountOfCharacters++;
-    currentCharacters.push(player1);
 
     //Position of player on map.
     let curX = 350;
     let curY = 250;
-
-    //Popup-menu for character customisation.
-    let popup = document.getElementById("popUp");
-    let content = document.getElementById("popup-content");
-    let span = document.getElementsByClassName("close")[0];
-    popup.style.display = "block";
 
     let fabCanvas = new fabric.Canvas("canvas");
     fabCanvas.setWidth(1700);
@@ -141,13 +149,27 @@
 
     let gameStarted = false;
     let onMapScreen = true;
+    let popup = document.getElementById("popUp");
 
     //Stops player from scrolling down when moving character.
     document.body.style.overflow = "hidden";
 
     const interval = setInterval(draw, 10);
 
-    loadTemplateValues();
+    createPopup();
+
+    /**
+     * Creates popup-menu for character customisation.
+     */
+    function createPopup() {
+        document.getElementById("name").value = "";
+        document.getElementById("characterClass").value = "";
+        document.getElementById("characterRace").value = "";
+        let content = document.getElementById("popup-content");
+        let span = document.getElementsByClassName("close")[0];
+        popup.style.display = "block";
+        loadTemplateValues();
+    }
 
     /**
      * Draws the player onto the map.
@@ -211,25 +233,42 @@
             document.getElementById("characterRace").value != "") {
             document.getElementById("formError").style.visibility = "hidden";
             gameStarted = true;
-            player1.name = document.getElementById("name").value;
             closeWindow();
-            document.getElementById("chosenName").innerHTML = "Name: " + player1.name;
-            player1.race = document.getElementById("characterRace").value;
-            player1.class = document.getElementById("characterClass").value;
-            document.getElementById("chosenTypes").innerHTML = "Race & Class: " + player1.race + " " + player1.class;
-            document.getElementById("chosenVIT").innerHTML = "VIT: " + player1.vit;
-            document.getElementById("chosenSTR").innerHTML = "STR: " + player1.str;
-            document.getElementById("chosenWIS").innerHTML = "WIS: " + player1.wis;
-            document.getElementById("chosenDEX").innerHTML = "DEX: " + player1.dex;
-            document.getElementById("chosenSPE").innerHTML = "SPE: " + player1.spe;
-            document.getElementById("chosenHP").innerHTML = "HP: " + player1.hpLeft + "/" + player1.hp;
-            document.getElementById("chosenMP").innerHTML = "MP: " + player1.mpLeft + "/" + player1.mp;
+            let player = createPlayer(window['player' + 1]);
+            document.getElementById("chosenName").innerHTML = "Name: " + player.name;
+            document.getElementById("chosenTypes").innerHTML = "Race & Class: " + player.race + " " + player.class;
+            document.getElementById("chosenVIT").innerHTML = "VIT: " + player.vit;
+            document.getElementById("chosenSTR").innerHTML = "STR: " + player.str;
+            document.getElementById("chosenWIS").innerHTML = "WIS: " + player.wis;
+            document.getElementById("chosenDEX").innerHTML = "DEX: " + player.dex;
+            document.getElementById("chosenSPE").innerHTML = "SPE: " + player.spe;
+            document.getElementById("chosenHP").innerHTML = "HP: " + player.hpLeft + "/" + player.hp;
+            document.getElementById("chosenMP").innerHTML = "MP: " + player.mpLeft + "/" + player.mp;
 
 
         }
         else {
             document.getElementById("formError").style.visibility = "visible";
         }
+    }
+
+    function createPlayer(player) {
+        player = new Character("", "", "", 0, 0, 0, 0, 0, 1, 0, 1000, 0, 0, 0, 0, ["Normal Strike"]);
+        amountOfCharacters++;
+        player.name = document.getElementById("name").value;
+        player.race = document.getElementById("characterRace").value;
+        player.class = document.getElementById("characterClass").value;
+        player.vit = currentVIT;
+        player.str = currentSTR;
+        player.wis = currentWIS;
+        player.dex = currentDEX;
+        player.spe = currentSPE;
+        player.hp = 10 + (3 * player.vit);
+        player.hpLeft = player.hp;
+        player.mp = 10 + (2 * player.wis);
+        player.mpLeft = player.mp;
+        currentCharacters.push(player);
+        return player;
     }
 
     /**
@@ -249,12 +288,8 @@
      * Gives characters correct HP and MP based on VIT and WIS stats.
      */
     function correctStats() {
-        player1.hp = 10 + (3 * player1.vit);
-        player1.hpLeft = player1.hp;
-        player1.mp = 10 + (2 * player1.wis);
-        player1.mpLeft = player1.mp;
-        document.getElementById("characterHP").innerHTML = "HP: " + player1.hp;
-        document.getElementById("characterMP").innerHTML = "MP: " + player1.mp;
+        document.getElementById("characterHP").innerHTML = "HP: " + (10 + (3 * currentVIT));
+        document.getElementById("characterMP").innerHTML = "MP: " + (10 + (2 * currentWIS));;
 
     }
 
@@ -270,7 +305,8 @@
                 document.getElementById("characterWIS").innerHTML = "WIS: " + (WIS + 3);
                 document.getElementById("characterDEX").innerHTML = "DEX: " + DEX;
                 document.getElementById("characterSPE").innerHTML = "SPE: " + (SPE - 2);
-                player1.vit = VIT + 2, player1.str = STR - 3, player1.wis = WIS + 3, player1.dex = DEX, player1.spe = SPE - 2;
+                //player1.vit = VIT + 2, player1.str = STR - 3, player1.wis = WIS + 3, player1.dex = DEX, player1.spe = SPE - 2;
+                currentVIT = VIT + 2, currentSTR = STR - 3, currentWIS = WIS + 3, currentDEX = DEX, currentSPE = SPE - 2;
                 break;
             case "Paladin":
                 document.getElementById("characterVIT").innerHTML = "VIT: " + (VIT + 2);
@@ -278,7 +314,7 @@
                 document.getElementById("characterWIS").innerHTML = "WIS: " + (WIS - 1);
                 document.getElementById("characterDEX").innerHTML = "DEX: " + (DEX - 3);
                 document.getElementById("characterSPE").innerHTML = "SPE: " + (SPE - 1);
-                player1.vit = VIT + 2, player1.str = STR + 3, player1.wis = WIS - 1, player1.dex = DEX - 3, player1.spe = SPE - 1;
+                currentVIT = VIT + 2, currentSTR = STR + 3, currentWIS = WIS - 1, currentDEX = DEX - 3, currentSPE = SPE - 1;
                 break;
             case "Wizard":
                 document.getElementById("characterVIT").innerHTML = "VIT: " + (VIT - 2);
@@ -286,7 +322,7 @@
                 document.getElementById("characterWIS").innerHTML = "WIS: " + (WIS + 3);
                 document.getElementById("characterDEX").innerHTML = "DEX: " + DEX;
                 document.getElementById("characterSPE").innerHTML = "SPE: " + (SPE + 2);
-                player1.vit = VIT - 2, player1.str = STR - 3, player1.wis = WIS + 3, player1.dex = DEX, player1.spe = SPE + 2;
+                currentVIT = VIT - 2, currentSTR = STR - 3, currentWIS = WIS + 3, currentDEX = DEX, currentSPE = SPE + 2;
                 break;
             case "Rogue":
                 document.getElementById("characterVIT").innerHTML = "VIT: " + (VIT - 3);
@@ -294,7 +330,7 @@
                 document.getElementById("characterWIS").innerHTML = "WIS: " + (WIS - 2);
                 document.getElementById("characterDEX").innerHTML = "DEX: " + (DEX + 2);
                 document.getElementById("characterSPE").innerHTML = "SPE: " + (SPE + 3);
-                player1.vit = VIT - 3, player1.str = STR, player1.wis = WIS - 2, player1.dex = DEX + 2, player1.spe = SPE + 3;
+                currentVIT = VIT - 3, currentSTR = STR, currentWIS = WIS - 2, currentDEX = DEX + 2, currentSPE = SPE + 3;
                 break;
             case "Ranger":
                 document.getElementById("characterVIT").innerHTML = "VIT: " + (VIT - 2);
@@ -302,7 +338,7 @@
                 document.getElementById("characterWIS").innerHTML = "WIS: " + WIS;
                 document.getElementById("characterDEX").innerHTML = "DEX: " + (DEX + 3);
                 document.getElementById("characterSPE").innerHTML = "SPE: " + (SPE + 1);
-                player1.vit = VIT - 2, player1.str = STR - 2, player1.wis = WIS, player1.dex = DEX + 3, player1.spe = SPE + 1;
+                currentVIT = VIT - 2, currentSTR = STR - 2, currentWIS = WIS, currentDEX = DEX + 3, currentSPE = SPE + 1;
                 break;
             /*else if (chosenClass == "Druid") {
                 document.getElementById("characterVIT").innerHTML = "VIT: " + (VIT-3);
@@ -317,7 +353,7 @@
                 document.getElementById("characterWIS").innerHTML = "WIS: " + WIS;
                 document.getElementById("characterDEX").innerHTML = "DEX: " + DEX;
                 document.getElementById("characterSPE").innerHTML = "SPE: " + SPE;
-                player1.vit = VIT, player1.str = STR, player1.wis = WIS, player1.dex = DEX, player1.spe = SPE;
+                currentVIT = VIT, currentSTR = STR, currentWIS = WIS, currentDEX = DEX, currentSPE = SPE;
                 break;
         }
         correctStats();
