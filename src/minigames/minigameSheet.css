@@ -62,22 +62,6 @@
     visibility: visible;
 }
 
-.menuButtons {
-    border: 2px solid black;
-    background-color: cornflowerblue;
-    color: white;
-    text-align: center;
-    width: 250px;
-    z-index: 1;
-    cursor: pointer;
-    font-family: Papyrus;
-    font-size: 15px;
-}
-
-.menuButtons:hover {
-    background-color: blue;
-}
-
 .incomeText {
     position: relative;
     display: inline-block;
@@ -100,6 +84,25 @@
 
 .incomeText:hover .averageIncome {
     visibility: visible;
+}
+
+
+/**********************************AOA**********************/
+
+.menuButtons {
+    border: 2px solid black;
+    background-color: cornflowerblue;
+    color: white;
+    text-align: center;
+    width: 250px;
+    z-index: 1;
+    cursor: pointer;
+    font-family: Papyrus;
+    font-size: 15px;
+}
+
+.menuButtons:hover {
+    background-color: blue;
 }
 
 #currentProgress {

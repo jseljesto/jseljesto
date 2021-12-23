@@ -11,9 +11,11 @@ let battleIsOver = false;
  * Changes from mapScreen to battleScreen.
  */
 function startBattle() {
+    battleIsOver = false;
     onMapScreen = false;
     hideMap();
-    unhideBattleScreen();
+    findRandomMonsters();
+    createBattleScreenElements(createCombatantArray(2, 2));
     addStats();
     sortBySpeed();
     nextUnitsTurn(combatantsSorted);
@@ -206,9 +208,11 @@ function buttonUnclicked(_this) {
  * Returns the user to the map screen.
  */
 function toMenu() {
+    //currentMonsters = [];
     onMapScreen = true;
+    let div = getElementById("headElement");
+    div.parentNode.removeChild(div);
     unhideMap();
-    hideBattleScreen();
     document.body.style.background = "url(RegionTest1.png) no-repeat";
 }
 
@@ -274,21 +278,45 @@ function findMove(selectedMove) {
 }
 
 /**
+ * Calculates the damage output of a selected move
+ * @param {Character} character the character using the move
+ * @param {Move} move the selected move used
+ * @returns damage as a number
+ */
+function calculateDamage(character, move) {
+    let roll = Math.floor(Math.random() * 11);
+    let variation = 0.95 + (roll / 100);
+    let damage = Math.round((((character.str * 0.065) * move.pow) + 10) * variation);
+    console.log(character.name + " does " + damage + " to " + target.name);
+    return damage;
+}
+
+/**
+ * Checks if the character has enough MP to perform the move
+ * @param {Character} character 
+ * @param {Move} move 
+ * @returns true if character has enough MP, false if not
+ */
+function checkForMP(character, move) {
+    if (move.mp <= character.mpLeft) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/**
  * Uses the selected move on selected target.
  * @param {String} moveName name of the selected move.
  * @param {Character} character the character using the move.
  * @param {Character/Monster} target the selected moves target.
  */
-function useMove(moveName, character, target) {
+function useMove(moveName, character, target, id) {
     removeMoveElements();
     let move = findMove(moveName);
-    let roll = Math.floor(Math.random() * 11);
-    let variation = 0.95 + (roll / 100);
-    let damage = Math.round((((character.str * 0.065) * move.pow) + 10) * variation);
-    console.log(character.name + " does " + damage + " to " + target.name);
-    if (move.mp <= character.mpLeft) {
+    if (checkforMP(character, move)) {
         changeCurrentMP(character, move.mp);
-        characterDamaged(damage, target);
+        characterDamaged(calculateDamage(character, move), target, id);
     } else {
         alert("You do not have enough MP left!");
     }
@@ -297,14 +325,10 @@ function useMove(moveName, character, target) {
 }
 
 /**
- * Removes all move and target buttons from screen.
+ * Removes all elements of a class from screen.
  */
-function removeMoveElements() {
-    let elementsFound = document.getElementsByClassName("moves");
-    while (elementsFound.length > 0) {
-        elementsFound[0].parentNode.removeChild(elementsFound[0]);
-    }
-    elementsFound = document.getElementsByClassName("targets");
+function removeMoveElements(elementType) {
+    let elementsFound = document.getElementsByClassName(elementType);
     while (elementsFound.length > 0) {
         elementsFound[0].parentNode.removeChild(elementsFound[0]);
     }
@@ -314,7 +338,7 @@ function removeMoveElements() {
  * Returns the player to the battle menu.
  */
 function returnToBattleMenu() {
-    removeMoveElements();
+    removeMoveElements("moves"), removeMoveElements("targets");
     movesShown = 0;
     x = 100;
     y = 250;
@@ -325,15 +349,36 @@ function returnToBattleMenu() {
 }
 
 /**
+ * Afflicts the calculated damage onto its reciever
+ * @param {Character} character 
+ * @param {number} damageValue 
+ */
+function afflictDamage(character, damageValue) {
+    character.hpLeft -= damageValue;
+}
+
+/**
+ * Drains the user for a selected amount of MP
+ * @param {Character} character 
+ * @param {number} mpValue 
+ */
+function drainMP(character, mpValue) {
+    character.mpLeft -= mpValue;
+}
+
+/**
  * Calculates the remaining HP of the targeted combatant.
  * @param {Number} damage damage taken.
  * @param {Character} character target combatant.
  */
-function characterDamaged(damage, character) {
-    character.hpLeft -= damage;
+function characterDamaged(damage, character, id) {
+    afflictDamage(character, damage);
+    alert(currentMonsters[0].hpLeft + " " + currentMonsters[1].hpLeft) //test method
     if (character.hpLeft < 0) {
         character.hpLeft = 0;
-        giveXP(character);
+        if (character instanceof Monster) {
+            giveXP(monsterXPYield(character));
+        }
     }
     let hpBarWidth = 200 * character.hpLeft / character.hp;
     if (character instanceof Character) {
@@ -343,15 +388,17 @@ function characterDamaged(damage, character) {
         changeHpBarColour((character.hpLeft / character.hp) * 100, "player" + (index + 1) + "curHP");
         if (areAllDead(currentCharacters) === true) {
             alert("All Players are dead");
+            //toMenu();
         }
     }
     else if (character instanceof Monster) {
-        let index = findRightMonster(character);
+        let index = id;
         document.getElementById("enemy" + (index + 1) + "HPNumber").innerHTML = character.hpLeft + "/" + character.hp;
         document.getElementById("enemy" + (index + 1) + "curHP").style.width = hpBarWidth + "px";
         changeHpBarColour((character.hpLeft / character.hp) * 100, "enemy" + (index + 1) + "curHP");
         if (areAllDead(currentMonsters) === true) {
             alert("All Monsters are dead");
+            //toMenu();
         }
     }
 }
@@ -382,7 +429,7 @@ function changeHpBarColour(percentage, elementID) {
  * @param {Number} mp number to be subtracted from previous remaining MP.
  */
 function changeCurrentMP(character, mp) {
-    character.mpLeft -= mp;
+    drainMP(character, mp);
     let mpBarWidth = 200 * character.mpLeft / character.mp;
     if (character instanceof Character) {
         document.getElementById("player" + (currentPlayerIndex + 1) + "MPNumber").innerHTML = character.mpLeft + "/" + character.mp;
@@ -424,11 +471,12 @@ function createMonsterTargets(selectedMove) {
         if (currentMonsters[i].hpLeft > 0) {
             let target = document.createElement("BUTTON");
             target.className = "targets";
+            target.id = i;
             target.style.top = ((i * 200) + 100) + "px";
             target.style.right = 200 + "px";
             let text = document.createTextNode("TargetTest");
             target.onclick = function () {
-                useMove(selectedMove, currentPlayer, currentMonsters[i]);
+                useMove(selectedMove, currentPlayer, currentMonsters[i], i);
             };
             target.appendChild(text);
             document.body.appendChild(target);
@@ -455,7 +503,7 @@ function findRightChar(character) {
  */
 function findRightMonster(character) {
     for (let i = 0; i < currentMonsters.length; i++) {
-        if (character.name === currentMonsters[i].name) {
+        if (character === currentMonsters[i]) {
             return i;
         }
     }
@@ -482,16 +530,37 @@ function areAllDead(array) {
 }
 
 /**
- * Gives alive characters XP based on the slayed monsters baseXP.
- * @param {Monster} monster the slayed monster.
+ * Formula to calculate xp yield from a monster
+ * @param {Monster} monster 
+ * @returns the xp yield
  */
-function giveXP(monster) {
-    let xpEarned = monster.baseXp * (1 + (monster.lvl * 0.03));
+function monsterXPYield(monster) {
+    let xp = monster.baseXp * (1 + (monster.lvl * 0.03));
+    return xp;
+}
+
+/**
+ * Gives all alive characters a set amount of xp.
+ * @param {number} xp number of xp given.
+ */
+function giveXP(xp) {
     for (let i = 0; i < currentCharacters.length; i++) {
         if (currentCharacters[i].hpLeft > 0) {
-            currentCharacters[i].xp += xpEarned;
+            currentCharacters[i].xp += xp;
             checkLvlUp(currentCharacters[i]);
         }
+    }
+}
+
+/**
+ * Gives a specific characte a set amount of xp.
+ * @param {number} xp number of xp given.
+ * @param {Character} character the chosen character
+ */
+ function giveXPToChar(xp, character) {
+        if (character.hpLeft > 0) {
+            character.xp += xp;
+            checkLvlUp(character);
     }
 }
 
