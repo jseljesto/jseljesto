@@ -7,17 +7,16 @@
 
 <body>
     <h1 align="center">Designing your own button!</h1><br>
-    <h3 align="center">Use the premade tools to create a button</h3>
-    <h3 align="center">to use for your own website!</h3>
-    <h3 align="center">Click on button for code!</h3>
+    <h3 align="center">Use the premade tools to create a button<br>to use for your own website! <br>Click on button for
+        code!</h3>
 
 
     <p style="position: absolute; top:40%;">Change the text of the button:</p>
     <input type="text" id="buttonName" name="buttonName" value="" oninput="changeName()"
-        style="position: absolute; top:47%;" />
+        style="position: absolute; top:45%;" />
 
     <p style="position: absolute; top:50%; ">What color do you want the button to have?</p>
-    <select id="color" onchange="changeColor()" style="position: absolute; top:57%;">
+    <select id="color" onchange="changeColor()" style="position: absolute; top:55%;">
         <option value="yellow">Yellow</option>
         <option value="red">Red</option>
         <option value="blue">Blue</option>
@@ -32,7 +31,7 @@
     </select>
 
     <p style="position: absolute; top:60%;">What color do you want the text to have?</p>
-    <select id="textColor" onchange="changeTextColor()" style="position: absolute; top:67%;">
+    <select id="textColor" onchange="changeTextColor()" style="position: absolute; top:65%;">
         <option value="yellow">Yellow</option>
         <option value="red">Red</option>
         <option value="blue">Blue</option>
@@ -47,7 +46,7 @@
     </select>
 
     <p style="position: absolute; top:70%;">How round do you want the corners?</p>
-    <select id="roundedCorners" onchange="changeCorners()" style="position: absolute; top:77%;">
+    <select id="roundedCorners" onchange="changeCorners()" style="position: absolute; top:75%;">
         <option value="0" selected>No corners (0px)</option>
         <option value="5">Slightly rounded (5px)</option>
         <option value="10">Fairly rounded (10px)</option>
@@ -55,7 +54,7 @@
     </select>
 
     <p style="position: absolute; top:40%; right: 1%">What color do you want when hovering over?</p>
-    <select id="hoverColor" style="position: absolute; top:47%; right:1%;">
+    <select id="hoverColor" style="position: absolute; top:45%; right:1%;">
         <option value="lightblue">Light Blue</option>
         <option value="gold">Gold</option>
         <option value="lime">Lime</option>
@@ -68,10 +67,10 @@
     </select>
 
     <p style="position: absolute; top: 50%; right: 3%;">Transition?</p>
-    <input type="checkbox" id="transition" style="position: absolute; top: 53%; right: 1%;" onclick="addTransition()">
+    <input type="checkbox" id="transition" style="position: absolute; top: 51.7%; right: 1%;" onclick="addTransition()">
 
     <p style="position: absolute; top: 57%; right: 1%;">Amount of shadow?</p>
-    <select id="boxShadow" style="position: absolute; top: 64%; right: 1%;" onchange="changeShadow()">
+    <select id="boxShadow" style="position: absolute; top: 62%; right: 1%;" onchange="changeShadow()">
         <option value="0" selected>No shadow (0px)</option>
         <option value="2">Small shadow (2px)</option>
         <option value="5">Medium shadow (5px)</option>
@@ -79,7 +78,7 @@
     </select>
 
     <p style="position: absolute; top: 67%; right: 1%;">Color of shadow?</p>
-    <select id="shadowColor" style="position: absolute; top: 74%; right: 1%;" onchange="changeShadow()">
+    <select id="shadowColor" style="position: absolute; top: 72%; right: 1%;" onchange="changeShadow()">
         <option value="magenta">Magenta</option>
         <option value="gold">Gold</option>
         <option value="black" selected>Black</option>
@@ -88,17 +87,17 @@
     </select>
 
 
-    <button id="designButton" style="position: absolute; top:45%; left:45%; background-color: white; 
+    <button id="designButton" style="position: absolute; top: 25%; left: 47%; background-color: white; 
     height: 30px; width: 130px;" onclick="outputCode()" onmouseover="changeHoverColor()"
         onmouseout="changeColor()">Design Me!</button>
 
     <strong>
         <p style="position: absolute; top: 85%;">CSS-code here:</p>
     </strong>
-    <textarea id="buttonCSSCode" rows="5" cols="50" style="position: absolute; top: 85%; left: 10%;">
+    <textarea id="buttonCSSCode" rows="5" cols="50" style="position: absolute; top: 85%; left: 7%;">
     </textarea>
     <strong>
-        <p style="position:absolute; top: 85%; right: 32%;">HTML-code here:</p>
+        <p style="position:absolute; top: 85%; right: 22%;">HTML-code here:</p>
     </strong>
     <textarea id="buttonHTMLCode" rows="5" cols="50" style="position: absolute; top: 85%; right: 1%;">
     </textarea>
@@ -109,9 +108,9 @@
     let bgColor = "";
     let hoverColor = "";
 
-   /**
-   * Changes name shown on button.
-   */ 
+    /**
+    * Changes name shown on button.
+    */
     function changeName() {
         document.getElementById("designButton").innerHTML =
             document.getElementById("buttonName").value;
@@ -200,8 +199,8 @@
             document.getElementById("designButton").innerHTML + "</button>"
 
         document.getElementById("designButton").style.position = "absolute";
-        document.getElementById("designButton").style.top = "45%";
-        document.getElementById("designButton").style.left = "45%";
+        document.getElementById("designButton").style.top = "25%";
+        document.getElementById("designButton").style.left = "47%";
         document.getElementById("designButton").style.height = "30px";
         document.getElementById("designButton").style.width = "130px";
 
