@@ -193,7 +193,7 @@ function checkMoveType(move, tooltip) {
         tooltip.style.backgroundImage = "repeating-linear-gradient( 45deg, #ffffff, #ffffff 2px, #0000ff 2px, #0000ff 10px)";
     }
     else if (move.type === "Melee") {
-        tooltip.style.backgroundImage = "url(sword.png)";
+        tooltip.style.backgroundImage = "url(pictures/sword.png)";
         tooltip.style.backgroundRepeat = "no-repeat";
     }
 }
