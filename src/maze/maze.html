@@ -7,7 +7,7 @@
 </head>
 
 <body onkeydown="moveObject(event)">
-    <canvas onclick="showCoords()" id="mazeCanvas" width="800" height="500"></canvas>
+    <canvas id="mazeCanvas" width="800" height="500"></canvas>
     <h1 id="timer" style="position: fixed; left: 10%">00:00:00</h1>
     <script>
 
@@ -277,15 +277,6 @@
             } else {
                 document.getElementById("timer").innerHTML += seconds;
             }
-        }
-
-        /**
-        * Showds your current coordinates in the canvas.
-        */
-        function showCoords() {
-            let x = event.screenX - 400;
-            let y = event.screenY - 120;
-            alert("X-coords: " + x + " Y-coords: " + y);
         }
 
         /**

@@ -105,7 +105,6 @@
 </body>
 <script>
 
-    let bgColor = "";
     let hoverColor = "";
 
     /**
@@ -120,9 +119,8 @@
     * Changes color of the button itself.
     */
     function changeColor() {
-        bgColor = document.getElementById("color").value;
         document.getElementById("designButton").style.backgroundColor =
-            bgColor;
+            document.getElementById("color").value;
     }
 
     /**
@@ -178,32 +176,43 @@
     }
 
     /**
-    * Outputs the code for the button in HTML and CSS form.
-    */
-    function outputCode() {
+     * Removes properties not needed for output code
+     */
+    function removeProperties() {
         document.getElementById("designButton").style.removeProperty("position");
         document.getElementById("designButton").style.removeProperty("top");
         document.getElementById("designButton").style.removeProperty("left");
         document.getElementById("designButton").style.removeProperty("height");
         document.getElementById("designButton").style.removeProperty("width");
+    }
 
-        document.getElementById("designButton").style.backgroundColor = bgColor;
-        document.getElementById("buttonCSSCode").innerHTML = "#designButton { "
-
-        document.getElementById("buttonCSSCode").innerHTML +=
-            document.getElementById("designButton").style.cssText;
-        document.getElementById("buttonCSSCode").innerHTML += `} #designButton:hover 
-        { background-color: ${hoverColor}; }`
-
-        document.getElementById("buttonHTMLCode").innerHTML = "<button id='designButton'>" +
-            document.getElementById("designButton").innerHTML + "</button>"
-
+    /**
+     * Adds necessary properties back to button-element
+     */
+    function addProperties() {
         document.getElementById("designButton").style.position = "absolute";
         document.getElementById("designButton").style.top = "25%";
         document.getElementById("designButton").style.left = "47%";
         document.getElementById("designButton").style.height = "30px";
         document.getElementById("designButton").style.width = "130px";
+    }
 
+    /**
+    * Outputs the code for the button in HTML and CSS form.
+    */
+    function outputCode() {
+        removeProperties();
+        document.getElementById("buttonCSSCode").innerHTML = "#designButton { "
+
+        document.getElementById("buttonCSSCode").innerHTML +=
+            document.getElementById("designButton").style.cssText;
+
+        document.getElementById("buttonCSSCode").innerHTML += `} #designButton:hover 
+        { background-color: ${hoverColor}; }`;
+
+        document.getElementById("buttonHTMLCode").innerHTML = "<button id='designButton'>" +
+            document.getElementById("designButton").innerHTML + "</button>";
+        addProperties();
     }
 </script>
 

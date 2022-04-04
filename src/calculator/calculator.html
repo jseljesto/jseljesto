@@ -38,7 +38,7 @@
         let currentSum = 0;
         let firstOperand = 0;
         let operator = "";
-        let secondOperand;
+        let secondOperand = 0;
         let boxPadding = 150;
         let decimalUsed = false;
         let includesDecimal = false;
@@ -68,7 +68,7 @@
         * @param {string} op The chosen operator.
         */
         function clickOperator(op) {
-            if (firstOperand != 0) {
+            if (firstOperand) {
                 boxPadding = 165;
                 if (!operator) {
                     operator = op;
@@ -101,7 +101,7 @@
         * Adds decimal symbol to the current sum.
         */
         function addDecimal() {
-            if (firstOperand != 0 && decimalUsed === false) {
+            if (firstOperand && !decimalUsed) {
                 if (document.getElementById("sum").innerHTML != "0") {
                     boxPadding -= 7.5;
                 }
@@ -148,7 +148,7 @@
         * Finds the square root of the current sum.
         */
         function squareRoot() {
-            if (secondOperand != 0) {
+            if (secondOperand) {
                 findSum();
                 currentSum = Math.sqrt(currentSum).toFixed(2);
                 boxPadding = 127 - (15 * (currentSum.toString().length - 3));

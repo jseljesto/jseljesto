@@ -41,6 +41,7 @@
 	<script>
 
 		let availablePlaces = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+		let items = ["ruby", "sapphire", "emerald", "diamond", "coal", "bronze", "silver", "gold"];
 		let firstPick = "";
 		let firstVisibleBox = 0;
 		let secondVisibleBox = 0;
@@ -55,39 +56,17 @@
 			return 0.5 - Math.random()
 		});
 
-		for (let i = 1; i <= 16; i++) {
-			let currentNumber = (availablePlaces[i-1]);
-			if (i === 1 || i === 2) {
-				document.getElementById("image" + currentNumber).src = "ruby.png";
-				placings[currentNumber - 1] = "ruby";
-			}
-			if (i === 3 || i === 4) {
-				document.getElementById("image" + currentNumber).src = "sapphire.png";
-				placings[currentNumber - 1] = "sapphire";
-			}
-			if (i === 5 || i === 6) {
-				document.getElementById("image" + currentNumber).src = "emerald.png";
-				placings[currentNumber - 1] = "emerald";
-			}
-			if (i === 7 || i === 8) {
-				document.getElementById("image" + currentNumber).src = "diamond.png";
-				placings[currentNumber - 1] = "diamond";
-			}
-			if (i === 9 || i === 10) {
-				document.getElementById("image" + currentNumber).src = "coal.png";
-				placings[currentNumber - 1] = "coal";
-			}
-			if (i === 11 || i === 12) {
-				document.getElementById("image" + currentNumber).src = "bronze.png";
-				placings[currentNumber - 1] = "bronze";
-			}
-			if (i === 13 || i === 14) {
-				document.getElementById("image" + currentNumber).src = "silver.png";
-				placings[currentNumber - 1] = "silver";
-			}
-			if (i === 15 || i === 16) {
-				document.getElementById("image" + currentNumber).src = "gold.png";
-				placings[currentNumber - 1] = "gold";
+		for (let i = 0; i < items.length; i++) {
+			placeItems(items[i], i + 1);
+		}
+
+		function placeItems(item, currentNumber) {
+			console.log(item);
+			for (let j = 0; j < 2; j++) {
+				let newNumber = availablePlaces[(currentNumber * 2 - j) -1];
+				console.log(newNumber);
+				document.getElementById("image" + newNumber).src = item + ".png";
+				placings[newNumber - 1] = item;
 			}
 		}
 
