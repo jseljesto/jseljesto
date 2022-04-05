@@ -1,4 +1,4 @@
-export let gradients = [
+let gradients = [
     {firstColor:"black", secondColor:"gray", thirdColor:"white", fourthColor:"gray", fifthColor:"black"},
     {firstColor:"purple", secondColor:"indigo", thirdColor:"white", fourthColor:"indigo", fifthColor:"purple"},
     {firstColor:"navy", secondColor: "cyan", thirdColor:"green", fourthColor:"cyan", fifthColor:"navy"},

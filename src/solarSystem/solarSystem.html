@@ -9,9 +9,9 @@
 <body>
     <canvas id="solarCanvas" width="550" height="550"></canvas>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.6.3/fabric.min.js"></script>
-    <script type="module">
-        import { gradients } from "./planetGradients.js";
-        import { names } from "./planetNames.js";
+    <script src="planetGradients.js"></script>
+    <script src="planetNames.js"></script>
+    <script>
 
         let canvas = new fabric.Canvas("solarCanvas");
         canvas.setWidth(screen.width - 25);

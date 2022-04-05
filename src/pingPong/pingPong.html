@@ -27,12 +27,12 @@
     <button id="reset" onclick="location.reload()" style="position: absolute; right: 45px;">Reset</button>
     <button id="start" onclick="startGame()" style="position: absolute; right: 110px;">Start</button>
     <strong>
-        <h1 id="highscore" style="position: absolute; top: 7%;">Highscore:</h1>
+        <h1 id="highscore" style="position: absolute; top: 7%; color: white;">Highscore:</h1>
     </strong>
     <button onclick="localStorage.removeItem('savedScores'); location.reload();" style="position: absolute; 
     bottom: 5%; left: 1%">Clear</button>
     <strong>
-        <h2 id="score" style="position:absolute; right: 35px;">Score: </h2>
+        <h2 id="score" style="position:absolute; right: 35px; color: white;">Score: </h2>
     </strong>
     <canvas id="myCanvas" width="600" height="400"></canvas>
     <script>
@@ -289,16 +289,18 @@
             //Checks if ball has passed user paddle and loss condition is granted
             if (x + dx < 0 - ballRadius) {
                 alert(`Game Over! \n Score: ${score}`);
+                clearInterval(interval);
                 if (multiEnabled === false) {
                     addScore(score);
                 }
-                document.location.reload();
+                location.reload();
             }
             //Checks if ball passes AI paddle and win condition is granted
             if (multiEnabled === true) {
                 if (x + dx > canvas.width + ballRadius) {
                     alert('You won!');
-                    document.location.reload();
+                    clearInterval(interval);
+                    location.reload();
                 }
             }
 
@@ -326,8 +328,10 @@
         * Changes screen when starting the game.
         */
         function startGame() {
-            dx = 1;
+            dx = 2;
             document.getElementById("start").style.visibility = "hidden";
+            document.getElementById("singleplayer").style.visibility = "hidden";
+            document.getElementById("multiplayer").style.visibility = "hidden";
             document.addEventListener("mousemove", checkMouseMove, false);
         }
     </script>
