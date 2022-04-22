@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="stylesheet.css" />
+</head>
+
+<body>
+    <div id="colorShowcaser" style="position: absolute; top: 3cm; left: 5cm; font-size: 25px;">
+        <p>Current Color:</p>
+    </div>
+    <script>
+        let gridElements = [];
+        let colors = ["yellow", "dodgerBlue", "red", "green"];
+        createGridElements(createGridContainer("canvas"), "grid-item", 100, true);
+        createGridElements(createGridContainer("palette"), "palette-item", 4, false);
+        createGridElements(document.getElementById("colorShowcaser"), "showcase-item", 1, false, "selectedColor");
+        const paletteElements = document.getElementsByClassName("palette-item");
+        for (let a = 0; a < colors.length; a++) {
+            paletteElements[a].onclick = function () {
+                changeSelectedColor(event);
+            }
+            paletteElements[a].style.backgroundColor = colors[a];
+        }
+
+        /**
+         * Creates a container to hold grid elements
+         * @param id The css id of the container
+         * @return gridContainer the container element
+         */
+        function createGridContainer(id) {
+            let gridContainer = document.createElement("DIV");
+            gridContainer.className = "grid-container";
+            gridContainer.id = id;
+            document.body.appendChild(gridContainer);
+            return gridContainer;
+        }
+
+        /**
+         * Creates the elements inside the container
+         * @param containter The container to be used
+         * @param elementClass the class name to be given to elements
+         * @param numOfElements number of elements to be created
+         * @param isCanvas checks if the container is the canvas
+         * @param id a specific id set for the element
+         */
+        function createGridElements(container, elementClass, numOfElements, isCanvas, id) {
+            for (let i = 0; i < numOfElements; i++) {
+                let gridElement = document.createElement("DIV");
+                gridElement.className = elementClass;
+                gridElement.id = id ?? i + 1;
+                if (isCanvas === true) {
+                    let roll = Math.floor(Math.random() * colors.length) + 0;
+                    gridElement.style.backgroundColor = colors[roll];
+                    gridElement.onclick = function () {
+                        changeColor(event, document.getElementById("selectedColor").style.backgroundColor, event.target.style.backgroundColor);
+                    }
+                    findAdjacentElements(gridElement);
+                }
+                container.appendChild(gridElement);
+            }
+        }
+
+        /**
+         * Finds the element adjacent to the selected element in the canvas
+         * @param element The element selected
+         */
+        function findAdjacentElements(element) {
+            let currentID = Number(element.id);
+            let pathObject = {
+                id: currentID
+            }
+            currentID <= 10 ? (pathObject.top = false) : (pathObject.top = currentID - 10);
+            currentID >= 90 ? (pathObject.bottom = false) : (pathObject.bottom = currentID + 10);
+            currentID % 10 == 1 ? (pathObject.left = false) : (pathObject.left = currentID - 1);
+            currentID % 10 == 0 ? (pathObject.right = false) : (pathObject.right = currentID + 1);
+            gridElements.push(pathObject);
+        }
+
+        /**
+         * Changes the selected color for the user
+         * @param event The color selected on the palette
+         */
+        function changeSelectedColor(event) {
+            document.getElementById("selectedColor").style.backgroundColor = event.target.style.backgroundColor;
+        }
+
+        /**
+         * Changes the color of the selected grid element
+         * @param element The selected grid element
+         * @param color The new color to be added
+         * @param currentColor The old color to be discarded
+         */
+        function changeColor(element, color, currentColor) {
+            if (element) {
+                let properElement = element.target ?? element;
+                if (currentColor != color && properElement.style.backgroundColor === currentColor) {
+                    properElement.style.backgroundColor = color;
+                    let id = properElement.id;
+                    let closeElements = gridElements[id - 1];
+                    console.log("Fungerte");
+                    changeColor(document.getElementById(closeElements.top), color, currentColor);
+                    changeColor(document.getElementById(closeElements.bottom), color, currentColor);
+                    changeColor(document.getElementById(closeElements.right), color, currentColor);
+                    changeColor(document.getElementById(closeElements.left), color, currentColor);
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

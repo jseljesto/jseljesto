@@ -1,0 +1,43 @@
+.grid-container {
+    position: absolute;
+    display: inline-grid;
+    border: 1px solid black;
+}
+
+#canvas {
+    left: 15cm;
+    top: 2cm;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+#palette {
+    left: 15cm;
+    bottom: 2cm;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+#selectedColor {
+    grid-template-columns: 1fr;
+    position: absolute;
+    transform: translate(45px, 10px);
+}
+
+.grid-item {
+    border: 1px solid black;
+    height: 70px;
+    width: 70px;
+    cursor: pointer;
+}
+
+.palette-item {
+    border: 1px solid black;
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+}
+
+.showcase-item {
+    border: 1px solid black;
+    height: 40px;
+    width: 40px;
+}
