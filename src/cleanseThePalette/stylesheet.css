@@ -19,10 +19,10 @@
 #selectedColor {
     grid-template-columns: 1fr;
     position: absolute;
-    transform: translate(45px, 10px);
+    transform: translate(45px, 0px);
 }
 
-.grid-item {
+.canvas-item {
     border: 1px solid black;
     height: 70px;
     width: 70px;

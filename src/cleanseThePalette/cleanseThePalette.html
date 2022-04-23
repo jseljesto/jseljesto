@@ -9,10 +9,13 @@
     <div id="colorShowcaser" style="position: absolute; top: 3cm; left: 5cm; font-size: 25px;">
         <p>Current Color:</p>
     </div>
+    <p id="numOfClicks" style="position: absolute; top: 3cm; right: 5cm; font-size: 25px;">Number of clicks: 0</p>
+    <p style="position: absolute; left: 9.5cm; bottom: 1.6cm; font-size: 25px;">Choose your color:</p>
     <script>
         let gridElements = [];
+        let clicks = 0;
         let colors = ["yellow", "dodgerBlue", "red", "green"];
-        createGridElements(createGridContainer("canvas"), "grid-item", 100, true);
+        createGridElements(createGridContainer("canvas"), "canvas-item", 100, true);
         createGridElements(createGridContainer("palette"), "palette-item", 4, false);
         createGridElements(document.getElementById("colorShowcaser"), "showcase-item", 1, false, "selectedColor");
         const paletteElements = document.getElementsByClassName("palette-item");
@@ -53,7 +56,12 @@
                     let roll = Math.floor(Math.random() * colors.length) + 0;
                     gridElement.style.backgroundColor = colors[roll];
                     gridElement.onclick = function () {
+                        clicks++;
+                        document.getElementById("numOfClicks").innerHTML = "Number of clicks: " + clicks;
                         changeColor(event, document.getElementById("selectedColor").style.backgroundColor, event.target.style.backgroundColor);
+                        if (isGameFinished() === true) {
+                            window.location.reload();
+                        }
                     }
                     findAdjacentElements(gridElement);
                 }
@@ -98,13 +106,23 @@
                     properElement.style.backgroundColor = color;
                     let id = properElement.id;
                     let closeElements = gridElements[id - 1];
-                    console.log("Fungerte");
                     changeColor(document.getElementById(closeElements.top), color, currentColor);
                     changeColor(document.getElementById(closeElements.bottom), color, currentColor);
                     changeColor(document.getElementById(closeElements.right), color, currentColor);
                     changeColor(document.getElementById(closeElements.left), color, currentColor);
                 }
             }
+        }
+
+        function isGameFinished() {
+            const canvasItems = document.getElementsByClassName("canvas-item");
+            for (let i = 0; i < canvasItems.length; i++) {
+                if (canvasItems[0].style.backgroundColor != canvasItems[i].style.backgroundColor) {
+                    return false;
+                }
+            }
+            alert("You won!");
+            return true;
         }
     </script>
 </body>
