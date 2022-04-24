@@ -121,8 +121,10 @@
                     return false;
                 }
             }
-            alert("You won!");
-            return true;
+            setTimeout(() => {
+                alert("You won!");
+                return true;
+            }, "200")
         }
     </script>
 </body>
