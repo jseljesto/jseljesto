@@ -1,6 +1,6 @@
 class Character {
 
-    constructor(name, race, type, vit, str, wis, dex, spe, lvl, xp, xpNext, hp, hpLeft, mp, mpLeft, availableMoves) {
+    constructor(name, race, type, vit, str, wis, dex, spe, lvl, xp, xpNext, hp, hpLeft, mp, mpLeft, availableMoves, equipmentSlots) {
         this._name = name;
         this._race = race;
         this._type = type;
@@ -17,6 +17,8 @@ class Character {
         this._mp = mp;
         this._mpLeft = mpLeft;
         this._availableMoves = availableMoves;
+        this._equipmentSlots = equipmentSlots;
+        addEquipmentSlots(this);
     }
 
     /**
@@ -274,5 +276,8 @@ class Character {
     set availableMoves(availableMoves) {
         this._availableMoves = availableMoves;
     }
+}
 
+function addEquipmentSlots(character) {
+    character.equipmentSlots = ["helmetSlot", "necklaceSlot", "weaponSlot", "chestSlot", "shieldSlot", "glovesSlot", "legsSlot", "ringSlot", "feetSlot"];
 }
