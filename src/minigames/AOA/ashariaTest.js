@@ -18,12 +18,11 @@ let currentCharacters = [];
 let currentPlayer = "";
 let currentPlayerIndex = 0;
 
-//First playable character.
-
 //Position of player on map.
 let curX = 350;
 let curY = 250;
 
+//Creates a fabric JS canvas inside original canvas
 let fabCanvas = new fabric.Canvas("canvas");
 fabCanvas.setWidth(1700);
 fabCanvas.setHeight(1600);
@@ -34,6 +33,16 @@ let popup = document.getElementById("popUp");
 
 const interval = setInterval(draw, 10);
 
+let moving = false;
+let newZ = 0;
+let mousePosition;
+let currentElement = "";
+let player = new Character("", "", "", 2, 2, 2, 2, 2, 1, 0, 1000, 20, 20, 10, 10, ["Normal Strike"], "");
+let weapon = new Equipment("TestWeapon", "weapon", true, 5, 1, "None", "weaponSlot", "", 2, 2, 0, 0, 0, 0, 0, "");
+let dragonScale = new Equipment("TestWeapon", "helmet", true, 5, 1, "None", "helmetSlot", "", 2, 2, 0, 0, 0, 0, 0, "");
+items.push(weapon);
+items.push(dragonScale);
+
 /**
  * Creates popup-menu for character customisation.
  */
@@ -41,22 +50,20 @@ function createPopup() {
     document.getElementById("name").value = "";
     document.getElementById("characterClass").value = "";
     document.getElementById("characterRace").value = "";
-    let content = document.getElementById("popup-content");
-    let span = document.getElementsByClassName("close")[0];
     popup.style.display = "block";
     loadTemplateValues();
 }
 
 /**
- * Draws the player onto the map.
+ * Draws the player object onto the map.
  */
 function draw() {
     if (onMapScreen == true) {
         fabCanvas.clear();
-        let player = new fabric.Circle({
+        let playerObject = new fabric.Circle({
             left: curX, top: curY, fill: "blue", radius: 6, hoverCursor: "pointer", visible: true, selectable: false
         });
-        fabCanvas.add(player);
+        fabCanvas.add(playerObject);
     }
 }
 
@@ -120,8 +127,6 @@ function startGame() {
         document.getElementById("chosenSPE").innerHTML = "SPE: " + player.spe;
         document.getElementById("chosenHP").innerHTML = "HP: " + player.hpLeft + "/" + player.hp;
         document.getElementById("chosenMP").innerHTML = "MP: " + player.mpLeft + "/" + player.mp;
-
-
     }
     else {
         document.getElementById("formError").style.visibility = "visible";
@@ -311,5 +316,187 @@ function createBattleScreenElements(array) {
         headElement.appendChild(charMPNumber);
 
         charPosition++;
+
     }
+}
+
+document.addEventListener('mousemove', function (e) {
+    if (currentElement) {
+        e.preventDefault();
+        if (isDown) {
+            mousePosition = {
+
+                x: e.clientX,
+                y: e.clientY
+
+            };
+            currentElement.style.left = mousePosition.x - 175 + 'px';
+            currentElement.style.top = mousePosition.y - 265 + 'px';
+        }
+    }
+}, true);
+
+/**
+ * Checks if the correct slot is chosen when droppign item with mouse
+ * @param event The element to trigger the event
+ */
+function checkSlot(event) {
+    if (currentElement) {
+        let elements = document.elementsFromPoint(event.clientX, event.clientY);
+        for (let i = 0; i < elements.length; i++) {
+            if (elements[i].nodeName === "DIV" && player.equipmentSlots.includes(elements[i].id)) {
+                if (equip(player, items[selectedItemIndex], currentElement.innerHTML, elements[i].id) === true) {
+                    items.splice(selectedItemIndex, 1);
+                    removeDefaultIcon(elements[i]);
+                    elements[i].onclick = function () {
+                        removeElementFromSlot(player, elements[i], elements[i].id);
+                        elements[i].onclick = null;
+                    };
+                };
+                break;
+            }
+        }
+        currentElement.remove();
+        currentElement = "";
+        removeInventoryScreen();
+        openInventoryScreen();
+        isDown = false;
+    }
+}
+
+/**
+ * Removes the default icon from the slot
+ * @param parentElement the parentElement of the selected slot
+ */
+function removeDefaultIcon(parentElement) {
+    parentElement.firstElementChild.remove();
+}
+
+/**
+ * Removes an equipment from selected slot and adds it back to the item storage
+ * @param character The character to have the equipment removed
+ * @param element The slot element that contains the equipment
+ * @param slot The name of the slot to have its item unequipped
+ */
+function removeElementFromSlot(character, element, slot) {
+    unequip(character, findCorrectSlot(slot), slot);
+    confirmDataIcon(slot);
+    removeInventoryScreen();
+    openInventoryScreen();
+    element.removeEventListener("click", function () {
+        removeElementFromSlot(player, elements[i], elements[i].id);
+    });
+}
+
+/**
+ * Finds which slot to have default icon added back
+ * @param slot The slot to get their default icon back
+ */
+function confirmDataIcon(slot) {
+    switch (slot) {
+        case "helmetSlot":
+            createDefaultIcon("helmetSlot", "helmetIcon", "whh:viking", "black");
+            break;
+        case "necklaceSlot":
+            createDefaultIcon("necklaceSlot", "necklaceIcon", "icon-park-outline:diamond-necklace", "black");
+            break;
+        case "chestSlot":
+            createDefaultIcon("chestSlot", "chestIcon", "icon-park:clothes-sweater");
+            break;
+        case "weaponSlot":
+            createDefaultIcon("weaponSlot", "weaponIcon", "mdi:sword");
+            break;
+        case "shieldSlot":
+            createDefaultIcon("shieldSlot", "shieldIcon", "emojione-monotone:shield");
+            break;
+        case "ringSlot":
+            createDefaultIcon("ringSlot", "ringIcon", "la:ring", "black");
+            break;
+        case "leggingSlot":
+            createDefaultIcon("leggingSlot", "leggingIcon", "icon-park-outline:trousers-bell-bottoms", "black");
+            break;
+        case "glovesSlot":
+            createDefaultIcon("glovesSlot", "gloveIcon", "healthicons:ppe-gloves");
+            break;
+        case "feetSlot":
+            createDefaultIcon("feetSlot", "feetIcon", "fa-solid:shoe-prints");
+            break;
+    }
+}
+
+/**
+ * Creates a default icon to be added to a slot
+ * @param slot The slot where the default icon will be added to
+ * @param id The id of the icon
+ * @param dataIcon The font code for creating the default icon
+ * @param color Additional parameter for icons that need black color in their style
+ */
+function createDefaultIcon(slot, id, dataIcon, color) {
+    let span = document.createElement("SPAN");
+    span.setAttribute(["data-width"], 75);
+    span.setAttribute(["data-height"], 75);
+    span.setAttribute(["data-icon"], dataIcon);
+    span.className = "iconify";
+    span.id = id;
+    if (color) {
+        span.style.color = color;
+    }
+    document.getElementById(slot).appendChild(span);
+}
+
+/**
+* Shows the inventory screen to the user
+*/
+function openInventoryScreen() {
+    let element = document.createElement("DIV");
+    element.className = "inventoryTable";
+    element.style.top = 250 + "px";
+    element.style.left = 150 + "px";
+    for (let i = 0; i < 50; i++) {
+        let slot = document.createElement("DIV");
+        slot.className = "inventorySlot";
+        slot.id = "slot" + (i + 1);
+        slot.addEventListener('mousedown', function (e) {
+            selectedItemIndex = i;
+            isDown = true;
+            currentElement = e.target;
+            currentElement.addEventListener('mouseup', function (e) {
+                checkSlot(e);
+            });
+            slot.style.position = "absolute";
+            slot.style.zIndex = 1;
+            slot.style.left = (e.clientX - 175) + "px";
+            slot.style.top = (e.clientY - 265) + "px";
+            addAdditionalSlot();
+        });
+        element.appendChild(slot);
+    }
+    document.body.appendChild(element);
+    populateInventoryScreen();
+}
+
+/**
+ * Removes the inventory screen from display
+ */
+function removeInventoryScreen() {
+    removeMoveElements("inventorySlot");
+    removeMoveElements("inventoryTable");
+}
+
+/**
+ * Opens sidebar and shows equipment slots
+ */
+function openSideBar() {
+    document.getElementById("mySideBar").style.width = "500px";
+    document.getElementById("openBar").style.visibility = "hidden";
+    openInventoryScreen();
+}
+
+/**
+ * Closes the equipment sidebar
+ */
+function closeSideBar() {
+    document.getElementById("mySideBar").style.width = "0px";
+    document.getElementById("openBar").style.visibility = "visible";
+    removeInventoryScreen();
 }

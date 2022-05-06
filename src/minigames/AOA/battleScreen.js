@@ -1,7 +1,6 @@
 let movesShown = 0;
 let x = 100;
 let y = 250;
-let targetedChar = "";
 let combatantsSorted = [];
 let currentUnitTurn = 0;
 let battleIsOver = false;
@@ -485,7 +484,7 @@ function createMonsterTargets(selectedMove) {
 }
 
 /**
- * Finds the right character in character array.
+ * Finds the right character in the character database array.
  * @returns character if found, and false if not.
  */
 function findRightChar(character) {

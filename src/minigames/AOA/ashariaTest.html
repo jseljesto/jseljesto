@@ -3,6 +3,7 @@
 
 <head>
     <link rel="stylesheet" href="gameSheet.css" />
+    <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
 </head>
 
 <body background="pictures/regiontest1.png" style="background-repeat:no-repeat;height:1269px;overflow:visible"
@@ -105,24 +106,81 @@
     <button id="playerFlee" class="menuButtons" onmousedown="buttonClicked(this)" onmouseup="buttonUnclicked(this)"
         onclick="toMenu()" style="position: absolute; visibility: hidden; bottom: 2%; left: 10px;">Flee</button>
     <button onclick="startBattle()" id="battleTest" style="position: absolute; top: 5%; right: 5%">To Battle</button>
-    <button onclick="createPopup()"style="position: absolute; top: 10%; right: 5%" >Ny spelar</button>
+    <button onclick="createPopup()" style="position: absolute; top: 10%; right: 5%">Ny spelar</button>
+
+    <button id="openBar" onclick="openSideBar()">Open</button>
+    <div id="mySideBar" class="sidebar inventoryBackground">
+        <button style="position: absolute; right: 10px; top: 10px;" onclick="closeSideBar()">Close</button>
+        <div id="helmetSlot" class="equipmentSlot" style="left: 225px; top: 75px;">
+            <span class="iconify" id="helmetIcon" data-icon="whh:viking" style="color: black;" data-width="75"
+                data-height="75"></span>
+        </div>
+        <div id="necklaceSlot" class="equipmentSlot" style="left: 225px; top: 225px;">
+            <span class="iconify" id="necklaceIcon" data-icon="icon-park-outline:diamond-necklace" style="color: black;"
+                data-width="75" data-height="75"></span>
+        </div>
+        <div id="chestSlot" class="equipmentSlot" style="left: 225px; top: 375px;">
+            <span class="iconify" id="chestIcon" data-icon="icon-park:clothes-sweater" data-width="75"
+                data-height="75"></span>
+        </div>
+        <div id="weaponSlot" class="equipmentSlot" style="left: 75px; top: 375px;">
+            <span class="iconify" id="weaponIcon" data-icon="mdi:sword" data-width="75" data-height="75"></span>
+        </div>
+        <div id="shieldSlot" class="equipmentSlot" style="left: 375px; top: 375px;">
+            <span class="iconify" id="shieldIcon" data-icon="emojione-monotone:shield" data-width="75"
+                data-height="75"></span>
+        </div>
+        <div id="ringSlot" class="equipmentSlot" style="left: 375px; top: 525px;">
+            <span class="iconify" id="ringIcon" data-icon="la:ring" style="color: black;" data-width="75"
+                data-height="75"></span>
+        </div>
+        <div id="leggingSlot" class="equipmentSlot" style="left: 225px; top: 525px;">
+            <span class="iconify" id="leggingIcon" data-icon="icon-park-outline:trousers-bell-bottoms"
+                style="color: black;" data-width="75" data-height="75"></span>
+        </div>
+        <div id="glovesSlot" class="equipmentSlot" style="left: 75px; top: 525px;">
+            <span class="iconify" id="gloveIcon" data-icon="healthicons:ppe-gloves" data-width="75"
+                data-height="75"></span>
+        </div>
+        <div id="feetSlot" class="equipmentSlot" style="left: 225px; top: 675px;">
+            <span class="iconify" id="feetIcon" data-icon="fa-solid:shoe-prints" data-width="75"
+                data-height="75"></span>
+        </div>
+
+        <img src="pictures/link.png" id="weaponChestLink" style="position: absolute; left: 150px; top: 385px;">
+        <img src="pictures/link.png" id="chestShieldLink" style="position: absolute; left: 300px; top: 385px;">
+        <img src="pictures/link.png" id="glovesLegsLink" style="position: absolute; left: 150px; top: 535px;">
+        <img src="pictures/link.png" id="legsRingLink" style="position: absolute; left: 300px; top: 535px;">
+        <img src="pictures/link.png" class="rotatedImage" id="helmetNecklaceLink"
+            style="position: absolute; left: 225px; top: 160px;">
+        <img src="pictures/link.png" class="rotatedImage" id="necklaceChestLink"
+            style="position: absolute; left: 225px; top: 310px;">
+        <img src="pictures/link.png" class="rotatedImage" id="chestLegsLink"
+            style="position: absolute; left: 225px; top: 460px;">
+        <img src="pictures/link.png" class="rotatedImage" id="weaponGlovesLink"
+            style="position: absolute; left: 75px; top: 460px;">
+        <img src="pictures/link.png" class="rotatedImage" id="shieldRingLink"
+            style="position: absolute; left: 375px; top: 460px;">
+        <img src="pictures/link.png" class="rotatedImage" id="legsFeetLink"
+            style="position: absolute; left: 225px; top: 610px;">
+    </div>
 
     <canvas id="canvas" width="1700" height="1600"></canvas>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.6.3/fabric.min.js"></script>
-<script src="battleScreen.js"></script>
-<script src="classes/character.js"></script>
-<script src="classes/items.js"></script>
-<script src="classes/move.js"></script>
-<script src="classes/monster.js"></script>
-<script src="levels.js"></script>
-<script src="ashariaTest.js"></script>
-<script>
-    //Stops player from scrolling down when moving character.
-    document.body.style.overflow = "hidden";
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.6.3/fabric.min.js"></script>
+    <script src="battleScreen.js"></script>
+    <script src="classes/character.js"></script>
+    <script src="classes/items.js"></script>
+    <script src="classes/move.js"></script>
+    <script src="classes/monster.js"></script>
+    <script src="levels.js"></script>
+    <script src="ashariaTest.js"></script>
+    <script>
+        //Stops player from scrolling down when moving character.
+        document.body.style.overflow = "hidden";
 
-    createPopup();
-</script>
-  </body>
+        createPopup();
+    </script>
+</body>
 
 </html>
