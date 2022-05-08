@@ -106,9 +106,9 @@
     <button id="playerFlee" class="menuButtons" onmousedown="buttonClicked(this)" onmouseup="buttonUnclicked(this)"
         onclick="toMenu()" style="position: absolute; visibility: hidden; bottom: 2%; left: 10px;">Flee</button>
     <button onclick="startBattle()" id="battleTest" style="position: absolute; top: 5%; right: 5%">To Battle</button>
-    <button onclick="createPopup()" style="position: absolute; top: 10%; right: 5%">Ny spelar</button>
+    <button onclick="createPopup()" id="newPlayerButton" style="position: absolute; top: 10%; right: 5%">Ny spelar</button>
 
-    <button id="openBar" onclick="openSideBar()">Open</button>
+    <button id="openBar" style="visibility: hidden;" onclick="openSideBar()">Open</button>
     <div id="mySideBar" class="sidebar inventoryBackground">
         <button style="position: absolute; right: 10px; top: 10px;" onclick="closeSideBar()">Close</button>
         <div id="helmetSlot" class="equipmentSlot" style="left: 225px; top: 75px;">
@@ -163,6 +163,18 @@
             style="position: absolute; left: 375px; top: 460px;">
         <img src="pictures/link.png" class="rotatedImage" id="legsFeetLink"
             style="position: absolute; left: 225px; top: 610px;">
+    </div>
+    <div id="actionBox" style="position: absolute; border: 2px solid black; bottom: 20px; left: 18cm; visibility: hidden; width: 500px; height: 300px;">
+        <p id="action1" class="actionLines"></p>
+        <p id="action2" class="actionLines"></p>
+        <p id="action3" class="actionLines"></p>
+        <p id="action4" class="actionLines"></p>
+        <p id="action5" class="actionLines"></p>
+        <p id="action6" class="actionLines"></p>
+        <p id="action7" class="actionLines"></p>
+        <p id="action8" class="actionLines"></p>
+        <p id="action9" class="actionLines"></p>
+        <p id="action10" class="actionLines"></p>
     </div>
 
     <canvas id="canvas" width="1700" height="1600"></canvas>

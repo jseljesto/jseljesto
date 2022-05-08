@@ -3,6 +3,7 @@ let x = 100;
 let y = 250;
 let combatantsSorted = [];
 let currentUnitTurn = 0;
+let turnCounter = 1;
 let battleIsOver = false;
 
 
@@ -13,11 +14,12 @@ function startBattle() {
     battleIsOver = false;
     onMapScreen = false;
     hideMap();
-    findRandomMonsters();
-    createBattleScreenElements(createCombatantArray(2, 2));
+    findRandomMonsters(4);
+    createBattleScreenElements(createCombatantArray(currentCharacters.length, currentMonsters.length));
     addStats();
     sortBySpeed();
     nextUnitsTurn(combatantsSorted);
+    unhideBattleScreen();
 }
 
 /**
@@ -37,6 +39,7 @@ function hideMap() {
     document.getElementById("chosenHP").style.visibility = "hidden";
     document.getElementById("chosenMP").style.visibility = "hidden";
     document.getElementById("battleTest").style.visibility = "hidden";
+    document.getElementById("newPlayerButton").style.visibility = "hidden";
 }
 
 /**
@@ -53,13 +56,14 @@ function unhideMap() {
     document.getElementById("chosenHP").style.visibility = "visible";
     document.getElementById("chosenMP").style.visibility = "visible";
     document.getElementById("battleTest").style.visibility = "visible";
+    document.getElementById("newPlayerButton").style.visibility = "visible";
 }
 
 /**
  * Hides the battle screen.
  */
 function hideBattleScreen() {
-    for (let i = 1; i <= amountOfCharacters; i++) {
+    for (let i = 1; i <= currentCharacters.length; i++) {
         document.getElementById("player" + i + "HP").style.visibility = "hidden";
         document.getElementById("player" + i + "MP").style.visibility = "hidden";
         document.getElementById("player" + i + "curHP").style.visibility = "hidden";
@@ -68,7 +72,7 @@ function hideBattleScreen() {
         document.getElementById("player" + i + "MPNumber").style.visibility = "hidden";
         document.getElementById("player" + i + "Name").style.visibility = "hidden";
     }
-    for (let j = 1; j <= amountOfMonsters; j++) {
+    for (let j = 1; j <= currentMonsters.length; j++) {
         document.getElementById("enemy" + j + "HP").style.visibility = "hidden";
         document.getElementById("enemy" + j + "MP").style.visibility = "hidden";
         document.getElementById("enemy" + j + "curHP").style.visibility = "hidden";
@@ -82,13 +86,14 @@ function hideBattleScreen() {
     document.getElementById("playerItems").style.visibility = "hidden";
     document.getElementById("playerFlee").style.visibility = "hidden";
     document.getElementById("goBack").style.visibility = "hidden";
+    document.getElementById("actionBox").style.visibility = "hidden";
 }
 
 /**
  * Makes the battle screen visible again.
  */
 function unhideBattleScreen() {
-    for (let i = 1; i <= amountOfCharacters; i++) {
+    for (let i = 1; i <= currentCharacters.length; i++) {
         document.getElementById("player" + i + "HP").style.visibility = "visible";
         document.getElementById("player" + i + "MP").style.visibility = "visible";
         document.getElementById("player" + i + "curHP").style.visibility = "visible";
@@ -97,7 +102,7 @@ function unhideBattleScreen() {
         document.getElementById("player" + i + "MPNumber").style.visibility = "visible";
         document.getElementById("player" + i + "Name").style.visibility = "visible";
     }
-    for (let j = 1; j <= amountOfMonsters; j++) {
+    for (let j = 1; j <= currentMonsters.length; j++) {
         document.getElementById("enemy" + j + "HP").style.visibility = "visible";
         document.getElementById("enemy" + j + "MP").style.visibility = "visible";
         document.getElementById("enemy" + j + "curHP").style.visibility = "visible";
@@ -106,18 +111,23 @@ function unhideBattleScreen() {
         document.getElementById("enemy" + j + "MPNumber").style.visibility = "visible";
         document.getElementById("enemy" + j + "Name").style.visibility = "visible";
     }
+    document.getElementById("playerAbilities").style.visibility = "visible";
+    document.getElementById("playerItems").style.visibility = "visible";
+    document.getElementById("playerFlee").style.visibility = "visible";
+    document.getElementById("goBack").style.visibility = "visible";
+    document.getElementById("actionBox").style.visibility = "visible";
 }
 
 /**
  * Adds the combatants stats to the screen.
  */
 function addStats() {
-    for (let i = 1; i <= amountOfCharacters; i++) {
+    for (let i = 1; i <= currentCharacters.length; i++) {
         document.getElementById("player" + i + "HPNumber").innerHTML = currentCharacters[i - 1].hpLeft + "/" + currentCharacters[i - 1].hp;
         document.getElementById("player" + i + "MPNumber").innerHTML = currentCharacters[i - 1].mpLeft + "/" + currentCharacters[i - 1].mp;
         document.getElementById("player" + i + "Name").innerHTML = currentCharacters[i - 1].name;
     }
-    for (let j = 1; j <= amountOfMonsters; j++) {
+    for (let j = 1; j <= currentMonsters.length; j++) {
         document.getElementById("enemy" + j + "HPNumber").innerHTML = currentMonsters[j - 1].hpLeft + "/" + currentMonsters[j - 1].hp;
         document.getElementById("enemy" + j + "MPNumber").innerHTML = currentMonsters[j - 1].mpLeft + "/" + currentMonsters[j - 1].mp;
         document.getElementById("enemy" + j + "Name").innerHTML = currentMonsters[j - 1].name;
@@ -144,34 +154,36 @@ function sortBySpeed() {
 
 /**
  * Find the next players turn, and removes dead combatants from the queue.
- * @param {array} combatantsSorted participating characters and monsters.
+ * @param {array} combatants participating characters and monsters.
  */
-function nextUnitsTurn(combatantsSorted) {
+function nextUnitsTurn(combatants) {
     if (battleIsOver == false) {
         do {
-            if (currentUnitTurn >= combatantsSorted.length) {
+            if (currentUnitTurn >= combatants.length) {
+                turnCounter++;
                 currentUnitTurn = 0;
             }
-            if (combatantsSorted[currentUnitTurn].hpLeft == 0) {
-                combatantsSorted.splice(currentUnitTurn, 1);
-                if (currentUnitTurn >= combatantsSorted.length) {
+            if (combatants[currentUnitTurn].hpLeft == 0) {
+                combatants.splice(currentUnitTurn, 1);
+                if (currentUnitTurn >= combatants.length) {
+                    turnCounter++;
                     currentUnitTurn = 0;
                 }
             }
-        } while (combatantsSorted[currentUnitTurn].hpLeft == 0);
-        if (combatantsSorted[currentUnitTurn] instanceof Character) {
+        } while (combatants[currentUnitTurn].hpLeft == 0);
+        if (combatants[currentUnitTurn] instanceof Character) {
             document.getElementById("playerAbilities").style.visibility = "visible";
             document.getElementById("playerItems").style.visibility = "visible";
             document.getElementById("playerFlee").style.visibility = "visible";
-            currentPlayer = combatantsSorted[currentUnitTurn];
-            currentPlayerIndex = findRightChar(currentPlayer);
-            console.log("It is " + currentPlayer.name + " turn. Index " + currentPlayerIndex);
+            currentPlayer = combatants[currentUnitTurn];
+            currentPlayerIndex = findRightCharIndex(currentPlayer);
+            logInteraction(("It is " + currentPlayer.name + " turn. Index " + currentPlayerIndex));
         }
-        else if (combatantsSorted[currentUnitTurn] instanceof Monster) {
-            console.log("It is " + combatantsSorted[currentUnitTurn].name + "'s turn");
-            currentPlayer = combatantsSorted[currentUnitTurn];
-            currentMonsterIndex = findRightMonster(currentPlayer);
-            randomMove(combatantsSorted[currentUnitTurn]);
+        else if (combatants[currentUnitTurn] instanceof Monster) {
+            logInteraction(("It is " + combatants[currentUnitTurn].name + "'s turn"));
+            currentPlayer = combatants[currentUnitTurn];
+            currentMonsterIndex = findRightMonsterIndex(currentPlayer);
+            randomMove(combatants[currentUnitTurn]);
         }
     }
 }
@@ -183,8 +195,20 @@ function nextUnitsTurn(combatantsSorted) {
 function randomMove(monster) {
     let numOfMoves = monster.availableMoves.length;
     let selectedNum = Math.floor(Math.random() * numOfMoves)
-    let randomTarget = Math.floor(Math.random() * currentCharacters.length);
-    useMove(monster.availableMoves[selectedNum], monster, currentCharacters[randomTarget]);
+    let selectedMove = monster.availableMoves[selectedNum];
+    let randomTarget = findCharacterTarget();
+    useMove(selectedMove, monster, randomTarget);
+}
+
+function findCharacterTarget() {
+    let randomCharIndex = Math.floor(Math.random() * currentCharacters.length);
+    if (currentCharacters[randomCharIndex].hpLeft === 0) {
+        logInteraction(`${currentCharacters[randomCharIndex].name} is already dead. Finding new target.`);
+        return findCharacterTarget();
+    } else {
+        logInteraction(`${currentCharacters[randomCharIndex].name} is alive. Target found.`);
+        return currentCharacters[randomCharIndex];
+    }
 }
 
 /**
@@ -209,8 +233,9 @@ function buttonUnclicked(_this) {
 function toMenu() {
     //currentMonsters = [];
     onMapScreen = true;
-    let div = getElementById("headElement");
+    let div = document.getElementById("headElement");
     div.parentNode.removeChild(div);
+    hideBattleScreen();
     unhideMap();
     document.body.style.background = "url(RegionTest1.png) no-repeat";
 }
@@ -277,16 +302,16 @@ function findMove(selectedMove) {
 }
 
 /**
- * Calculates the damage output of a selected move
+ * Calculates the damage output of a selected move using a formula
  * @param {Character} character the character using the move
- * @param {Move} move the selected move used
+ * @param {Move} move the selected move with its base power
  * @returns damage as a number
  */
-function calculateDamage(character, move) {
+ function calculateDamage(character, move, target) {
     let roll = Math.floor(Math.random() * 11);
     let variation = 0.95 + (roll / 100);
     let damage = Math.round((((character.str * 0.065) * move.pow) + 10) * variation);
-    console.log(character.name + " does " + damage + " to " + target.name);
+    logInteraction((character.name + " does " + damage + " to " + target.name));
     return damage;
 }
 
@@ -310,17 +335,17 @@ function checkForMP(character, move) {
  * @param {Character} character the character using the move.
  * @param {Character/Monster} target the selected moves target.
  */
-function useMove(moveName, character, target, id) {
-    removeMoveElements();
+function useMove(moveName, character, target) {
+    returnToBattleMenu();
     let move = findMove(moveName);
-    if (checkforMP(character, move)) {
+    if (checkForMP(character, move)) {
         changeCurrentMP(character, move.mp);
-        characterDamaged(calculateDamage(character, move), target, id);
+        characterDamaged(calculateDamage(character, move, target), target);
+        currentUnitTurn++;
+        nextUnitsTurn(combatantsSorted);
     } else {
         alert("You do not have enough MP left!");
     }
-    currentUnitTurn++;
-    nextUnitsTurn(combatantsSorted);
 }
 
 /**
@@ -370,9 +395,8 @@ function drainMP(character, mpValue) {
  * @param {Number} damage damage taken.
  * @param {Character} character target combatant.
  */
-function characterDamaged(damage, character, id) {
+function characterDamaged(damage, character) {
     afflictDamage(character, damage);
-    alert(currentMonsters[0].hpLeft + " " + currentMonsters[1].hpLeft) //test method
     if (character.hpLeft < 0) {
         character.hpLeft = 0;
         if (character instanceof Monster) {
@@ -381,22 +405,22 @@ function characterDamaged(damage, character, id) {
     }
     let hpBarWidth = 200 * character.hpLeft / character.hp;
     if (character instanceof Character) {
-        let index = findRightChar(character);
+        let index = findRightCharIndex(character);
         document.getElementById("player" + (index + 1) + "HPNumber").innerHTML = character.hpLeft + "/" + character.hp;
         document.getElementById("player" + (index + 1) + "curHP").style.width = hpBarWidth + "px";
         changeHpBarColour((character.hpLeft / character.hp) * 100, "player" + (index + 1) + "curHP");
         if (areAllDead(currentCharacters) === true) {
-            alert("All Players are dead");
+            logInteraction("All Players are dead");
             //toMenu();
         }
     }
     else if (character instanceof Monster) {
-        let index = id;
+        let index = findRightMonsterIndex(character);
         document.getElementById("enemy" + (index + 1) + "HPNumber").innerHTML = character.hpLeft + "/" + character.hp;
         document.getElementById("enemy" + (index + 1) + "curHP").style.width = hpBarWidth + "px";
         changeHpBarColour((character.hpLeft / character.hp) * 100, "enemy" + (index + 1) + "curHP");
         if (areAllDead(currentMonsters) === true) {
-            alert("All Monsters are dead");
+            logInteraction("All Monsters are dead");
             //toMenu();
         }
     }
@@ -475,7 +499,7 @@ function createMonsterTargets(selectedMove) {
             target.style.right = 200 + "px";
             let text = document.createTextNode("TargetTest");
             target.onclick = function () {
-                useMove(selectedMove, currentPlayer, currentMonsters[i], i);
+                useMove(selectedMove, currentPlayer, currentMonsters[i]);
             };
             target.appendChild(text);
             document.body.appendChild(target);
@@ -487,7 +511,7 @@ function createMonsterTargets(selectedMove) {
  * Finds the right character in the character database array.
  * @returns character if found, and false if not.
  */
-function findRightChar(character) {
+function findRightCharIndex(character) {
     for (let i = 0; i < currentCharacters.length; i++) {
         if (character.name == currentCharacters[i].name) {
             return i;
@@ -500,7 +524,7 @@ function findRightChar(character) {
  * Finds the right monster in monster array.
  * @returns monster if found, and false if not.
  */
-function findRightMonster(character) {
+function findRightMonsterIndex(character) {
     for (let i = 0; i < currentMonsters.length; i++) {
         if (character === currentMonsters[i]) {
             return i;
@@ -571,7 +595,7 @@ function checkLvlUp(character) {
     while (character.xp >= character.xpNext) {
         character.lvl++;
         increaseStats(character, 3);
-        alert(character.vit + " " + character.str + " " + character.wis + " " + character.dex + " " + character.spe);
+        console.log(character.vit + " " + character.str + " " + character.wis + " " + character.dex + " " + character.spe);
         character.xp -= character.xpNext;
         for (let i = 0; i <= levels.length; i++) {
             if (levels[i].lvl === character.lvl) {
@@ -627,6 +651,18 @@ function increaseStats(character, numOfRolls) {
         }
         else if (roll <= charClass[0] + charClass[1] + charClass[2] + charClass[3] + charClass[4]) {
             character.spe++;
+        }
+    }
+}
+
+function logInteraction(text) {
+    for (let i = 1; i < 10; i++) {
+        let action1 = document.getElementById("action" + i);
+        let action2 = document.getElementById("action" + (i+1));
+        if (i === 9) {
+            action1.innerHTML = `turn ${turnCounter}: ${text}`;
+        } else {
+            action1.innerHTML = action2.innerHTML;
         }
     }
 }

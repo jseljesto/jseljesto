@@ -11,7 +11,6 @@ let currentSTR = 0;
 let currentWIS = 0;
 let currentDEX = 0;
 let currentSPE = 0;
-let amountOfCharacters = 0;
 let currentCharacters = [];
 
 //Currently selected player in battle.
@@ -37,7 +36,8 @@ let moving = false;
 let newZ = 0;
 let mousePosition;
 let currentElement = "";
-let player = new Character("", "", "", 2, 2, 2, 2, 2, 1, 0, 1000, 20, 20, 10, 10, ["Normal Strike"], "");
+let tempCharacter = new Character("Roger", "Elf", "Rogue", 10, 10, 10, 10, 10, 1, 0, 1000, 1000, 1000, 50, 50, ["Scratch"], "");
+currentCharacters.push(tempCharacter);
 let weapon = new Equipment("TestWeapon", "weapon", true, 5, 1, "None", "weaponSlot", "", 2, 2, 0, 0, 0, 0, 0, "");
 let dragonScale = new Equipment("TestWeapon", "helmet", true, 5, 1, "None", "helmetSlot", "", 2, 2, 0, 0, 0, 0, 0, "");
 items.push(weapon);
@@ -118,6 +118,7 @@ function startGame() {
         gameStarted = true;
         closeWindow();
         let player = createPlayer(window['player' + 1]);
+        currentPlayer = player;
         document.getElementById("chosenName").innerHTML = "Name: " + player.name;
         document.getElementById("chosenTypes").innerHTML = "Race & Class: " + player.race + " " + player.class;
         document.getElementById("chosenVIT").innerHTML = "VIT: " + player.vit;
@@ -135,7 +136,6 @@ function startGame() {
 
 function createPlayer(player) {
     player = new Character("", "", "", 0, 0, 0, 0, 0, 1, 0, 1000, 0, 0, 0, 0, ["Normal Strike"]);
-    amountOfCharacters++;
     player.name = document.getElementById("name").value;
     player.race = document.getElementById("characterRace").value;
     player.class = document.getElementById("characterClass").value;
@@ -344,12 +344,12 @@ function checkSlot(event) {
     if (currentElement) {
         let elements = document.elementsFromPoint(event.clientX, event.clientY);
         for (let i = 0; i < elements.length; i++) {
-            if (elements[i].nodeName === "DIV" && player.equipmentSlots.includes(elements[i].id)) {
-                if (equip(player, items[selectedItemIndex], currentElement.innerHTML, elements[i].id) === true) {
+            if (elements[i].nodeName === "DIV" && currentPlayer.equipmentSlots.includes(elements[i].id)) {
+                if (equip(currentPlayer, items[selectedItemIndex], currentElement.innerHTML, elements[i].id) === true) {
                     items.splice(selectedItemIndex, 1);
                     removeDefaultIcon(elements[i]);
                     elements[i].onclick = function () {
-                        removeElementFromSlot(player, elements[i], elements[i].id);
+                        removeElementFromSlot(currentPlayer, elements[i], elements[i].id);
                         elements[i].onclick = null;
                     };
                 };
@@ -383,9 +383,6 @@ function removeElementFromSlot(character, element, slot) {
     confirmDataIcon(slot);
     removeInventoryScreen();
     openInventoryScreen();
-    element.removeEventListener("click", function () {
-        removeElementFromSlot(player, elements[i], elements[i].id);
-    });
 }
 
 /**
@@ -452,7 +449,7 @@ function openInventoryScreen() {
     element.className = "inventoryTable";
     element.style.top = 250 + "px";
     element.style.left = 150 + "px";
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < items.length; i++) {
         let slot = document.createElement("DIV");
         slot.className = "inventorySlot";
         slot.id = "slot" + (i + 1);

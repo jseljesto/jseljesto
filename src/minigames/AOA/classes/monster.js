@@ -261,18 +261,16 @@ class Monster {
 
 }
 let monsterList = [];
-let amountOfMonsters = 0;
 let currentMonsters = [];
 let currentMonsterIndex = 0;
 let bear = new Monster("Bear", "", "", 8, 8, 4, 6, 7, 1, 10, 31, 31, 18, 18, ["Scratch"]);
 let cub = new Monster("Cub", "", "", 5, 6, 3, 6, 7, 1, 7, 24, 24, 15, 15, ["Scratch"]);
 
 
-function findRandomMonsters() {
-    for (let i = 0; i < 2; i++) {
+function findRandomMonsters(amount) {
+    for (let i = 0; i < amount; i++) {
         let randNum = Math.floor(Math.random() * monsterList.length);
         let testMonster = Object.assign(Object.create(Object.getPrototypeOf(monsterList[randNum])), monsterList[randNum]);
-        amountOfMonsters++;
         currentMonsters.push(testMonster);
     }
 }
